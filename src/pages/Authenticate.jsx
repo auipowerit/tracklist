@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
-import { useAuthContext } from "../context/Auth/AuthContext";
-import AuthInput from "../components/AuthInput";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faArrowRight,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
+import AuthInput from "../components/AuthInput";
+import { useAuthContext } from "../context/Auth/AuthContext";
 
 export default function Authenticate() {
   const { signup, usernameAvailable, login } = useAuthContext();

@@ -1,10 +1,3 @@
-import { auth, db } from "../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
 import {
   collection,
   doc,
@@ -14,6 +7,14 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+import { auth, db } from "../config/firebase";
 
 export function useAuth() {
   async function signup(email, password, firstname, lastname, username) {
@@ -21,7 +22,7 @@ export function useAuth() {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       const newUser = userCredentials.user;

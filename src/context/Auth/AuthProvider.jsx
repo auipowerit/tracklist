@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { onAuthStateChanged } from "firebase/auth";
-import { db, auth } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import AuthContext from "./AuthContext";
+import { useAuth } from "../../hooks/useAuth";
+import { auth, db } from "../../config/firebase";
 
 export default function AuthProvider({ children }) {
   const [globalUser, setGlobalUser] = useState(null);
   const [globalData, setGlobalData] = useState(null);
 
-  const {
-    signup,
-    usernameAvailable,
-    login,
-    logout,
-    resetPassword,
-    getUserById,
-  } = useAuth();
+  const useAuthMethods = useAuth();
 
   useEffect(() => {
     // Update global user on auth state change
@@ -40,21 +33,10 @@ export default function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const authDBMethods = {
-    globalUser,
-    globalData,
-    signup,
-    usernameAvailable,
-    login,
-    logout,
-    resetPassword,
-    getUserById,
-  };
+  const authMethods = { globalUser, globalData, ...useAuthMethods };
 
   return (
-    // Provide useContext with authDBmethods
-    <AuthContext.Provider value={authDBMethods}>
-      {children}
-    </AuthContext.Provider>
+    // Provide useContext with authMethods
+    <AuthContext.Provider value={authMethods}>{children}</AuthContext.Provider>
   );
 }

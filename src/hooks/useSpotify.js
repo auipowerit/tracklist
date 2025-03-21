@@ -39,9 +39,9 @@ export function useSpotify() {
           },
         },
       );
-      const data = await response.json();
+      const artists = await response.json();
 
-      return data.artists?.items || [];
+      return artists.artists?.items || [];
     } catch (error) {
       console.error(error);
     }
@@ -67,9 +67,9 @@ export function useSpotify() {
         throw new Error("No artist found!");
       }
 
-      const data = await response.json();
+      const artist = await response.json();
 
-      return data || [];
+      return artist || [];
     } catch (error) {
       console.error(error);
     }
@@ -90,9 +90,9 @@ export function useSpotify() {
           },
         },
       );
-      const data = await response.json();
+      const albums = await response.json();
 
-      return data.items || [];
+      return albums.items || [];
     } catch (error) {
       console.error(error);
     }
@@ -113,9 +113,32 @@ export function useSpotify() {
           },
         },
       );
-      const data = await response.json();
+      const singles = await response.json();
 
-      return data.items || [];
+      return singles.items || [];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function getAlbumTracks(albumId) {
+    if (!albumId) return [];
+    const access_token = accessToken || (await fetchAccessToken());
+
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/albums/${albumId}/tracks?market=US`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+      );
+      const tracks = await response.json();
+
+      return tracks.items || [];
     } catch (error) {
       console.error(error);
     }
@@ -127,5 +150,6 @@ export function useSpotify() {
     searchArtistById,
     getArtistAlbums,
     getArtistSingles,
+    getAlbumTracks,
   };
 }

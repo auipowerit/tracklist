@@ -1,4 +1,4 @@
-export default function Artist({ artist, onClick }) {
+export default function ArtistCard({ artist, onClick }) {
   const imgSource =
     artist.images !== null && artist.images.length > 0
       ? artist.images[0].url
@@ -6,17 +6,17 @@ export default function Artist({ artist, onClick }) {
 
   return (
     <div
-      className="my-2 flex h-[400px] w-[300px] cursor-pointer flex-col justify-between bg-white align-middle text-black transition-all duration-200 hover:scale-110"
+      className="flex min-h-[400px] w-[300px] cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      <div className="flex h-full flex-col justify-between gap-2 py-2 text-center">
-        <p className="text-2xl font-bold">{artist.name}</p>
+      <img src={imgSource} className="h-[300px] w-[300px]" />
+      <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
+        <p className="text-xl font-bold">{artist.name}</p>
         <p className="text-sm font-light">
           {artist.followers.total.toLocaleString()}{" "}
           {artist.followers.total === 1 ? "Follower" : "Followers"}
         </p>
       </div>
-      <img src={imgSource} className="h-[300px] w-[300px]" />
     </div>
   );
 }

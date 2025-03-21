@@ -1,21 +1,27 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faExclamationTriangle,
+  faHome,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function ErrorPage() {
   return (
-    <div className="mt-20 flex flex-col items-center gap-4 text-center">
+    <div className="flex h-[80vh] flex-col items-center justify-center gap-4 text-center text-5xl">
       <FontAwesomeIcon
         icon={faExclamationTriangle}
         className="text-6xl text-red-500"
       />
 
-      <h1 className="text-3xl font-bold">Error! Something went wrong!</h1>
+      <h1 className="text-3xl font-bold">{`Oops! Something went wrong :(`}</h1>
 
-      <Link to="/" className="text-black" style={{ textDecoration: "none" }}>
-        <p className="w-fit rounded-full bg-gray-300 px-5 py-3 text-xl no-underline">
-          Go to home
-        </p>
+      <Link
+        to="/"
+        className="mt-6 flex w-fit items-center gap-4 rounded-full bg-green-900 px-4 py-2 text-2xl no-underline"
+        style={{ textDecoration: "none" }}
+      >
+        <FontAwesomeIcon icon={faHome} />
+        Go to home
       </Link>
     </div>
   );

@@ -1,16 +1,22 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AuthProvider from "./context/Auth/AuthProvider";
-import Index from "./pages/Index";
+import Navbar from "./components/Layout/Navbar";
 import ErrorPage from "./pages/ErrorPage";
-import SpotifyProvider from "./context/Spotify/SpotifyProvider";
+import SearchPage from "./pages/SearchPage";
 import ArtistPage from "./pages/ArtistPage";
 import Authenticate from "./pages/Authenticate";
+import AuthProvider from "./context/Auth/AuthProvider";
+import SpotifyProvider from "./context/Spotify/SpotifyProvider";
 
 export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Index />,
+      element: (
+        <>
+          <Navbar />
+          <SearchPage />
+        </>
+      ),
       errorElement: <ErrorPage />,
     },
     {
@@ -19,8 +25,23 @@ export default function App() {
       errorElement: <ErrorPage />,
     },
     {
+      path: "/search",
+      element: (
+        <>
+          <Navbar />
+          <SearchPage />
+        </>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
       path: "/artists/:artistId",
-      element: <ArtistPage />,
+      element: (
+        <>
+          <Navbar />
+          <ArtistPage />
+        </>
+      ),
       errorElement: <ErrorPage />,
     },
     {

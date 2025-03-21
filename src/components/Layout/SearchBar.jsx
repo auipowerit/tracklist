@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function SearchBar({ setIsLoading, setArtists }) {
   const { searchArtistsByName } = useSpotifyContext();
@@ -25,17 +25,17 @@ export default function SearchBar({ setIsLoading, setArtists }) {
 
   return (
     <form
-      className="m-auto my-5 flex w-fit justify-center gap-4 align-middle"
+      className="mb-8 flex items-center justify-center gap-4"
       onSubmit={handleSubmit}
     >
       <input
         ref={searchInput}
         placeholder="Search for an artist..."
-        className="border-2 border-white px-2 py-1 text-2xl"
+        className="w-1/3 rounded-md border-2 border-white px-2 py-1 text-2xl outline-hidden"
       />
       <button
         type="submit"
-        className="rounded-full bg-green-900 px-4 py-2 text-2xl"
+        className="rounded-md bg-green-900 px-4 py-2 text-2xl"
       >
         Search
       </button>

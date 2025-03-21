@@ -1,30 +1,13 @@
-import { useEffect, useState } from "react";
-import { useSpotify } from "../../hooks/useSpotify";
+import { useEffect } from "react";
 import SpotifyContext from "./SpotifyContext";
+import { useSpotify } from "../../hooks/useSpotify";
 
 export default function SpotifyProvider({ children }) {
-  const {
-    fetchAccessToken,
-    searchArtistsByName,
-    searchArtistById,
-    getArtistAlbums,
-    getArtistSingles,
-  } = useSpotify();
+  const spotifyMethods = useSpotify();
 
   useEffect(() => {
-    const getAccessToken = async () => {
-      await fetchAccessToken();
-    };
-
-    getAccessToken();
+    spotifyMethods.fetchAccessToken();
   }, []);
-
-  const spotifyMethods = {
-    searchArtistsByName,
-    searchArtistById,
-    getArtistAlbums,
-    getArtistSingles,
-  };
 
   return (
     // Provide useContext with authDBmethods
