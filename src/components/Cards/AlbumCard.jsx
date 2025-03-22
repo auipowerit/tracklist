@@ -1,3 +1,4 @@
+import StarRating from "../StarRating";
 import { formatDateMDYLong } from "../../utils/date";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
@@ -6,7 +7,7 @@ export default function AlbumCard({ album }) {
 
   async function getTracks() {
     const tracks = await getAlbumTracks(album.id);
-    console.log(tracks);
+    //console.log(tracks);
   }
 
   return (
@@ -21,6 +22,8 @@ export default function AlbumCard({ album }) {
         </p>
       </div>
       <img src={album.images[0].url} className="h-[300px] w-[300px]" />
+
+      <StarRating albumId={album.id} />
     </div>
   );
 }
