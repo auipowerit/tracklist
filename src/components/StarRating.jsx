@@ -35,8 +35,8 @@ export default function StarRating({ albumId }) {
 
   return (
     <div className="flex items-center justify-center gap-1 p-4">
-      <div className="flex flex-row gap-1">
-        {[...Array(5)].map((star, i) => {
+      <div className="flex flex-row">
+        {[...Array(5)].map((_, i) => {
           const ratingValue = i + 1;
           const color =
             ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9";
