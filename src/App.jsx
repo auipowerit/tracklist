@@ -1,7 +1,10 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExclamationTriangle,
+  faHome,
+} from "@fortawesome/free-solid-svg-icons";
 import SearchPage from "./pages/SearchPage";
 import ArtistPage from "./pages/ArtistPage";
 import Authenticate from "./pages/Authenticate";
@@ -12,63 +15,38 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <Layout>
-          <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "/authenticate",
-      element: <Authenticate />,
-    },
-    {
-      path: "/search",
-      element: (
-        <Layout>
-          <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "/artists/:artistId",
-      element: (
-        <Layout>
-          <ArtistPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "/account",
-      element: (
-        <Layout>
-          <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "/lists",
-      element: (
-        <Layout>
-          <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "/friends",
-      element: (
-        <Layout>
-          <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: "*",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <SearchPage />,
+        },
+        {
+          path: "/account/login",
+          element: <Authenticate />,
+        },
+        {
+          path: "/search",
+          element: <SearchPage />,
+        },
+        {
+          path: "/artists/:artistId",
+          element: <ArtistPage />,
+        },
+        {
+          path: "/account/*",
+          element: <SearchPage />,
+        },
+        {
+          path: "*",
+          element: <ErrorPage is404={true} />,
+        },
+      ],
     },
   ]);
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorPage}>
+    <ErrorBoundary FallbackComponent={(props) => <ErrorPage {...props} />}>
       <AppProviders>
         <RouterProvider router={router} />
       </AppProviders>
@@ -76,7 +54,7 @@ export default function App() {
   );
 }
 
-function ErrorPage({ error }) {
+function ErrorPage({ error, is404 }) {
   return (
     <div className="flex h-[80vh] flex-col items-center justify-center gap-4 text-center text-5xl">
       <FontAwesomeIcon
@@ -84,8 +62,10 @@ function ErrorPage({ error }) {
         className="text-6xl text-red-500"
       />
 
-      <h1 className="text-3xl font-bold">{`Oops! Something went wrong :(`}</h1>
-      <p>{error.message}</p>
+      <h1 className="text-3xl font-bold">
+        {is404 ? "404 - Page Not Found" : "Oops! Something went wrong :("}
+      </h1>
+      {error && <p>{error.message}</p>}
 
       <Link
         to="/"

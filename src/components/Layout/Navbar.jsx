@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 
@@ -14,7 +14,7 @@ export default function Navbar() {
     if (globalUser) {
       setShowDropdown(!showDropdown);
     } else {
-      navigate("/authenticate");
+      navigate("/account/login");
     }
   }
 
@@ -35,16 +35,34 @@ export default function Navbar() {
   return (
     <ul className="flex items-center gap-6 px-6 py-4 text-2xl">
       <li>
-        <Link to="/">Home</Link>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `transition-all duration-150 ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <Link to="/search">Search</Link>
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            `transition-all duration-150 ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+          }
+        >
+          Search
+        </NavLink>
       </li>
       <li className="ml-auto">
         <div ref={dropdownRef} className="relative">
           <FaUser
             onClick={handleUserClick}
-            className="cursor-pointer text-4xl text-green-900"
+            className={`cursor-pointer text-4xl ${
+              location.pathname.startsWith("/account")
+                ? "text-green-700"
+                : "text-white"
+            }`}
           />
           <div
             className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-900 text-white transition-all duration-300 ease-in-out ${
@@ -55,10 +73,10 @@ export default function Navbar() {
           >
             <DropdownMenu
               items={[
-                { label: "Profile", path: "/account" },
-                { label: "Lists", path: "/lists" },
-                { label: "Friends", path: "/friends" },
-                { label: "Logout", path: "/authenticate", action: logout },
+                { label: "Profile", path: "/account/profile" },
+                { label: "Lists", path: "/account/lists" },
+                { label: "Friends", path: "/account/friends" },
+                { label: "Logout", path: "/account/login", action: logout },
               ]}
               onClose={() => setShowDropdown(false)}
             />

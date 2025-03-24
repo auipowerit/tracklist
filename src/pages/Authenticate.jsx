@@ -1,11 +1,7 @@
 import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faArrowRight,
-  faHome,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import AuthInput from "../components/AuthInput";
 import { useAuthContext } from "../context/Auth/AuthContext";
 
@@ -63,16 +59,6 @@ export default function Authenticate() {
 
   return (
     <div className="flex flex-col items-center justify-evenly gap-6 p-4 align-middle text-2xl">
-      <Link
-        to="/"
-        className="m-auto w-fit rounded-md px-5 py-2 hover:bg-green-900"
-      >
-        <p className="flex items-center gap-2">
-          <FontAwesomeIcon icon={faHome} />
-          Go to home
-        </p>
-      </Link>
-
       <form
         ref={formRef}
         onSubmit={handleSubmit}
