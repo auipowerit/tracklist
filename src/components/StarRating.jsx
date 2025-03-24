@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { useRatingContext } from "../context/Rating/RatingContext";
 
@@ -25,7 +25,23 @@ export default function StarRating({ albumId }) {
     fetchRatings();
   }, [globalUser]);
 
-  async function giveStarRating(ratingValue) {
+  function getStarColor(ratingValue) {
+    return ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9";
+  }
+
+  function handleMouseMove(event, ratingValue) {
+    const starElement = event.target.getBoundingClientRect();
+    const clickPosition = event.clientX;
+    const starMidpoint = starElement.left + starElement.width / 2;
+
+    setHover(clickPosition < starMidpoint ? ratingValue - 0.5 : ratingValue);
+  }
+
+  function handleMouseLeave() {
+    setHover(null);
+  }
+
+  async function handleClick(ratingValue) {
     if (!globalUser) return;
 
     setRating(ratingValue);
@@ -38,30 +54,35 @@ export default function StarRating({ albumId }) {
       <div className="flex flex-row">
         {[...Array(5)].map((_, i) => {
           const ratingValue = i + 1;
-          const color =
-            ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9";
+          const isHalf = (hover || rating) === ratingValue - 0.5;
 
           return (
-            <label key={i}>
-              <input
-                type="radio"
-                name="album-rating"
-                value={ratingValue}
-                onClick={() => giveStarRating(ratingValue)}
-                className="hidden"
-              />
-              <FaStar
-                color={color}
-                size={30}
-                onMouseEnter={() => setHover(ratingValue)}
-                onMouseLeave={() => setHover(null)}
-                className="cursor-pointer transition-all duration-75"
-              />
-            </label>
+            <span
+              key={i}
+              className="cursor-pointer transition-all duration-75"
+              onMouseMove={(event) => handleMouseMove(event, ratingValue)}
+              onMouseLeave={handleMouseLeave}
+            >
+              {isHalf ? (
+                <FaStarHalfAlt
+                  size={30}
+                  color="#ffc107"
+                  onClick={() => handleClick(ratingValue - 0.5)}
+                />
+              ) : (
+                <FaStar
+                  size={30}
+                  color={getStarColor(ratingValue)}
+                  onClick={() => handleClick(ratingValue)}
+                />
+              )}
+            </span>
           );
         })}
       </div>
-      <p className="text-2xl font-bold">({avgRating.toFixed(1)})</p>
+      <p className="w-[60px] text-center text-2xl font-bold">
+        ({avgRating.toFixed(1)})
+      </p>
     </div>
   );
 }
