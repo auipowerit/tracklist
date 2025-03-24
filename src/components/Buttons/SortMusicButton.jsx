@@ -2,41 +2,61 @@ import { useEffect, useRef, useState } from "react";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function SortArtistButton({
-  artists,
-  setArtists,
-  initialArtists,
-}) {
+export default function SortMusicButton(props) {
+  const { results, setResults, initialResults, category } = props;
+
   const [showSort, setShowSort] = useState(false);
   const sorterRef = useRef(null);
 
   const sortOptions = [
     { label: "Relevance", value: "relevant" },
-    { label: "Popularity", value: "popular" },
-    { label: "Followers", value: "followers" },
+    ...(category === "artist" || category === "track"
+      ? [{ label: "Popularity", value: "popular" }]
+      : []),
+    ...(category === "artist"
+      ? [{ label: "Followers", value: "followers" }]
+      : []),
+    ...(category === "album" || category === "track"
+      ? [{ label: "Artist", value: "artist" }]
+      : []),
+    ...(category === "album" ? [{ label: "Newest", value: "newest" }] : []),
+    ...(category === "album" ? [{ label: "Oldest", value: "oldest" }] : []),
     { label: "A - Z", value: "alphabet" },
     { label: "Z - A", value: "rev-alphabet" },
   ];
 
-  function sortArtists(sortValue) {
-    const sortedArtists = artists.sort((a, b) => {
+  function sortResults(sortValue) {
+    const sortedResults = results.sort((a, b) => {
       switch (sortValue) {
         case "popular":
-          return b.popularity > a.popularity;
+          return b.popularity - a.popularity;
         case "followers":
           return b.followers.total - a.followers.total;
+        case "artist":
+          const artistComparison = a.artists[0].name.localeCompare(
+            b.artists[0].name,
+          );
+          if (artistComparison !== 0) return artistComparison;
+          return (
+            new Date(b.album?.release_date || b.release_date) -
+            new Date(a.album?.release_date || a.release_date)
+          );
+        case "newest":
+          return new Date(b.release_date) - new Date(a.release_date);
+        case "oldest":
+          return new Date(a.release_date) - new Date(b.release_date);
         case "alphabet":
-          return a.name > b.name;
+          return a.name.localeCompare(b.name);
         case "rev-alphabet":
-          return b.name > a.name;
+          return b.name.localeCompare(a.name);
         default:
           return 0;
       }
     });
 
     sortValue === "relevant"
-      ? setArtists([...initialArtists])
-      : setArtists([...sortedArtists]);
+      ? setResults([...initialResults])
+      : setResults([...sortedResults]);
 
     setShowSort(false);
   }
@@ -57,7 +77,7 @@ export default function SortArtistButton({
   return (
     <div ref={sorterRef} className="relative z-20 w-fit">
       <button
-        onClick={() => artists.length > 0 && setShowSort(!showSort)}
+        onClick={() => results?.length > 0 && setShowSort(!showSort)}
         className="flex cursor-pointer items-center gap-2 text-xl"
       >
         <FontAwesomeIcon icon={faSort} />
@@ -72,7 +92,7 @@ export default function SortArtistButton({
         {sortOptions.map((option) => (
           <button
             key={option.value}
-            onClick={() => sortArtists(option.value)}
+            onClick={() => sortResults(option.value)}
             className="w-full rounded-sm px-3 py-1 text-left transition-all hover:bg-gray-300"
           >
             {option.label}

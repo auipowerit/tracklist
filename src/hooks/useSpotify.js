@@ -24,13 +24,13 @@ export function useSpotify() {
     }
   }
 
-  async function searchArtistsByName(artistName) {
-    if (!artistName) return [];
+  async function searchByName(name, category) {
+    if (!name || !category) return [];
     const access_token = accessToken || (await fetchAccessToken());
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${artistName}&type=artist&limit=50`,
+        `https://api.spotify.com/v1/search?q=${name}&type=${category}&limit=25`,
         {
           method: "GET",
           headers: {
@@ -39,9 +39,9 @@ export function useSpotify() {
           },
         },
       );
-      const artists = await response.json();
+      const results = await response.json();
 
-      return artists.artists?.items || [];
+      return results || [];
     } catch (error) {
       console.error(error);
     }
@@ -146,7 +146,7 @@ export function useSpotify() {
 
   return {
     fetchAccessToken,
-    searchArtistsByName,
+    searchByName,
     searchArtistById,
     getArtistAlbums,
     getArtistSingles,

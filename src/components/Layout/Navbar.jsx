@@ -1,7 +1,7 @@
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "../../context/Auth/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
   const { globalUser, logout } = useAuthContext();

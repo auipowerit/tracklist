@@ -1,14 +1,42 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import SortArtistButton from "../Buttons/SortArtistButton";
+import SortMusicButton from "../Buttons/SortMusicButton";
 
-export default function SearchBar({ setIsLoading, artists, setArtists }) {
-  const { searchArtistsByName } = useSpotifyContext();
-  const [initialArtists, setInitialArtists] = useState([]);
+export default function SearchBar(props) {
+  const {
+    setIsLoading,
+    results,
+    setResults,
+    category,
+    initialResults,
+    setInitialResults,
+  } = props;
+
+  const { searchByName } = useSpotifyContext();
   const searchInput = useRef(null);
 
+  async function fetchResultsByType(searchString) {
+    const fetchedResults = await searchByName(searchString, category);
+
+    const keyMap = {
+      artist: "artists",
+      album: "albums",
+      track: "tracks",
+    };
+
+    const key = keyMap[category];
+    if (key) {
+      const items = fetchedResults?.[key]?.items || [];
+      setResults(items);
+      setInitialResults([...items]);
+    } else {
+      setResults([]);
+      setInitialResults([]);
+    }
+  }
+
   async function handleSubmit(event) {
-    event.preventDefault();
+    event?.preventDefault();
 
     setIsLoading(true);
 
@@ -16,15 +44,25 @@ export default function SearchBar({ setIsLoading, artists, setArtists }) {
       const searchString = searchInput.current?.value.trim();
       if (!searchString) return;
 
-      const fetchedArtists = await searchArtistsByName(searchString);
-      setArtists(fetchedArtists);
-      setInitialArtists([...fetchedArtists]);
+      await fetchResultsByType(searchString);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (searchInput.current?.value.trim() !== "") {
+      handleSubmit();
+    }
+  }, [category]);
+
+  const placeholderMap = {
+    artist: "Ex: 'Hippo Campus'",
+    album: "Ex: 'Landmark'",
+    track: "Ex: 'Way it Goes'",
+  };
 
   return (
     <div className="mb-8 flex w-full items-center justify-center gap-4">
@@ -34,7 +72,7 @@ export default function SearchBar({ setIsLoading, artists, setArtists }) {
       >
         <input
           ref={searchInput}
-          placeholder="Search for an artist..."
+          placeholder={placeholderMap[category]}
           className="w-full rounded-md border-2 border-white px-2 py-1 text-2xl outline-hidden"
         />
         <button
@@ -45,10 +83,11 @@ export default function SearchBar({ setIsLoading, artists, setArtists }) {
         </button>
       </form>
 
-      <SortArtistButton
-        artists={artists}
-        setArtists={setArtists}
-        initialArtists={initialArtists}
+      <SortMusicButton
+        results={results}
+        setResults={setResults}
+        initialResults={initialResults}
+        category={category}
       />
     </div>
   );

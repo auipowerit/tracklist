@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
-import AlbumCard from "../components/Cards/AlbumCard";
+import StarRating from "../components/StarRating";
+import MediaCard from "../components/Cards/MediaCard";
 import RatingProvider from "../context/Rating/RatingProvider";
-import ArtistCard from "../components/Cards/ArtistCard";
 import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
@@ -43,8 +43,9 @@ export default function ArtistPage() {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6 p-6">
       {artist && (
-        <ArtistCard
-          artist={artist}
+        <MediaCard
+          media={artist}
+          category={"artist"}
           onClick={() => window.open(artist.external_urls.spotify)}
         />
       )}
@@ -53,7 +54,11 @@ export default function ArtistPage() {
           {albums.map((album) => {
             return (
               <RatingProvider key={album.id}>
-                <AlbumCard album={album} />
+                <MediaCard
+                  media={album}
+                  category={"album"}
+                  rating={<StarRating albumId={album.id} />}
+                />
               </RatingProvider>
             );
           })}
