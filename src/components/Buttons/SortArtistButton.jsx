@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function SortArtistButton({ artists, setArtists }) {
+export default function SortArtistButton({
+  artists,
+  setArtists,
+  initialArtists,
+}) {
   const [showSort, setShowSort] = useState(false);
-  const [initialArtists, setInitialAritsts] = useState([]);
   const sorterRef = useRef(null);
 
   const sortOptions = [
@@ -14,10 +17,6 @@ export default function SortArtistButton({ artists, setArtists }) {
     { label: "A - Z", value: "alphabet" },
     { label: "Z - A", value: "rev-alphabet" },
   ];
-
-  useEffect(() => {
-    setInitialAritsts([...artists]);
-  }, []);
 
   function sortArtists(sortValue) {
     const sortedArtists = artists.sort((a, b) => {
@@ -58,7 +57,7 @@ export default function SortArtistButton({ artists, setArtists }) {
   return (
     <div ref={sorterRef} className="relative z-20 w-fit">
       <button
-        onClick={() => setShowSort(!showSort)}
+        onClick={() => artists.length > 0 && setShowSort(!showSort)}
         className="flex cursor-pointer items-center gap-2 text-xl"
       >
         <FontAwesomeIcon icon={faSort} />
@@ -66,7 +65,7 @@ export default function SortArtistButton({ artists, setArtists }) {
       </button>
 
       <div
-        className={`absolute right-0 left-0 w-fit overflow-hidden rounded-lg bg-white text-black shadow-lg transition-all duration-300 ease-in-out ${
+        className={`absolute top-10 left-0 w-fit overflow-hidden rounded-lg bg-white text-black shadow-lg transition-all duration-300 ease-in-out ${
           showSort ? "max-h-screen p-2" : "max-h-0"
         }`}
       >
