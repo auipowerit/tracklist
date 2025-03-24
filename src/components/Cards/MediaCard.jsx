@@ -4,8 +4,7 @@ export default function MediaCard(props) {
   const { media, category, rating, onClick } = props;
 
   const defaultDate = "01/01/2000";
-  const defaultImg =
-    "https://i.scdn.co/image/ab6761610000e5ebed00a732f4a1fffa76678858";
+  const defaultImg = "/images/default-img.jpg";
 
   function getMediaDetails() {
     switch (category) {

@@ -19,8 +19,12 @@ export default function SortMusicButton(props) {
     ...(category === "album" || category === "track"
       ? [{ label: "Artist", value: "artist" }]
       : []),
-    ...(category === "album" ? [{ label: "Newest", value: "newest" }] : []),
-    ...(category === "album" ? [{ label: "Oldest", value: "oldest" }] : []),
+    ...(category === "album" || category === "track"
+      ? [{ label: "Newest", value: "newest" }]
+      : []),
+    ...(category === "album" || category === "track"
+      ? [{ label: "Oldest", value: "oldest" }]
+      : []),
     { label: "A - Z", value: "alphabet" },
     { label: "Z - A", value: "rev-alphabet" },
   ];
@@ -42,9 +46,15 @@ export default function SortMusicButton(props) {
             new Date(a.album?.release_date || a.release_date)
           );
         case "newest":
-          return new Date(b.release_date) - new Date(a.release_date);
+          return (
+            new Date(b.album?.release_date || b.release_date) -
+            new Date(a.album?.release_date || a.release_date)
+          );
         case "oldest":
-          return new Date(a.release_date) - new Date(b.release_date);
+          return (
+            new Date(a.album?.release_date || a.release_date) -
+            new Date(b.album?.release_date || b.release_date)
+          );
         case "alphabet":
           return a.name.localeCompare(b.name);
         case "rev-alphabet":
