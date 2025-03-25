@@ -12,7 +12,6 @@ export default function AuthProvider({ children }) {
   const useAuthMethods = useAuth();
 
   useEffect(() => {
-    // Update global user on auth state change
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setGlobalUser(user);
 
@@ -36,7 +35,6 @@ export default function AuthProvider({ children }) {
   const authMethods = { globalUser, globalData, ...useAuthMethods };
 
   return (
-    // Provide useContext with authMethods
     <AuthContext.Provider value={authMethods}>{children}</AuthContext.Provider>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Loading from "../components/Loading";
 import ReviewCard from "../components/Cards/ReviewCard";
 import SortReviews from "../components/Sort/SortReviews";
@@ -7,10 +7,9 @@ import { useReviewContext } from "../context/Review/ReviewContext";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();
-  const { getReviews, addReview } = useReviewContext();
+  const { reviews, addReview } = useReviewContext();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [reviews, setReviews] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const inputReview = useRef(null);
 
   async function handleSubmit(event) {
@@ -35,24 +34,7 @@ export default function HomePage() {
     inputReview.current.value = "";
   }
 
-  useEffect(() => {
-    async function fetchReviews() {
-      setIsLoading(true);
-
-      try {
-        const fetchedReviews = await getReviews();
-        setReviews(fetchedReviews);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    return fetchReviews;
-  }, []);
-
-  if (isLoading) {
+  if (!reviews) {
     return <Loading />;
   }
 
@@ -74,7 +56,7 @@ export default function HomePage() {
 
       {reviews && (
         <div className="w-2/3 border-x-1 border-white px-10">
-          <SortReviews reviews={reviews} setReviews={setReviews} />
+          <SortReviews />
           <div className="mt-6 flex h-screen flex-col overflow-auto">
             {reviews.map((review) => {
               return <ReviewCard key={review.id} review={review} />;

@@ -1,8 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import LikeButton from "../Buttons/LikeButton";
 import { getTimeSince } from "../../utils/date";
+import DeleteButton from "../Buttons/DeleteButton";
+import DislikeButton from "../Buttons/DislikeButton";
+import { useAuthContext } from "../../context/Auth/AuthContext";
 
 export default function ReviewCard({ review }) {
+  const { globalUser } = useAuthContext();
+
   return (
     <div
       key={review.id}
@@ -18,15 +22,12 @@ export default function ReviewCard({ review }) {
         <p className="text-xl">{review.content}</p>
       </div>
       <div className="ml-1 flex items-center">
-        <button className="text-md flex w-12 items-center gap-1 font-light transition-all duration-150 hover:text-gray-400">
-          <FontAwesomeIcon icon={faThumbsUp} />
-          <p>{review.likes.length}</p>
-        </button>
+        <LikeButton review={review} />
+        <DislikeButton review={review} />
 
-        <button className="text-md flex w-12 items-center gap-1 font-light transition-all duration-150 hover:text-gray-400">
-          <FontAwesomeIcon icon={faThumbsDown} />
-          <p>{review.dislikes.length}</p>
-        </button>
+        {globalUser && globalUser.uid === review.userId && (
+          <DeleteButton review={review} />
+        )}
       </div>
     </div>
   );

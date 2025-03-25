@@ -10,7 +10,6 @@ export default function SpotifyProvider({ children }) {
   }, []);
 
   return (
-    // Provide useContext with authDBmethods
     <SpotifyContext.Provider value={spotifyMethods}>
       {children}
     </SpotifyContext.Provider>
