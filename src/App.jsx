@@ -5,11 +5,13 @@ import {
   faExclamationTriangle,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import SearchPage from "./pages/SearchPage";
 import ArtistPage from "./pages/ArtistPage";
-import Authenticate from "./pages/Authenticate";
 import Layout from "./components/Layout/Layout";
 import AppProviders from "./context/AppProviders";
+import ReviewProvider from "./context/Review/ReviewProvider";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -19,11 +21,15 @@ export default function App() {
       children: [
         {
           path: "/",
-          element: <SearchPage />,
+          element: (
+            <ReviewProvider>
+              <HomePage />
+            </ReviewProvider>
+          ),
         },
         {
           path: "/account/login",
-          element: <Authenticate />,
+          element: <LoginPage />,
         },
         {
           path: "/search",

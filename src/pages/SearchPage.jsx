@@ -1,16 +1,17 @@
 import { useState } from "react";
-import SearchMusic from "../components/SearchMusic";
-import SearchTabs from "../components/Buttons/SearchTabs";
+import SearchTabs from "../components/Search/SearchTabs";
+import SearchMusic from "../components/Search/SearchMusic";
+import SearchAccounts from "../components/Search/SearchAccounts";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");
   const [results, setResults] = useState(null);
-  const [initialResults, setInitialResults] = useState([]);
 
   const tabs = [
     { id: "artists", label: "Artists", category: "artist" },
     { id: "albums", label: "Albums", category: "album" },
     { id: "songs", label: "Songs", category: "track" },
+    { id: "account", label: "Accounts", category: "account" },
   ];
 
   return (
@@ -20,17 +21,17 @@ export default function SearchPage() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         setResults={setResults}
-        initialResults={initialResults}
-        setInitialResults={setInitialResults}
       />
 
-      <SearchMusic
-        category={tabs.find((tab) => tab.id === activeTab)?.category}
-        results={results}
-        setResults={setResults}
-        initialResults={initialResults}
-        setInitialResults={setInitialResults}
-      />
+      {activeTab === "account" ? (
+        <SearchAccounts results={results} setResults={setResults} />
+      ) : (
+        <SearchMusic
+          category={tabs.find((tab) => tab.id === activeTab)?.category}
+          results={results}
+          setResults={setResults}
+        />
+      )}
     </div>
   );
 }

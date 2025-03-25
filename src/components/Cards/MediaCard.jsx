@@ -28,9 +28,14 @@ export default function MediaCard(props) {
       case "track":
         return {
           title: media.name,
-          image: media?.album?.images[0]?.url || defaultImg,
+          image:
+            media?.album?.images[0]?.url || media?.images[0]?.url || defaultImg,
           subtitle: (
-            <>{formatDateMDYLong(media?.album?.release_date) || defaultDate}</>
+            <>
+              {formatDateMDYLong(
+                media?.album?.release_date || media?.release_date,
+              ) || defaultDate}
+            </>
           ),
         };
     }

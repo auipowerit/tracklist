@@ -13,7 +13,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-
 import { auth, db } from "../config/firebase";
 
 export function useAuth() {
@@ -88,6 +87,35 @@ export function useAuth() {
     }
   }
 
+  async function searchUsersByUsername(username) {
+    try {
+      const end = username.replace(/.$/, (c) =>
+        String.fromCharCode(c.charCodeAt(0) + 1),
+      );
+
+      const usersRef = collection(db, "users");
+      const q = query(
+        usersRef,
+        where("username", ">=", username),
+        where("username", "<", end),
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) return [];
+
+      const users = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      return users;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     signup,
     usernameAvailable,
@@ -95,5 +123,6 @@ export function useAuth() {
     logout,
     resetPassword,
     getUserById,
+    searchUsersByUsername,
   };
 }

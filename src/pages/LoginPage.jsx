@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import AuthInput from "../components/AuthInput";
+import LoginInput from "../components/Inputs/LoginInput";
 import { useAuthContext } from "../context/Auth/AuthContext";
 
-export default function Authenticate() {
+export default function LoginPage() {
   const { signup, usernameAvailable, login } = useAuthContext();
   const [isRegistration, setIsRegistration] = useState(false);
   const formRef = useRef(null);
@@ -43,7 +43,7 @@ export default function Authenticate() {
     }
 
     if (await signup(email, password, firstname, lastname, username)) {
-      console.log("Signed up!");
+      resetForm();
     } else {
       console.log("failed to signup.");
     }
@@ -52,9 +52,15 @@ export default function Authenticate() {
   async function handleLogin(email, password) {
     if (await login(email, password)) {
       navigate("/");
+      resetForm();
     } else {
       console.log("failed to login.");
     }
+  }
+
+  function resetForm() {
+    setIsRegistration(false);
+    formRef.current?.reset();
   }
 
   return (
@@ -66,14 +72,14 @@ export default function Authenticate() {
       >
         {isRegistration && (
           <>
-            <AuthInput label="First Name" name="firstname" type="text" />
-            <AuthInput label="Last Name" name="lastname" type="text" />
-            <AuthInput label="Username" name="username" type="text" />
+            <LoginInput label="First Name" name="firstname" type="text" />
+            <LoginInput label="Last Name" name="lastname" type="text" />
+            <LoginInput label="Username" name="username" type="text" />
           </>
         )}
 
-        <AuthInput label="Email Address" name="email" type="text" />
-        <AuthInput label="Password" name="password" type="password" />
+        <LoginInput label="Email Address" name="email" type="text" />
+        <LoginInput label="Password" name="password" type="password" />
 
         <button
           type="submit"

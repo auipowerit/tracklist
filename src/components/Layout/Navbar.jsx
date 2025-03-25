@@ -58,10 +58,10 @@ export default function Navbar() {
         <div ref={dropdownRef} className="relative">
           <FaUser
             onClick={handleUserClick}
-            className={`cursor-pointer text-4xl ${
+            className={`cursor-pointer text-4xl transition-all duration-150 ${
               location.pathname.startsWith("/account")
                 ? "text-green-700"
-                : "text-white"
+                : "text-white hover:text-gray-400"
             }`}
           />
           <div

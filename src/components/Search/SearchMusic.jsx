@@ -1,13 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Loading from "./Loading";
-import MediaCard from "./Cards/MediaCard";
-import SearchBar from "./Layout/SearchBar";
+import Loading from "../Loading";
+import MediaCard from "../Cards/MediaCard";
+import SearchBar from "./SearchBar";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function SearchMusic(props) {
-  const { category, results, setResults, initialResults, setInitialResults } =
-    props;
+  const { category, results, setResults } = props;
+
+  const { searchByName } = useSpotifyContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [initialResults, setInitialResults] = useState([]);
+
+  async function getMediaByType(searchString) {
+    const fetchedResults = await searchByName(searchString, category);
+
+    const keyMap = {
+      artist: "artists",
+      album: "albums",
+      track: "tracks",
+    };
+
+    const key = keyMap[category];
+    if (key) {
+      const items = fetchedResults?.[key]?.items || [];
+      return items;
+    } else {
+      return [];
+    }
+  }
 
   return (
     <div>
@@ -15,9 +36,10 @@ export default function SearchMusic(props) {
         setIsLoading={setIsLoading}
         results={results}
         setResults={setResults}
-        category={category}
         initialResults={initialResults}
         setInitialResults={setInitialResults}
+        category={category}
+        getResults={getMediaByType}
       />
 
       {isLoading && <Loading />}

@@ -1,39 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import SortMusicButton from "../Buttons/SortMusicButton";
+import SortMusic from "../Sort/SortMusic";
 
 export default function SearchBar(props) {
   const {
     setIsLoading,
     results,
     setResults,
-    category,
     initialResults,
     setInitialResults,
+    category,
+    getResults,
   } = props;
 
   const { searchByName } = useSpotifyContext();
   const searchInput = useRef(null);
-
-  async function fetchResultsByType(searchString) {
-    const fetchedResults = await searchByName(searchString, category);
-
-    const keyMap = {
-      artist: "artists",
-      album: "albums",
-      track: "tracks",
-    };
-
-    const key = keyMap[category];
-    if (key) {
-      const items = fetchedResults?.[key]?.items || [];
-      setResults(items);
-      setInitialResults([...items]);
-    } else {
-      setResults([]);
-      setInitialResults([]);
-    }
-  }
 
   async function handleSubmit(event) {
     event?.preventDefault();
@@ -44,7 +25,10 @@ export default function SearchBar(props) {
       const searchString = searchInput.current?.value.trim();
       if (!searchString) return;
 
-      await fetchResultsByType(searchString);
+      const fetchedResults = await getResults(searchString);
+
+      setResults(fetchedResults);
+      setInitialResults([...fetchedResults]);
     } catch (error) {
       console.error(error);
     } finally {
@@ -62,6 +46,7 @@ export default function SearchBar(props) {
     artist: "Ex: 'Hippo Campus'",
     album: "Ex: 'Landmark'",
     track: "Ex: 'Way it Goes'",
+    account: "Ex: @zbetters97",
   };
 
   return (
@@ -77,13 +62,13 @@ export default function SearchBar(props) {
         />
         <button
           type="submit"
-          className="rounded-md bg-green-900 px-4 py-2 text-2xl"
+          className="rounded-md bg-green-900 px-4 py-2 text-2xl transition-all duration-150 hover:text-gray-400"
         >
           Search
         </button>
       </form>
 
-      <SortMusicButton
+      <SortMusic
         results={results}
         setResults={setResults}
         initialResults={initialResults}

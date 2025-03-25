@@ -144,6 +144,29 @@ export function useSpotify() {
     }
   }
 
+  async function getAlbumById(albumId) {
+    if (!albumId) return;
+    const access_token = accessToken || (await fetchAccessToken());
+
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/albums/${albumId}?market=US`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+      );
+      const album = await response.json();
+
+      return album || null;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return {
     fetchAccessToken,
     searchByName,
@@ -151,5 +174,6 @@ export function useSpotify() {
     getArtistAlbums,
     getArtistSingles,
     getAlbumTracks,
+    getAlbumById,
   };
 }

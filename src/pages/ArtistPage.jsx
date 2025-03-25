@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import StarRating from "../components/StarRating";
+import SortMusic from "../components/Sort/SortMusic";
 import MediaCard from "../components/Cards/MediaCard";
 import RatingProvider from "../context/Rating/RatingProvider";
 import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
-  const { searchArtistById, getArtistAlbums } = useSpotifyContext();
+  const { searchArtistById, getArtistAlbums, getArtistSingles } =
+    useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [artist, setArtist] = useState([]);
   const [albums, setAlbums] = useState([]);
+  const [tracks, setTracks] = useState([]);
 
   const params = useParams();
   const artistId = params?.artistId;
@@ -23,9 +26,11 @@ export default function ArtistPage() {
       try {
         const fetchedArtist = await searchArtistById(artistId);
         const fetchedAlbums = await getArtistAlbums(artistId);
+        const fetchedTracks = await getArtistSingles(artistId);
 
         setArtist(fetchedArtist);
         setAlbums(fetchedAlbums);
+        setTracks(fetchedTracks);
       } catch (error) {
         console.log(error);
       } finally {
@@ -41,7 +46,7 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-6 p-6">
+    <div className="flex w-full flex-col items-center justify-center gap-8 p-6">
       {artist && (
         <MediaCard
           media={artist}
@@ -49,21 +54,65 @@ export default function ArtistPage() {
           onClick={() => window.open(artist.external_urls.spotify)}
         />
       )}
-      {albums && albums.length > 0 && (
-        <div className="grid grid-cols-4 gap-8">
-          {albums.map((album) => {
-            return (
-              <RatingProvider key={album.id}>
-                <MediaCard
-                  media={album}
-                  category={"album"}
-                  rating={<StarRating albumId={album.id} />}
-                />
-              </RatingProvider>
-            );
-          })}
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <p className="text-4xl font-bold">Albums</p>
+
+            <SortMusic
+              results={albums}
+              setResults={setAlbums}
+              initialResults={albums}
+              category={"album"}
+            />
+          </div>
+
+          {albums && albums.length > 0 ? (
+            <div className="grid grid-cols-4 gap-8">
+              {albums.map((album) => {
+                return (
+                  <RatingProvider key={album.id}>
+                    <MediaCard
+                      media={album}
+                      category={"album"}
+                      rating={<StarRating albumId={album.id} />}
+                    />
+                  </RatingProvider>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="p-20 text-center text-5xl italic">Nothing to show!</p>
+          )}
         </div>
-      )}
+
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <p className="text-4xl font-bold">Singles</p>
+
+            <SortMusic
+              results={tracks}
+              setResults={setTracks}
+              initialResults={tracks}
+              category={"track"}
+            />
+          </div>
+
+          {tracks && tracks.length > 0 ? (
+            <div className="grid grid-cols-4 gap-8">
+              {tracks.map((track) => {
+                return (
+                  <RatingProvider key={track.id}>
+                    <MediaCard media={track} category={"track"} />
+                  </RatingProvider>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="p-20 text-center text-5xl italic">Nothing to show!</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
