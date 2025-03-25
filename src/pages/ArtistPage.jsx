@@ -8,7 +8,7 @@ import RatingProvider from "../context/Rating/RatingProvider";
 import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
-  const { searchArtistById, getArtistAlbums, getArtistSingles } =
+  const { getArtistById, getArtistAlbums, getArtistSingles } =
     useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function ArtistPage() {
       setIsLoading(true);
 
       try {
-        const fetchedArtist = await searchArtistById(artistId);
+        const fetchedArtist = await getArtistById(artistId);
         const fetchedAlbums = await getArtistAlbums(artistId);
         const fetchedTracks = await getArtistSingles(artistId);
 

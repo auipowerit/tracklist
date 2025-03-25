@@ -17,7 +17,7 @@ export function useReview() {
   const { getUserById } = useAuthContext();
   const { getAlbumById } = useSpotifyContext();
 
-  async function getReviews() {
+  async function getReviews(count) {
     try {
       const reviewsRef = collection(db, "reviews");
       const reviewsDoc = await getDocs(reviewsRef);
@@ -46,12 +46,11 @@ export function useReview() {
 
       const review = { ...reviewInfo, createdAt: new Date() };
       const reviewRef = collection(db, "reviews");
-      await addDoc(reviewRef, review);
 
-      return true;
+      const reviewDoc = await addDoc(reviewRef, review);
+      return await getDoc(reviewDoc);
     } catch (error) {
       console.error(error.message);
-      return false;
     }
   }
 

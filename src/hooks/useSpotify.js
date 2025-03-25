@@ -47,34 +47,6 @@ export function useSpotify() {
     }
   }
 
-  async function searchArtistById(artistId) {
-    if (!artistId) return [];
-    const access_token = accessToken || (await fetchAccessToken());
-
-    try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        },
-      );
-
-      if (response.status === 400) {
-        throw new Error("No artist found!");
-      }
-
-      const artist = await response.json();
-
-      return artist || [];
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async function getArtistAlbums(artistId) {
     if (!artistId) return [];
     const access_token = accessToken || (await fetchAccessToken());
@@ -144,6 +116,34 @@ export function useSpotify() {
     }
   }
 
+  async function getArtistById(artistId) {
+    if (!artistId) return [];
+    const access_token = accessToken || (await fetchAccessToken());
+
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/artists/${artistId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+      );
+
+      if (response.status === 400) {
+        throw new Error("No artist found!");
+      }
+
+      const artist = await response.json();
+
+      return artist || [];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async function getAlbumById(albumId) {
     if (!albumId) return;
     const access_token = accessToken || (await fetchAccessToken());
@@ -167,13 +167,37 @@ export function useSpotify() {
     }
   }
 
+  async function getTrackById(trackId) {
+    if (!trackId) return;
+    const access_token = accessToken || (await fetchAccessToken());
+
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/tracks/${trackId}?market=US`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+      );
+      const track = await response.json();
+
+      return track || null;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return {
     fetchAccessToken,
     searchByName,
-    searchArtistById,
     getArtistAlbums,
     getArtistSingles,
     getAlbumTracks,
+    getArtistById,
     getAlbumById,
+    getTrackById,
   };
 }
