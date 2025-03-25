@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import Loading from "../components/Loading";
 import ReviewCard from "../components/Cards/ReviewCard";
+import SortReviews from "../components/Sort/SortReviews";
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { useReviewContext } from "../context/Review/ReviewContext";
-import SortReviews from "../components/Sort/SortReviews";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();

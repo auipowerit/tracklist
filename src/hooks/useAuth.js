@@ -31,6 +31,9 @@ export function useAuth() {
         firstname,
         lastname,
         username,
+        folllowing: [],
+        followers: [],
+        createdAt: new Date(),
       };
 
       const userRef = doc(db, "users", newUser.uid);
@@ -87,7 +90,7 @@ export function useAuth() {
     }
   }
 
-  async function searchUsersByUsername(username) {
+  async function searchByUsername(username) {
     try {
       const end = username.replace(/.$/, (c) =>
         String.fromCharCode(c.charCodeAt(0) + 1),
@@ -123,6 +126,6 @@ export function useAuth() {
     logout,
     resetPassword,
     getUserById,
-    searchUsersByUsername,
+    searchByUsername,
   };
 }

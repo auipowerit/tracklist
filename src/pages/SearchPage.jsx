@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SearchTabs from "../components/Search/SearchTabs";
-import SearchMusic from "../components/Search/SearchMusic";
-import SearchAccounts from "../components/Search/SearchAccounts";
+import SearchMedia from "../components/Search/SearchMedia";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");
@@ -10,8 +9,8 @@ export default function SearchPage() {
   const tabs = [
     { id: "artists", label: "Artists", category: "artist" },
     { id: "albums", label: "Albums", category: "album" },
-    { id: "songs", label: "Songs", category: "track" },
-    { id: "account", label: "Accounts", category: "account" },
+    { id: "tracks", label: "Songs", category: "track" },
+    { id: "users", label: "Users", category: "user" },
   ];
 
   return (
@@ -23,15 +22,11 @@ export default function SearchPage() {
         setResults={setResults}
       />
 
-      {activeTab === "account" ? (
-        <SearchAccounts results={results} setResults={setResults} />
-      ) : (
-        <SearchMusic
-          category={tabs.find((tab) => tab.id === activeTab)?.category}
-          results={results}
-          setResults={setResults}
-        />
-      )}
+      <SearchMedia
+        category={tabs.find((tab) => tab.id === activeTab)?.category}
+        results={results}
+        setResults={setResults}
+      />
     </div>
   );
 }
