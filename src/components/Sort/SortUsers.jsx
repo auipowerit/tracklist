@@ -17,12 +17,12 @@ export default function SortUsers(props) {
 
     return users.sort((a, b) => {
       switch (sortValue) {
+        case "followers":
+          return b.followers.total - a.followers.total;
         case "alphabet":
           return a.username.localeCompare(b.username);
         case "rev-alphabet":
           return b.username.localeCompare(a.username);
-        case "followers":
-          return b.followers.total - a.followers.total;
         default:
           return 0;
       }

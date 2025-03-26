@@ -42,18 +42,18 @@ export default function SearchMedia(props) {
       <div className="mb-8 flex w-full items-center justify-center gap-4">
         <SearchBar category={category} handleSubmit={handleSubmit} />
 
-        {category === "users" ? (
-          <SortMusic
-            results={results}
-            setResults={setResults}
-            initialResults={initialResults}
-            category={category}
-          />
-        ) : (
+        {category === "user" ? (
           <SortUsers
             users={results}
             setUsers={setResults}
             initialUsers={initialResults}
+            category={category}
+          />
+        ) : (
+          <SortMusic
+            results={results}
+            setResults={setResults}
+            initialResults={initialResults}
             category={category}
           />
         )}
