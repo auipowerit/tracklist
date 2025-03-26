@@ -8,7 +8,6 @@ import { auth, db } from "../../config/firebase";
 export default function AuthProvider({ children }) {
   const [globalUser, setGlobalUser] = useState(null);
   const [globalData, setGlobalData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const useAuthMethods = useAuth();
 
@@ -36,8 +35,6 @@ export default function AuthProvider({ children }) {
   const authMethods = {
     globalUser,
     globalData,
-    isModalOpen,
-    setIsModalOpen,
     ...useAuthMethods,
   };
 

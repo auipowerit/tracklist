@@ -24,36 +24,13 @@ export function useSpotify() {
     }
   }
 
-  async function searchAllByName(name) {
-    if (!name) return [];
-    const access_token = accessToken || (await fetchAccessToken());
-
-    try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${name}&type=album%2Cartist%2Ctrack&limit=5&market=US`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        },
-      );
-      const results = await response.json();
-
-      return results || [];
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function searchByName(name, category) {
+  async function searchByName(name, category, limit = 25) {
     if (!name || !category) return [];
     const access_token = accessToken || (await fetchAccessToken());
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${name}&type=${category}&limit=5`,
+        `https://api.spotify.com/v1/search?q=${name}&type=${category}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -244,7 +221,6 @@ export function useSpotify() {
 
   return {
     fetchAccessToken,
-    searchAllByName,
     searchByName,
     getArtistAlbums,
     getArtistSingles,

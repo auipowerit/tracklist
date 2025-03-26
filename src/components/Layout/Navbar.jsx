@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import ModalButton from "../ModalButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PostButton from "../Buttons/PostButton";
+import { useAuthContext } from "../../context/Auth/AuthContext";
 
 export default function Navbar() {
   const { globalUser, logout } = useAuthContext();
@@ -59,7 +59,7 @@ export default function Navbar() {
       </li>
       <li className="ml-auto">
         {globalUser ? (
-          <ModalButton />
+          <PostButton />
         ) : (
           <NavLink
             to="/account/login"

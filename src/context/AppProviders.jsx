@@ -1,12 +1,12 @@
 import AuthProvider from "./Auth/AuthProvider";
-import RatingProvider from "./Rating/RatingProvider";
+import ReviewProvider from "./Review/ReviewProvider";
 import SpotifyProvider from "./Spotify/SpotifyProvider";
 
 export default function AppProviders({ children }) {
   return (
     <AuthProvider>
       <SpotifyProvider>
-        <RatingProvider>{children}</RatingProvider>
+        <ReviewProvider>{children}</ReviewProvider>
       </SpotifyProvider>
     </AuthProvider>
   );

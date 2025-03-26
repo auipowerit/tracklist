@@ -1,4 +1,8 @@
-export default function Modal({ isModalOpen, onClose, children }) {
+import { useReviewContext } from "../context/Review/ReviewContext";
+
+export default function Modal({ onClose, children }) {
+  const { isModalOpen } = useReviewContext();
+
   return (
     <div
       className={`fixed inset-0 z-50 transition-colors ${isModalOpen ? "visible bg-black/80" : "invisible"}`}

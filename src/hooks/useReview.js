@@ -174,6 +174,40 @@ export function useReview() {
     }
   }
 
+  async function getRatings(mediaId) {
+    try {
+      const ratingsRef = collection(db, "reviews");
+      const q = query(ratingsRef, where("mediaId", "==", mediaId));
+      const querySnapshot = await getDocs(q);
+
+      return querySnapshot;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function getAvgRating(mediaId) {
+    try {
+      const mediaRatings = await getRatings(mediaId);
+
+      if (!mediaRatings.empty) {
+        let totalRating = 0;
+        mediaRatings.docs.forEach((doc) => {
+          totalRating += doc.data().rating;
+        });
+
+        const totalRatings = mediaRatings.docs.length;
+        const avgRating = totalRatings / mediaRatings.docs.length;
+
+        return { avgRating, totalRatings };
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return {
     getReviews,
     getReviewsByUserId,
@@ -181,5 +215,7 @@ export function useReview() {
     deleteReview,
     likeReview,
     dislikeReview,
+    getRatings,
+    getAvgRating,
   };
 }

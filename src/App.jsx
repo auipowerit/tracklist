@@ -11,7 +11,6 @@ import SearchPage from "./pages/SearchPage";
 import ArtistPage from "./pages/ArtistPage";
 import Layout from "./components/Layout/Layout";
 import AppProviders from "./context/AppProviders";
-import ReviewProvider from "./context/Review/ReviewProvider";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -21,11 +20,7 @@ export default function App() {
       children: [
         {
           path: "/",
-          element: (
-            <ReviewProvider>
-              <HomePage />
-            </ReviewProvider>
-          ),
+          element: <HomePage />,
         },
         {
           path: "/account/login",

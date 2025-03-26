@@ -5,6 +5,7 @@ import { useAuthContext } from "../Auth/AuthContext";
 
 export default function ReviewProvider({ children }) {
   const [reviews, setReviews] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { globalUser, getFollowingById } = useAuthContext();
   const useReviewMethods = useReview();
@@ -55,6 +56,8 @@ export default function ReviewProvider({ children }) {
     reviews,
     setReviews,
     updateReviewState,
+    isModalOpen,
+    setIsModalOpen,
     ...useReviewMethods,
   };
 

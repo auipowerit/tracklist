@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
-import StarRating from "../components/StarRating";
 import SortMusic from "../components/Sort/SortMusic";
 import MediaCard from "../components/Cards/MediaCard";
-import RatingProvider from "../context/Rating/RatingProvider";
 import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
@@ -71,13 +69,7 @@ export default function ArtistPage() {
             <div className="grid grid-cols-4 gap-8">
               {albums.map((album) => {
                 return (
-                  <RatingProvider key={album.id}>
-                    <MediaCard
-                      media={album}
-                      category={"album"}
-                      rating={<StarRating albumId={album.id} />}
-                    />
-                  </RatingProvider>
+                  <MediaCard key={album.id} media={album} category={"album"} />
                 );
               })}
             </div>
@@ -102,9 +94,7 @@ export default function ArtistPage() {
             <div className="grid grid-cols-4 gap-8">
               {tracks.map((track) => {
                 return (
-                  <RatingProvider key={track.id}>
-                    <MediaCard media={track} category={"track"} />
-                  </RatingProvider>
+                  <MediaCard key={track.id} media={track} category={"track"} />
                 );
               })}
             </div>

@@ -5,23 +5,49 @@ import StarRating from "../StarRating";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import { useNavigate } from "react-router-dom";
 
-export default function ReviewForm({ onClose }) {
+export default function ReviewForm() {
+  const defaultImage = "/images/default-img.jpg";
+
   const { globalUser, getUserById } = useAuthContext();
   const { searchByName, getMediaById } = useSpotifyContext();
-  const { addReview, setReviews } = useReviewContext();
+  const { setIsModalOpen, addReview, setReviews } = useReviewContext();
 
-  const navigate = useNavigate();
-
+  const [type, setType] = useState("artist");
   const [results, setResults] = useState([]);
   const [mediaId, setMediaId] = useState("");
-  const [mediaImage, setMediaImage] = useState("/images/default-img.jpg");
+  const [mediaImage, setMediaImage] = useState(defaultImage);
   const [rating, setRating] = useState(null);
 
   const formRef = useRef(null);
   const inputRef = useRef(null);
   const textareaRef = useRef(null);
+
+  async function handleSearch() {
+    const data = await searchByName(inputRef?.current?.value, type, 5);
+    setResults(
+      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [],
+    );
+  }
+
+  function handleClick(media) {
+    inputRef.current.value = media.name;
+
+    setResults([]);
+
+    setMediaId(media.id);
+    setMediaImage(
+      media?.images?.[0].url || media?.album?.images?.[0].url || defaultImage,
+    );
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!globalUser || !mediaId || !textareaRef || rating <= 0) return;
+
+    submitReview();
+  }
 
   async function submitReview() {
     const content = textareaRef?.current?.value.trim();
@@ -31,7 +57,7 @@ export default function ReviewForm({ onClose }) {
     const reviewInfo = {
       content,
       userId: globalUser.uid,
-      category: "artist",
+      category: type,
       mediaId,
       rating,
       likes: [],
@@ -54,28 +80,15 @@ export default function ReviewForm({ onClose }) {
     ]);
 
     formRef.current.reset();
-    navigate("/");
-    onClose();
+    setIsModalOpen(false);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    if (!globalUser || !mediaId || !textareaRef || rating <= 0) return;
-
-    submitReview();
-  }
-
-  async function handleSearch() {
-    const data = await searchByName(inputRef?.current?.value, "artist");
-    setResults(data?.artists?.items || []);
-  }
-
-  function handleClick(media) {
-    inputRef.current.value = media.name;
-    setMediaId(media.id);
-    setMediaImage(media?.images[0].url);
+  function resetValues() {
+    setType("artist");
     setResults([]);
+    setMediaId("");
+    setMediaImage(defaultImage);
+    inputRef.current.value = "";
   }
 
   return (
@@ -87,18 +100,31 @@ export default function ReviewForm({ onClose }) {
       <p className="text-3xl font-bold">Add a review</p>
       <div className="flex w-full items-center justify-center gap-6">
         <img
-          src={mediaImage || "/images/default-img.jpg"}
-          className="h-[175px] w-[175px] shadow-lg"
+          src={mediaImage || defaultImage}
+          className="aspect-square h-48 object-cover shadow-lg"
         />
-        <div className="flex h-[150px] flex-col justify-center gap-2">
-          <div className="relative">
+        <div className="flex h-48 flex-col justify-center gap-2">
+          <div className="relative flex gap-2">
             <input
               ref={inputRef}
               type="search"
-              placeholder="Search for an artist..."
+              placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
               onKeyUp={handleSearch}
               className="bg-white text-black"
             />
+
+            <select
+              defaultValue={type}
+              onChange={(e) => {
+                setType(e.target.value);
+                resetValues();
+              }}
+            >
+              <option value="artist">artist</option>
+              <option value="album">album</option>
+              <option value="track">song</option>
+            </select>
+
             <div className="absolute top-10 right-0 left-0 flex flex-col bg-green-900">
               {results.map((result) => (
                 <button
@@ -107,6 +133,12 @@ export default function ReviewForm({ onClose }) {
                   className="px-2 py-1 text-start hover:bg-gray-600"
                 >
                   <p>{result.name}</p>
+                  {type !== "artist" && (
+                    <p className="text-sm">
+                      {result?.artists?.[0].name ||
+                        result?.album?.artists?.[0].name}
+                    </p>
+                  )}
                 </button>
               ))}
             </div>

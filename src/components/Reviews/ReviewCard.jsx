@@ -32,7 +32,10 @@ export default function ReviewCard({ review }) {
   return (
     <div className="flex cursor-pointer flex-col gap-2 p-2 transition-colors duration-75 hover:bg-slate-800">
       <div className="flex items-center gap-4">
-        <img src={media.image} className="h-[125px] shadow-lg shadow-black" />
+        <img
+          src={media.image}
+          className="aspect-square h-32 object-cover shadow-lg"
+        />
 
         <div className="flex flex-col justify-center gap-4">
           <div className="flex items-center gap-2">
@@ -56,7 +59,7 @@ export default function ReviewCard({ review }) {
               <p className="font-light">{media.subtitle}</p>
             </div>
 
-            <ReviewStars rating={4.5} />
+            <ReviewStars rating={review.rating || 0} />
           </div>
         </div>
       </div>
