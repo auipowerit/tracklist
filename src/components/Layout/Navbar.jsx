@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "../../context/Auth/AuthContext";
+import ModalButton from "../ModalButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const { globalUser, logout } = useAuthContext();
@@ -57,13 +58,17 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li className="ml-auto">
-        <NavLink
-          to="/"
-          className="flex cursor-pointer items-center gap-1 rounded-md bg-green-900 px-2 py-1 hover:text-gray-400"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-          <p>Post</p>
-        </NavLink>
+        {globalUser ? (
+          <ModalButton />
+        ) : (
+          <NavLink
+            to="/account/login"
+            className="flex cursor-pointer items-center gap-1 rounded-md bg-green-900 px-2 py-1 hover:text-gray-400"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+            <p>Post</p>
+          </NavLink>
+        )}
       </li>
       <li>
         <div ref={dropdownRef} className="relative">
