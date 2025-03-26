@@ -1,10 +1,12 @@
 import {
+  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import {
@@ -119,6 +121,37 @@ export function useAuth() {
     }
   }
 
+  async function followUser(userId, followerId) {
+    try {
+      const usersRef = collection(db, "users");
+      const currentUserRef = doc(usersRef, userId);
+      const followedUserRef = doc(usersRef, followerId);
+
+      if (currentUserRef.empty || followedUserRef.empty) return;
+
+      await updateDoc(currentUserRef, {
+        following: arrayUnion(followerId),
+      });
+
+      await updateDoc(followedUserRef, {
+        followers: arrayUnion(userId),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getFollowingById(userId) {
+    try {
+      const user = await getUserById(userId);
+      if (!user) return;
+
+      return user?.following;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     signup,
     usernameAvailable,
@@ -127,5 +160,7 @@ export function useAuth() {
     resetPassword,
     getUserById,
     searchByUsername,
+    followUser,
+    getFollowingById,
   };
 }

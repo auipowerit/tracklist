@@ -7,7 +7,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useAuthContext } from "../context/Auth/AuthContext";
@@ -15,9 +17,9 @@ import { useSpotifyContext } from "../context/Spotify/SpotifyContext";
 
 export function useReview() {
   const { getUserById } = useAuthContext();
-  const { getAlbumById } = useSpotifyContext();
+  const { getMediaById } = useSpotifyContext();
 
-  async function getReviews(count) {
+  async function getReviews() {
     try {
       const reviewsRef = collection(db, "reviews");
       const reviewsDoc = await getDocs(reviewsRef);
@@ -28,7 +30,33 @@ export function useReview() {
             id: doc.id,
             ...doc.data(),
             username: (await getUserById(doc.data().userId)).username,
-            media: await getAlbumById(doc.data().mediaId),
+            media: await getMediaById(doc.data().mediaId, doc.data().category),
+          };
+        }),
+      );
+
+      return reviews;
+    } catch (error) {
+      console.error(error.message);
+      return [];
+    }
+  }
+
+  async function getReviewsByUserId(userId) {
+    try {
+      const reviewsRef = collection(db, "reviews");
+      const q = query(reviewsRef, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) return [];
+
+      const reviews = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+            username: (await getUserById(doc.data().userId)).username,
+            media: await getMediaById(doc.data().mediaId, doc.data().category),
           };
         }),
       );
@@ -148,6 +176,7 @@ export function useReview() {
 
   return {
     getReviews,
+    getReviewsByUserId,
     addReview,
     deleteReview,
     likeReview,

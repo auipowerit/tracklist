@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 
 export default function Navbar() {
@@ -38,7 +40,7 @@ export default function Navbar() {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `transition-all duration-150 ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            `${isActive ? "text-green-700" : "hover:text-gray-400"}`
           }
         >
           Home
@@ -48,17 +50,26 @@ export default function Navbar() {
         <NavLink
           to="/search"
           className={({ isActive }) =>
-            `transition-all duration-150 ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            `${isActive ? "text-green-700" : "hover:text-gray-400"}`
           }
         >
           Search
         </NavLink>
       </li>
       <li className="ml-auto">
+        <NavLink
+          to="/"
+          className="flex cursor-pointer items-center gap-1 rounded-md bg-green-900 px-2 py-1 hover:text-gray-400"
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p>Post</p>
+        </NavLink>
+      </li>
+      <li>
         <div ref={dropdownRef} className="relative">
           <FaUser
             onClick={handleUserClick}
-            className={`cursor-pointer text-4xl transition-all duration-150 ${
+            className={`cursor-pointer text-4xl ${
               location.pathname.startsWith("/account")
                 ? "text-green-700"
                 : "text-white hover:text-gray-400"

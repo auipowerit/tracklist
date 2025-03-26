@@ -9,7 +9,7 @@ export default function SortReviews() {
     { label: "Oldest", value: "oldest" },
     { label: "Best", value: "best" },
     { label: "Controversial", value: "worst" },
-    { label: "Replied to", value: "replies" },
+    { label: "Commented", value: "comments" },
   ];
 
   function sortMethod(sortValue) {
@@ -39,7 +39,7 @@ export default function SortReviews() {
 
         case "replies":
           return (
-            b.replies.length - a.replies.length ||
+            b.comments.length - a.comments.length ||
             b.createdAt - a.createdAt ||
             a.userId.localeCompare(b.userId)
           );
