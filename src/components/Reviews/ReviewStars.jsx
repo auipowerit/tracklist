@@ -1,6 +1,6 @@
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
-export default function RatingStars({ rating }) {
+export default function ReviewStars({ rating }) {
   function getStarColor(ratingValue) {
     return ratingValue <= rating ? "#ffc107" : "#e4e5e9";
   }

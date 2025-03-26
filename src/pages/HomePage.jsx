@@ -1,7 +1,7 @@
 import Loading from "../components/Loading";
-import ReviewCard from "../components/Cards/ReviewCard";
+import ReviewCard from "../components/Reviews/ReviewCard";
 import SortReviews from "../components/Sort/SortReviews";
-import ReviewInput from "../components/Inputs/ReviewInput";
+import ReviewInput from "../components/Reviews/ReviewInput";
 import { useReviewContext } from "../context/Review/ReviewContext";
 
 export default function HomePage() {
@@ -13,8 +13,6 @@ export default function HomePage() {
 
   return (
     <div className="m-auto flex w-full flex-col items-center justify-center gap-4">
-      <ReviewInput />
-
       {reviews && (
         <div className="w-2/3 border-x-1 border-white px-10">
           <SortReviews />

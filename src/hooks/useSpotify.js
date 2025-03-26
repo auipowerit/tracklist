@@ -116,6 +116,35 @@ export function useSpotify() {
     }
   }
 
+  async function getMediaById(mediaId, category) {
+    if (!mediaId || !category) return [];
+
+    const access_token = accessToken || (await fetchAccessToken());
+
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/${category}s/${mediaId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+      );
+
+      if (response.status === 400) {
+        throw new Error("No media found!");
+      }
+
+      const media = await response.json();
+
+      return media || [];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async function getArtistById(artistId) {
     if (!artistId) return [];
     const access_token = accessToken || (await fetchAccessToken());
@@ -196,6 +225,7 @@ export function useSpotify() {
     getArtistAlbums,
     getArtistSingles,
     getAlbumTracks,
+    getMediaById,
     getArtistById,
     getAlbumById,
     getTrackById,

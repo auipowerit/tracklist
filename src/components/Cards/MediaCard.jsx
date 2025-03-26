@@ -11,7 +11,7 @@ export default function MediaCard(props) {
       case "artist":
         return {
           title: media.name,
-          image: media?.images[0]?.url || defaultImg,
+          image: media?.images?.[0]?.url || defaultImg,
           subtitle: (
             <>
               {media.followers.total.toLocaleString()}{" "}
@@ -22,14 +22,16 @@ export default function MediaCard(props) {
       case "album":
         return {
           title: media.name,
-          image: media?.images[0]?.url || defaultImg,
+          image: media?.images?.[0]?.url || defaultImg,
           subtitle: <>{formatDateMDYLong(media.release_date) || defaultDate}</>,
         };
       case "track":
         return {
           title: media.name,
           image:
-            media?.album?.images[0]?.url || media?.images[0]?.url || defaultImg,
+            media?.album?.images?.[0]?.url ||
+            media?.images?.[0]?.url ||
+            defaultImg,
           subtitle: (
             <>
               {formatDateMDYLong(

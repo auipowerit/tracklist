@@ -22,8 +22,7 @@ export default function ReviewInput() {
       mediaId: "1btWGBz4Uu1HozTwb2Lm8A",
       likes: [],
       dislikes: [],
-      replyingTo: "",
-      replies: [],
+      comments: [],
     };
 
     const newReview = await addReview(reviewInfo);
