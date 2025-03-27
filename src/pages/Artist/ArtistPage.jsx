@@ -4,6 +4,8 @@ import Loading from "../../components/Loading";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 import Singles from "./Singles";
 import Albums from "./Albums";
+import MediaCard from "../../components/Cards/MediaCard";
+import MediaReviews from "./MediaReviews";
 
 export default function ArtistPage() {
   const { getArtistById, getArtistAlbums, getArtistSingles } =
@@ -45,12 +47,6 @@ export default function ArtistPage() {
 
   return (
     <div className="mx-10 mt-6 flex flex-col gap-2">
-      <div className="flex items-center gap-2 font-bold tracking-wider">
-        <Link to={`/artists/${artist.id}`} className="text-green-700">
-          {artist.name}
-        </Link>
-      </div>
-
       <div className="flex gap-8">
         <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
           {artist && (

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
 import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function TrackPage() {
   const { getTrackById } = useSpotifyContext();
@@ -23,6 +25,7 @@ export default function TrackPage() {
       try {
         const fetchedTrack = await getTrackById(trackId);
         setTrack(fetchedTrack);
+        console.log(fetchedTrack);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,18 +42,14 @@ export default function TrackPage() {
 
   return (
     <div className="mx-10 mt-6 flex flex-col gap-2">
-      <div className="flex items-center gap-2 font-bold tracking-wider">
-        <Link to={`/artists/${artistId}`}>{artistId}</Link>
-        <span>&#x2022;</span>
-        <Link to={`/artists/${artistId}/albums/${albumId}`}>{albumId}</Link>
-        <span>&#x2022;</span>
-        <Link
-          to={`/artists/${artistId}/albums/${albumId}/track/${trackId}`}
-          className="text-green-700"
-        >
-          {track.name}
-        </Link>
-      </div>
+      <Link
+        to={`/artists/${artistId}/albums/${albumId}`}
+        className="flex w-fit items-center gap-2 rounded-sm bg-green-700 p-2"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+        <p>Back</p>
+      </Link>
+
       <div className="flex gap-8">
         <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
           <MediaCard
