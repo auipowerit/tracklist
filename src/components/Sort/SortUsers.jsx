@@ -1,4 +1,4 @@
-import SortButton from "./SortButton";
+import SortButton from "../../components/Buttons/SortButton";
 
 export default function SortUsers(props) {
   const { users, setUsers, initialUsers } = props;

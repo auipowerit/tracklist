@@ -1,7 +1,7 @@
-import Loading from "../components/Loading";
-import ReviewList from "../components/Reviews/ReviewList";
-import { useAuthContext } from "../context/Auth/AuthContext";
-import { useReviewContext } from "../context/Review/ReviewContext";
+import Loading from "../../components/Loading";
+import ReviewList from "./ReviewList";
+import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();
@@ -22,5 +22,5 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  return <ReviewList />;
+  return <ReviewList reviews={reviews} />;
 }

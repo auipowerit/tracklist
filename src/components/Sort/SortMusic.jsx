@@ -1,18 +1,28 @@
-import SortButton from "../Sort/SortButton";
+import SortButton from "../Buttons/SortButton";
 
 export default function SortMusic(props) {
-  const { results, setResults, initialResults, category } = props;
+  const {
+    results,
+    setResults,
+    initialResults,
+    category,
+    search = false,
+  } = props;
 
   const sortOptions = [
-    { label: "Relevance", value: "relevant" },
-    ...(category === "artist" || category === "track"
-      ? [{ label: "Popularity", value: "popular" }]
+    ...(search ? [{ label: "Relevance", value: "relevant" }] : []),
+    ...(search
+      ? category === "artist" || category === "track"
+        ? [{ label: "Popularity", value: "popular" }]
+        : []
       : []),
     ...(category === "artist"
       ? [{ label: "Followers", value: "followers" }]
       : []),
-    ...(category === "album" || category === "track"
-      ? [{ label: "Artist", value: "artist" }]
+    ...(search
+      ? category === "album" || category === "track"
+        ? [{ label: "Artist", value: "artist" }]
+        : []
       : []),
     ...(category === "album" || category === "track"
       ? [{ label: "Newest", value: "newest" }]

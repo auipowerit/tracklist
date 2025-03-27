@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Loading from "../Loading";
 import SearchBar from "./SearchBar";
-import SortMusic from "../Sort/SortMusic";
-import SortUsers from "../Sort/SortUsers";
 import SearchResults from "./SearchResults";
+import Loading from "../../components/Loading";
+import SortMusic from "../../components/Sort/SortMusic";
+import SortUsers from "../../components/Sort/SortUsers";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
@@ -55,6 +55,7 @@ export default function SearchMedia(props) {
             setResults={setResults}
             initialResults={initialResults}
             category={category}
+            search={true}
           />
         )}
       </div>

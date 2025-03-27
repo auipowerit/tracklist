@@ -42,6 +42,31 @@ export function useReview() {
     }
   }
 
+  async function getReviewsByMediaId(mediaId) {
+    try {
+      const reviewsRef = collection(db, "reviews");
+      const q = query(reviewsRef, where("mediaId", "==", mediaId));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) return [];
+
+      const reviews = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+            username: (await getUserById(doc.data().userId)).username,
+            media: await getMediaById(doc.data().mediaId, doc.data().category),
+          };
+        }),
+      );
+
+      return reviews;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function getReviewsByUserId(userId) {
     try {
       const reviewsRef = collection(db, "reviews");
@@ -212,6 +237,7 @@ export function useReview() {
   return {
     getReviews,
     getReviewsByUserId,
+    getReviewsByMediaId,
     addReview,
     deleteReview,
     likeReview,

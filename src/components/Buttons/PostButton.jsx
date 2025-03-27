@@ -1,23 +1,41 @@
+import { useNavigate } from "react-router-dom";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
-import ReviewForm from "../Reviews/ReviewForm";
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useAuthContext } from "../../context/Auth/AuthContext";
 
-export default function PostButton() {
-  const { setIsModalOpen } = useReviewContext();
+export default function PostButton({
+  isModalOpen,
+  setIsModalOpen,
+  mediaId,
+  category,
+}) {
+  const { globalUser } = useAuthContext();
+
+  const navigate = useNavigate();
+
+  function handleClick() {
+    if (!globalUser) {
+      navigate("/account/login");
+      return;
+    }
+    setIsModalOpen(true);
+  }
 
   return (
     <div>
-      <Modal onClose={() => setIsModalOpen(false)}>
-        <ReviewForm />
-      </Modal>
+      <Modal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        mediaId={mediaId}
+        category={category}
+      />
 
       <button
         className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 hover:text-gray-400"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleClick}
       >
         <FontAwesomeIcon icon={faPlus} />
         <p>Post</p>

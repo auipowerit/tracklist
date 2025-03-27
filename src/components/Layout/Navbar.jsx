@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PostButton from "../Buttons/PostButton";
 import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
 export default function Navbar() {
-  const { globalUser, logout } = useAuthContext();
+  const { globalUser, globalData, logout } = useAuthContext();
+  const { isModalOpen, setIsModalOpen } = useReviewContext();
+
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -58,17 +59,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li className="ml-auto">
-        {globalUser ? (
-          <PostButton />
-        ) : (
-          <NavLink
-            to="/account/login"
-            className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 hover:text-gray-400"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-            <p>Post</p>
-          </NavLink>
-        )}
+        <PostButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </li>
       <li>
         <div ref={dropdownRef} className="relative">
@@ -105,6 +96,9 @@ export default function Navbar() {
   function DropdownMenu({ items, onClose }) {
     return (
       <ul className="flex flex-col gap-2 px-4 py-2">
+        <li>
+          <p className="font-bold text-nowrap">Hi, {globalData?.firstname}</p>
+        </li>
         {items.map(({ label, path, action }) => (
           <li
             key={label}

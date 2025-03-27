@@ -1,7 +1,7 @@
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import VoteButton from "../Buttons/VoteButton";
-import DeleteButton from "../Buttons/DeleteButton";
+import VoteButton from "../../components/Buttons/VoteButton";
+import DeleteButton from "../../components/Buttons/DeleteButton";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 

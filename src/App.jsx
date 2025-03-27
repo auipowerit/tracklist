@@ -5,12 +5,12 @@ import {
   faExclamationTriangle,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import SearchPage from "./pages/SearchPage";
-import ArtistPage from "./pages/ArtistPage";
+import HomePage from "./pages/Home/HomePage";
 import Layout from "./components/Layout/Layout";
+import LoginPage from "./pages/Login/LoginPage";
 import AppProviders from "./context/AppProviders";
+import SearchPage from "./pages/Search/SearchPage";
+import ArtistPage from "./pages/Artist/ArtistPage";
 
 export default function App() {
   const router = createBrowserRouter([

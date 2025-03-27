@@ -1,7 +1,14 @@
-import { useReviewContext } from "../context/Review/ReviewContext";
+import ReviewForm from "./Review/ReviewForm";
 
-export default function Modal({ onClose, children }) {
-  const { isModalOpen } = useReviewContext();
+export default function Modal({
+  isModalOpen,
+  setIsModalOpen,
+  mediaId,
+  category,
+}) {
+  function onClose() {
+    setIsModalOpen(false);
+  }
 
   return (
     <div
@@ -19,7 +26,14 @@ export default function Modal({ onClose, children }) {
           &times;
         </button>
 
-        <div>{children}</div>
+        <div>
+          <ReviewForm
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            mediaId={mediaId}
+            category={category}
+          />
+        </div>
       </div>
     </div>
   );

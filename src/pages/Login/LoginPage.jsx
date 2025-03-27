@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import LoginInput from "../components/Inputs/LoginInput";
-import { useAuthContext } from "../context/Auth/AuthContext";
+import LoginInput from "./LoginInput";
+import { useAuthContext } from "../../context/Auth/AuthContext";
 
 export default function LoginPage() {
   const { signup, usernameAvailable, login } = useAuthContext();

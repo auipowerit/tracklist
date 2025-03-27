@@ -1,27 +1,34 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import StarRating from "../StarRating";
+import StarRating from "./StarRating";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
-export default function ReviewForm() {
+export default function ReviewForm(props) {
+  const { isModalOpen, setIsModalOpen, mediaId, category } = props;
   const defaultImage = "/images/default-img.jpg";
 
   const { globalUser, getUserById } = useAuthContext();
   const { searchByName, getMediaById } = useSpotifyContext();
-  const { setIsModalOpen, addReview, setReviews } = useReviewContext();
+  const { addReview, setReviews } = useReviewContext();
 
   const [type, setType] = useState("artist");
   const [results, setResults] = useState([]);
-  const [mediaId, setMediaId] = useState("");
-  const [mediaImage, setMediaImage] = useState(defaultImage);
+  const [media, setMedia] = useState({});
   const [rating, setRating] = useState(null);
 
   const formRef = useRef(null);
   const inputRef = useRef(null);
   const textareaRef = useRef(null);
+
+  function handleChange(e) {
+    setType(e.target.value);
+
+    setResults([]);
+    setMedia({});
+  }
 
   async function handleSearch() {
     const data = await searchByName(inputRef?.current?.value, type, 20);
@@ -32,13 +39,9 @@ export default function ReviewForm() {
 
   function handleClick(media) {
     inputRef.current.value = media.name;
+    setMedia(media);
 
     setResults([]);
-
-    setMediaId(media.id);
-    setMediaImage(
-      media?.images?.[0].url || media?.album?.images?.[0].url || defaultImage,
-    );
   }
 
   function handleSubmit(event) {
@@ -81,17 +84,33 @@ export default function ReviewForm() {
 
     formRef.current.reset();
     resetValues();
-    setRating(0);
-    inputRef.current.value = "";
     setIsModalOpen(false);
   }
 
   function resetValues() {
     setType("artist");
     setResults([]);
-    setMediaId("");
-    setMediaImage(defaultImage);
+    setMedia({});
+    setType("artist");
+    setRating(0);
+    inputRef.current.value = "";
+    textareaRef.current.value = "";
   }
+
+  useEffect(() => {
+    const fetchMedia = async () => {
+      if (!mediaId || !category) return;
+
+      const fetchedMedia = await getMediaById(mediaId, category);
+      inputRef.current.value = fetchedMedia.name;
+      setType(category);
+      setMedia(fetchedMedia);
+    };
+
+    if (isModalOpen) resetValues();
+
+    return fetchMedia;
+  }, [isModalOpen]);
 
   return (
     <form
@@ -102,26 +121,24 @@ export default function ReviewForm() {
       <p className="text-3xl font-bold">Add a review</p>
       <div className="flex w-full items-center justify-center gap-6">
         <img
-          src={mediaImage || defaultImage}
+          src={
+            media?.images?.[0].url ||
+            media?.album?.images?.[0].url ||
+            defaultImage
+          }
           className="aspect-square h-48 object-cover shadow-lg"
         />
-        <div className="flex h-48 flex-col justify-center gap-2">
+        <div className="flex h-48 flex-col justify-center gap-2 text-xl">
           <div className="relative flex gap-2">
             <input
               ref={inputRef}
               type="search"
               placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
               onKeyUp={handleSearch}
-              className="bg-white text-black"
+              className="bg-white px-2 py-1 text-black"
             />
 
-            <select
-              defaultValue={type}
-              onChange={(e) => {
-                resetValues();
-                setType(e.target.value);
-              }}
-            >
+            <select value={type} onChange={handleChange}>
               <option value="artist">artist</option>
               <option value="album">album</option>
               <option value="track">song</option>

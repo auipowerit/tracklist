@@ -1,5 +1,5 @@
 import { useReviewContext } from "../../context/Review/ReviewContext";
-import SortButton from "./SortButton";
+import SortButton from "../Buttons/SortButton";
 
 export default function SortReviews() {
   const { reviews, setReviews } = useReviewContext();
