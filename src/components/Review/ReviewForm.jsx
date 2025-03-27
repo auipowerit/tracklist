@@ -31,15 +31,15 @@ export default function ReviewForm(props) {
   }
 
   async function handleSearch() {
-    const data = await searchByName(inputRef?.current?.value, type, 20);
+    const data = await searchByName(inputRef.current.value, type, 20);
     setResults(
       data?.artists?.items || data?.albums?.items || data?.tracks?.items || [],
     );
   }
 
-  function handleClick(media) {
-    inputRef.current.value = media.name;
-    setMedia(media);
+  function handleClick(fetchedMedia) {
+    inputRef.current.value = fetchedMedia.name;
+    setMedia(fetchedMedia);
 
     setResults([]);
   }
@@ -47,13 +47,13 @@ export default function ReviewForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!globalUser || !mediaId || !textareaRef || rating <= 0) return;
+    if (!globalUser || !media || !textareaRef || rating <= 0) return;
 
     submitReview();
   }
 
   async function submitReview() {
-    const content = textareaRef?.current?.value.trim();
+    const content = textareaRef.current.value.trim();
 
     if (content === "") return;
 
@@ -61,7 +61,7 @@ export default function ReviewForm(props) {
       content,
       userId: globalUser.uid,
       category: type,
-      mediaId,
+      mediaId: media.id,
       rating: parseFloat(rating),
       likes: [],
       dislikes: [],
@@ -70,7 +70,6 @@ export default function ReviewForm(props) {
 
     const newReview = await addReview(reviewInfo);
     const username = (await getUserById(globalUser.uid)).username;
-    const media = await getMediaById(reviewInfo.mediaId, reviewInfo.category);
 
     setReviews((prevData) => [
       {
@@ -99,7 +98,7 @@ export default function ReviewForm(props) {
 
   useEffect(() => {
     const fetchMedia = async () => {
-      if (!mediaId || !category) return;
+      if (!mediaId || !category || !inputRef.current) return;
 
       const fetchedMedia = await getMediaById(mediaId, category);
       inputRef.current.value = fetchedMedia.name;

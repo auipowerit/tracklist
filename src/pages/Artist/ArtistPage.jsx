@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import SongsList from "./SongsList";
-import AlbumsList from "./AlbumsList";
-import ArtistReviews from "./ArtistReviews";
+import { Link, useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
-import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import Singles from "./Singles";
+import Albums from "./Albums";
 
 export default function ArtistPage() {
   const { getArtistById, getArtistAlbums, getArtistSingles } =
@@ -14,7 +12,7 @@ export default function ArtistPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [artist, setArtist] = useState([]);
   const [albums, setAlbums] = useState([]);
-  const [tracks, setTracks] = useState([]);
+  const [singles, setSingles] = useState([]);
 
   const params = useParams();
   const artistId = params?.artistId;
@@ -26,11 +24,11 @@ export default function ArtistPage() {
       try {
         const fetchedArtist = await getArtistById(artistId);
         const fetchedAlbums = await getArtistAlbums(artistId);
-        const fetchedTracks = await getArtistSingles(artistId);
+        const fetchedSingles = await getArtistSingles(artistId);
 
         setArtist(fetchedArtist);
         setAlbums(fetchedAlbums);
-        setTracks(fetchedTracks);
+        setSingles(fetchedSingles);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,28 +37,36 @@ export default function ArtistPage() {
     };
 
     getArtistData();
-  }, [artistId]);
+  }, [params]);
 
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="mx-10 mt-6 flex gap-8">
-      <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
-        {artist && (
-          <MediaCard
-            media={artist}
-            category={"artist"}
-            onClick={() => window.open(artist.external_urls.spotify)}
-          />
-        )}
-
-        <AlbumsList albums={albums} setAlbums={setAlbums} />
-        <SongsList tracks={tracks} setTracks={setTracks} />
+    <div className="mx-10 mt-6 flex flex-col gap-2">
+      <div className="flex items-center gap-2 font-bold tracking-wider">
+        <Link to={`/artists/${artist.id}`} className="text-green-700">
+          {artist.name}
+        </Link>
       </div>
-      <div className="h-screen flex-1 overflow-auto py-6">
-        <ArtistReviews artistId={artistId} />
+
+      <div className="flex gap-8">
+        <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
+          {artist && (
+            <MediaCard
+              media={artist}
+              category={"artist"}
+              onClick={() => window.open(artist.external_urls.spotify)}
+            />
+          )}
+
+          <Albums artist={artist} albums={albums} setAlbums={setAlbums} />
+          <Singles singles={singles} setSingles={setSingles} />
+        </div>
+        <div className="h-screen flex-1 overflow-auto py-6">
+          <MediaReviews mediaId={artist.id} category={"artist"} />
+        </div>
       </div>
     </div>
   );

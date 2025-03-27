@@ -3,7 +3,7 @@ import { formatDateMDYLong } from "../../utils/date";
 import ReviewStars from "../Review/ReviewStars";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 
-export default function MediaCard({ media, onClick }) {
+export default function MediaCard({ media, onClick, showImage = true }) {
   const defaultDate = "01/01/2000";
   const defaultImg = "/images/default-img.jpg";
 
@@ -49,7 +49,7 @@ export default function MediaCard({ media, onClick }) {
       className="flex w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      <img src={fetchedMedia.image} className="h-72" />
+      {showImage && <img src={fetchedMedia.image} className="h-72" />}
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
         <p className="text-xl font-bold">{fetchedMedia.title}</p>
         <p className="text-sm font-light">{fetchedMedia.subtitle}</p>

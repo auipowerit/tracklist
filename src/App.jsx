@@ -1,5 +1,10 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Link,
+  RouterProvider,
+  useRouteError,
+} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationTriangle,
@@ -8,6 +13,8 @@ import {
 import HomePage from "./pages/Home/HomePage";
 import Layout from "./components/Layout/Layout";
 import LoginPage from "./pages/Login/LoginPage";
+import AlbumPage from "./pages/Artist/AlbumPage";
+import TrackPage from "./pages/Artist/TrackPage";
 import AppProviders from "./context/AppProviders";
 import SearchPage from "./pages/Search/SearchPage";
 import ArtistPage from "./pages/Artist/ArtistPage";
@@ -21,26 +28,42 @@ export default function App() {
         {
           path: "/",
           element: <HomePage />,
+          errorElement: <ErrorPage is404={false} />,
         },
         {
           path: "/account/login",
           element: <LoginPage />,
+          errorElement: <ErrorPage is404={false} />,
         },
         {
           path: "/search",
           element: <SearchPage />,
+          errorElement: <ErrorPage is404={false} />,
         },
         {
           path: "/artists/:artistId",
           element: <ArtistPage />,
+          errorElement: <ErrorPage is404={false} />,
+        },
+        {
+          path: "/artists/:artistId/albums/:albumId",
+          element: <AlbumPage />,
+          errorElement: <ErrorPage is404={false} />,
+        },
+        {
+          path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
+          element: <TrackPage />,
+          errorElement: <ErrorPage is404={false} />,
         },
         {
           path: "/account/*",
           element: <SearchPage />,
+          errorElement: <ErrorPage is404={false} />,
         },
         {
           path: "*",
           element: <ErrorPage is404={true} />,
+          errorElement: <ErrorPage is404={false} />,
         },
       ],
     },
@@ -55,7 +78,9 @@ export default function App() {
   );
 }
 
-function ErrorPage({ error, is404 }) {
+function ErrorPage({ is404 }) {
+  const error = useRouteError();
+
   return (
     <div className="flex h-[80vh] flex-col items-center justify-center gap-4 text-center text-5xl">
       <FontAwesomeIcon
@@ -66,7 +91,7 @@ function ErrorPage({ error, is404 }) {
       <h1 className="text-3xl font-bold">
         {is404 ? "404 - Page Not Found" : "Oops! Something went wrong :("}
       </h1>
-      {error && <p>{error.message}</p>}
+      {error && <p className="text-2xl text-gray-400">"{error.message}"</p>}
 
       <Link
         to="/"

@@ -1,7 +1,8 @@
 import SortMusic from "../../components/Sort/SortMusic";
 import MediaCard from "../../components/Cards/MediaCard";
+import { Link } from "react-router-dom";
 
-export default function AlbumsList({ albums, setAlbums }) {
+export default function Albums({ artist, albums, setAlbums }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
@@ -19,7 +20,12 @@ export default function AlbumsList({ albums, setAlbums }) {
         <div className="grid grid-cols-3 gap-8">
           {albums.map((album) => {
             return (
-              <MediaCard key={album.id} media={album} category={"album"} />
+              <Link
+                key={album.id}
+                to={`/artists/${artist.id}/albums/${album.id}`}
+              >
+                <MediaCard key={album.id} media={album} category={"album"} />
+              </Link>
             );
           })}
         </div>

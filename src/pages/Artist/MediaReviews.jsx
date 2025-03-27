@@ -3,15 +3,16 @@ import PostButton from "../../components/Buttons/PostButton";
 import MediaReviewCard from "../../components/Cards/MediaReviewCard";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 
-export default function ArtistReviews({ artistId }) {
+export default function MediaReviews({ mediaId, category }) {
   const { getReviewsByMediaId } = useReviewContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [artistReviews, setArtistReviews] = useState([]);
+  const [mediaReviews, setMediaReviews] = useState([]);
 
   useEffect(() => {
     const fetchReviews = async () => {
-      const fetchedReviews = await getReviewsByMediaId(artistId);
-      setArtistReviews(
+      const fetchedReviews = await getReviewsByMediaId(mediaId);
+
+      setMediaReviews(
         [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
       );
     };
@@ -21,18 +22,18 @@ export default function ArtistReviews({ artistId }) {
   return (
     <div className="flex h-full flex-col gap-4">
       <div className="flex items-center justify-between align-middle">
-        <p className="text-2xl text-gray-400">Newest Reviews</p>
+        <p className="text-2xl font-bold">Newest Reviews</p>
         <PostButton
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          mediaId={artistId}
-          category={"artist"}
+          mediaId={mediaId}
+          category={category}
         />
       </div>
 
       <div className="flex-gap flex flex-col gap-6 overflow-y-scroll border-t-1 border-white py-10">
-        {artistReviews.length > 0 ? (
-          artistReviews.map((review) => {
+        {mediaReviews.length > 0 ? (
+          mediaReviews.map((review) => {
             return <MediaReviewCard key={review.id} review={review} />;
           })
         ) : (
