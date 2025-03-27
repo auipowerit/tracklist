@@ -83,7 +83,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="m-auto self-start rounded-md bg-green-900 px-5 py-2"
+          className="m-auto self-start rounded-md bg-green-700 px-5 py-2"
         >
           Submit
         </button>
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
       <button
         onClick={() => setIsRegistration(!isRegistration)}
-        className="rounded-md px-4 py-2 hover:bg-green-900"
+        className="rounded-md px-4 py-2 hover:bg-green-700"
       >
         {isRegistration ? (
           <p className="flex items-center gap-2">

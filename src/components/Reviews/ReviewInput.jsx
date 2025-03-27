@@ -54,7 +54,7 @@ export default function ReviewInput() {
         />
         <button
           type="submit"
-          className="rounded-md bg-green-900 px-5 py-2 text-2xl"
+          className="rounded-md bg-green-700 px-5 py-2 text-2xl"
         >
           Review
         </button>

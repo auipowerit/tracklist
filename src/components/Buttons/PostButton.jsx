@@ -14,7 +14,7 @@ export default function PostButton() {
       </Modal>
 
       <button
-        className="flex cursor-pointer items-center gap-1 rounded-md bg-green-900 px-2 py-1 hover:text-gray-400"
+        className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 hover:text-gray-400"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
         onClick={() => setIsModalOpen(true)}

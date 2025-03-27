@@ -23,7 +23,7 @@ export default function ToTopButton() {
   return (
     <button
       href="#"
-      className={`fixed right-0 bottom-0 m-6 flex aspect-square cursor-pointer items-center justify-center rounded-full bg-green-900 p-3 text-center text-2xl text-white transition-all duration-200 hover:scale-120 ${isVisible ? "opacity-100" : "opacity-0"}`}
+      className={`fixed right-0 bottom-0 m-6 flex aspect-square cursor-pointer items-center justify-center rounded-full bg-green-700 p-3 text-center text-2xl text-white transition-all duration-200 hover:scale-120 ${isVisible ? "opacity-100" : "opacity-0"}`}
       onClick={handleClick}
     >
       <FontAwesomeIcon icon={faArrowUp} />

@@ -39,7 +39,7 @@ export default function SearchBar(props) {
       />
       <button
         type="submit"
-        className="rounded-md bg-green-900 px-4 py-2 text-2xl transition-all duration-150 hover:text-gray-400"
+        className="rounded-md bg-green-700 px-4 py-2 text-2xl transition-all duration-150 hover:text-gray-400"
       >
         Search
       </button>

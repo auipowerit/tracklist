@@ -63,7 +63,7 @@ export default function Navbar() {
         ) : (
           <NavLink
             to="/account/login"
-            className="flex cursor-pointer items-center gap-1 rounded-md bg-green-900 px-2 py-1 hover:text-gray-400"
+            className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 hover:text-gray-400"
           >
             <FontAwesomeIcon icon={faPlus} />
             <p>Post</p>
@@ -81,7 +81,7 @@ export default function Navbar() {
             }`}
           />
           <div
-            className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-900 text-white transition-all duration-300 ease-in-out ${
+            className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
               showDropdown
                 ? "max-h-screen p-2 opacity-100"
                 : "max-h-0 opacity-0"

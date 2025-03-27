@@ -9,7 +9,7 @@ export default function ReviewStars({ rating = 0 }) {
 
   return (
     <div className="flex flex-row gap-1">
-      {[...Array(Math.ceil(rating))].map((_, i) => {
+      {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = rating === ratingValue - 0.5;
 

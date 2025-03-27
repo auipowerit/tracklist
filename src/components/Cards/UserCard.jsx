@@ -23,7 +23,7 @@ export default function UserCard({ user }) {
 
       <button
         onClick={handleClick}
-        className="flex items-center gap-1 rounded-md bg-green-900 p-3 text-2xl hover:text-gray-400"
+        className="flex items-center gap-1 rounded-md bg-green-700 p-3 text-2xl hover:text-gray-400"
       >
         <FontAwesomeIcon icon={faPlus} />
         <p>Follow</p>

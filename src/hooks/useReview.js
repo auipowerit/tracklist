@@ -191,15 +191,16 @@ export function useReview() {
       const mediaRatings = await getRatings(mediaId);
 
       if (!mediaRatings.empty) {
-        let totalRating = 0;
+        let totalRating = 0.0;
+
         mediaRatings.docs.forEach((doc) => {
           totalRating += doc.data().rating;
         });
 
-        const totalRatings = mediaRatings.docs.length;
-        const avgRating = totalRatings / mediaRatings.docs.length;
+        const count = mediaRatings.docs.length;
+        const avgRating = totalRating / count;
 
-        return { avgRating, totalRatings };
+        return { avgRating, count };
       } else {
         return 0;
       }

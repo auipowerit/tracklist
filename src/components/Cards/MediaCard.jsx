@@ -18,9 +18,9 @@ export default function MediaCard({ media, onClick }) {
 
   useEffect(() => {
     const fetchMedia = async () => {
-      const { avgRating, totalRatings } = await getAvgRating(media.id);
+      const { avgRating, count } = await getAvgRating(media.id);
 
-      setRating({ avgRating, totalRatings });
+      setRating({ avgRating, count });
 
       setFetchedMedia({
         title: media?.name,
@@ -55,12 +55,11 @@ export default function MediaCard({ media, onClick }) {
         <p className="text-sm font-light">{fetchedMedia.subtitle}</p>
       </div>
 
-      {rating.avgRating > 0 && (
-        <div className="flex items-center justify-center gap-1">
-          <ReviewStars rating={rating.avgRating} />
-          <p className="font-bold">({rating.avgRating})</p>
-        </div>
-      )}
+      <div className="flex items-center justify-center gap-1">
+        <p>{rating?.avgRating?.toFixed(1) || ""}</p>
+        <ReviewStars rating={rating?.avgRating || 0} />
+        <p>{(rating?.avgRating && `(${rating?.count})`) || ""}</p>
+      </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function ReviewForm() {
   const textareaRef = useRef(null);
 
   async function handleSearch() {
-    const data = await searchByName(inputRef?.current?.value, type, 5);
+    const data = await searchByName(inputRef?.current?.value, type, 20);
     setResults(
       data?.artists?.items || data?.albums?.items || data?.tracks?.items || [],
     );
@@ -59,7 +59,7 @@ export default function ReviewForm() {
       userId: globalUser.uid,
       category: type,
       mediaId,
-      rating,
+      rating: parseFloat(rating),
       likes: [],
       dislikes: [],
       comments: [],
@@ -80,6 +80,9 @@ export default function ReviewForm() {
     ]);
 
     formRef.current.reset();
+    resetValues();
+    setRating(0);
+    inputRef.current.value = "";
     setIsModalOpen(false);
   }
 
@@ -88,7 +91,6 @@ export default function ReviewForm() {
     setResults([]);
     setMediaId("");
     setMediaImage(defaultImage);
-    inputRef.current.value = "";
   }
 
   return (
@@ -116,8 +118,8 @@ export default function ReviewForm() {
             <select
               defaultValue={type}
               onChange={(e) => {
-                setType(e.target.value);
                 resetValues();
+                setType(e.target.value);
               }}
             >
               <option value="artist">artist</option>
@@ -125,7 +127,9 @@ export default function ReviewForm() {
               <option value="track">song</option>
             </select>
 
-            <div className="absolute top-10 right-0 left-0 flex flex-col bg-green-900">
+            <div
+              className={`absolute top-10 right-0 left-0 flex flex-col bg-green-700 ${results.length > 0 && "h-46 overflow-auto"}`}
+            >
               {results.map((result) => (
                 <button
                   key={result.id}
@@ -159,7 +163,7 @@ export default function ReviewForm() {
 
       <button
         type="submit"
-        className="flex items-center gap-1 rounded-md bg-green-900 p-3 text-2xl hover:text-gray-400"
+        className="flex items-center gap-1 rounded-md bg-green-700 p-3 text-2xl hover:text-gray-400"
       >
         <FontAwesomeIcon icon={faPlus} />
         <p>Add Post</p>

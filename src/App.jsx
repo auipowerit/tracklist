@@ -70,7 +70,7 @@ function ErrorPage({ error, is404 }) {
 
       <Link
         to="/"
-        className="mt-6 flex w-fit items-center gap-4 rounded-full bg-green-900 px-4 py-2 text-2xl no-underline"
+        className="mt-6 flex w-fit items-center gap-4 rounded-full bg-green-700 px-4 py-2 text-2xl no-underline"
         style={{ textDecoration: "none" }}
       >
         <FontAwesomeIcon icon={faHome} />
