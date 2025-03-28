@@ -18,6 +18,8 @@ import TrackPage from "./pages/Artist/TrackPage";
 import AppProviders from "./context/AppProviders";
 import SearchPage from "./pages/Search/SearchPage";
 import ArtistPage from "./pages/Artist/ArtistPage";
+import ListsPage from "./pages/Account/Lists/ListsPage";
+import ListPage from "./pages/Account/Lists/List/ListPage";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -33,6 +35,16 @@ export default function App() {
         {
           path: "/account/authenticate",
           element: <AuthPage />,
+          errorElement: <ErrorPage is404={false} />,
+        },
+        {
+          path: "/account/lists",
+          element: <ListsPage />,
+          errorElement: <ErrorPage is404={false} />,
+        },
+        {
+          path: "/account/lists/:listId",
+          element: <ListPage />,
           errorElement: <ErrorPage is404={false} />,
         },
         {
@@ -53,11 +65,6 @@ export default function App() {
         {
           path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
           element: <TrackPage />,
-          errorElement: <ErrorPage is404={false} />,
-        },
-        {
-          path: "/account/*",
-          element: <SearchPage />,
           errorElement: <ErrorPage is404={false} />,
         },
         {

@@ -34,15 +34,15 @@ export default function NewList({ isModalOpen, setNewList }) {
     const isRanking = rankingRef.current.checked;
     const descr = descrRef.current.value;
 
-    if (name === "" || tags === "" || descr === "" || !globalUser) {
+    if (name === "" || descr === "" || !globalUser) {
       return;
     }
 
-    const tagArray = tags.replace(/, /g, ",").split(",");
+    const tagArray = tags === "" ? [] : tags.replace(/, /g, ",").split(",");
 
     const listData = {
       name,
-      tagArray,
+      tags: tagArray,
       isRanking,
       descr,
       media: [],

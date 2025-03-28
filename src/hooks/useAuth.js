@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   arrayUnion,
   collection,
@@ -168,6 +169,12 @@ export function useAuth() {
 
       if (listExists) return;
 
+      listData = {
+        id: uuidv4(),
+        ...listData,
+        createdAt: new Date(),
+      };
+
       await updateDoc(userRef, {
         lists: arrayUnion(listData),
       });
@@ -208,35 +215,40 @@ export function useAuth() {
         .data()
         .lists.find((list) => list.name === name);
 
-      return existingList.media.includes(mediaId);
+      return existingList.media.find((media) => media.id === mediaId);
     } catch (error) {
       console.log(error);
       return false;
     }
   }
 
-  async function addMediaToList(mediaId, name, userId) {
+  async function addMediaToList(mediaId, category, name, userId) {
     try {
-      if (!mediaId || !name || !userId) return;
+      if (!mediaId || !category || !name || !userId) return false;
 
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!userRef || userDoc.empty) return false;
 
       if (
         !(await checkIfListExists(name, userId)) ||
         (await checkIfMediaExistsInList(name, mediaId, userId))
       ) {
-        return;
+        return false;
       }
+
+      const newMedia = {
+        id: mediaId,
+        category: category,
+      };
 
       // Create new merged list with existing media and new media
       const mergedList = userDoc.data().lists.map((list) => {
         return list.name === name
           ? {
               ...list,
-              media: [...list.media, mediaId],
+              media: [...list.media, newMedia],
             }
           : list;
       });
@@ -244,8 +256,11 @@ export function useAuth() {
       await updateDoc(userRef, {
         lists: mergedList,
       });
+
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
     }
   }
 
@@ -283,6 +298,25 @@ export function useAuth() {
     }
   }
 
+  async function getUserListById(listId, userId) {
+    try {
+      if (!userId || !listId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const existingList = userDoc
+        .data()
+        .lists.find((list) => list.id === listId);
+
+      return existingList;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     signup,
     usernameAvailable,
@@ -298,5 +332,6 @@ export function useAuth() {
     addMediaToList,
     getUserLists,
     getUserListByTitle,
+    getUserListById,
   };
 }

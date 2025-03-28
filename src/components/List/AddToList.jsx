@@ -25,7 +25,7 @@ export default function AddToList(props) {
     }
 
     const filteredLists = lists.filter((item) =>
-      item.name.includes(searchString),
+      item.name.toLowerCase().includes(searchString.toLowerCase()),
     );
     setResults(filteredLists);
   }
@@ -43,9 +43,9 @@ export default function AddToList(props) {
     const searchString = inputRef.current.value;
     if (searchString === "") return;
 
-    await addMediaToList(mediaId, searchString, globalUser.uid);
-
-    setIsModalOpen(false);
+    if (await addMediaToList(mediaId, category, searchString, globalUser.uid)) {
+      setIsModalOpen(false);
+    }
   }
 
   function resetValues() {
