@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../../context/Auth/AuthContext";
+import FormInput from "../Inputs/FormInput";
 
 export default function NewList({ isModalOpen, setNewList }) {
   const { globalUser, checkIfListExists, createNewMediaList } =
@@ -72,28 +73,30 @@ export default function NewList({ isModalOpen, setNewList }) {
       </p>
       <div className="flex h-full justify-center gap-6">
         <div className="flex h-full flex-col gap-8">
-          <div>
-            <p>Name</p>
-            <input
-              ref={nameRef}
+          <div className="flex flex-col gap-1">
+            <FormInput
+              name="name"
               type="text"
-              className="border-1 border-white px-2 py-1 outline-0"
+              ref={nameRef}
+              classes="border-1 border-white"
+              label="Name"
             />
           </div>
-          <div>
-            <p>Tags (Comma Seperated)</p>
-            <input
-              ref={tagsRef}
+          <div className="flex flex-col gap-1">
+            <FormInput
+              name="tags"
               type="text"
-              className="border-1 border-white px-2 py-1 outline-0"
+              ref={tagsRef}
+              classes="border-1 border-white"
+              label="Tags (Comma Seperated)"
             />
           </div>
           <div className="flex items-center gap-2">
-            <input ref={rankingRef} type="checkbox" />
+            <FormInput type="checkbox" ref={rankingRef} />
             <p>Ranking</p>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           <p>Description</p>
           <textarea
             ref={descrRef}

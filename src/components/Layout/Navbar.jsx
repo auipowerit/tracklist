@@ -18,7 +18,7 @@ export default function Navbar() {
     if (globalUser) {
       setShowDropdown(!showDropdown);
     } else {
-      navigate("/account/login");
+      navigate("/account/authenticate");
     }
   }
 
@@ -80,7 +80,11 @@ export default function Navbar() {
                 { label: "Profile", path: "/account/profile" },
                 { label: "Lists", path: "/account/lists" },
                 { label: "Friends", path: "/account/friends" },
-                { label: "Logout", path: "/account/login", action: logout },
+                {
+                  label: "Logout",
+                  path: "/account/authenticate",
+                  action: logout,
+                },
               ]}
               onClose={() => setShowDropdown(false)}
             />

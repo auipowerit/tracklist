@@ -11,8 +11,8 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import HomePage from "./pages/Home/HomePage";
+import AuthPage from "./pages/Auth/AuthPage";
 import Layout from "./components/Layout/Layout";
-import LoginPage from "./pages/Login/LoginPage";
 import AlbumPage from "./pages/Artist/AlbumPage";
 import TrackPage from "./pages/Artist/TrackPage";
 import AppProviders from "./context/AppProviders";
@@ -31,8 +31,8 @@ export default function App() {
           errorElement: <ErrorPage is404={false} />,
         },
         {
-          path: "/account/login",
-          element: <LoginPage />,
+          path: "/account/authenticate",
+          element: <AuthPage />,
           errorElement: <ErrorPage is404={false} />,
         },
         {

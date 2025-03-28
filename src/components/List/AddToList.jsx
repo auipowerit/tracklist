@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "../../context/Auth/AuthContext";
+import FormInput from "../Inputs/FormInput";
 
 export default function AddToList(props) {
   const { isModalOpen, setIsModalOpen, media, category, setNewList } = props;
@@ -80,12 +81,12 @@ export default function AddToList(props) {
       <div className="flex w-full items-center justify-center gap-4">
         <div className="flex items-center justify-center gap-4">
           <div className="relative">
-            <input
+            <FormInput
+              type="text"
               ref={inputRef}
               onKeyUp={handleSearch}
-              type="text"
               placeholder="List name"
-              className="border-1 border-white px-2 py-1"
+              classes="border-1 border-white"
             />
             <div
               className={`absolute top-10 right-0 left-0 flex w-full flex-col items-start bg-green-700 ${results.length > 0 && "overflow-auto p-2"}`}

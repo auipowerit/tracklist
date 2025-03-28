@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRating from "./StarRating";
+import FormInput from "../Inputs/FormInput";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
@@ -129,12 +130,12 @@ export default function ReviewForm(props) {
         />
         <div className="flex h-48 flex-col justify-center gap-2 text-xl">
           <div className="relative flex gap-2">
-            <input
-              ref={inputRef}
+            <FormInput
               type="search"
+              ref={inputRef}
               placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
               onKeyUp={handleSearch}
-              className="bg-white px-2 py-1 text-black"
+              classes="bg-white text-black"
             />
 
             <select value={type} onChange={handleChange}>

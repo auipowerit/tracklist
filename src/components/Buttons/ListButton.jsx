@@ -17,7 +17,7 @@ export default function ListButton({
 
   function handleClick() {
     if (!globalUser) {
-      navigate("/account/login");
+      navigate("/account/authenticate");
       return;
     }
     setIsModalOpen(true);
