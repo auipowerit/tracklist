@@ -115,7 +115,7 @@ export default function ReviewForm(props) {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="m-auto flex w-4/5 flex-col items-center justify-center gap-6 py-6"
+      className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
     >
       <p className="text-3xl font-bold">Add a review</p>
       <div className="flex w-full items-center justify-center gap-6">

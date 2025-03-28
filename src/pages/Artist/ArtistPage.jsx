@@ -5,8 +5,13 @@ import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
 import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { useAuthContext } from "../../context/Auth/AuthContext";
+import ListButton from "../../components/Buttons/ListButton";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
 export default function ArtistPage() {
+  const { globalUser, getUserLists } = useAuthContext();
+  const { isModalOpen, setIsModalOpen } = useReviewContext();
   const { getArtistById, getArtistAlbums, getArtistSingles } =
     useSpotifyContext();
 
@@ -40,6 +45,13 @@ export default function ArtistPage() {
     getArtistData();
   }, []);
 
+  async function handleAddToList() {
+    if (!globalUser || !artistId) return;
+
+    const lists = await getUserLists(globalUser.uid);
+    console.log(lists);
+  }
+
   if (isLoading) {
     return <Loading />;
   }
@@ -48,21 +60,18 @@ export default function ArtistPage() {
     <div className="mx-10 mt-6 flex flex-col gap-2">
       <div className="flex gap-8">
         <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto p-10">
-          {artist && (
-            <MediaCard
-              media={artist}
-              category={"artist"}
-              onClick={() => window.open(artist.external_urls.spotify)}
-            />
-          )}
+          <MediaCard
+            media={artist}
+            category={"artist"}
+            onClick={() => window.open(artist.external_urls.spotify)}
+          />
 
-          <div className="flex gap-2">
-            {artist.genres.map((genre) => (
-              <p key={genre} className="rounded-sm bg-gray-700 p-2">
-                {genre}
-              </p>
-            ))}
-          </div>
+          <ListButton
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            media={{ mediaId: artist.id, mediaName: artist.name }}
+            category={"artist"}
+          />
 
           <MediaList media={albums} setMedia={setAlbums} category={"album"} />
           <MediaList media={singles} setMedia={setSingles} category={"track"} />

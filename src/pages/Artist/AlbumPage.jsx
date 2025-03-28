@@ -8,9 +8,12 @@ import Loading from "../../components/Loading";
 import { formatDateMDYLong } from "../../utils/date";
 import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import ListButton from "../../components/Buttons/ListButton";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
 export default function AlbumPage() {
   const { getAlbumById } = useSpotifyContext();
+  const { isModalOpen, setIsModalOpen } = useReviewContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [album, setAlbum] = useState({});
@@ -53,11 +56,20 @@ export default function AlbumPage() {
       </Link>
       <div className="flex gap-8">
         <div className="flex flex-2 items-start justify-center gap-8 py-6">
-          <MediaCard
-            media={album}
-            defaultSubtitle={formatDateMDYLong(album.release_date)}
-            onClick={() => window.open(album.external_urls.spotify)}
-          />
+          <div className="flex flex-col items-center gap-4">
+            <MediaCard
+              media={album}
+              defaultSubtitle={formatDateMDYLong(album.release_date)}
+              onClick={() => window.open(album.external_urls.spotify)}
+            />
+
+            <ListButton
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              media={{ mediaId: album.id, mediaName: album.name }}
+              category={"album"}
+            />
+          </div>
 
           <div className="h-screen overflow-auto px-8">
             <TrackList artistId={artistId} album={album} tracks={tracks} />

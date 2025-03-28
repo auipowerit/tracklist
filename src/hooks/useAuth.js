@@ -35,6 +35,7 @@ export function useAuth() {
         username,
         folllowing: [],
         followers: [],
+        lists: [],
         createdAt: new Date(),
       };
 
@@ -152,6 +153,136 @@ export function useAuth() {
     }
   }
 
+  async function createNewMediaList(listData, userId) {
+    try {
+      if (!listData || !userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const listExists = userDoc
+        .data()
+        .lists.find((list) => list.name === listData.title);
+
+      if (listExists) return;
+
+      await updateDoc(userRef, {
+        lists: arrayUnion(listData),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function checkIfListExists(name, userId) {
+    try {
+      if (!name || !userId) return false;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return false;
+
+      const existingList =
+        userDoc.data().lists.find((list) => list.name === name) || null;
+
+      return existingList !== null;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async function checkIfMediaExistsInList(name, mediaId, userId) {
+    try {
+      if (!mediaId || !name || !userId) return false;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return false;
+
+      const existingList = userDoc
+        .data()
+        .lists.find((list) => list.name === name);
+
+      return existingList.media.includes(mediaId);
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async function addMediaToList(mediaId, name, userId) {
+    try {
+      if (!mediaId || !name || !userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      if (
+        !(await checkIfListExists(name, userId)) ||
+        (await checkIfMediaExistsInList(name, mediaId, userId))
+      ) {
+        return;
+      }
+
+      // Create new merged list with existing media and new media
+      const mergedList = userDoc.data().lists.map((list) => {
+        return list.name === name
+          ? {
+              ...list,
+              media: [...list.media, mediaId],
+            }
+          : list;
+      });
+
+      await updateDoc(userRef, {
+        lists: mergedList,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUserLists(userId) {
+    try {
+      if (!userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      return userDoc.data().lists;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUserListByTitle(name, userId) {
+    try {
+      if (!userId || !name) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const existingList = userDoc
+        .data()
+        .lists.find((list) => list.name === name);
+
+      return existingList;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     signup,
     usernameAvailable,
@@ -162,5 +293,10 @@ export function useAuth() {
     searchByUsername,
     followUser,
     getFollowingById,
+    checkIfListExists,
+    createNewMediaList,
+    addMediaToList,
+    getUserLists,
+    getUserListByTitle,
   };
 }

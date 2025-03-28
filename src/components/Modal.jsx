@@ -1,11 +1,4 @@
-import ReviewForm from "./Review/ReviewForm";
-
-export default function Modal({
-  isModalOpen,
-  setIsModalOpen,
-  mediaId,
-  category,
-}) {
+export default function Modal({ children, isModalOpen, setIsModalOpen }) {
   function onClose() {
     setIsModalOpen(false);
   }
@@ -16,7 +9,7 @@ export default function Modal({
       onClick={onClose}
     >
       <div
-        className={`fixed top-1/2 left-1/2 w-1/2 -translate-1/2 rounded-sm bg-stone-900 transition-all ${isModalOpen ? "scale-100 opacity-100" : "scale-50 opacity-0"}`}
+        className={`fixed top-1/2 left-1/2 -translate-1/2 rounded-sm bg-stone-900 p-10 text-lg transition-all ${isModalOpen ? "scale-100 opacity-100" : "scale-50 opacity-0"}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -26,14 +19,7 @@ export default function Modal({
           &times;
         </button>
 
-        <div>
-          <ReviewForm
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            mediaId={mediaId}
-            category={category}
-          />
-        </div>
+        <div>{children}</div>
       </div>
     </div>
   );

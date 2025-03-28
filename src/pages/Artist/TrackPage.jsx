@@ -6,9 +6,12 @@ import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ListButton from "../../components/Buttons/ListButton";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
 export default function TrackPage() {
   const { getTrackById } = useSpotifyContext();
+  const { isModalOpen, setIsModalOpen } = useReviewContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [track, setTrack] = useState([]);
@@ -50,10 +53,17 @@ export default function TrackPage() {
       </Link>
 
       <div className="flex gap-8">
-        <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
+        <div className="flex h-screen flex-2 flex-col items-center gap-4 py-6">
           <MediaCard
             media={track}
             onClick={() => window.open(track.external_urls.spotify)}
+          />
+
+          <ListButton
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            media={{ mediaId: track.id, mediaName: track.name }}
+            category={"track"}
           />
         </div>
         <div className="h-screen flex-1 overflow-auto py-6">

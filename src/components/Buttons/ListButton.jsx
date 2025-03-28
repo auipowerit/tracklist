@@ -3,12 +3,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
 import { useAuthContext } from "../../context/Auth/AuthContext";
-import ReviewForm from "../Review/ReviewForm";
+import ListForm from "../List/ListForm";
 
-export default function PostButton({
+export default function ListButton({
   isModalOpen,
   setIsModalOpen,
-  mediaId,
+  media,
   category,
 }) {
   const { globalUser } = useAuthContext();
@@ -26,22 +26,22 @@ export default function PostButton({
   return (
     <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <ReviewForm
+        <ListForm
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          mediaId={mediaId}
+          media={media}
           category={category}
         />
       </Modal>
 
       <button
-        className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 hover:text-gray-400"
+        className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 text-lg hover:text-gray-400"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
         onClick={handleClick}
       >
         <FontAwesomeIcon icon={faPlus} />
-        <p>Post</p>
+        <p>Add to List</p>
       </button>
     </div>
   );

@@ -23,6 +23,7 @@ export default function MediaReviews({ mediaId, category }) {
     <div className="flex h-full flex-col gap-4">
       <div className="flex items-center justify-between align-middle">
         <p className="text-2xl text-gray-400">User Reviews</p>
+        
         <PostButton
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
