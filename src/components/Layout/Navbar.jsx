@@ -59,9 +59,6 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li className="ml-auto">
-        <PostButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      </li>
-      <li>
         <div ref={dropdownRef} className="relative">
           <FaUser
             onClick={handleUserClick}

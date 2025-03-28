@@ -25,7 +25,6 @@ export default function TrackPage() {
       try {
         const fetchedTrack = await getTrackById(trackId);
         setTrack(fetchedTrack);
-        console.log(fetchedTrack);
       } catch (error) {
         console.log(error);
       } finally {
@@ -47,7 +46,7 @@ export default function TrackPage() {
         className="flex w-fit items-center gap-2 rounded-sm bg-green-700 p-2"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
-        <p>Back</p>
+        <p>Album</p>
       </Link>
 
       <div className="flex gap-8">

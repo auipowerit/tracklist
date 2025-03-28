@@ -8,6 +8,19 @@ export default function SearchResults({ results, category }) {
       ? "m-auto w-fit"
       : "m-auto grid w-fit grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
 
+  function getUrl(result) {
+    switch (result.type) {
+      case "artist":
+        return `/artists/${result.id}`;
+      case "album":
+        return `/artists/${result.artists[0].id}/albums/${result.id}`;
+      case "track":
+        return `/artists/${result.artists[0].id}/albums/${result.album.id}/tracks/${result.id}`;
+      default:
+        return `/users/${result.id}`;
+    }
+  }
+
   if (!results) {
     return;
   }
@@ -23,7 +36,7 @@ export default function SearchResults({ results, category }) {
   return (
     <div className={classes}>
       {results.map((result) => (
-        <Link key={result.id} to={`/${category}s/${result.id}`}>
+        <Link key={result.id} to={getUrl(result)}>
           {category === "user" ? (
             <UserCard user={result} />
           ) : (

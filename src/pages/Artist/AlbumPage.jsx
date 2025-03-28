@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TrackList from "./TrackList";
 import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
+import { formatDateMDYLong } from "../../utils/date";
 import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function AlbumPage() {
-  const { getAlbumById, getAlbumTracks } = useSpotifyContext();
+  const { getAlbumById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [album, setAlbum] = useState({});
@@ -25,10 +26,8 @@ export default function AlbumPage() {
 
       try {
         const fetchedAlbum = await getAlbumById(albumId);
-        const fetchedTracks = await getAlbumTracks(albumId);
-
         setAlbum(fetchedAlbum);
-        setTracks(fetchedTracks);
+        setTracks(fetchedAlbum.tracks.items);
       } catch (error) {
         console.log(error);
       } finally {
@@ -50,15 +49,19 @@ export default function AlbumPage() {
         className="flex w-fit items-center gap-2 rounded-sm bg-green-700 p-2"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
-        <p>Back</p>
+        <p>Artist</p>
       </Link>
       <div className="flex gap-8">
-        <div className="flex h-screen flex-2 items-start justify-center gap-8 overflow-auto py-6">
+        <div className="flex flex-2 items-start justify-center gap-8 py-6">
           <MediaCard
             media={album}
+            defaultSubtitle={formatDateMDYLong(album.release_date)}
             onClick={() => window.open(album.external_urls.spotify)}
           />
-          <TrackList artistId={artistId} album={album} tracks={tracks} />
+
+          <div className="h-screen overflow-auto px-8">
+            <TrackList artistId={artistId} album={album} tracks={tracks} />
+          </div>
         </div>
         <div className="h-screen flex-1 overflow-auto py-6">
           <MediaReviews mediaId={album.id} category={"album"} />

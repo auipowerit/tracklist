@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Loading from "../../components/Loading";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import Singles from "./Singles";
-import Albums from "./Albums";
-import MediaCard from "../../components/Cards/MediaCard";
+import { useParams } from "react-router-dom";
+import MediaList from "./MediaList";
 import MediaReviews from "./MediaReviews";
+import Loading from "../../components/Loading";
+import MediaCard from "../../components/Cards/MediaCard";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
   const { getArtistById, getArtistAlbums, getArtistSingles } =
@@ -39,7 +38,7 @@ export default function ArtistPage() {
     };
 
     getArtistData();
-  }, [params]);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -48,7 +47,7 @@ export default function ArtistPage() {
   return (
     <div className="mx-10 mt-6 flex flex-col gap-2">
       <div className="flex gap-8">
-        <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto py-6">
+        <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto p-10">
           {artist && (
             <MediaCard
               media={artist}
@@ -57,11 +56,19 @@ export default function ArtistPage() {
             />
           )}
 
-          <Albums artist={artist} albums={albums} setAlbums={setAlbums} />
-          <Singles singles={singles} setSingles={setSingles} />
+          <div className="flex gap-2">
+            {artist.genres.map((genre) => (
+              <p key={genre} className="rounded-sm bg-gray-700 p-2">
+                {genre}
+              </p>
+            ))}
+          </div>
+
+          <MediaList media={albums} setMedia={setAlbums} category={"album"} />
+          <MediaList media={singles} setMedia={setSingles} category={"track"} />
         </div>
         <div className="h-screen flex-1 overflow-auto py-6">
-          <MediaReviews mediaId={artist.id} category={"artist"} />
+          <MediaReviews mediaId={artistId} category={"artist"} />
         </div>
       </div>
     </div>

@@ -20,22 +20,28 @@ export default function ReviewCard({ review }) {
   });
 
   useEffect(() => {
-    const fetchMedia = () => {
-      const artist = review.media?.artists?.[0] || review.media || {};
+    const artist = review.media?.artists?.[0] || review.media || {};
+    const artistURL = `/artists/${artist?.id}`;
 
-      setMedia({
-        title: review.media?.name,
-        titleLink: `/artists/${artist?.id}/` || "",
-        subtitle: review.media?.artists?.[0]?.name || "",
-        subtitleLink: `/artists/${artist?.id}` || "",
-        image:
-          review.media?.images?.[0]?.url ||
-          review.media?.album?.images?.[0]?.url ||
-          defaultImg,
-      });
+    const mediaData = {
+      title: review.media?.name,
+      image: review.media?.images?.[0]?.url || defaultImg,
     };
 
-    return fetchMedia;
+    if (review.media.type === "artist") {
+      mediaData.titleLink = artistURL;
+    } else if (review.media.type === "album") {
+      mediaData.titleLink = `${artistURL}/albums/${review.media?.id}`;
+      mediaData.subtitle = review.media?.artists?.[0]?.name;
+      mediaData.subtitleLink = artistURL;
+    } else if (review.media.type === "track") {
+      mediaData.titleLink = `${artistURL}/albums/${review.media?.album?.id}/tracks/${review.media?.id}`;
+      mediaData.subtitle = review.media?.artists?.[0]?.name;
+      mediaData.subtitleLink = artistURL;
+      mediaData.image = review.media?.album?.images?.[0]?.url || defaultImg;
+    }
+
+    setMedia(mediaData);
   }, []);
 
   return (
