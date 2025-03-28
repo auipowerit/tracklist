@@ -1,4 +1,4 @@
-export default function LoginInput({ label, name, type, ...props }) {
+export default function AuthInput({ label, name, type, ...props }) {
   return (
     <div className="flex justify-between gap-4">
       <label htmlFor={name}>{label}</label>
