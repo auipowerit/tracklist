@@ -154,6 +154,23 @@ export function useAuth() {
     }
   }
 
+  async function deleteMediaList(listId, userId) {
+    try {
+      if (!listId || !userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      await updateDoc(userRef, {
+        lists: userDoc.data().lists.filter((list) => list.id !== listId),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function createNewMediaList(listData, userId) {
     try {
       if (!listData || !userId) return;
@@ -329,6 +346,7 @@ export function useAuth() {
     getFollowingById,
     checkIfListExists,
     createNewMediaList,
+    deleteMediaList,
     addMediaToList,
     getUserLists,
     getUserListByTitle,

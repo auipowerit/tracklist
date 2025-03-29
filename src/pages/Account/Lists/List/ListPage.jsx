@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { faArrowLeft, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useParams } from "react-router-dom";
 import MediaList from "./MediaList";
 import ListHeader from "./ListHeader";
 import Loading from "../../../../components/Loading";
@@ -47,7 +45,8 @@ export default function ListPage() {
             return {
               id: fetchedMedia.id,
               title: fetchedMedia.name,
-              subtitle: fetchedMedia.type,
+              subtitle:
+                fetchedMedia.type === "track" ? "song" : fetchedMedia.type,
               link:
                 fetchedMedia.type === "artist"
                   ? artistURL
@@ -78,20 +77,11 @@ export default function ListPage() {
   }
 
   return (
-    <div className="m-auto flex w-fit flex-col gap-6 p-8">
-      <Link
-        to={"/account/lists"}
-        className="flex w-fit items-center gap-2 rounded-sm bg-green-700 p-2 hover:text-gray-400"
-      >
-        <FontAwesomeIcon icon={faArrowLeft} />
-        <p>Back to Lists</p>
-      </Link>
-      {list && (
-        <div className="flex w-fit flex-col gap-8">
-          <ListHeader user={user} name={list.name} tags={list.tags} />
-          <MediaList mediaList={mediaList} isRanking={list.isRanking} />
-        </div>
-      )}
+    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
+      <ListHeader username={user.username} name={list.name} tags={list.tags} />
+      <div className="overflow-y-scroll border-t-1 border-white py-10">
+        {list && <MediaList mediaList={mediaList} isRanking={list.isRanking} />}
+      </div>
     </div>
   );
 }

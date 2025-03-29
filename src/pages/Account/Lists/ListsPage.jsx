@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../context/Auth/AuthContext";
 import Loading from "../../../components/Loading";
-import { Link } from "react-router-dom";
+import ListCard from "../../../components/Cards/ListCard";
+import ListButton from "../../../components/Buttons/ListButton";
+import { useSpotifyContext } from "../../../context/Spotify/SpotifyContext";
 
 export default function ListsPage() {
-  const { globalUser, getUserLists } = useAuthContext();
+  const defaultImg = "/images/default-img.jpg";
+
+  const { globalUser, getUserLists, getUserListById } = useAuthContext();
+  const { getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [lists, setLists] = useState(null);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -18,6 +25,26 @@ export default function ListsPage() {
       try {
         const fetchedLists = await getUserLists(globalUser.uid);
         setLists(fetchedLists);
+
+        const fetchedImages = await Promise.all(
+          fetchedLists.map(async (list) => {
+            if (list.media.length === 0) return defaultImg;
+
+            const fetchedMedia = await getMediaById(
+              list.media[0].id,
+              list.media[0].category,
+            );
+
+            const mediaImage =
+              fetchedMedia.images?.[0]?.url ||
+              fetchedMedia.album?.images?.[0]?.url ||
+              defaultImg;
+
+            return mediaImage;
+          }),
+        );
+
+        setImages(fetchedImages);
       } catch (error) {
         console.log(error);
       } finally {
@@ -33,37 +60,30 @@ export default function ListsPage() {
   }
 
   return (
-    <div className="m-auto w-fit">
-      <p className="w-fit border-b-1 border-white text-4xl">Your Lists</p>
-      {lists && (
-        <ul className="flex w-full flex-col gap-4">
-          {lists.map((list) => {
-            return (
-              <li
-                key={list.id}
-                className="mt-4 w-full cursor-pointer rounded-md p-4 hover:bg-gray-400"
-              >
-                <Link to={`${list.id}`}>
-                  <p className="font-bold">{list.name}</p>
-                  <p>{list.tagArray}</p>
-                  <div className="flex items-center justify-center gap-2">
-                    {list.tags.map((tag, index) => {
-                      return (
-                        <p
-                          key={index}
-                          className="rounded-sm bg-gray-600 px-2 py-1"
-                        >
-                          {tag}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
+      <div className="flex items-center justify-between align-middle">
+        <p className="text-2xl text-gray-400">Your Lists</p>
+        <ListButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      </div>
+      <div className="overflow-y-scroll">
+        {lists && (
+          <ul className="flex w-full flex-col gap-4">
+            {lists.map((list, index) => {
+              return (
+                <li key={list.id}>
+                  <ListCard
+                    id={list.id}
+                    image={images[index] || defaultImg}
+                    name={list.name}
+                    length={list.media.length}
+                    description={list.description}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

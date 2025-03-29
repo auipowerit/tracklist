@@ -41,7 +41,7 @@ export default function ListButton({
         onClick={handleClick}
       >
         <FontAwesomeIcon icon={faPlus} />
-        <p>Add to List</p>
+        <p>{media ? "Add to List" : "Create List"}</p>
       </button>
     </div>
   );

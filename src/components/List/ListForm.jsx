@@ -10,8 +10,17 @@ export default function ListForm({
 }) {
   const [newList, setNewList] = useState(false);
 
+  if (!media || !category)
+    return (
+      <NewList isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    );
+
   return newList ? (
-    <NewList isModalOpen={isModalOpen} setNewList={setNewList} />
+    <NewList
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      setNewList={setNewList}
+    />
   ) : (
     <AddToList
       isModalOpen={isModalOpen}

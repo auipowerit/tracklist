@@ -8,7 +8,7 @@ import {
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import FormInput from "../Inputs/FormInput";
 
-export default function NewList({ isModalOpen, setNewList }) {
+export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   const { globalUser, checkIfListExists, createNewMediaList } =
     useAuthContext();
 
@@ -48,13 +48,17 @@ export default function NewList({ isModalOpen, setNewList }) {
 
     await createNewMediaList(listData, globalUser.uid);
 
+    if (!setNewList) {
+      setIsModalOpen(false);
+      return;
+    }
+
     setNewList(false);
     resetValues();
   }
 
   function getValues() {
     const name = nameRef.current.value;
-    const tags = tagsRef.current.value;
     const isRanking = rankingRef.current.checked;
     const descr = descrRef.current.value;
 
@@ -62,14 +66,11 @@ export default function NewList({ isModalOpen, setNewList }) {
       return;
     }
 
-    const tagArray = tags === "" ? [] : tags.replace(/, /g, ",").split(",");
-    tagArray;
-
     const listData = {
       name,
-      tags: [...new Set(tagArray)], // Remove duplicates
+      tags: [...new Set(tags)], // Remove duplicates
       isRanking,
-      descr,
+      description: descr,
       media: [],
     };
 
@@ -81,7 +82,8 @@ export default function NewList({ isModalOpen, setNewList }) {
     tagsRef.current.value = "";
     rankingRef.current.checked = false;
     descrRef.current.value = "";
-    setNewList(false);
+    if (setNewList) setNewList(false);
+    setTags([]);
   }
 
   useEffect(() => {
@@ -148,14 +150,16 @@ export default function NewList({ isModalOpen, setNewList }) {
         </div>
       </div>
       <div className="flex justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => setNewList(false)}
-          className="flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-          <p>Back</p>
-        </button>
+        {setNewList && (
+          <button
+            type="button"
+            onClick={() => setNewList(false)}
+            className="flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+            <p>Back</p>
+          </button>
+        )}
         <button
           type="submit"
           className="flex items-center justify-center gap-1 rounded-md bg-green-700 px-4 py-2"
