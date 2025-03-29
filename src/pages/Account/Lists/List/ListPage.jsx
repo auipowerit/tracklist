@@ -89,7 +89,7 @@ export default function ListPage() {
       {list && (
         <div className="flex w-fit flex-col gap-8">
           <ListHeader user={user} name={list.name} tags={list.tags} />
-          <MediaList mediaList={mediaList} />
+          <MediaList mediaList={mediaList} isRanking={list.isRanking} />
         </div>
       )}
     </div>
