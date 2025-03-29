@@ -53,7 +53,7 @@ export function useSpotify() {
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=50&offset=49`,
         {
           method: "GET",
           headers: {
@@ -62,6 +62,7 @@ export function useSpotify() {
           },
         },
       );
+
       const albums = await response.json();
 
       return albums.items || [];

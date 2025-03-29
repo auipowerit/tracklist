@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import FormInput from "../Inputs/FormInput";
@@ -12,9 +12,10 @@ export default function AddToList(props) {
 
   const inputRef = useRef(null);
   const [lists, setLists] = useState(null);
+  const [currentLists, setCurrentLists] = useState([]);
   const [results, setResults] = useState([]);
 
-  function handleSearch() {
+  function searchForList() {
     if (!globalUser) return;
 
     const searchString = inputRef.current.value;
@@ -30,9 +31,17 @@ export default function AddToList(props) {
     setResults(filteredLists);
   }
 
-  function handleClick(list) {
-    inputRef.current.value = list.name;
+  function addToCurrentLists(list) {
+    setCurrentLists([...currentLists, list.name]);
+
+    inputRef.current.value = "";
     setResults([]);
+    setLists(lists.filter((item) => item.name !== list.name));
+  }
+
+  function removeFromCurrentLists(name) {
+    setCurrentLists(currentLists.filter((item) => item !== name));
+    setLists([...lists, { name }]);
   }
 
   async function handleSubmit(event) {
@@ -40,18 +49,21 @@ export default function AddToList(props) {
 
     if (!globalUser) return;
 
-    const searchString = inputRef.current.value;
-    if (searchString === "") return;
+    if (currentLists.length === 0) return;
 
-    if (await addMediaToList(mediaId, category, searchString, globalUser.uid)) {
-      setIsModalOpen(false);
+    for (const list of currentLists) {
+      await addMediaToList(mediaId, category, list, globalUser.uid);
     }
+
+    setIsModalOpen(false);
+    resetValues();
   }
 
   function resetValues() {
     inputRef.current.value = "";
     setLists(null);
     setResults([]);
+    setCurrentLists([]);
     setNewList(false);
   }
 
@@ -78,40 +90,64 @@ export default function AddToList(props) {
     >
       <p>Add "{mediaName}" to your list</p>
 
-      <div className="flex w-full items-center justify-center gap-4">
-        <div className="flex items-center justify-center gap-4">
-          <div className="relative">
-            <FormInput
-              type="text"
-              ref={inputRef}
-              onKeyUp={handleSearch}
-              placeholder="List name"
-              classes="border-1 border-white"
-            />
-            <div
-              className={`absolute top-10 right-0 left-0 flex w-full flex-col items-start bg-green-700 ${results.length > 0 && "overflow-auto p-2"}`}
-            >
-              {results?.map((list, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleClick(list)}
-                    className="hover:text-gray-400"
-                  >
-                    {list.name}
-                  </button>
-                );
-              })}
+      <div className="flex flex-col">
+        <div className="flex w-full items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4">
+            <div className="relative">
+              <FormInput
+                type="text"
+                ref={inputRef}
+                onKeyUp={searchForList}
+                placeholder="List name"
+                classes="border-1 border-white"
+              />
+              <div
+                className={`absolute top-10 right-0 left-0 flex w-full flex-col items-start bg-green-700 ${results.length > 0 && "overflow-auto p-2"}`}
+              >
+                {results?.map((list, index) => {
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => addToCurrentLists(list)}
+                      className="hover:text-gray-400"
+                    >
+                      {list.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          <button
-            onClick={() => setNewList(true)}
-            className="flex items-center gap-2"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-            <p>New List</p>
-          </button>
+            <button
+              type="button"
+              onClick={() => setNewList(true)}
+              className="flex items-center gap-2"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              <p>New List</p>
+            </button>
+          </div>
+        </div>
+        <div
+          className={`flex h-20 flex-col items-start gap-2 overflow-auto p-2`}
+        >
+          {currentLists?.map((name, index) => {
+            return (
+              <div
+                key={index}
+                className="flex items-center gap-2 rounded-sm bg-gray-700 px-2 py-1"
+              >
+                <p>{name}</p>
+                <button
+                  type="button"
+                  onClick={() => removeFromCurrentLists(name)}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
 
