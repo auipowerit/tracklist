@@ -143,12 +143,12 @@ export function useSpotify() {
 
       const media = await response.json();
 
-      const mediaImage =
+      const image =
         media.images?.[0]?.url || media.album?.images?.[0]?.url || defaultImg;
 
       const formattedMedia = {
         ...media,
-        image: mediaImage,
+        image,
       };
 
       return formattedMedia || [];
@@ -231,6 +231,30 @@ export function useSpotify() {
     }
   }
 
+  function getMediaLinks(media) {
+    const artist = media?.artists?.[0] || media || {};
+    const artistURL = `/artists/${artist?.id}`;
+
+    const mediaData = {
+      title: media?.name,
+      image: media?.images?.[0]?.url || defaultImg,
+    };
+
+    if (media.type === "artist") {
+      mediaData.titleLink = artistURL;
+    } else if (media.type === "album") {
+      mediaData.titleLink = `${artistURL}/albums/${media?.id}`;
+      mediaData.subtitle = media?.artists?.[0]?.name;
+      mediaData.subtitleLink = artistURL;
+    } else if (media.type === "track") {
+      mediaData.titleLink = `${artistURL}/albums/${media?.album?.id}/tracks/${media?.id}`;
+      mediaData.subtitle = media?.artists?.[0]?.name;
+      mediaData.subtitleLink = artistURL;
+    }
+
+    return mediaData;
+  }
+
   return {
     defaultImg,
     fetchAccessToken,
@@ -242,5 +266,6 @@ export function useSpotify() {
     getArtistById,
     getAlbumById,
     getTrackById,
+    getMediaLinks,
   };
 }

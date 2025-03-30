@@ -37,61 +37,63 @@ export default function Navbar() {
   }, []);
 
   return (
-    <ul className="flex items-center gap-6 px-6 py-4 text-2xl">
-      <li>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `${isActive ? "text-green-700" : "hover:text-gray-400"}`
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/search"
-          className={({ isActive }) =>
-            `${isActive ? "text-green-700" : "hover:text-gray-400"}`
-          }
-        >
-          Search
-        </NavLink>
-      </li>
-      <li className="ml-auto">
-        <div ref={dropdownRef} className="relative">
-          <FaUser
-            onClick={handleUserClick}
-            className={`cursor-pointer text-4xl ${
-              location.pathname.startsWith("/account")
-                ? "text-green-700"
-                : "text-white hover:text-gray-400"
-            }`}
-          />
-          <div
-            className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
-              showDropdown
-                ? "max-h-screen p-2 opacity-100"
-                : "max-h-0 opacity-0"
-            }`}
+    <div className="items-center bg-[#121212] py-4 text-2xl">
+      <ul className="m-auto flex w-3/5 items-center justify-evenly gap-6">
+        <li>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            }
           >
-            <DropdownMenu
-              items={[
-                { label: "Profile", path: "/account/profile" },
-                { label: "Lists", path: "/account/lists" },
-                { label: "Friends", path: "/account/friends" },
-                {
-                  label: "Logout",
-                  path: "/account/authenticate",
-                  action: logout,
-                },
-              ]}
-              onClose={() => setShowDropdown(false)}
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/search"
+            className={({ isActive }) =>
+              `${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            }
+          >
+            Search
+          </NavLink>
+        </li>
+        <li className="ml-auto">
+          <div ref={dropdownRef} className="relative">
+            <FaUser
+              onClick={handleUserClick}
+              className={`cursor-pointer text-4xl ${
+                location.pathname.startsWith("/account")
+                  ? "text-green-700"
+                  : "text-white hover:text-gray-400"
+              }`}
             />
+            <div
+              className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+                showDropdown
+                  ? "max-h-screen p-2 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <DropdownMenu
+                items={[
+                  { label: "Profile", path: "/account/profile" },
+                  { label: "Lists", path: "/account/lists" },
+                  { label: "Friends", path: "/account/friends" },
+                  {
+                    label: "Logout",
+                    path: "/account/authenticate",
+                    action: logout,
+                  },
+                ]}
+                onClose={() => setShowDropdown(false)}
+              />
+            </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   );
 
   function DropdownMenu({ items, onClose }) {

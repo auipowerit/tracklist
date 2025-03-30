@@ -7,3 +7,4 @@ export { default as ArtistPage } from "./Artist/ArtistPage";
 export { default as ListsPage } from "./Account/Lists/ListsPage";
 export { default as ListPage } from "./Account/Lists/List/ListPage";
 export { default as ErrorPage } from "./Error/ErrorPage";
+export { default as ReviewPage } from "./Review/ReviewPage";

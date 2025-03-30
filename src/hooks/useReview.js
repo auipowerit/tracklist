@@ -131,6 +131,27 @@ export function useReview() {
     }
   }
 
+  async function getReviewById(reviewId) {
+    try {
+      const reviewRef = doc(db, "reviews", reviewId);
+      const reviewDoc = await getDoc(reviewRef);
+
+      if (reviewDoc.exists()) {
+        return {
+          id: reviewDoc.id,
+          ...reviewDoc.data(),
+          username: (await getUserById(reviewDoc.data().userId)).username,
+          media: await getMediaById(
+            reviewDoc.data().mediaId,
+            reviewDoc.data().category,
+          ),
+        };
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   async function addReview(reviewInfo) {
     try {
       if (!reviewInfo) return false;
@@ -277,6 +298,7 @@ export function useReview() {
     getPopularReviews,
     getReviewsByUserId,
     getReviewsByMediaId,
+    getReviewById,
     addReview,
     deleteReview,
     likeReview,

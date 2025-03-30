@@ -8,48 +8,22 @@ import ReviewButtons from "../../pages/Home/ReviewButtons";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ReviewCard({ review }) {
-  const { defaultImg } = useSpotifyContext();
+  const { getMediaLinks } = useSpotifyContext();
 
   const navigate = useNavigate();
 
-  const [media, setMedia] = useState({
-    title: "",
-    titleLink: "",
-    subtitle: "",
-    subtitleLink: "",
-    image: defaultImg,
-  });
+  const [media, setMedia] = useState({});
 
   useEffect(() => {
-    const artist = review.media?.artists?.[0] || review.media || {};
-    const artistURL = `/artists/${artist?.id}`;
-
-    const mediaData = {
-      title: review.media?.name,
-      image: review.media?.images?.[0]?.url || defaultImg,
-    };
-
-    if (review.media.type === "artist") {
-      mediaData.titleLink = artistURL;
-    } else if (review.media.type === "album") {
-      mediaData.titleLink = `${artistURL}/albums/${review.media?.id}`;
-      mediaData.subtitle = review.media?.artists?.[0]?.name;
-      mediaData.subtitleLink = artistURL;
-    } else if (review.media.type === "track") {
-      mediaData.titleLink = `${artistURL}/albums/${review.media?.album?.id}/tracks/${review.media?.id}`;
-      mediaData.subtitle = review.media?.artists?.[0]?.name;
-      mediaData.subtitleLink = artistURL;
-      mediaData.image = review.media?.album?.images?.[0]?.url || defaultImg;
-    }
-
+    const mediaData = getMediaLinks(review.media);
     setMedia(mediaData);
   }, []);
 
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-2 transition-colors duration-75 hover:bg-slate-800">
+    <div className="flex cursor-pointer flex-col gap-2 p-2">
       <div className="flex items-center gap-4">
         <img
-          src={media.image}
+          src={review.media.image}
           className="aspect-square h-32 object-cover shadow-lg transition-all duration-300 hover:scale-110"
           onClick={() => navigate(media.titleLink)}
         />
@@ -91,7 +65,7 @@ export default function ReviewCard({ review }) {
 
       <p className="py-1 text-lg">{review.content}</p>
 
-      <ReviewButtons review={review} />
+      <ReviewButtons review={review} onPage={false} />
     </div>
   );
 }

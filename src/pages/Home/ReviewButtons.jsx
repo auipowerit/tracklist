@@ -4,8 +4,9 @@ import VoteButton from "../../components/Buttons/VoteButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
+import { Link } from "react-router-dom";
 
-export default function ReviewButtons({ review }) {
+export default function ReviewButtons({ review, onPage }) {
   const { globalUser } = useAuthContext();
   const {
     updateReviewState,
@@ -33,10 +34,20 @@ export default function ReviewButtons({ review }) {
         />
       </div>
 
-      <button className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400">
-        <FontAwesomeIcon icon={faComment} />
-        <p>{review?.comments.length || 0}</p>
-      </button>
+      {onPage ? (
+        <button className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400">
+          <FontAwesomeIcon icon={faComment} />
+          <p>{review?.comments.length || 0}</p>
+        </button>
+      ) : (
+        <Link
+          to={`/reviews/${review.id}`}
+          className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400"
+        >
+          <FontAwesomeIcon icon={faComment} />
+          <p>{review?.comments.length || 0}</p>
+        </Link>
+      )}
 
       {globalUser && globalUser.uid === review.userId && (
         <DeleteButton

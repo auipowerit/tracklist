@@ -21,7 +21,7 @@ export default function MediaList({ media, setMedia, category }) {
       </div>
 
       {media && media.length > 0 ? (
-        <div className="grid w-fit gap-8 gap-x-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid w-fit gap-8 gap-x-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
           {media.map((music) => {
             const artistId = music.artists?.[0]?.id || "";
 

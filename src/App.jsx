@@ -51,6 +51,11 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
+          path: "/reviews/:reviewId/",
+          element: <Pages.ReviewPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
           path: "*",
           element: <Pages.ErrorPage is404={true} />,
           errorElement: <Pages.ErrorPage is404={false} />,
