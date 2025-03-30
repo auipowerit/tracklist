@@ -71,7 +71,8 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
       name,
       tags: [...new Set(tags)], // Remove duplicates
       isRanking,
-      descr,
+      isPrivate,
+      description,
       media: [],
     };
 
@@ -82,8 +83,10 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
     nameRef.current.value = "";
     tagsRef.current.value = "";
     rankingRef.current.checked = false;
-    descrRef.current.value = "";
-    setNewList(false);
+    visibilityRef.current.checked = false;
+    setDescription("");
+    if (setNewList) setNewList(false);
+    setTags([]);
   }
 
   useEffect(() => {
