@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRating from "./StarRating";
+import FormInput from "../Inputs/FormInput";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ReviewForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
-  const defaultImage = "/images/default-img.jpg";
 
   const { globalUser, getUserById } = useAuthContext();
-  const { searchByName, getMediaById } = useSpotifyContext();
+  const { defaultImg, searchByName, getMediaById } = useSpotifyContext();
   const { addReview, setReviews } = useReviewContext();
 
   const [type, setType] = useState("artist");
@@ -115,7 +115,7 @@ export default function ReviewForm(props) {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="m-auto flex w-4/5 flex-col items-center justify-center gap-6 py-6"
+      className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
     >
       <p className="text-3xl font-bold">Add a review</p>
       <div className="flex w-full items-center justify-center gap-6">
@@ -123,18 +123,18 @@ export default function ReviewForm(props) {
           src={
             media?.images?.[0].url ||
             media?.album?.images?.[0].url ||
-            defaultImage
+            defaultImg
           }
           className="aspect-square h-48 object-cover shadow-lg"
         />
         <div className="flex h-48 flex-col justify-center gap-2 text-xl">
           <div className="relative flex gap-2">
-            <input
-              ref={inputRef}
+            <FormInput
               type="search"
+              ref={inputRef}
               placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
               onKeyUp={handleSearch}
-              className="bg-white px-2 py-1 text-black"
+              classes="bg-white text-black"
             />
 
             <select value={type} onChange={handleChange}>
@@ -174,7 +174,7 @@ export default function ReviewForm(props) {
         ref={textareaRef}
         placeholder="Write your review..."
         rows="5"
-        className="w-full bg-white text-black"
+        className="w-full bg-white text-black outline-none"
       ></textarea>
 
       <button

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import FormInput from "../../components/Inputs/FormInput";
 
 export default function SearchBar(props) {
   const { category, handleSubmit } = props;
@@ -32,11 +33,12 @@ export default function SearchBar(props) {
       className="flex w-1/3 items-center justify-center gap-4"
       onSubmit={handleSearch}
     >
-      <input
+      <FormInput
         ref={searchInput}
         placeholder={placeholderMap[category]}
-        className="w-full rounded-md border-2 border-white px-2 py-1 text-2xl outline-hidden"
+        classes="rounded-md border-white text-2xl border-2"
       />
+
       <button
         type="submit"
         className="rounded-md bg-green-700 px-4 py-2 text-2xl transition-all duration-150 hover:text-gray-400"

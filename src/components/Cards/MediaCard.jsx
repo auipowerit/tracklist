@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { formatDateMDYLong } from "../../utils/date";
 import ReviewStars from "../Review/ReviewStars";
 import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
-export default function MediaCard({ media, onClick, showImage = true }) {
+export default function MediaCard(props) {
+  const { media, defaultSubtitle, onClick, showImage = true } = props;
+
   const defaultDate = "01/01/2000";
-  const defaultImg = "/images/default-img.jpg";
 
   const { getAvgRating } = useReviewContext();
+  const { defaultImg } = useSpotifyContext();
 
   const [fetchedMedia, setFetchedMedia] = useState({
     title: "",
@@ -25,16 +28,20 @@ export default function MediaCard({ media, onClick, showImage = true }) {
       setFetchedMedia({
         title: media?.name,
 
-        subtitle: media.followers ? (
-          <>
-            {media?.followers?.total.toLocaleString()}
-            {media?.followers?.total === 1 ? " follower" : " followers"}
-          </>
-        ) : (
-          media.artists?.[0]?.name ||
-          formatDateMDYLong(media.album?.release_date || media?.release_date) ||
-          defaultDate
-        ),
+        subtitle:
+          defaultSubtitle ||
+          (media.followers ? (
+            <>
+              {media?.followers?.total.toLocaleString()}
+              {media?.followers?.total === 1 ? " follower" : " followers"}
+            </>
+          ) : (
+            media.artists?.[0]?.name ||
+            formatDateMDYLong(
+              media.album?.release_date || media?.release_date,
+            ) ||
+            defaultDate
+          )),
 
         image:
           media.album?.images?.[0]?.url || media.images?.[0]?.url || defaultImg,

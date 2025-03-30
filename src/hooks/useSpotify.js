@@ -4,6 +4,8 @@ export function useSpotify() {
   const CLIENT_ID = "548a9a9d3fde4f158dd279cd9b6611bf";
   const CLIENT_SECRET = "36cc595e343e4d9ea93827c801a7fd49";
 
+  const defaultImg = "/images/default-img.jpg";
+
   const [accessToken, setAccessToken] = useState("");
 
   async function fetchAccessToken() {
@@ -53,7 +55,7 @@ export function useSpotify() {
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=50`,
         {
           method: "GET",
           headers: {
@@ -62,6 +64,7 @@ export function useSpotify() {
           },
         },
       );
+
       const albums = await response.json();
 
       return albums.items || [];
@@ -140,7 +143,15 @@ export function useSpotify() {
 
       const media = await response.json();
 
-      return media || [];
+      const mediaImage =
+        media.images?.[0]?.url || media.album?.images?.[0]?.url || defaultImg;
+
+      const formattedMedia = {
+        ...media,
+        image: mediaImage,
+      };
+
+      return formattedMedia || [];
     } catch (error) {
       console.error(error);
     }
@@ -221,6 +232,7 @@ export function useSpotify() {
   }
 
   return {
+    defaultImg,
     fetchAccessToken,
     searchByName,
     getArtistAlbums,
