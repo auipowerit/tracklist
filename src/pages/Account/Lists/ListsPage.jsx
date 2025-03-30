@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../context/Auth/AuthContext";
 import Loading from "../../../components/Loading";
@@ -58,6 +59,14 @@ export default function ListsPage() {
   if (isLoading) {
     return <Loading />;
   }
+=======
+import { useState } from "react";
+import ListButton from "../../../components/Buttons/ListButton";
+import ListList from "./List/ListList";
+
+export default function ListsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+>>>>>>> 18a6fba (0.1.13 Update)
 
   return (
     <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
@@ -65,6 +74,7 @@ export default function ListsPage() {
         <p className="text-2xl text-gray-400">Your Lists</p>
         <ListButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
+<<<<<<< HEAD
       <div className="overflow-y-scroll">
         {lists && (
           <ul className="flex w-full flex-col gap-4">
@@ -84,6 +94,9 @@ export default function ListsPage() {
           </ul>
         )}
       </div>
+=======
+      <ListList />
+>>>>>>> 18a6fba (0.1.13 Update)
     </div>
   );
 }

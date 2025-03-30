@@ -15,6 +15,7 @@ export default function ListCard({ id, image, name, length, description }) {
   }
 
   return (
+<<<<<<< HEAD
     <div className="border-box flex gap-4 border-t-1 border-white pt-6">
       <img src={image} className="w-46" />
       <div className="flex flex-col gap-2">
@@ -22,12 +23,26 @@ export default function ListCard({ id, image, name, length, description }) {
           <Link to={`${id}`} className="text-2xl font-bold hover:text-gray-400">
             {name}
           </Link>
+=======
+    <Link
+      to={`${id}`}
+      className="border-box mt-6 flex cursor-pointer gap-4 hover:bg-gray-800"
+    >
+      <img src={image} className="w-46" />
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
+          <p className="text-2xl font-bold">{name}</p>
+>>>>>>> 18a6fba (0.1.13 Update)
           <p className="text-gray-400">
             {length === 0 ? "No" : length} {length === 1 ? "entry" : "entries"}
           </p>
         </div>
         <p>{description}</p>
       </div>
+<<<<<<< HEAD
     </div>
+=======
+    </Link>
+>>>>>>> 18a6fba (0.1.13 Update)
   );
 }

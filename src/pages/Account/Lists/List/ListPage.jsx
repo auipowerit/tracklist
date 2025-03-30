@@ -7,10 +7,8 @@ import { useAuthContext } from "../../../../context/Auth/AuthContext";
 import { useSpotifyContext } from "../../../../context/Spotify/SpotifyContext";
 
 export default function ListPage() {
-  const defaultImg = "/images/default-img.jpg";
-
   const { globalUser, getUserById, getUserListById } = useAuthContext();
-  const { getMediaById } = useSpotifyContext();
+  const { defaultImg, getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [list, setList] = useState(null);

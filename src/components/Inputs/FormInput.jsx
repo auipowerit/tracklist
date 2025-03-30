@@ -5,7 +5,7 @@ export default function FormInput(props) {
     <>
       {label && <label htmlFor={name}>{label}</label>}
       <input
-        name={name}
+        id={name}
         type={type}
         ref={ref}
         placeholder={placeholder}

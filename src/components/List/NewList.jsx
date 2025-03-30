@@ -5,32 +5,33 @@ import {
   faPlus,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "../../context/Auth/AuthContext";
 import FormInput from "../Inputs/FormInput";
+import { useAuthContext } from "../../context/Auth/AuthContext";
 
 export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   const { globalUser, checkIfListExists, createNewMediaList } =
     useAuthContext();
+
+  const characterLimit = 150;
 
   const [tags, setTags] = useState([]);
 
   const nameRef = useRef(null);
   const tagsRef = useRef(null);
   const rankingRef = useRef(null);
-  const descrRef = useRef(null);
+  const visibilityRef = useRef(null);
+  const [description, setDescription] = useState("");
 
   function addTag(e) {
-    if (e.key === ",") {
-      if (tagsRef.current.value === "") return;
+    if (e.key !== "," || tagsRef.current.value === "") return;
 
-      const newTag = tagsRef.current.value.slice(0, -1);
+    const newTag = tagsRef.current.value.slice(0, -1);
 
-      if (!tags.includes(newTag)) {
-        setTags([...tags, newTag]);
-      }
-
-      tagsRef.current.value = "";
+    if (!tags.includes(newTag)) {
+      setTags([...tags, newTag]);
     }
+
+    tagsRef.current.value = "";
   }
 
   function removeTag(tag) {
@@ -60,9 +61,9 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   function getValues() {
     const name = nameRef.current.value;
     const isRanking = rankingRef.current.checked;
-    const descr = descrRef.current.value;
+    const isPrivate = visibilityRef.current.checked;
 
-    if (name === "" || descr === "" || !globalUser) {
+    if (name === "" || description === "" || !globalUser) {
       return;
     }
 
@@ -70,7 +71,7 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
       name,
       tags: [...new Set(tags)], // Remove duplicates
       isRanking,
-      description: descr,
+      descr,
       media: [],
     };
 
@@ -82,8 +83,7 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
     tagsRef.current.value = "";
     rankingRef.current.checked = false;
     descrRef.current.value = "";
-    if (setNewList) setNewList(false);
-    setTags([]);
+    setNewList(false);
   }
 
   useEffect(() => {
@@ -136,16 +136,42 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
               })}
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <FormInput type="checkbox" ref={rankingRef} />
-            <p>Ranking</p>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <FormInput name="ranking" type="checkbox" ref={rankingRef} />
+              <label htmlFor="ranking">Ranking</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <FormInput
+                name="visibility"
+                type="checkbox"
+                ref={visibilityRef}
+              />
+              <label htmlFor="visibility">Private</label>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <p>Description</p>
+          <div className="flex items-center justify-between">
+            <label htmlFor="description">Description</label>
+            <p
+              className={`text-sm ${description.length >= characterLimit ? "text-red-600" : "text-gray-400"}`}
+            >
+              {description.length || 0}/{characterLimit}
+            </p>
+          </div>
+
           <textarea
-            ref={descrRef}
-            className="h-full border-1 border-white px-2 py-1"
+            id="description"
+            value={description}
+            onChange={(e) => {
+              if (e.target.value.length > characterLimit) {
+                setDescription(e.target.value.slice(0, characterLimit));
+                return;
+              }
+              setDescription(e.target.value);
+            }}
+            className="h-full border-1 border-white px-2 py-1 outline-none"
           />
         </div>
       </div>

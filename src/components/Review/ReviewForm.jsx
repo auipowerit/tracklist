@@ -9,10 +9,9 @@ import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ReviewForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
-  const defaultImage = "/images/default-img.jpg";
 
   const { globalUser, getUserById } = useAuthContext();
-  const { searchByName, getMediaById } = useSpotifyContext();
+  const { defaultImg, searchByName, getMediaById } = useSpotifyContext();
   const { addReview, setReviews } = useReviewContext();
 
   const [type, setType] = useState("artist");
@@ -124,7 +123,7 @@ export default function ReviewForm(props) {
           src={
             media?.images?.[0].url ||
             media?.album?.images?.[0].url ||
-            defaultImage
+            defaultImg
           }
           className="aspect-square h-48 object-cover shadow-lg"
         />
@@ -175,7 +174,7 @@ export default function ReviewForm(props) {
         ref={textareaRef}
         placeholder="Write your review..."
         rows="5"
-        className="w-full bg-white text-black"
+        className="w-full bg-white text-black outline-none"
       ></textarea>
 
       <button

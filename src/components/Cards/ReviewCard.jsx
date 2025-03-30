@@ -5,9 +5,10 @@ import { getTimeSince } from "../../utils/date";
 import { Link, useNavigate } from "react-router-dom";
 import ReviewStars from "../Review/ReviewStars";
 import ReviewButtons from "../../pages/Home/ReviewButtons";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ReviewCard({ review }) {
-  const defaultImg = "/images/default-img.jpg";
+  const { defaultImg } = useSpotifyContext();
 
   const navigate = useNavigate();
 
