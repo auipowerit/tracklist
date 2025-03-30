@@ -108,6 +108,7 @@ export function useSpotify() {
           },
         },
       );
+
       const tracks = await response.json();
 
       return tracks.items || [];

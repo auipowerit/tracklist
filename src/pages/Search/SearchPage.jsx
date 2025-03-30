@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SearchTabs from "./SearchTabs";
 import SearchMedia from "./SearchMedia";
+import Tabs from "../../components/Tabs";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");
@@ -15,7 +15,7 @@ export default function SearchPage() {
 
   return (
     <div className="flex flex-col gap-8 p-6">
-      <SearchTabs
+      <Tabs
         tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}

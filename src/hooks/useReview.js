@@ -7,6 +7,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -39,6 +41,42 @@ export function useReview() {
     } catch (error) {
       console.error(error.message);
       return [];
+    }
+  }
+
+  async function getPopularReviews() {
+    try {
+      const reviewsRef = collection(db, "reviews");
+
+      const earliestDate = new Date();
+      earliestDate.setDate(earliestDate.getDate() - 2);
+
+      // Get the 20 most liked reviews from the last 2 days
+      const q = query(
+        reviewsRef,
+        where("createdAt", ">", earliestDate),
+        orderBy("likes", "desc"),
+        orderBy("createdAt", "desc"),
+        limit(20),
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) return [];
+
+      const popularReviews = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+            username: (await getUserById(doc.data().userId)).username,
+            media: await getMediaById(doc.data().mediaId, doc.data().category),
+          };
+        }),
+      );
+
+      return popularReviews;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -236,6 +274,7 @@ export function useReview() {
 
   return {
     getReviews,
+    getPopularReviews,
     getReviewsByUserId,
     getReviewsByMediaId,
     addReview,

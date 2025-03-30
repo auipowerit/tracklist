@@ -4,6 +4,8 @@ import Loading from "../../components/Loading";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 import Singles from "./Singles";
 import Albums from "./Albums";
+import MediaCard from "../../components/Cards/MediaCard";
+import MediaReviews from "./MediaReviews";
 
 export default function ArtistPage() {
   const { getArtistById, getArtistAlbums, getArtistSingles } =

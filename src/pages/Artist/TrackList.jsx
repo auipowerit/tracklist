@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import TrackCard from "./TrackCard";
 
-export default function TrackList({ artistId, album, tracks }) {
+export default function TrackList({ artistId, albumId, tracks }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-4xl font-bold">Tracks</p>
@@ -12,7 +12,7 @@ export default function TrackList({ artistId, album, tracks }) {
             return (
               <li key={track.id}>
                 <Link
-                  to={`/artists/${artistId}/albums/${album.id}/tracks/${track.id}`}
+                  to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
                 >
                   <TrackCard number={track.track_number} track={track} />
                 </Link>

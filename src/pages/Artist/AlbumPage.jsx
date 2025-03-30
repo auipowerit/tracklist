@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TrackList from "./TrackList";
 import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
@@ -7,9 +7,10 @@ import MediaCard from "../../components/Cards/MediaCard";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function AlbumPage() {
-  const { getAlbumById, getAlbumTracks } = useSpotifyContext();
+  const { getArtistById, getAlbumById, getAlbumTracks } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [artist, setArtist] = useState([]);
   const [album, setAlbum] = useState({});
   const [tracks, setTracks] = useState([]);
 
@@ -22,9 +23,11 @@ export default function AlbumPage() {
       setIsLoading(true);
 
       try {
+        const fetchedArtist = await getArtistById(artistId);
         const fetchedAlbum = await getAlbumById(albumId);
-        const fetchedTracks = await getAlbumTracks(album.id);
+        const fetchedTracks = await getAlbumTracks(albumId);
 
+        setArtist(fetchedArtist);
         setAlbum(fetchedAlbum);
         setTracks(fetchedTracks);
       } catch (error) {
@@ -44,7 +47,7 @@ export default function AlbumPage() {
   return (
     <div className="mx-10 mt-6 flex flex-col gap-2">
       <div className="flex items-center gap-2 font-bold tracking-wider">
-        <Link to={`/artists/${artistId}`}>{artistId}</Link>
+        <Link to={`/artists/${artistId}`}>{artist.name}</Link>
         <span>&#x2022;</span>
         <Link
           to={`/artists/${artistId}/albums/${albumId}`}
@@ -52,7 +55,6 @@ export default function AlbumPage() {
         >
           {album.name}
         </Link>
-        <span>&#x2022;</span>
       </div>
       <div className="flex gap-8">
         <div className="flex h-screen flex-2 items-start justify-center gap-8 overflow-auto py-6">
@@ -60,7 +62,7 @@ export default function AlbumPage() {
             media={album}
             onClick={() => window.open(album.external_urls.spotify)}
           />
-          <TrackList artist={artistId} album={album} tracks={tracks} />
+          <TrackList artistId={artistId} albumId={albumId} tracks={tracks} />
         </div>
         <div className="h-screen flex-1 overflow-auto py-6">
           <MediaReviews mediaId={album.id} category={"album"} />

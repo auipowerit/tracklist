@@ -1,5 +1,5 @@
 import Loading from "../../components/Loading";
-import ReviewList from "./ReviewList";
+import Feed from "./Feed";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 
@@ -22,5 +22,5 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  return <ReviewList reviews={reviews} />;
+  return <Feed reviews={reviews} />;
 }

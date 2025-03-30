@@ -1,8 +1,8 @@
-export default function SearchTabs(props) {
+export default function Tabs(props) {
   const { tabs, activeTab, setActiveTab, setResults } = props;
 
   function handleClick(tab) {
-    setResults(null);
+    setResults && setResults(null);
     setActiveTab(tab.id);
   }
 
