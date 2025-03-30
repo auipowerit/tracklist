@@ -4,11 +4,10 @@ import MediaList from "./MediaList";
 import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
 import MediaCard from "../../components/Cards/MediaCard";
+import ListButton from "../../components/Buttons/ListButton";
+import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import Singles from "./Singles";
-import Albums from "./Albums";
-import MediaCard from "../../components/Cards/MediaCard";
-import MediaReviews from "./MediaReviews";
 
 export default function ArtistPage() {
   const { globalUser, getUserLists } = useAuthContext();

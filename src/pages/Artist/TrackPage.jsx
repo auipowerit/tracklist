@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
 import MediaCard from "../../components/Cards/MediaCard";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ListButton from "../../components/Buttons/ListButton";
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function TrackPage() {
   const { getArtistById, getAlbumById, getTrackById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [artist, setArtist] = useState([]);
   const [album, setAlbum] = useState([]);
   const [track, setTrack] = useState([]);
