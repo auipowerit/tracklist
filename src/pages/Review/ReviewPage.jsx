@@ -1,32 +1,40 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
+import CommentList from "./CommentList";
 import Loading from "../../components/Loading";
 import { useReview } from "../../hooks/useReview";
-import ReviewButtons from "../Home/ReviewButtons";
-import ReviewStars from "../../components/Review/ReviewStars";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { useCommentContext } from "../../context/Comment/CommentContext";
+import Review from "./Review";
+import BackButton from "../../components/Buttons/BackButton";
 
 export default function ReviewPage() {
   const { getReviewById } = useReview();
+  const { getCommentsByReviewId } = useCommentContext();
   const { getMediaLinks } = useSpotifyContext();
 
   const params = useParams();
+
+  const reviewId = params?.reviewId;
+
   const [isLoading, setIsLoading] = useState(true);
   const [review, setReview] = useState({});
   const [mediaData, setMediaData] = useState({});
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     const fetchReview = async () => {
       setIsLoading(true);
 
       try {
-        const fetchedReview = await getReviewById(params.reviewId);
+        const fetchedReview = await getReviewById(reviewId);
         setReview(fetchedReview);
 
         const fetchedMedia = getMediaLinks(fetchedReview.media);
         setMediaData(fetchedMedia);
+
+        const fetchedComments = await getCommentsByReviewId(reviewId);
+        setComments(fetchedComments);
       } catch (error) {
         console.log(error);
       } finally {
@@ -42,37 +50,19 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
-      <Link
-        to="/"
-        className="flex w-fit items-center gap-2 rounded-sm bg-green-700 px-3 py-2"
-      >
-        <FontAwesomeIcon icon={faArrowLeft} />
-        Back
-      </Link>
+    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-6">
+      <BackButton targetURL="/" />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex items-end gap-4 border-b-1 border-white pb-4">
-          <img src={review.media.image} className="w-40" />
-          <div className="flex w-full flex-col gap-2">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faUserCircle} />
-                <p>Review by {review.username}</p>
-              </div>
-              <p className="text-sm text-gray-400">
-                {review.createdAt.toDate().toDateString()}
-              </p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <p className="text-xl">{review.content}</p>
-              <ReviewStars rating={review.rating} />
-            </div>
-            <ReviewButtons review={review} onPage={true} />
-          </div>
-        </div>
-      </div>
-      <div>comments</div>
+      <Review
+        review={review}
+        mediaTitle={mediaData.title}
+        mediaSubtitle={mediaData.subtitle}
+      />
+      <CommentList
+        comments={comments}
+        setComments={setComments}
+        reviewId={reviewId}
+      />
     </div>
   );
 }

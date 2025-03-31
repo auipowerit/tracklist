@@ -35,7 +35,7 @@ export default function ReviewButtons({ review, onPage }) {
       </div>
 
       {onPage ? (
-        <button className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400">
+        <button className="flex items-center gap-1">
           <FontAwesomeIcon icon={faComment} />
           <p>{review?.comments.length || 0}</p>
         </button>

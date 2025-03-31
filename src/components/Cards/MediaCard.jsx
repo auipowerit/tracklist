@@ -5,7 +5,7 @@ import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function MediaCard(props) {
-  const { media, defaultSubtitle, onClick, showImage = true } = props;
+  const { media, defaultSubtitle, onClick } = props;
 
   const defaultDate = "01/01/2000";
 
@@ -56,7 +56,7 @@ export default function MediaCard(props) {
       className="flex w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      {showImage && <img src={fetchedMedia.image} className="h-72" />}
+      <img src={fetchedMedia.image} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
         <p className="text-xl font-bold">{fetchedMedia.title}</p>
         <p className="text-sm font-light">{fetchedMedia.subtitle}</p>

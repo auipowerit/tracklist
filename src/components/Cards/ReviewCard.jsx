@@ -20,18 +20,18 @@ export default function ReviewCard({ review }) {
   }, []);
 
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-2">
+    <div className="flex flex-col gap-2 p-2">
       <div className="flex items-center gap-4">
         <img
           src={review.media.image}
-          className="aspect-square h-32 object-cover shadow-lg transition-all duration-300 hover:scale-110"
+          className="aspect-square h-32 cursor-pointer object-cover shadow-lg transition-all duration-300 hover:scale-110"
           onClick={() => navigate(media.titleLink)}
         />
 
         <div className="flex flex-col justify-center gap-4">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <div className="flex items-center gap-1 hover:text-gray-400">
+              <div className="flex cursor-pointer items-center gap-1 hover:text-gray-400">
                 <FontAwesomeIcon icon={faUserCircle} />
                 <p className="font-semibold">{review.username} </p>
               </div>
