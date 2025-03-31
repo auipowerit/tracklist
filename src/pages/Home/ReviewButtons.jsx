@@ -4,10 +4,12 @@ import VoteButton from "../../components/Buttons/VoteButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCommentContext } from "../../context/Comment/CommentContext";
 
 export default function ReviewButtons({ review, onPage }) {
   const { globalUser } = useAuthContext();
+  const { deleteComment } = useCommentContext();
   const {
     updateReviewState,
     likeReview,
@@ -16,6 +18,38 @@ export default function ReviewButtons({ review, onPage }) {
     getReviews,
     deleteReview,
   } = useReviewContext();
+
+  const navigate = useNavigate();
+
+  async function handleDelete() {
+    const comments = review.comments;
+
+    if (!review.id) return;
+
+    // Delete each comment from comments db
+    if (comments.length > 0) {
+      await Promise.all(
+        comments.map(async (comment) => {
+          await deleteComment(comment);
+        }),
+      );
+    }
+
+    // Delete review
+    await deleteReview(review.id);
+
+    // Fetch updated review from Firestore
+    const reviewData = await getReviews();
+
+    // Filter out any reviews from useState not found in Firestore state
+    setReviews((prevReviews) =>
+      prevReviews.filter((r) =>
+        reviewData.some((review) => review.id === r.id),
+      ),
+    );
+
+    navigate("/");
+  }
 
   return (
     <div className="ml-1 flex items-center gap-4">
@@ -34,12 +68,7 @@ export default function ReviewButtons({ review, onPage }) {
         />
       </div>
 
-      {onPage ? (
-        <button className="flex items-center gap-1">
-          <FontAwesomeIcon icon={faComment} />
-          <p>{review?.comments.length || 0}</p>
-        </button>
-      ) : (
+      {!onPage && (
         <Link
           to={`/reviews/${review.id}`}
           className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400"
@@ -50,12 +79,7 @@ export default function ReviewButtons({ review, onPage }) {
       )}
 
       {globalUser && globalUser.uid === review.userId && (
-        <DeleteButton
-          content={review}
-          deleteContent={deleteReview}
-          getContent={getReviews}
-          setContent={setReviews}
-        />
+        <DeleteButton type="review" deleteContent={handleDelete} />
       )}
     </div>
   );

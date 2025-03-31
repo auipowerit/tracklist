@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useCommentContext } from "../../context/Comment/CommentContext";
+import { useReviewContext } from "../../context/Review/ReviewContext";
 
-export default function CommentInput({ reviewId }) {
-  const { globalUser } = useAuthContext();
+export default function CommentInput({ review, setComments }) {
+  const { globalUser, globalData } = useAuthContext();
   const { addComment } = useCommentContext();
+  const { updateReviewState } = useReviewContext();
 
   const inputComment = useRef(null);
 
@@ -16,7 +18,7 @@ export default function CommentInput({ reviewId }) {
     event.preventDefault();
 
     const content = inputComment.current?.value.trim();
-    if (!content || !globalUser || !reviewId) return;
+    if (!content || !globalUser || !review) return;
 
     const commentInfo = {
       content,
@@ -25,7 +27,28 @@ export default function CommentInput({ reviewId }) {
       dislikes: [],
     };
 
-    await addComment(commentInfo, reviewId);
+    const newComment = await addComment(commentInfo, review.id);
+
+    // Update comment state with new comment data
+    setComments((prevData) => [
+      {
+        id: newComment.id,
+        ...newComment.data(),
+        username: globalData?.username || "",
+      },
+      ...(prevData || []),
+    ]);
+
+    // Save new review for reference
+    const newReview = {
+      ...review,
+      comments: [...review.comments, newComment.id],
+    };
+
+    // Update review state
+    updateReviewState(review, newReview);
+
+    closeComment();
   }
 
   return (

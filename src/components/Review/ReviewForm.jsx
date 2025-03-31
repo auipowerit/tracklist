@@ -78,7 +78,7 @@ export default function ReviewForm(props) {
         username,
         media,
       },
-      ...prevData,
+      ...(prevData || []),
     ]);
 
     formRef.current.reset();

@@ -1,14 +1,36 @@
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useCommentContext } from "../../context/Comment/CommentContext";
-import { getTimeSince } from "../../utils/date";
 import VoteButton from "../Buttons/VoteButton";
+import { getTimeSince } from "../../utils/date";
+import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useCommentContext } from "../../context/Comment/CommentContext";
+import DeleteButton from "../Buttons/DeleteButton";
 
-export default function CommentCard({ comment, reviewId }) {
+export default function CommentCard(props) {
+  const { comment, review, comments, setComments } = props;
+
   const { globalUser } = useAuthContext();
-  const { likeComment, dislikeComment, deleteComment } = useCommentContext();
+  const { likeComment, dislikeComment, deleteCommentFromReview } =
+    useCommentContext();
+  const { updateReviewState } = useReviewContext();
+
+  async function updateCommentState(comment, updatedComment) {
+    Object.assign(comment, updatedComment);
+
+    setComments(
+      comments.map((comment) =>
+        comment.id === updatedComment.id ? updatedComment : comment,
+      ),
+    );
+  }
 
   async function handleDelete() {
-    await deleteComment(comment.id, reviewId);
+    await deleteCommentFromReview(comment.id, review.id);
+
+    const updatedComments = comments.filter((c) => c.id !== comment.id);
+    setComments(updatedComments);
+
+    const updatedReview = { ...review, comments: updatedComments };
+    updateReviewState(review, updatedReview);
   }
 
   return (
@@ -25,19 +47,20 @@ export default function CommentCard({ comment, reviewId }) {
         <p className="text-xl">{comment.content}</p>
       </div>
       <div className="flex items-center gap-2">
-        <VoteButton content={comment} type="like" handleContent={likeComment} />
+        <VoteButton
+          content={comment}
+          type="like"
+          handleContent={likeComment}
+          updateContent={updateCommentState}
+        />
         <VoteButton
           content={comment}
           type="dislike"
           handleContent={dislikeComment}
+          updateContent={updateCommentState}
         />
         {globalUser.uid === comment.userId && (
-          <button
-            className="rounded-full px-3 py-1 transition-colors duration-150 hover:bg-gray-600"
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
+          <DeleteButton type="comment" deleteContent={handleDelete} />
         )}
       </div>
     </div>

@@ -64,12 +64,14 @@ export function useComment() {
       await updateDoc(reviewRef, {
         comments: arrayUnion(newComment.id),
       });
+
+      return await getDoc(commentDoc);
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  async function deleteComment(commentId, reviewId) {
+  async function deleteComment(commentId) {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -78,6 +80,14 @@ export function useComment() {
 
       // Delete from Firestore
       await deleteDoc(commentRef);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  async function deleteCommentFromReview(commentId, reviewId) {
+    try {
+      await deleteComment(commentId);
 
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -167,6 +177,7 @@ export function useComment() {
     getCommentById,
     addComment,
     deleteComment,
+    deleteCommentFromReview,
     likeComment,
     dislikeComment,
   };

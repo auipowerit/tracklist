@@ -175,14 +175,6 @@ export function useReview() {
 
       // Delete from Firestore
       await deleteDoc(reviewRef);
-
-      // Get replied reviews
-      const comments = reviewDoc.data().comments || [];
-
-      // For each comment, delete from Firestore
-      if (comments.length > 0) {
-        await Promise.all(comments.map(deleteReview));
-      }
     } catch (error) {
       console.error(error.message);
     }
