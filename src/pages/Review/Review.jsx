@@ -38,7 +38,7 @@ export default function Review({ review, mediaData }) {
               <p className="text-gray-400">
                 Review by{" "}
                 <Link
-                  to={`/user/${review.userId}`}
+                  to={`/users/${review.userId}`}
                   className="font-bold text-white hover:text-gray-400"
                 >
                   {review.username}

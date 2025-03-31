@@ -5,12 +5,10 @@ import MediaReviews from "./MediaReviews";
 import Loading from "../../components/Loading";
 import MediaCard from "../../components/Cards/MediaCard";
 import ListButton from "../../components/Buttons/ListButton";
-import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
 
 export default function ArtistPage() {
-  const { globalUser, getUserLists } = useAuthContext();
   const { isModalOpen, setIsModalOpen } = useReviewContext();
   const { getArtistById, getArtistAlbums, getArtistSingles } =
     useSpotifyContext();
@@ -44,13 +42,6 @@ export default function ArtistPage() {
 
     getArtistData();
   }, []);
-
-  async function handleAddToList() {
-    if (!globalUser || !artistId) return;
-
-    const lists = await getUserLists(globalUser.uid);
-    console.log(lists);
-  }
 
   if (isLoading) {
     return <Loading />;

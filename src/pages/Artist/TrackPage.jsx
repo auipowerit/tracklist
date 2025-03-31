@@ -54,7 +54,7 @@ export default function TrackPage() {
         <Link to={`/artists/${artistId}/albums/${albumId}`}>{album.name}</Link>
         <span>&#x2022;</span>
         <Link
-          to={`/artists/${artistId}/albums/${albumId}/track/${trackId}`}
+          to={`/artists/${artistId}/albums/${albumId}/tracks/${trackId}`}
           className="text-green-700"
         >
           {track.name}

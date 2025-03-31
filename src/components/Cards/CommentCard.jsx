@@ -4,6 +4,7 @@ import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useReviewContext } from "../../context/Review/ReviewContext";
 import { useCommentContext } from "../../context/Comment/CommentContext";
 import DeleteButton from "../Buttons/DeleteButton";
+import { Link } from "react-router-dom";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
@@ -37,16 +38,19 @@ export default function CommentCard(props) {
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
-          <p className="cursor-pointer text-sm font-bold hover:text-gray-400">
+          <Link
+            to={`/users/${comment.userId}`}
+            className="cursor-pointer text-sm font-bold hover:text-gray-400"
+          >
             @{comment.username}
-          </p>
+          </Link>
           <p className="text-sm text-gray-400">
             {getTimeSince(comment.createdAt.toDate())}
           </p>
         </div>
         <p className="text-xl">{comment.content}</p>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <VoteButton
           content={comment}
           type="like"
@@ -59,7 +63,7 @@ export default function CommentCard(props) {
           handleContent={dislikeComment}
           updateContent={updateCommentState}
         />
-        {globalUser.uid === comment.userId && (
+        {globalUser?.uid === comment.userId && (
           <DeleteButton type="comment" deleteContent={handleDelete} />
         )}
       </div>

@@ -39,9 +39,7 @@ export default function CommentList({ review }) {
           {comments?.length || 0}{" "}
           {comments?.length === 1 ? "Comment" : "Comments"}
         </h2>
-        {comments?.length > 0 && (
-          <SortComments comments={comments} setComments={setComments} />
-        )}
+        <SortComments comments={comments} setComments={setComments} />
       </div>
 
       <div className="ml-2">

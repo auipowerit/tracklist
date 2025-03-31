@@ -30,12 +30,11 @@ export default function ReviewCard({ review }) {
 
         <div className="flex flex-col justify-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <div className="flex cursor-pointer items-center gap-1 hover:text-gray-400">
                 <FontAwesomeIcon icon={faUserCircle} />
                 <p className="font-semibold">{review.username}</p>
               </div>
-              <span>&#x2022;</span>
               <p className="text-sm font-light text-gray-400">
                 {getTimeSince(review.createdAt.toDate())}
               </p>

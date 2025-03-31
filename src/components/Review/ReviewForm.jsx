@@ -32,13 +32,27 @@ export default function ReviewForm(props) {
 
   async function handleSearch() {
     const data = await searchByName(inputRef.current.value, type, 20);
+
+    const items =
+      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
+
+    const ids = items.map((item) => item.id) || [];
+    const names = items.map((item) => item.name) || [];
+    const subtitles = items.map((item) => item.artists[0].name || []) || [];
+
     setResults(
-      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [],
+      ids.map((id, index) => ({
+        id,
+        name: names[index],
+        subtitle: subtitles[index],
+      })),
     );
   }
 
-  function handleClick(fetchedMedia) {
-    inputRef.current.value = fetchedMedia.name;
+  async function handleClick(id, name) {
+    inputRef.current.value = name;
+
+    const fetchedMedia = await getMediaById(id, type);
     setMedia(fetchedMedia);
 
     setResults([]);
@@ -101,6 +115,7 @@ export default function ReviewForm(props) {
       if (!mediaId || !category || !inputRef.current) return;
 
       const fetchedMedia = await getMediaById(mediaId, category);
+
       inputRef.current.value = fetchedMedia.name;
       setType(category);
       setMedia(fetchedMedia);
@@ -120,11 +135,7 @@ export default function ReviewForm(props) {
       <p className="text-3xl font-bold">Add a review</p>
       <div className="flex w-full items-center justify-center gap-6">
         <img
-          src={
-            media?.images?.[0].url ||
-            media?.album?.images?.[0].url ||
-            defaultImg
-          }
+          src={media.image || defaultImg}
           className="aspect-square h-48 object-cover shadow-lg"
         />
         <div className="flex h-48 flex-col justify-center gap-2 text-xl">
@@ -146,19 +157,14 @@ export default function ReviewForm(props) {
             <div
               className={`absolute top-10 right-0 left-0 flex flex-col bg-green-700 ${results.length > 0 && "h-46 overflow-auto"}`}
             >
-              {results.map((result) => (
+              {results.map(({ id, name, subtitle }) => (
                 <button
-                  key={result.id}
-                  onClick={() => handleClick(result, result.id)}
+                  key={id}
+                  onClick={() => handleClick(id, name)}
                   className="px-2 py-1 text-start hover:bg-gray-600"
                 >
-                  <p>{result.name}</p>
-                  {type !== "artist" && (
-                    <p className="text-sm">
-                      {result?.artists?.[0].name ||
-                        result?.album?.artists?.[0].name}
-                    </p>
-                  )}
+                  <p>{name}</p>
+                  {type !== "artist" && <p className="text-sm">{subtitle}</p>}
                 </button>
               ))}
             </div>
@@ -174,7 +180,7 @@ export default function ReviewForm(props) {
         ref={textareaRef}
         placeholder="Write your review..."
         rows="5"
-        className="w-full bg-white text-black outline-none"
+        className="w-full bg-white p-2 text-black outline-none"
       ></textarea>
 
       <button
