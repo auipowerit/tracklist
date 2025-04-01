@@ -20,12 +20,8 @@ export default function MediaCard(props) {
   const [rating, setRating] = useState({});
 
   useEffect(() => {
-    console.log("called");
-    console.log("media:", media);
-  }, []);
-
-  useEffect(() => {
     const fetchMedia = async () => {
+      console.log("called");
       const { avgRating, count } = (await getAvgRating(media?.id)) || {};
 
       setRating({ avgRating, count });
@@ -55,7 +51,7 @@ export default function MediaCard(props) {
       });
     };
 
-    return fetchMedia;
+    fetchMedia();
   }, []);
 
   return (
