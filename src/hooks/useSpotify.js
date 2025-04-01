@@ -14,6 +14,7 @@ export function useSpotify() {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
+          cors: "true",
         },
         body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
       });
@@ -37,6 +38,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -60,6 +62,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -84,6 +87,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -107,6 +111,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -132,6 +137,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -168,6 +174,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -196,6 +203,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -219,6 +227,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
