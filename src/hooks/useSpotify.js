@@ -200,8 +200,8 @@ export function useSpotify() {
           },
         },
       );
+
       const album = await response.json();
-      console.log(album);
 
       return album || null;
     } catch (error) {
