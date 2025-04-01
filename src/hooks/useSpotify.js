@@ -201,6 +201,7 @@ export function useSpotify() {
         },
       );
       const album = await response.json();
+      console.log(album);
 
       return album || null;
     } catch (error) {
@@ -224,7 +225,6 @@ export function useSpotify() {
         },
       );
 
-      console.log(response);
       const track = await response.json();
 
       return track || null;
