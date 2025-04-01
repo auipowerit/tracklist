@@ -1,6 +1,6 @@
 import { faPlus, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function UserCard({ user }) {
   const { globalUser, followUser } = useAuthContext();

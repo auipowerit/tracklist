@@ -1,18 +1,17 @@
-import VoteButton from "../Buttons/VoteButton";
-import { getTimeSince } from "../../utils/date";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
-import { useCommentContext } from "../../context/Comment/CommentContext";
-import DeleteButton from "../Buttons/DeleteButton";
 import { Link } from "react-router-dom";
+import VoteButton from "../Buttons/VoteButton";
+import { getTimeSince } from "src/utils/date";
+import DeleteButton from "../Buttons/DeleteButton";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import { useCommentContext } from "src/context/Comment/CommentContext";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
 
   const { globalUser } = useAuthContext();
-  const { likeComment, dislikeComment, deleteCommentFromReview } =
-    useCommentContext();
-  const { updateReviewState } = useReviewContext();
+  const { likeComment, dislikeComment } = useCommentContext();
+  const { deleteReviewComment, updateReviewState } = useReviewContext();
 
   async function updateCommentState(comment, updatedComment) {
     Object.assign(comment, updatedComment);
@@ -25,7 +24,7 @@ export default function CommentCard(props) {
   }
 
   async function handleDelete() {
-    await deleteCommentFromReview(comment.id, review.id);
+    await deleteReviewComment(comment.id, review.id);
 
     const updatedComments = comments.filter((c) => c.id !== comment.id);
     setComments(updatedComments);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function VoteButton(props) {
   const { content, type, handleContent, updateContent } = props;

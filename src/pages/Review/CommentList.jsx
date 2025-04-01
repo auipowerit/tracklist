@@ -1,14 +1,14 @@
-import CommentInput from "../../components/Inputs/CommentInput";
-import CommentCard from "../../components/Cards/CommentCard";
-import SortComments from "../../components/Sort/SortComments";
-import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useEffect, useState } from "react";
-import { useCommentContext } from "../../context/Comment/CommentContext";
-import Loading from "../../components/Loading";
+import Loading from "src/components/Loading";
+import CommentCard from "src/components/Cards/CommentCard";
+import SortComments from "src/components/Sort/SortComments";
+import CommentInput from "src/components/Inputs/CommentInput";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useCommentContext } from "src/context/Comment/CommentContext";
 
 export default function CommentList({ review }) {
   const { globalUser } = useAuthContext();
-  const { getCommentsByReviewId } = useCommentContext();
+  const { getReviewComments } = useCommentContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
@@ -18,7 +18,7 @@ export default function CommentList({ review }) {
       try {
         setIsLoading(true);
 
-        const fetchedComments = await getCommentsByReviewId(review.id);
+        const fetchedComments = await getReviewComments(review.id);
         setComments(fetchedComments);
       } catch (error) {
         console.log(error);

@@ -1,4 +1,4 @@
-import { useComment } from "../../hooks/useComment";
+import { useComment } from "src/hooks/useComment";
 import CommentContext from "./CommentContext";
 
 export default function CommentProvder({ children }) {

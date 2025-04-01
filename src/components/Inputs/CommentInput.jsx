@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useCommentContext } from "../../context/Comment/CommentContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useCommentContext } from "src/context/Comment/CommentContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function CommentInput({ review, setComments }) {
   const { globalUser, globalData } = useAuthContext();

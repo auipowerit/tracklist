@@ -1,7 +1,7 @@
-import Loading from "../../components/Loading";
+import Loading from "src/components/Loading";
 import Feed from "./Feed";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();

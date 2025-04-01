@@ -6,7 +6,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import FormInput from "../Inputs/FormInput";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   const { globalUser, checkIfListExists, createNewMediaList } =

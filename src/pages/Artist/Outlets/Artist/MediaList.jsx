@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { formatDateMDYLong } from "../../utils/date";
-import SortMusic from "../../components/Sort/SortMusic";
-import MediaCard from "../../components/Cards/MediaCard";
+import { formatDateMDYLong } from "src/utils/date";
+import SortMusic from "src/components/Sort/SortMusic";
+import MediaCard from "src/components/Cards/MediaCard";
 
 export default function MediaList({ media, setMedia, category }) {
   const title = `${category.charAt(0).toUpperCase()}${category.slice(1)}s`;

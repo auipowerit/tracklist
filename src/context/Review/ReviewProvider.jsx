@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ReviewContext from "./ReviewContext";
-import { useReview } from "../../hooks/useReview";
+import { useReview } from "src/hooks/useReview";
 import { useAuthContext } from "../Auth/AuthContext";
 
 export default function ReviewProvider({ children }) {

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import FormInput from "../../components/Inputs/FormInput";
+import FormInput from "src/components/Inputs/FormInput";
 
 export default function SearchBar(props) {
   const { category, handleSubmit } = props;

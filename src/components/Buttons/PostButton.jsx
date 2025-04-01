@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 import ReviewForm from "../Review/ReviewForm";
 
 export default function PostButton({

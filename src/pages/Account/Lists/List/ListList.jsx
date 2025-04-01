@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Loading from "../../../../components/Loading";
-import ListCard from "../../../../components/Cards/ListCard";
-import { useAuthContext } from "../../../../context/Auth/AuthContext";
-import { useSpotifyContext } from "../../../../context/Spotify/SpotifyContext";
+import Loading from "src/components/Loading";
+import ListCard from "src/components/Cards/ListCard";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function ListList() {
   const { globalUser, getUserLists } = useAuthContext();

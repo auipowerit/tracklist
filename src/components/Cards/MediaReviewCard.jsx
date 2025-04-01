@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { getTimeSince } from "../../utils/date";
+import { getTimeSince } from "src/utils/date";
 import ReviewStars from "../Review/ReviewStars";
-import ReviewButtons from "../../pages/Home/ReviewButtons";
+import ReviewButtons from "../Review/ReviewButtons";
 
 export default function MediaReviewCard({ review }) {
   return (

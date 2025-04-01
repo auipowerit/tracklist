@@ -1,11 +1,11 @@
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import VoteButton from "../../components/Buttons/VoteButton";
-import DeleteButton from "../../components/Buttons/DeleteButton";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useCommentContext } from "../../context/Comment/CommentContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useCommentContext } from "src/context/Comment/CommentContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import VoteButton from "../Buttons/VoteButton";
+import DeleteButton from "../Buttons/DeleteButton";
 
 export default function ReviewButtons({ review, onPage }) {
   const { globalUser } = useAuthContext();

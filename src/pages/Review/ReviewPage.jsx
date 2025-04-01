@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Review from "./Review";
 import CommentList from "./CommentList";
-import Loading from "../../components/Loading";
-import BackButton from "../../components/Buttons/BackButton";
-import { useReviewContext } from "../../context/Review/ReviewContext";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import Loading from "src/components/Loading";
+import BackButton from "src/components/Buttons/BackButton";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function ReviewPage() {
   const { getReviewById } = useReviewContext();

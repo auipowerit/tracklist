@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ListButton from "../../../components/Buttons/ListButton";
+import ListButton from "src/components/Buttons/ListButton";
 import ListList from "./List/ListList";
 
 export default function ListsPage() {

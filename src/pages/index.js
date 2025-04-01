@@ -1,10 +1,11 @@
 export { default as HomePage } from "./Home/HomePage";
 export { default as AuthPage } from "./Auth/AuthPage";
-export { default as AlbumPage } from "./Artist/AlbumPage";
-export { default as TrackPage } from "./Artist/TrackPage";
 export { default as SearchPage } from "./Search/SearchPage";
 export { default as ArtistPage } from "./Artist/ArtistPage";
 export { default as ListsPage } from "./Account/Lists/ListsPage";
 export { default as ListPage } from "./Account/Lists/List/ListPage";
 export { default as ErrorPage } from "./Error/ErrorPage";
 export { default as ReviewPage } from "./Review/ReviewPage";
+export { default as ArtistProfile } from "./Artist/Outlets/Artist/ArtistProfile";
+export { default as AlbumProfile } from "./Artist/Outlets/Album/AlbumProfile";
+export { default as TrackProfile } from "./Artist/Outlets/Track/TrackProfile";

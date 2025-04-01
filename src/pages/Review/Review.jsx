@@ -1,7 +1,7 @@
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ReviewButtons from "../Home/ReviewButtons";
-import ReviewStars from "../../components/Review/ReviewStars";
+import ReviewButtons from "src/components/Review/ReviewButtons";
+import ReviewStars from "src/components/Review/ReviewStars";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Review({ review, mediaData }) {

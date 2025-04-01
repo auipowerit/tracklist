@@ -14,7 +14,14 @@ import { useAuthContext } from "../context/Auth/AuthContext";
 export function useComment() {
   const { getUserById } = useAuthContext();
 
-  async function getCommentsByReviewId(reviewId) {
+  async function getCommentById(commentId) {
+    const commentRef = doc(db, "comments", commentId);
+    const commentDoc = await getDoc(commentRef);
+
+    return commentDoc.data();
+  }
+
+  async function getReviewComments(reviewId) {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -45,13 +52,6 @@ export function useComment() {
     }
   }
 
-  async function getCommentById(commentId) {
-    const commentRef = doc(db, "comments", commentId);
-    const commentDoc = await getDoc(commentRef);
-
-    return commentDoc.data();
-  }
-
   async function addComment(commentInfo, reviewId) {
     try {
       const comment = { ...commentInfo, reviewId, createdAt: new Date() };
@@ -80,23 +80,6 @@ export function useComment() {
 
       // Delete from Firestore
       await deleteDoc(commentRef);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
-  async function deleteCommentFromReview(commentId, reviewId) {
-    try {
-      await deleteComment(commentId);
-
-      const reviewRef = doc(db, "reviews", reviewId);
-      const reviewDoc = await getDoc(reviewRef);
-
-      if (!reviewDoc.exists()) return;
-
-      await updateDoc(reviewRef, {
-        comments: arrayRemove(commentId),
-      });
     } catch (error) {
       console.error(error.message);
     }
@@ -173,11 +156,10 @@ export function useComment() {
   }
 
   return {
-    getCommentsByReviewId,
     getCommentById,
+    getReviewComments,
     addComment,
     deleteComment,
-    deleteCommentFromReview,
     likeComment,
     dislikeComment,
   };

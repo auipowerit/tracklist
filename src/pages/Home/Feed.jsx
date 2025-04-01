@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import FeedResults from "./FeedResults";
-import Tabs from "../../components/Tabs";
-import { useReview } from "../../hooks/useReview";
-import PostButton from "../../components/Buttons/PostButton";
+import Tabs from "src/components/Tabs";
+import { useReview } from "src/hooks/useReview";
+import PostButton from "src/components/Buttons/PostButton";
 
 export default function Feed({ reviews }) {
   const { getPopularReviews } = useReview();

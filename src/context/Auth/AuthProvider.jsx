@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import AuthContext from "./AuthContext";
-import { useAuth } from "../../hooks/useAuth";
-import { auth, db } from "../../config/firebase";
+import { useAuth } from "src/hooks/useAuth";
+import { auth, db } from "src/config/firebase";
 
 export default function AuthProvider({ children }) {
   const [globalUser, setGlobalUser] = useState(null);

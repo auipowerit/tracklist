@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { formatDateMDYLong } from "../../utils/date";
+import { formatDateMDYLong } from "src/utils/date";
 import ReviewStars from "../Review/ReviewStars";
-import { useReviewContext } from "../../context/Review/ReviewContext";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function MediaCard(props) {
   const { media, defaultSubtitle, onClick } = props;
@@ -21,7 +21,7 @@ export default function MediaCard(props) {
 
   useEffect(() => {
     const fetchMedia = async () => {
-      const { avgRating, count } = await getAvgRating(media.id);
+      const { avgRating, count } = (await getAvgRating(media?.id)) || {};
 
       setRating({ avgRating, count });
 
@@ -53,13 +53,13 @@ export default function MediaCard(props) {
 
   return (
     <div
-      className="flex w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
+      className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      <img src={fetchedMedia.image} className="h-72" />
+      <img src={fetchedMedia?.image || defaultImg} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
-        <p className="text-xl font-bold">{fetchedMedia.title}</p>
-        <p className="text-sm font-light">{fetchedMedia.subtitle}</p>
+        <p className="text-xl font-bold">{fetchedMedia?.title || ""}</p>
+        <p className="text-sm font-light">{fetchedMedia?.subtitle || ""}</p>
       </div>
 
       <div className="flex items-center justify-center gap-1">

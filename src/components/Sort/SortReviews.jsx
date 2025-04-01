@@ -1,4 +1,4 @@
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 import SortButton from "../Buttons/SortButton";
 
 export default function SortReviews() {

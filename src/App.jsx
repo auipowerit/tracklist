@@ -36,19 +36,26 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
-          path: "/artists/:artistId",
+          path: "/artists",
           element: <Pages.ArtistPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
-          path: "/artists/:artistId/albums/:albumId",
-          element: <Pages.AlbumPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
-          path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
-          element: <Pages.TrackPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
+          children: [
+            {
+              path: "/artists/:artistId",
+              element: <Pages.ArtistProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/artists/:artistId/albums/:albumId",
+              element: <Pages.AlbumProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
+              element: <Pages.TrackProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+          ],
         },
         {
           path: "/reviews/:reviewId/",

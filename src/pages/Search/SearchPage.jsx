@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SearchMedia from "./SearchMedia";
-import Tabs from "../../components/Tabs";
+import Tabs from "src/components/Tabs";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");

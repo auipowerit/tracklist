@@ -1,4 +1,4 @@
-import ReviewCard from "../../components/Cards/ReviewCard";
+import ReviewCard from "src/components/Cards/ReviewCard";
 
 export default function FeedResults({ results }) {
   return (

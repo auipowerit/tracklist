@@ -3,9 +3,9 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRating from "./StarRating";
 import FormInput from "../Inputs/FormInput";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function ReviewForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;

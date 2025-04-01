@@ -250,6 +250,28 @@ export function useReview() {
     }
   }
 
+  async function deleteReviewComment(commentId, reviewId) {
+    try {
+      const commentRef = doc(db, "comments", commentId);
+      const commentDoc = await getDoc(commentRef);
+
+      if (!commentDoc.exists()) return;
+
+      await deleteDoc(commentRef);
+
+      const reviewRef = doc(db, "reviews", reviewId);
+      const reviewDoc = await getDoc(reviewRef);
+
+      if (!reviewDoc.exists()) return;
+
+      await updateDoc(reviewRef, {
+        comments: arrayRemove(commentId),
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   async function getRatings(mediaId) {
     try {
       const ratingsRef = collection(db, "reviews");
@@ -264,6 +286,8 @@ export function useReview() {
 
   async function getAvgRating(mediaId) {
     try {
+      if (!mediaId) return;
+
       const mediaRatings = await getRatings(mediaId);
 
       if (!mediaRatings.empty) {
@@ -293,6 +317,7 @@ export function useReview() {
     getReviewById,
     addReview,
     deleteReview,
+    deleteReviewComment,
     likeReview,
     dislikeReview,
     getRatings,

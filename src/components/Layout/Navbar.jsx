@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import PostButton from "../Buttons/PostButton";
-import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useReviewContext } from "../../context/Review/ReviewContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function Navbar() {
   const { globalUser, globalData, logout } = useAuthContext();

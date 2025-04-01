@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function ListCard({ id, image, name, length, description }) {
   const { globalUser, deleteMediaList } = useAuthContext();

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 import FormInput from "../Inputs/FormInput";
 
 export default function AddToList(props) {

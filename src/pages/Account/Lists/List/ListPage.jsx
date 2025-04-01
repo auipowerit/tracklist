@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MediaList from "./MediaList";
 import ListHeader from "./ListHeader";
-import Loading from "../../../../components/Loading";
-import { useAuthContext } from "../../../../context/Auth/AuthContext";
-import { useSpotifyContext } from "../../../../context/Spotify/SpotifyContext";
+import Loading from "src/components/Loading";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function ListPage() {
   const { globalUser, getUserById, getUserListById } = useAuthContext();

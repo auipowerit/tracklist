@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { getTimeSince } from "../../utils/date";
+import { getTimeSince } from "src/utils/date";
 import { Link, useNavigate } from "react-router-dom";
 import ReviewStars from "../Review/ReviewStars";
-import ReviewButtons from "../../pages/Home/ReviewButtons";
-import { useSpotifyContext } from "../../context/Spotify/SpotifyContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import ReviewButtons from "../Review/ReviewButtons";
 
 export default function ReviewCard({ review }) {
   const { getMediaLinks } = useSpotifyContext();
