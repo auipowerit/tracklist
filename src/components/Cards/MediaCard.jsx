@@ -20,6 +20,11 @@ export default function MediaCard(props) {
   const [rating, setRating] = useState({});
 
   useEffect(() => {
+    console.log("called");
+    console.log("media:", media);
+  }, []);
+
+  useEffect(() => {
     const fetchMedia = async () => {
       const { avgRating, count } = (await getAvgRating(media?.id)) || {};
 
@@ -58,7 +63,6 @@ export default function MediaCard(props) {
       className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      {console.log(fetchedMedia)}
       <img src={fetchedMedia?.image || defaultImg} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
         <p className="text-xl font-bold">{fetchedMedia?.title || ""}</p>
