@@ -12,9 +12,9 @@ export function useSpotify() {
     try {
       const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          cors: "true",
         },
         body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
       });
@@ -36,9 +36,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/search?q=${name}&type=${category}&limit=${limit}`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -60,9 +60,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=50`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -85,9 +85,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=single&market=US&limit=50`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -109,9 +109,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/albums/${albumId}/tracks?market=US`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -135,9 +135,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/${category}s/${mediaId}`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -172,9 +172,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/artists/${artistId}`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -201,9 +201,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/albums/${albumId}?market=US`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
@@ -225,9 +225,9 @@ export function useSpotify() {
         `https://api.spotify.com/v1/tracks/${trackId}?market=US`,
         {
           method: "GET",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            cors: "true",
             Authorization: `Bearer ${access_token}`,
           },
         },
