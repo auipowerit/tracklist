@@ -25,6 +25,8 @@ export default function MediaCard(props) {
 
       setRating({ avgRating, count });
 
+      console.log(media);
+
       setFetchedMedia({
         title: media?.name,
 
@@ -56,6 +58,7 @@ export default function MediaCard(props) {
       className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
+      {console.log(fetchedMedia)}
       <img src={fetchedMedia?.image || defaultImg} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
         <p className="text-xl font-bold">{fetchedMedia?.title || ""}</p>
