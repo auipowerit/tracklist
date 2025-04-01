@@ -30,6 +30,8 @@ export default function ArtistPage() {
           trackId && getTrackById(trackId),
         ]);
 
+        console.log("fetched media:", fetchedMedia);
+
         setMedia({
           id: mediaId,
           category,

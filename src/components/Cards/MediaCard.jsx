@@ -25,7 +25,7 @@ export default function MediaCard(props) {
 
       setRating({ avgRating, count });
 
-      console.log(media);
+      console.log("passed media:", media);
 
       setFetchedMedia({
         title: media?.name,

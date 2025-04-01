@@ -7,6 +7,7 @@ export default function TrackProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { track } = useOutletContext();
+  console.log("given track:", track);
 
   if (!track) {
     return (
