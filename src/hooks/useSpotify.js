@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export function useSpotify() {
-  const CLIENT_ID = "34e1029a79a849e4961c3de724acaca9";
-  const CLIENT_SECRET = "7c8f58ab81fa49fbbe5d2d1943193ce1";
+  const CLIENT_ID = "548a9a9d3fde4f158dd279cd9b6611bf";
+  const CLIENT_SECRET = "36cc595e343e4d9ea93827c801a7fd49";
 
   const defaultImg = "/images/default-img.jpg";
 
@@ -26,7 +26,7 @@ export function useSpotify() {
     }
   }
 
-  async function searchByName(name, category, limit = 25) {
+  async function searchByName(name, category, limit = 20) {
     if (!name || !category) return [];
     const access_token = accessToken || (await fetchAccessToken());
 
@@ -55,7 +55,7 @@ export function useSpotify() {
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=50`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=10`,
         {
           method: "GET",
           headers: {
@@ -79,7 +79,7 @@ export function useSpotify() {
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=single&market=US&limit=50`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=single&market=US&limit=20`,
         {
           method: "GET",
           headers: {

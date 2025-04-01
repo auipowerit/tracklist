@@ -1,16 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
-import { useAuthContext } from "src/context/Auth/AuthContext";
 import ListForm from "../List/ListForm";
 
-export default function ListButton({
-  isModalOpen,
-  setIsModalOpen,
-  media,
-  category,
-}) {
+export default function ListButton(props) {
+  const { isModalOpen, setIsModalOpen, media, category } = props;
+
   const { globalUser } = useAuthContext();
 
   const navigate = useNavigate();
