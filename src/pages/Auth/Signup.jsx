@@ -15,8 +15,7 @@ export default function Signup({ setIsRegistration }) {
     const formData = new FormData(formRef.current);
     const email = formData.get("email");
     const password = formData.get("password");
-    const firstname = formData.get("firstname");
-    const lastname = formData.get("lastname");
+    const displayname = formData.get("displayname");
     const username = formData.get("username");
 
     if (!(await usernameAvailable(username))) {
@@ -24,7 +23,7 @@ export default function Signup({ setIsRegistration }) {
       return;
     }
 
-    if (await signup(email, password, firstname, lastname, username)) {
+    if (await signup(email, password, displayname, username)) {
       resetForm();
     } else {
       console.log("Failed to signup.");
@@ -43,8 +42,7 @@ export default function Signup({ setIsRegistration }) {
         onSubmit={handleSubmit}
         className="flex flex-col gap-4"
       >
-        <AuthInput label="First Name" name="firstname" type="text" />
-        <AuthInput label="Last Name" name="lastname" type="text" />
+        <AuthInput label="Display Name" name="displayname" type="text" />
         <AuthInput label="Username" name="username" type="text" />
         <AuthInput label="Email Address" name="email" type="text" />
         <AuthInput label="Password" name="password" type="password" />

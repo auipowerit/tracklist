@@ -1,32 +1,9 @@
-import { useEffect, useState } from "react";
-import Loading from "src/components/Loading";
+import { useState } from "react";
 import PostButton from "src/components/Buttons/PostButton";
 import MediaReviewCard from "src/components/Cards/MediaReviewCard";
-import { useReviewContext } from "src/context/Review/ReviewContext";
 
-export default function MediaReviews({ mediaId, category }) {
-  const { getReviewsByMediaId } = useReviewContext();
-  const [isLoading, setIsLoading] = useState(true);
+export default function MediaReviews({ mediaId, reviews, category }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mediaReviews, setMediaReviews] = useState([]);
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      setIsLoading(true);
-      try {
-        const fetchedReviews = await getReviewsByMediaId(mediaId);
-
-        setMediaReviews(
-          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
-        );
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    return fetchReviews;
-  }, [category, mediaId]);
 
   return (
     <div className="flex-1 overflow-auto py-6">
@@ -43,10 +20,8 @@ export default function MediaReviews({ mediaId, category }) {
         </div>
 
         <div className="flex-gap flex flex-col gap-6 overflow-y-scroll border-t-1 border-white py-10">
-          {isLoading ? (
-            <Loading />
-          ) : mediaReviews.length > 0 ? (
-            mediaReviews.map((review) => {
+          {reviews.length > 0 ? (
+            reviews.map((review) => {
               return <MediaReviewCard key={review.id} review={review} />;
             })
           ) : (

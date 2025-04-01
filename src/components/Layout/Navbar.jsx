@@ -100,7 +100,7 @@ export default function Navbar() {
     return (
       <ul className="flex flex-col gap-2 px-4 py-2">
         <li>
-          <p className="font-bold text-nowrap">Hi, {globalData?.firstname}</p>
+          <p className="font-bold text-nowrap">Hi, {globalData?.username}</p>
         </li>
         {items.map(({ label, path, action }) => (
           <li

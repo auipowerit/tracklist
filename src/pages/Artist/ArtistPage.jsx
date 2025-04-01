@@ -4,11 +4,15 @@ import Loading from "src/components/Loading";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaReviews from "./MediaReviews";
 import ArtistNavigation from "./ArtistNavigation";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function ArtistPage() {
   const { getArtistById, getAlbumById, getTrackById } = useSpotifyContext();
+  const { getReviewsByMediaId } = useReviewContext();
+
   const params = useParams();
   const [media, setMedia] = useState({});
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -33,6 +37,12 @@ export default function ArtistPage() {
           album: fetchedMedia[1] || null,
           track: fetchedMedia[2] || null,
         });
+
+        const fetchedReviews = await getReviewsByMediaId(mediaId);
+
+        setReviews(
+          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
+        );
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +60,11 @@ export default function ArtistPage() {
       <ArtistNavigation media={media} category={media.category} />
       <div className="flex gap-8">
         <Outlet context={media} />
-        <MediaReviews mediaId={media.id} category={media.category} />
+        <MediaReviews
+          mediaId={media.id}
+          reviews={reviews}
+          category={media.category}
+        />
       </div>
     </div>
   );

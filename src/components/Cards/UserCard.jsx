@@ -16,9 +16,7 @@ export default function UserCard({ user }) {
       <FontAwesomeIcon icon={faUserCircle} className="text-5xl" />
       <div className="flex flex-col items-center justify-center gap-2">
         <p className="text-xl font-bold">{user.username}</p>
-        <p className="text-xl">
-          {user.firstname} {user.lastname}
-        </p>
+        <p className="text-xl">{user.displayname}</p>
       </div>
 
       <button
