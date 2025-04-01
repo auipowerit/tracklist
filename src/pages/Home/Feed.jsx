@@ -21,7 +21,8 @@ export default function Feed({ reviews }) {
       const fetchedReviews = await getPopularReviews();
       setPopReviews(fetchedReviews);
     };
-    return fetchReviews;
+
+    fetchReviews();
   }, [activeTab]);
 
   return (

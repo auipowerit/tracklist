@@ -21,12 +21,9 @@ export default function MediaCard(props) {
 
   useEffect(() => {
     const fetchMedia = async () => {
-      console.log("called");
       const { avgRating, count } = (await getAvgRating(media?.id)) || {};
 
       setRating({ avgRating, count });
-
-      console.log("passed media:", media);
 
       setFetchedMedia({
         title: media?.name,

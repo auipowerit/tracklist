@@ -27,7 +27,7 @@ export default function CommentList({ review }) {
       }
     };
 
-    return fetchComments;
+    fetchComments();
   }, []);
 
   if (isLoading) return <Loading />;

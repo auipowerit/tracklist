@@ -13,7 +13,7 @@ export default function TrackCard({ number, track }) {
       setRating({ avgRating, count });
     };
 
-    return fetchRating;
+    fetchRating();
   }, []);
 
   return (

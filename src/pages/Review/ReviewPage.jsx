@@ -37,7 +37,7 @@ export default function ReviewPage() {
       }
     };
 
-    return fetchReview;
+    fetchReview();
   }, []);
 
   if (isLoading) return <Loading />;
