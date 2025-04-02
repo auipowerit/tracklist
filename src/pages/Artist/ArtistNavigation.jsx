@@ -2,12 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function ArtistNavigation({ media, category, color }) {
   return (
-    <div
-      className="flex w-fit items-center gap-2 font-bold tracking-wider"
-      style={{
-        textShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
-      }}
-    >
+    <div className="flex w-fit items-center gap-2 font-bold tracking-wider">
       <Link
         to={`/artists/${media.artist.id}`}
         style={{ color: category === "artist" ? color : "" }}

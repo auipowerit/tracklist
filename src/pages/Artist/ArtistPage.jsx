@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { getPalette } from "react-palette";
 import { Outlet, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
+import { getColorPalette, getColors } from "src/utils/colors";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+
 import MediaReviews from "./MediaReviews";
 import ArtistNavigation from "./ArtistNavigation";
 
@@ -49,20 +50,11 @@ export default function ArtistPage() {
         const imageURL =
           fetchedMedia[1]?.images[0].url || fetchedMedia[0].images[0].url;
 
-        const palette = await getPalette(imageURL);
-        const colors = Object.keys(palette).map((key) => {
-          return {
-            name: key,
-            color: palette[key],
-          };
-        });
+        const colors = await getColors(imageURL);
+        setColors(colors);
 
-        setPalette(colors);
-        setColors({
-          light: palette.vibrant,
-          dark: palette.darkMuted,
-          text: palette.lightMuted,
-        });
+        const palette = await getColorPalette(imageURL);
+        setPalette(palette);
 
         const fetchedReviews = await getReviewsByMediaId(mediaId);
         setReviews(
@@ -89,7 +81,7 @@ export default function ArtistPage() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: `linear-gradient(to bottom left, ${colors.light}, ${colors.dark})`,
+          backgroundImage: `linear-gradient(to bottom left, ${colors.light} 0%, ${colors.dark} 5%, #000000 100%)`,
           filter: "blur(100px)",
           zIndex: -1,
         }}
@@ -101,7 +93,6 @@ export default function ArtistPage() {
         color={colors.text}
       />
 
-      {/*
       <div className="flex gap-2">
         {palette &&
           palette.map((color) => {
@@ -118,7 +109,7 @@ export default function ArtistPage() {
               </div>
             );
           })}
-      </div> */}
+      </div>
 
       <div className="flex gap-8">
         <Outlet context={media} />
