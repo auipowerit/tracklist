@@ -18,3 +18,17 @@ button {
 .fa-beat {
   animation: fa-beat 500ms;
 }
+
+.moving-gradient {
+  background-size: 100% 100%;
+  animation: move-gradient 5s ease-in-out infinite alternate;
+}
+
+@keyframes move-gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 300px 0;
+  }
+}

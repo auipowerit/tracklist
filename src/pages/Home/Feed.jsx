@@ -26,7 +26,7 @@ export default function Feed({ reviews }) {
   }, [activeTab]);
 
   return (
-    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
+    <div className="m-auto mt-6 flex w-3/5 flex-col gap-4">
       <div className="flex items-center justify-center">
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 

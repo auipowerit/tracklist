@@ -38,7 +38,7 @@ export default function ArtistProfile() {
   }
 
   return (
-    <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto p-10">
+    <div className="flex min-h-screen flex-2 flex-col items-center gap-8 p-10">
       <MediaCard
         media={artist}
         category={"artist"}

@@ -99,6 +99,7 @@ export default function ArtistPage() {
 function MediaGradient({ light, dark }) {
   return (
     <div
+      className="moving-gradient"
       style={{
         position: "absolute",
         top: 0,

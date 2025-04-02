@@ -22,7 +22,7 @@ export default function AlbumProfile() {
   }
 
   return (
-    <div className="flex h-screen flex-2 justify-center gap-8 p-10">
+    <div className="flex min-h-screen flex-2 justify-center gap-8 p-10">
       <div className="flex flex-col items-center gap-8">
         <MediaCard
           media={album}

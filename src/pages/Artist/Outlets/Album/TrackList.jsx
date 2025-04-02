@@ -3,12 +3,12 @@ import TrackCard from "./TrackCard";
 
 export default function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div className="flex h-screen flex-col items-center">
+    <div className="flex flex-col items-center">
       <p className="text-4xl font-bold">Tracks</p>
 
-      <div className="flex h-full flex-2 items-start justify-center gap-8">
+      <div className="flex flex-2 items-start justify-center gap-8">
         {tracks && tracks.length > 0 ? (
-          <ul className="flex h-full flex-col gap-4 overflow-auto p-6">
+          <ul className="flex flex-col gap-4 overflow-auto p-6">
             {tracks.map((track) => {
               return (
                 <li key={track.id}>
