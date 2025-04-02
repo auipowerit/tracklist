@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 
-export default function ArtistNavigation({ media, category }) {
+export default function ArtistNavigation({ media, category, color }) {
   return (
-    <div className="flex items-center gap-2 font-bold tracking-wider">
+    <div
+      className="flex w-fit items-center gap-2 font-bold tracking-wider"
+      style={{
+        textShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
+      }}
+    >
       <Link
         to={`/artists/${media.artist.id}`}
-        className={category === "artist" ? "text-green-700" : ""}
+        style={{ color: category === "artist" ? color : "" }}
       >
         {media.artist.name}
       </Link>
@@ -15,7 +20,7 @@ export default function ArtistNavigation({ media, category }) {
           <span>&#x2022;</span>
           <Link
             to={`/artists/${media.artist.id}/albums/${media.album.id}`}
-            className={category === "album" ? "text-green-700" : ""}
+            style={{ color: category === "album" ? color : "" }}
           >
             {media.album.name}
           </Link>
@@ -24,7 +29,7 @@ export default function ArtistNavigation({ media, category }) {
               <span>&#x2022;</span>
               <Link
                 to={`/artists/${media.artist.id}/albums/${media.album.id}/tracks/${media.track.id}`}
-                className={category === "track" ? "text-green-700" : ""}
+                style={{ color: category === "track" ? color : "" }}
               >
                 {media.track.name}
               </Link>

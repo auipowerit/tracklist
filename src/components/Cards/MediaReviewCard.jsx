@@ -15,13 +15,13 @@ export default function MediaReviewCard({ review }) {
           <div className="flex items-center gap-1">
             <Link
               to={`/users/${review.userId}`}
-              className="font-semibold hover:text-gray-400"
+              className="font-semibold hover:text-gray-300"
             >
               {review.username}
             </Link>
             <span>&#x2022;</span>
 
-            <p className="text-sm font-light text-gray-400">
+            <p className="text-sm font-light">
               {getTimeSince(review.createdAt.toDate())}
             </p>
           </div>
