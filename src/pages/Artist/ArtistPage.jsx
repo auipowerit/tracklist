@@ -12,16 +12,17 @@ export default function ArtistPage() {
   const { getArtistById, getAlbumById, getTrackById } = useSpotifyContext();
   const { getReviewsByMediaId } = useReviewContext();
 
+  const params = useParams();
+
+  const [media, setMedia] = useState({});
+  const [reviews, setReviews] = useState([]);
+
   const [colors, setColors] = useState({
     light: "#ffffff",
     dark: "#000000",
     text: "#000000",
   });
   const [palette, setPalette] = useState([]);
-
-  const params = useParams();
-  const [media, setMedia] = useState({});
-  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -47,6 +48,11 @@ export default function ArtistPage() {
           track: fetchedMedia[2] || null,
         });
 
+        const fetchedReviews = await getReviewsByMediaId(mediaId);
+        setReviews(
+          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
+        );
+
         const imageURL =
           fetchedMedia[1]?.images[0].url || fetchedMedia[0].images[0].url;
 
@@ -55,11 +61,6 @@ export default function ArtistPage() {
 
         const palette = await getColorPalette(imageURL);
         setPalette(palette);
-
-        const fetchedReviews = await getReviewsByMediaId(mediaId);
-        setReviews(
-          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
-        );
       } catch (error) {
         console.log(error);
       }
@@ -74,42 +75,13 @@ export default function ArtistPage() {
 
   return (
     <div className="mx-10 mt-6 flex flex-col gap-2">
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage: `linear-gradient(to bottom left, ${colors.light} 0%, ${colors.dark} 5%, #000000 100%)`,
-          filter: "blur(100px)",
-          zIndex: -1,
-        }}
-      />
+      <MediaGradient light={colors.light} dark={colors.dark} />
 
       <ArtistNavigation
         media={media}
         category={media.category}
         color={colors.text}
       />
-
-      <div className="flex gap-2">
-        {palette &&
-          palette.map((color) => {
-            return (
-              <div
-                key={color.name}
-                style={{
-                  backgroundColor: color.color,
-                  padding: 5,
-                  height: 50,
-                }}
-              >
-                {color.name}
-              </div>
-            );
-          })}
-      </div>
 
       <div className="flex gap-8">
         <Outlet context={media} />
@@ -121,6 +93,45 @@ export default function ArtistPage() {
           category={media.category}
         />
       </div>
+    </div>
+  );
+}
+
+function MediaGradient({ light, dark }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundImage: `linear-gradient(to bottom left, ${light} 0%, ${dark} 10%, #000000 100%)`,
+        filter: "blur(100px)",
+        zIndex: -1,
+      }}
+    />
+  );
+}
+
+function MediaColorPalette({ palette }) {
+  return (
+    <div className="flex gap-2">
+      {palette &&
+        palette.map((color) => {
+          return (
+            <div
+              key={color.name}
+              style={{
+                backgroundColor: color.color,
+                padding: 5,
+                height: 50,
+              }}
+            >
+              {color.name}
+            </div>
+          );
+        })}
     </div>
   );
 }
