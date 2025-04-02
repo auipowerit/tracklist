@@ -77,8 +77,6 @@ export default function ArtistPage() {
     <div className="mx-10 mt-6 flex flex-col gap-2">
       <MediaGradient light={colors.light} dark={colors.dark} />
 
-      <MediaColorPalette palette={palette} />
-
       <ArtistNavigation
         media={media}
         category={media.category}
