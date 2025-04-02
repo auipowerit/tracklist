@@ -32,7 +32,7 @@ export default function ListButton(props) {
       </Modal>
 
       <button
-        className="flex cursor-pointer items-center gap-1 rounded-md bg-green-700 px-2 py-1 text-lg hover:text-gray-400"
+        className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white p-2 text-lg hover:text-gray-400"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
         onClick={handleClick}

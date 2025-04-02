@@ -4,9 +4,9 @@ export async function getColors(imageURL) {
   const palette = await getPalette(imageURL);
 
   return {
-    light: palette.vibrant,
-    dark: palette.lightMuted,
-    text: palette.lightMuted,
+    light: palette.muted,
+    dark: palette.darkMuted,
+    text: palette.lightVibrant,
   };
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
-import { getColorPalette, getColors } from "src/utils/colors";
+import { getColors, getColorPalette } from "src/utils/colors";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
@@ -77,12 +77,13 @@ export default function ArtistPage() {
     <div className="mx-10 mt-6 flex flex-col gap-2">
       <MediaGradient light={colors.light} dark={colors.dark} />
 
+      <MediaColorPalette palette={palette} />
+
       <ArtistNavigation
         media={media}
         category={media.category}
         color={colors.text}
       />
-
       <div className="flex gap-8">
         <Outlet context={media} />
 
@@ -106,7 +107,7 @@ function MediaGradient({ light, dark }) {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundImage: `linear-gradient(to bottom left, ${light} 0%, ${dark} 10%, #000000 100%)`,
+        backgroundImage: `linear-gradient(to bottom right, ${light}, ${dark})`,
         filter: "blur(100px)",
         zIndex: -1,
       }}
