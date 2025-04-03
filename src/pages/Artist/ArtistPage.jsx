@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import Loading from "src/components/Loading";
-import { getColors, getColorPalette } from "src/utils/colors";
+import { getColorPalette, getColors } from "src/utils/colors";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-
 import MediaReviews from "./MediaReviews";
 import ArtistNavigation from "./ArtistNavigation";
 
@@ -14,8 +12,9 @@ export default function ArtistPage() {
 
   const params = useParams();
 
-  const [media, setMedia] = useState({});
-  const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [media, setMedia] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
   const [colors, setColors] = useState({
     light: "#ffffff",
@@ -26,7 +25,11 @@ export default function ArtistPage() {
 
   useEffect(() => {
     const fetchMedia = async () => {
+      setIsLoading(true);
+
       try {
+        setReviews(null);
+
         const artistId = params.artistId;
         const albumId = params.albumId;
         const trackId = params.trackId;
@@ -40,19 +43,6 @@ export default function ArtistPage() {
           trackId && getTrackById(trackId),
         ]);
 
-        setMedia({
-          id: mediaId,
-          category,
-          artist: fetchedMedia[0] || null,
-          album: fetchedMedia[1] || null,
-          track: fetchedMedia[2] || null,
-        });
-
-        const fetchedReviews = await getReviewsByMediaId(mediaId);
-        setReviews(
-          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
-        );
-
         const imageURL =
           fetchedMedia[1]?.images[0].url || fetchedMedia[0].images[0].url;
 
@@ -61,35 +51,52 @@ export default function ArtistPage() {
 
         const palette = await getColorPalette(imageURL);
         setPalette(palette);
+
+        setMedia({
+          id: mediaId,
+          category,
+          artist: fetchedMedia[0] || null,
+          album: fetchedMedia[1] || null,
+          track: fetchedMedia[2] || null,
+          colors: colors,
+        });
+
+        const fetchedReviews = await getReviewsByMediaId(mediaId);
+        setReviews(
+          [...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt),
+        );
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchMedia();
   }, [params]);
 
-  if (!media.id) {
-    return <Loading />;
-  }
-
   return (
-    <div className="mx-10 mt-6 flex flex-col gap-2">
+    <div className="flex h-full gap-8">
       <MediaGradient light={colors.light} dark={colors.dark} />
 
-      <ArtistNavigation
-        media={media}
-        category={media.category}
-        color={colors.text}
-      />
-      <div className="flex gap-8">
-        <Outlet context={media} />
+      <div className="flex flex-2 flex-col">
+        <ArtistNavigation
+          media={media}
+          category={media?.category}
+          color={colors?.text}
+        />
+        <div className="px-6">
+          <Outlet context={media} />
+        </div>
+      </div>
 
+      <div className="h-full flex-1 bg-[rgba(20,20,20,0.6)]">
         <MediaReviews
-          key={media.id}
-          mediaId={media.id}
+          key={media?.id}
+          mediaId={media?.id}
           reviews={reviews}
-          category={media.category}
+          setReviews={setReviews}
+          category={media?.category}
         />
       </div>
     </div>

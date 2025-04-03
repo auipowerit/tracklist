@@ -85,19 +85,22 @@ export default function ReviewForm(props) {
     const newReview = await addReview(reviewInfo);
     const username = (await getUserById(globalUser.uid)).username;
 
-    setReviews((prevData) => [
-      {
-        id: newReview.id,
-        ...newReview.data(),
-        username,
-        media,
-      },
-      ...(prevData || []),
-    ]);
+    setReviews((prevReviews) =>
+      [
+        {
+          id: newReview.id,
+          ...newReview.data(),
+          username,
+          media,
+        },
+        ...(prevReviews || []),
+      ].sort((a, b) => b.createdAt - a.createdAt),
+    );
 
     formRef.current.reset();
     resetValues();
     setIsModalOpen(false);
+    window.location.reload();
   }
 
   function resetValues() {

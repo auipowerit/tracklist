@@ -1,9 +1,6 @@
-import { useReviewContext } from "src/context/Review/ReviewContext";
 import SortButton from "../Buttons/SortButton";
 
-export default function SortReviews() {
-  const { reviews, setReviews } = useReviewContext();
-
+export default function SortReviews({ reviews, setReviews }) {
   const sortOptions = [
     { label: "Newest", value: "newest" },
     { label: "Oldest", value: "oldest" },

@@ -7,8 +7,8 @@ export default function TrackList({ artistId, albumId, tracks }) {
       <p className="text-4xl font-bold">Tracks</p>
 
       <div className="flex flex-2 items-start justify-center gap-8">
-        {tracks && tracks.length > 0 ? (
-          <ul className="flex flex-col gap-4 overflow-auto p-6">
+        {tracks && tracks.length > 0 && (
+          <ul className="grid grid-cols-2 gap-4 p-4">
             {tracks.map((track) => {
               return (
                 <li key={track.id}>
@@ -21,8 +21,6 @@ export default function TrackList({ artistId, albumId, tracks }) {
               );
             })}
           </ul>
-        ) : (
-          <p className="p-20 text-center text-5xl italic">Nothing to show!</p>
         )}
       </div>
     </div>

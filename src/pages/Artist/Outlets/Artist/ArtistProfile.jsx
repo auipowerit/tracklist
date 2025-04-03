@@ -1,26 +1,26 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import MediaCard from "src/components/Cards/MediaCard";
 import ListButton from "src/components/Buttons/ListButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaList from "./MediaList";
+import MediaBanner from "../../MediaBanner";
 
-export default function ArtistProfile() {
+function ArtistProfile() {
   const { isModalOpen, setIsModalOpen } = useReviewContext();
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
-  const { artist } = useOutletContext();
+  const context = useOutletContext();
+  const { artist, colors } = context ?? {};
 
-  const [albums, setAlbums] = useState([]);
-  const [singles, setSingles] = useState([]);
+  const [albums, setAlbums] = useState(null);
+  const [singles, setSingles] = useState(null);
 
   useEffect(() => {
     const getArtistData = async () => {
       try {
-        const fetchedAlbums = await getArtistAlbums(artist.id);
-        const fetchedSingles = await getArtistSingles(artist.id);
-
+        const fetchedAlbums = await getArtistAlbums(artist?.id);
+        const fetchedSingles = await getArtistSingles(artist?.id);
         setAlbums(fetchedAlbums);
         setSingles(fetchedSingles);
       } catch (error) {
@@ -31,24 +31,21 @@ export default function ArtistProfile() {
     getArtistData();
   }, []);
 
-  if (!artist) {
-    return (
-      <div className="flex h-screen flex-2 flex-col items-center gap-8 overflow-auto p-10"></div>
-    );
-  }
-
   return (
     <div className="flex min-h-screen flex-2 flex-col items-center gap-8 p-10">
-      <MediaCard
-        media={artist}
-        category={"artist"}
-        onClick={() => window.open(artist.external_urls.spotify)}
+      <MediaBanner
+        mediaId={artist?.id}
+        spotifyURL={artist?.external_urls.spotify}
+        color={colors?.dark}
+        image={artist?.images[0].url}
+        name={artist?.name}
+        subtitle={artist && `${artist?.followers.total} followers`}
       />
 
       <ListButton
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        media={{ mediaId: artist.id, mediaName: artist.name }}
+        media={{ mediaId: artist?.id, mediaName: artist?.name }}
         category={"artist"}
       />
 
@@ -57,3 +54,5 @@ export default function ArtistProfile() {
     </div>
   );
 }
+
+export default memo(ArtistProfile);

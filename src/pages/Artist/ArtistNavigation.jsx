@@ -1,32 +1,33 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
-export default function ArtistNavigation({ media, category, color }) {
+function ArtistNavigation({ media, category, color }) {
   return (
-    <div className="flex w-fit items-center gap-2 rounded-md bg-[rgba(20,20,20,0.6)] px-2 py-1 font-bold tracking-wider">
+    <div className="flex w-fit items-center gap-2 bg-black/40 px-4 py-2 font-bold tracking-wider">
       <Link
-        to={`/artists/${media.artist.id}`}
+        to={`/artists/${media?.artist.id}`}
         style={{ color: category === "artist" ? color : "" }}
       >
-        {media.artist.name}
+        {media?.artist.name}
       </Link>
 
-      {media.album && (
+      {media?.album && (
         <>
           <span>&rsaquo;</span>
           <Link
-            to={`/artists/${media.artist.id}/albums/${media.album.id}`}
+            to={`/artists/${media?.artist.id}/albums/${media?.album.id}`}
             style={{ color: category === "album" ? color : "" }}
           >
-            {media.album.name}
+            {media?.album.name}
           </Link>
-          {media.track && (
+          {media?.track && (
             <>
               <span>&rsaquo;</span>
               <Link
-                to={`/artists/${media.artist.id}/albums/${media.album.id}/tracks/${media.track.id}`}
+                to={`/artists/${media?.artist.id}/albums/${media?.album.id}/tracks/${media?.track.id}`}
                 style={{ color: category === "track" ? color : "" }}
               >
-                {media.track.name}
+                {media?.track.name}
               </Link>
             </>
           )}
@@ -35,3 +36,5 @@ export default function ArtistNavigation({ media, category, color }) {
     </div>
   );
 }
+
+export default memo(ArtistNavigation);

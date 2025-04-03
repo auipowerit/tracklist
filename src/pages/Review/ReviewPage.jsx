@@ -48,7 +48,7 @@ export default function ReviewPage() {
 
   return (
     <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-6">
-      <BackButton targetURL="/" />
+      <BackButton />
       <Review review={review} mediaData={mediaData} />
       <CommentList review={review} />
     </div>

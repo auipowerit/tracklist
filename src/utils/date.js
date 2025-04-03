@@ -37,6 +37,8 @@ export function formatDateMDLong(date) {
 
 /* January 1, 2025 */
 export function formatDateMDYLong(date) {
+  if (!date) return null;
+
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useReviewContext } from "src/context/Review/ReviewContext";
-import ReviewStars from "src/components/Review/ReviewStars";
+import { ReviewStars } from "src/components/Review/ReviewContent";
 
 export default function TrackCard({ number, track }) {
   const { getAvgRating } = useReviewContext();

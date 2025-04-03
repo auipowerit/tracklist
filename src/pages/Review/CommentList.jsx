@@ -34,7 +34,7 @@ export default function CommentList({ review }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4">
         <h2 className="text-xl font-bold">
           {comments?.length || 0}{" "}
           {comments?.length === 1 ? "Comment" : "Comments"}

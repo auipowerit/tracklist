@@ -30,7 +30,7 @@ export default function SearchBar(props) {
 
   return (
     <form
-      className="flex w-1/3 items-center justify-center gap-4"
+      className="flex items-center justify-center gap-4"
       onSubmit={handleSearch}
     >
       <FormInput

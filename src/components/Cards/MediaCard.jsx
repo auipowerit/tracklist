@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { formatDateMDYLong } from "src/utils/date";
-import ReviewStars from "../Review/ReviewStars";
+import { ReviewStars } from "../Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 

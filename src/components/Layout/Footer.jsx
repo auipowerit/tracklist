@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-  function goToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
   return (
-    <footer className="mt-10 flex flex-col items-center gap-2 p-10">
+    <footer className="flex flex-col items-center gap-2 bg-black/50 p-10 pt-6">
       <p className="space-y-2 text-center text-sm text-gray-400">
         Coded in&nbsp;
         <Link
