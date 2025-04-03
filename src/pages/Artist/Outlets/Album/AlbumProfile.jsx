@@ -15,15 +15,15 @@ function AlbumProfile() {
 
   return (
     <div className="flex min-h-screen flex-2 flex-col gap-8 p-10">
-      <div className="flex flex-col items-center gap-8">
+      <div className="m-auto flex w-fit flex-col items-center justify-center gap-8">
         <MediaBanner
           mediaId={album?.id}
           spotifyURL={album?.external_urls.spotify}
           color={colors?.dark}
           image={album?.images[0].url}
           name={album?.name}
-          artistName={artist?.name}
-          subtitle={formatDateMDYLong(album?.release_date)}
+          subtitle={`${album?.tracks.items.length > 0 && album?.tracks.items.length} songs · 
+              ${formatDateMDYLong(album?.release_date)}`}
         />
 
         <ListButton

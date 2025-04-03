@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export function useSpotify() {
-  const CLIENT_ID = "34e1029a79a849e4961c3de724acaca9";
-  const CLIENT_SECRET = "7c8f58ab81fa49fbbe5d2d1943193ce1";
+  const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
   const defaultImg = "/images/default-img.jpg";
 
@@ -49,13 +49,13 @@ export function useSpotify() {
     }
   }
 
-  async function getArtistAlbums(artistId) {
+  async function getArtistAlbums(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
     const access_token = accessToken || (await fetchAccessToken());
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=10`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&market=US&limit=${limit}&offset=${offset}`,
         {
           method: "GET",
           headers: {
@@ -73,13 +73,13 @@ export function useSpotify() {
     }
   }
 
-  async function getArtistSingles(artistId) {
+  async function getArtistSingles(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
     const access_token = accessToken || (await fetchAccessToken());
 
     try {
       const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=single&market=US&limit=20`,
+        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=single&market=US&limit=${limit}&offset=${offset}`,
         {
           method: "GET",
           headers: {

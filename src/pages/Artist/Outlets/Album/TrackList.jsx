@@ -6,7 +6,7 @@ export default function TrackList({ artistId, albumId, tracks }) {
     <div className="flex flex-col items-center">
       <p className="text-4xl font-bold">Tracks</p>
 
-      <div className="flex flex-2 items-start justify-center gap-8">
+      <div className="flex min-h-80 flex-2 items-start justify-center gap-8">
         {tracks && tracks.length > 0 && (
           <ul className="grid grid-cols-2 gap-4 p-4">
             {tracks.map((track) => {

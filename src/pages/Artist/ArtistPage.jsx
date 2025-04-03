@@ -85,9 +85,7 @@ export default function ArtistPage() {
           category={media?.category}
           color={colors?.text}
         />
-        <div className="px-6">
-          <Outlet context={media} />
-        </div>
+        <div className="px-6">{!isLoading && <Outlet context={media} />}</div>
       </div>
 
       <div className="h-full flex-1 bg-[rgba(20,20,20,0.6)]">
