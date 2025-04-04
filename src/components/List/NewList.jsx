@@ -51,6 +51,7 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
 
     if (!setNewList) {
       setIsModalOpen(false);
+      window.location.reload();
       return;
     }
 

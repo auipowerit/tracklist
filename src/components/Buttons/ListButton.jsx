@@ -14,7 +14,7 @@ export default function ListButton(props) {
 
   function handleClick() {
     if (!globalUser) {
-      navigate("/account/authenticate");
+      navigate("/authenticate");
       return;
     }
     setIsModalOpen(true);

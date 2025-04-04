@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import PostButton from "../Buttons/PostButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function Navbar() {
   const { globalUser, globalData, logout } = useAuthContext();
-  const { isModalOpen, setIsModalOpen } = useReviewContext();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -18,7 +15,7 @@ export default function Navbar() {
     if (globalUser) {
       setShowDropdown(!showDropdown);
     } else {
-      navigate("/account/authenticate");
+      navigate("/authenticate");
     }
   }
 
@@ -78,12 +75,12 @@ export default function Navbar() {
             >
               <DropdownMenu
                 items={[
-                  { label: "Profile", path: "/account/profile" },
+                  { label: "Profile", path: "/account" },
                   { label: "Lists", path: "/account/lists" },
                   { label: "Friends", path: "/account/friends" },
                   {
                     label: "Logout",
-                    path: "/account/authenticate",
+                    path: "/authenticate",
                     action: logout,
                   },
                 ]}

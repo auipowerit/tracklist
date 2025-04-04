@@ -3,7 +3,7 @@ import MediaListCard from "./MediaListCard";
 
 export default function MediaList({ mediaList, isRanking }) {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-4">
       {mediaList?.length > 0 &&
         mediaList.map((media, index) => {
           return (

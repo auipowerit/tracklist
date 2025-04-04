@@ -16,19 +16,25 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
-          path: "/account/authenticate",
+          path: "/authenticate",
           element: <Pages.AuthPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
-          path: "/account/lists",
-          element: <Pages.ListsPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
-          path: "/account/lists/:listId",
-          element: <Pages.ListPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
+          path: "/account",
+          element: <Pages.AccountPage />,
+          children: [
+            {
+              path: "/account/lists",
+              element: <Pages.ListsPage />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/account/lists/:listId",
+              element: <Pages.ListPage />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+          ],
         },
         {
           path: "/search",

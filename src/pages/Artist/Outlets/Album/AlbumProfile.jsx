@@ -1,8 +1,7 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
 import ListButton from "src/components/Buttons/ListButton";
-import { useReviewContext } from "src/context/Review/ReviewContext";
 import TrackList from "./TrackList";
 import MediaBanner from "../../MediaBanner";
 
@@ -10,7 +9,7 @@ function AlbumProfile() {
   const context = useOutletContext();
   const { artist, album, colors } = context ?? {};
 
-  const { isModalOpen, setIsModalOpen } = useReviewContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const tracks = useMemo(() => album?.tracks.items, [album]);
 
   return (

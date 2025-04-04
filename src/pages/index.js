@@ -9,3 +9,4 @@ export { default as ReviewPage } from "./Review/ReviewPage";
 export { default as ArtistProfile } from "./Artist/Outlets/Artist/ArtistProfile";
 export { default as AlbumProfile } from "./Artist/Outlets/Album/AlbumProfile";
 export { default as TrackProfile } from "./Artist/Outlets/Track/TrackProfile";
+export { default as AccountPage } from "./Account/AccountPage";

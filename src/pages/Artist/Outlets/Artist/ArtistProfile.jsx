@@ -1,18 +1,17 @@
 import { memo, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import ListButton from "src/components/Buttons/ListButton";
-import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaList from "./MediaList";
 import MediaBanner from "../../MediaBanner";
 
 function ArtistProfile() {
-  const { isModalOpen, setIsModalOpen } = useReviewContext();
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
   const context = useOutletContext();
   const { artist, colors } = context ?? {};
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState([]);

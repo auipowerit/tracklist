@@ -10,6 +10,7 @@ import {
   limit,
   orderBy,
   query,
+  startAfter,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -107,8 +108,16 @@ export function useReview() {
 
   async function getReviewsByUserId(userId) {
     try {
+      if (!userId) return [];
+
       const reviewsRef = collection(db, "reviews");
-      const q = query(reviewsRef, where("userId", "==", userId));
+      const q = query(
+        reviewsRef,
+        where("userId", "==", userId),
+        orderBy("createdAt", "desc"),
+        limit(10),
+      );
+
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) return [];

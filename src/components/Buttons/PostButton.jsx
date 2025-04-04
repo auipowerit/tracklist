@@ -17,7 +17,7 @@ export default function PostButton({
 
   function handleClick() {
     if (!globalUser) {
-      navigate("/account/authenticate");
+      navigate("/authenticate");
       return;
     }
     setIsModalOpen(true);

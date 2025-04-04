@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import FeedResults from "./FeedResults";
 import Tabs from "src/components/Tabs";
-import { useReview } from "src/hooks/useReview";
 import PostButton from "src/components/Buttons/PostButton";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function Feed({ reviews }) {
-  const { getPopularReviews } = useReview();
+  const { getPopularReviews } = useReviewContext();
 
-  const [popReviews, setPopReviews] = useState([]);
+  const [popularReviews, setPopularReviews] = useState([]);
   const [activeTab, setActiveTab] = useState("newest");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,7 +19,7 @@ export default function Feed({ reviews }) {
   useEffect(() => {
     const fetchReviews = async () => {
       const fetchedReviews = await getPopularReviews();
-      setPopReviews(fetchedReviews);
+      setPopularReviews(fetchedReviews);
     };
 
     fetchReviews();
@@ -38,7 +38,9 @@ export default function Feed({ reviews }) {
         </div>
       </div>
 
-      <FeedResults results={activeTab === "newest" ? reviews : popReviews} />
+      <FeedResults
+        results={activeTab === "newest" ? reviews : popularReviews}
+      />
     </div>
   );
 }

@@ -6,9 +6,9 @@ export default function ListsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
+    <div className="flex h-full w-full flex-col gap-4">
       <div className="flex items-center justify-between align-middle">
-        <p className="text-2xl text-gray-400">Your Lists</p>
+        <p className="text-2xl text-white">Your Lists</p>
         <ListButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "src/hooks/useAuth";
+import { auth, db } from "src/config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import AuthContext from "./AuthContext";
-import { useAuth } from "src/hooks/useAuth";
-import { auth, db } from "src/config/firebase";
 
 export default function AuthProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [globalUser, setGlobalUser] = useState(null);
   const [globalData, setGlobalData] = useState(null);
 
@@ -13,11 +14,12 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setGlobalUser(user);
-
-      if (!user) return;
+      setIsLoading(true);
 
       try {
+        setGlobalUser(user);
+        if (!user) return;
+
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
 
@@ -26,6 +28,8 @@ export default function AuthProvider({ children }) {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     });
 
@@ -33,6 +37,7 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const authMethods = {
+    isLoading,
     globalUser,
     globalData,
     ...useAuthMethods,

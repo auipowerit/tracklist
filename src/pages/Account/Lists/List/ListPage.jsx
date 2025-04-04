@@ -7,12 +7,11 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function ListPage() {
-  const { globalUser, getUserById, getUserListById } = useAuthContext();
+  const { globalUser, getUserListById } = useAuthContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [list, setList] = useState(null);
-  const [user, setUser] = useState("");
   const [mediaList, setMediaList] = useState({
     link: "",
     image: defaultImg,
@@ -28,9 +27,6 @@ export default function ListPage() {
       setIsLoading(true);
 
       try {
-        const fetchedUser = await getUserById(globalUser.uid);
-        setUser(fetchedUser);
-
         const fetchedList = await getUserListById(listId, globalUser.uid);
         setList(fetchedList);
 
@@ -75,8 +71,8 @@ export default function ListPage() {
   }
 
   return (
-    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-4">
-      <ListHeader username={user.username} name={list.name} tags={list.tags} />
+    <div className="flex h-full flex-col gap-4">
+      <ListHeader name={list.name} tags={list.tags} />
       <div className="overflow-y-scroll border-t-1 border-white py-10">
         {list && <MediaList mediaList={mediaList} isRanking={list.isRanking} />}
       </div>
