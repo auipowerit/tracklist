@@ -1,16 +1,15 @@
+import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { formatDateMDYLong } from "src/utils/date";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendar,
-  faCancel,
   faCheck,
   faPen,
   faUserCircle,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-import { formatDateMDYLong } from "src/utils/date";
 
 export default function AccountProfile() {
   const { globalData } = useOutletContext();
