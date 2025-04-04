@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import AuthContext from "./AuthContext";
 
 export default function AuthProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [globalUser, setGlobalUser] = useState(null);
   const [globalData, setGlobalData] = useState(null);
 
@@ -14,7 +14,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setIsLoading(true);
+      setLoadingUser(true);
 
       try {
         setGlobalUser(user);
@@ -29,7 +29,7 @@ export default function AuthProvider({ children }) {
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false);
+        setLoadingUser(false);
       }
     });
 
@@ -37,7 +37,7 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const authMethods = {
-    isLoading,
+    loadingUser,
     globalUser,
     globalData,
     ...useAuthMethods,

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import {
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -19,7 +20,7 @@ import {
 import { auth, db } from "../config/firebase";
 
 export function useAuth() {
-  async function signup(email, password, firstname, lastname, username) {
+  async function signup(email, password, displayname, username) {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -31,9 +32,9 @@ export function useAuth() {
 
       const newUserData = {
         email,
-        firstname,
-        lastname,
+        displayname,
         username,
+        bio: "",
         folllowing: [],
         followers: [],
         lists: [],
@@ -143,12 +144,43 @@ export function useAuth() {
     }
   }
 
+  async function unfollowUser(userId, unfollowedId) {
+    try {
+      const usersRef = collection(db, "users");
+      const currentUserRef = doc(usersRef, userId);
+      const unfollowedUserRef = doc(usersRef, unfollowedId);
+
+      if (currentUserRef.empty || unfollowedUserRef.empty) return;
+
+      await updateDoc(currentUserRef, {
+        following: arrayRemove(unfollowedId),
+      });
+
+      await updateDoc(unfollowedUserRef, {
+        followers: arrayRemove(userId),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function getFollowingById(userId) {
     try {
       const user = await getUserById(userId);
       if (!user) return;
 
       return user?.following;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getFollowersById(userId) {
+    try {
+      const user = await getUserById(userId);
+      if (!user) return;
+
+      return user?.followers;
     } catch (error) {
       console.log(error);
     }
@@ -344,6 +376,8 @@ export function useAuth() {
     searchByUsername,
     followUser,
     getFollowingById,
+    getFollowersById,
+    unfollowUser,
     checkIfListExists,
     createNewMediaList,
     deleteMediaList,

@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function AccountPage() {
-  const { isLoading, globalData, logout } = useAuthContext();
+  const { loadingUser, globalUser, globalData, logout } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -27,30 +27,28 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
-    if (isLoading) return;
+    if (loadingUser) return;
 
-    if (!globalData) {
+    if (!globalData || !globalUser) {
       navigate("/authenticate", { replace: true });
     }
-  }, [globalData, isLoading]);
+  }, [globalUser, globalData, loadingUser]);
 
   const children = [
-    { page: "reviews", content: "Reviews" },
-    { page: "lists", content: "Lists" },
-    { page: "tags", content: "Tags" },
-    { page: "likes", content: "Likes" },
-    { page: "followers", content: "Followers" },
-    { page: "following", content: "Following" },
-    { page: "settings", content: "Settings" },
+    { id: "reviews", LoadBundleTask: "Reviews" },
+    { id: "lists", LoadBundleTask: "Lists" },
+    { id: "tags", LoadBundleTask: "Tags" },
+    { id: "likes", LoadBundleTask: "Likes" },
+    { id: "network", LoadBundleTask: "Network" },
   ];
 
-  if (isLoading) {
+  if (loadingUser) {
     return <Loading />;
   }
 
   return (
     <div>
-      <div className="mx-auto my-4 flex w-3/5 items-center justify-around bg-green-700/30 px-4 py-2 text-lg text-gray-400">
+      <div className="mx-auto my-4 flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
         <Link
           to=""
           className={`flex items-center gap-2 ${isActive("/") && "text-white"}`}
@@ -62,11 +60,11 @@ export default function AccountPage() {
         <div className="flex items-center gap-4">
           {children.map((child) => (
             <Link
-              key={child.page}
-              to={child.page}
-              className={`flex items-center gap-2 ${isActive(child.page) && "text-white"}`}
+              key={child.id}
+              to={child.id}
+              className={`flex items-center gap-2 ${isActive(child.id) && "text-white"}`}
             >
-              {child.content}
+              {child.LoadBundleTask}
             </Link>
           ))}
         </div>
@@ -77,7 +75,7 @@ export default function AccountPage() {
       </div>
 
       <div className="m-auto my-6 w-3/5">
-        <Outlet />
+        <Outlet context={{ globalUser }} />
       </div>
     </div>
   );

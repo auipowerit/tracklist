@@ -6,7 +6,7 @@ import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
-export default function ListPage() {
+export default function AccountList() {
   const { globalUser, getUserListById } = useAuthContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 

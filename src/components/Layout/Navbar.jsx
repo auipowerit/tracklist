@@ -67,7 +67,7 @@ export default function Navbar() {
               }`}
             />
             <div
-              className={`absolute top-10 right-0 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+              className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
                 showDropdown
                   ? "max-h-screen p-2 opacity-100"
                   : "max-h-0 opacity-0"
@@ -77,7 +77,7 @@ export default function Navbar() {
                 items={[
                   { label: "Profile", path: "/account" },
                   { label: "Lists", path: "/account/lists" },
-                  { label: "Friends", path: "/account/friends" },
+                  { label: "Friends", path: "/account/network" },
                   {
                     label: "Logout",
                     path: "/authenticate",

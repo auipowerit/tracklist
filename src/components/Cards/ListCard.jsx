@@ -15,10 +15,7 @@ export default function ListCard({ id, image, name, length, description }) {
   }
 
   return (
-    <Link
-      to={`${id}`}
-      className="border-box mt-6 flex cursor-pointer gap-4 hover:bg-gray-800"
-    >
+    <Link to={`${id}`} className="border-box mt-6 flex cursor-pointer gap-4">
       <img src={image} className="w-46" />
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">

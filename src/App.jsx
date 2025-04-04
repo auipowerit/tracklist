@@ -25,13 +25,28 @@ export default function App() {
           element: <Pages.AccountPage />,
           children: [
             {
+              path: "/account/reviews",
+              element: <Pages.AccountReviews />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
               path: "/account/lists",
-              element: <Pages.ListsPage />,
+              element: <Pages.AccountLists />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
               path: "/account/lists/:listId",
-              element: <Pages.ListPage />,
+              element: <Pages.AccountList />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/account/likes",
+              element: <Pages.AccountLikes />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/account/network",
+              element: <Pages.AccountNetwork />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
           ],
