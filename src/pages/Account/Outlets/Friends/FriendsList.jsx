@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import NetworkCard from "./NetworkCard";
+import FriendCard from "./FriendCard";
 
-export default function NetworkList(props) {
+export default function FriendsList(props) {
   const { userId, category } = props;
 
   const {
@@ -38,7 +38,7 @@ export default function NetworkList(props) {
   }
 
   useEffect(() => {
-    const fetchNetwork = async () => {
+    const fetchFriends = async () => {
       if (!userId) return;
 
       setIsLoading(true);
@@ -70,7 +70,7 @@ export default function NetworkList(props) {
       }
     };
 
-    fetchNetwork();
+    fetchFriends();
   }, [userId, category]);
 
   if (isLoading) {
@@ -84,7 +84,7 @@ export default function NetworkList(props) {
           <ul className="flex w-full flex-col gap-4">
             {users.map((user) => {
               return (
-                <NetworkCard
+                <FriendCard
                   key={user.id}
                   user={user}
                   handleClick={handleClick}

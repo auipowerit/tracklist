@@ -25,6 +25,16 @@ export default function App() {
           element: <Pages.AccountPage />,
           children: [
             {
+              index: true,
+              element: <Pages.AccountProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/account/profile",
+              element: <Pages.AccountProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
               path: "/account/reviews",
               element: <Pages.AccountReviews />,
               errorElement: <Pages.ErrorPage is404={false} />,
@@ -45,8 +55,8 @@ export default function App() {
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/network",
-              element: <Pages.AccountNetwork />,
+              path: "/account/friends",
+              element: <Pages.AccountFriends />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
           ],

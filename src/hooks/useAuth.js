@@ -186,6 +186,15 @@ export function useAuth() {
     }
   }
 
+  async function updateUserDetails(displayname, bio) {
+    try {
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(userRef, { displayname, bio });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function deleteMediaList(listId, userId) {
     try {
       if (!listId || !userId) return;
@@ -375,9 +384,10 @@ export function useAuth() {
     getUserById,
     searchByUsername,
     followUser,
+    unfollowUser,
     getFollowingById,
     getFollowersById,
-    unfollowUser,
+    updateUserDetails,
     checkIfListExists,
     createNewMediaList,
     deleteMediaList,

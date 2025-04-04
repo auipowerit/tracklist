@@ -5,6 +5,7 @@ import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaReviews from "./MediaReviews";
 import ArtistNavigation from "./ArtistNavigation";
+import MediaGradient from "src/components/Layout/MediaGradient";
 
 export default function ArtistPage() {
   const { getArtistById, getAlbumById, getTrackById } = useSpotifyContext();
@@ -98,24 +99,6 @@ export default function ArtistPage() {
         />
       </div>
     </div>
-  );
-}
-
-function MediaGradient({ light, dark }) {
-  return (
-    <div
-      className="moving-gradient"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundImage: `linear-gradient(to bottom right, ${light}, ${dark})`,
-        filter: "blur(100px)",
-        zIndex: -1,
-      }}
-    />
   );
 }
 

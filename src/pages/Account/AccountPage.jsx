@@ -39,7 +39,7 @@ export default function AccountPage() {
     { id: "lists", LoadBundleTask: "Lists" },
     { id: "tags", LoadBundleTask: "Tags" },
     { id: "likes", LoadBundleTask: "Likes" },
-    { id: "network", LoadBundleTask: "Network" },
+    { id: "friends", LoadBundleTask: "Friends" },
   ];
 
   if (loadingUser) {
@@ -47,11 +47,11 @@ export default function AccountPage() {
   }
 
   return (
-    <div>
-      <div className="mx-auto my-4 flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
+    <div className="mx-auto my-4 flex w-full flex-col items-center gap-4">
+      <div className="flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
         <Link
-          to=""
-          className={`flex items-center gap-2 ${isActive("/") && "text-white"}`}
+          to="profile"
+          className={`flex items-center gap-2 hover:text-white ${isActive("/") || (isActive("profile") && "text-white")}`}
         >
           <FontAwesomeIcon icon={faUserCircle} />
           <p>{globalData?.username}</p>
@@ -62,20 +62,23 @@ export default function AccountPage() {
             <Link
               key={child.id}
               to={child.id}
-              className={`flex items-center gap-2 ${isActive(child.id) && "text-white"}`}
+              className={`flex items-center gap-2 hover:text-white ${isActive(child.id) && "text-white"}`}
             >
               {child.LoadBundleTask}
             </Link>
           ))}
         </div>
 
-        <button onClick={handleLogout} className="flex items-center gap-2">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 hover:text-white"
+        >
           <FontAwesomeIcon icon={faSignOut} />
         </button>
       </div>
 
       <div className="m-auto my-6 w-3/5">
-        <Outlet context={{ globalUser }} />
+        <Outlet context={{ globalUser, globalData }} />
       </div>
     </div>
   );
