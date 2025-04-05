@@ -38,6 +38,7 @@ export function useAuth() {
         folllowing: [],
         followers: [],
         lists: [],
+        likes: [],
         createdAt: new Date(),
       };
 
@@ -190,6 +191,42 @@ export function useAuth() {
     try {
       const userRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userRef, { displayname, bio });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function likeContent(contentId, category, userId) {
+    try {
+      if (!contentId || !category || !userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      await updateDoc(userRef, {
+        likes: arrayUnion({ contentId, category }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function unlikeContent(contentId, userId) {
+    try {
+      if (!contentId || !userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      await updateDoc(userRef, {
+        likes: userDoc
+          .data()
+          .likes.filter((like) => like.contentId !== contentId),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -388,6 +425,8 @@ export function useAuth() {
     getFollowingById,
     getFollowersById,
     updateUserDetails,
+    likeContent,
+    unlikeContent,
     checkIfListExists,
     createNewMediaList,
     deleteMediaList,

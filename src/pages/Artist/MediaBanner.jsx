@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import ListButton from "src/components/Buttons/ListButton";
 import Placeholder from "src/components/Placeholder";
 import { ReviewStars } from "src/components/Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";

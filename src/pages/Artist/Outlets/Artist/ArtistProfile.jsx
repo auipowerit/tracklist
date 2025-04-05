@@ -1,21 +1,25 @@
 import { memo, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import ListButton from "src/components/Buttons/ListButton";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import LikeMediaButton from "src/components/Buttons/LikeMediaButton";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaList from "./MediaList";
 import MediaBanner from "../../MediaBanner";
 
 function ArtistProfile() {
-  const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
-
   const context = useOutletContext();
   const { artist, colors } = context ?? {};
+
+  const { globalData } = useAuthContext();
+  const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState([]);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   async function loadMedia(start, category) {
     if (category === "album") {
@@ -41,6 +45,7 @@ function ArtistProfile() {
       }
     };
 
+    setIsLiked(globalData?.likes.find((like) => like.contentId === artist?.id));
     getArtistData();
   }, []);
 
@@ -61,6 +66,16 @@ function ArtistProfile() {
         media={{ mediaId: artist?.id, mediaName: artist?.name }}
         category={"artist"}
       />
+
+      {globalData && (
+        <LikeMediaButton
+          user={globalData}
+          isLiked={isLiked}
+          setIsLiked={setIsLiked}
+          id={artist?.id}
+          category={"artist"}
+        />
+      )}
 
       <MediaList
         media={albums}

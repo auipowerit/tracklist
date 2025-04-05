@@ -9,8 +9,10 @@ export default function AccountLikes() {
   const [activeTab, setActiveTab] = useState("reviews");
 
   const tabs = [
+    { id: "artists", label: "Artists" },
+    { id: "albums", label: "Albums" },
+    { id: "songs", label: "Songs" },
     { id: "reviews", label: "Reviews" },
-    { id: "comments", label: "Comments" },
     { id: "lists", label: "Lists" },
   ];
 

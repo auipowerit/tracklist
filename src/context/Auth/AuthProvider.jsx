@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
-          setGlobalData(userDoc.data());
+          setGlobalData({ id: user.uid, ...userDoc.data() });
         }
       } catch (error) {
         console.log(error);
