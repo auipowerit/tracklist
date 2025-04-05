@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FeedReviewCard from "src/components/Cards/FeedReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import MediaListCard from "src/components/Cards/MediaListCard";
 
 export default function AccountLikes() {
   const { globalData } = useOutletContext();
@@ -38,7 +39,7 @@ export default function AccountLikes() {
       <div>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="flex flex-col gap-4">
+        <div className="p-4">
           {activeTab === "review" ? (
             <LikedReviews likes={globalData?.likes} />
           ) : activeTab === "list" ? (
@@ -57,6 +58,8 @@ function LikedMedia({ likes, category }) {
   const [media, setMedia] = useState(null);
 
   useEffect(() => {
+    setMedia(null);
+
     const fetchMedia = async () => {
       const fetchedMedia = await Promise.all(
         likes
@@ -79,13 +82,17 @@ function LikedMedia({ likes, category }) {
   }, [likes, category]);
 
   return (
-    <div>
+    <div className="grid w-fit grid-cols-4 gap-4">
       {media &&
         (media.length > 0 ? (
-          media.map((m) => {
+          media.map((entry) => {
             return (
-              <Link key={m.id} to={m.titleLink}>
-                <MediaCard media={m} />
+              <Link key={entry.id} to={entry.titleLink} className="w-fit">
+                <MediaListCard
+                  title={entry.title}
+                  subtitle={entry.subtitle}
+                  image={entry.image}
+                />
               </Link>
             );
           })

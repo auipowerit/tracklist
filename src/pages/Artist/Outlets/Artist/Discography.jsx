@@ -13,7 +13,7 @@ export default function Discography({
 }) {
   const title = `${category.charAt(0).toUpperCase()}${category.slice(1)}s`;
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   function loadMore() {
     const start = (page + 1) * 6;

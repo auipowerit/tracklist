@@ -10,6 +10,7 @@ import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import MediaGradient from "src/components/Layout/MediaGradient";
 
 export default function AccountPage() {
   const { loadingUser, globalUser, globalData, logout } = useAuthContext();

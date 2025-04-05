@@ -239,7 +239,11 @@ export function useSpotify() {
 
     const mediaData = {
       title: media?.name,
-      image: media?.images?.[0]?.url || defaultImg,
+      titleLink: artistURL,
+      subtitle: media?.type,
+      subtitleLink: artistURL,
+      image:
+        media?.images?.[0]?.url || media?.album?.images?.[0]?.url || defaultImg,
     };
 
     if (media.type === "artist") {
