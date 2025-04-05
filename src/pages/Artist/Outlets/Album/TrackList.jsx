@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TrackCard from "./TrackCard";
+import { ReviewStars } from "src/components/Review/ReviewContent";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function TrackList({ artistId, albumId, tracks }) {
   return (
@@ -22,6 +24,30 @@ export default function TrackList({ artistId, albumId, tracks }) {
             })}
           </ul>
         )}
+      </div>
+    </div>
+  );
+}
+
+function TrackCard({ number, track }) {
+  const { getAvgRating } = useReviewContext();
+  const [rating, setRating] = useState({});
+
+  useEffect(() => {
+    const fetchRating = async () => {
+      const { avgRating, count } = await getAvgRating(track.id);
+
+      setRating({ avgRating, count });
+    };
+
+    fetchRating();
+  }, []);
+
+  return (
+    <div className="flex w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110">
+      {number}. {track.name}
+      <div className="m-auto">
+        <ReviewStars rating={rating?.avgRating || 0} />
       </div>
     </div>
   );

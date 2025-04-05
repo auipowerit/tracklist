@@ -2,7 +2,7 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
-export default function FriendCard({ user, handleClick }) {
+export default function ProfileCard({ user, handleClick }) {
   return (
     <div className="my-4 flex w-full items-center justify-between border-1 border-gray-500 px-2">
       <Link to={`/users/${user.id}`}>

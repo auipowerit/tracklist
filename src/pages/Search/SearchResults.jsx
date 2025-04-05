@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import UserCard from "src/components/Cards/UserCard";
 import MediaCard from "src/components/Cards/MediaCard";
+import UserCard from "src/components/Cards/UserCard";
 
 export default function SearchResults({ results, category }) {
   const classes =

@@ -4,8 +4,8 @@ import ListButton from "src/components/Buttons/ListButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import LikeMediaButton from "src/components/Buttons/LikeMediaButton";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaList from "./MediaList";
 import MediaBanner from "../../MediaBanner";
+import Discography from "./Discography";
 
 function ArtistProfile() {
   const context = useOutletContext();
@@ -45,7 +45,12 @@ function ArtistProfile() {
       }
     };
 
-    setIsLiked(globalData?.likes.find((like) => like.contentId === artist?.id));
+    setIsLiked(
+      globalData?.likes
+        .filter((like) => like.category === "artist")
+        .flatMap((like) => like.content)
+        .includes(artist?.id),
+    );
     getArtistData();
   }, []);
 
@@ -77,7 +82,7 @@ function ArtistProfile() {
         />
       )}
 
-      <MediaList
+      <Discography
         media={albums}
         setMedia={setAlbums}
         category={"album"}
@@ -85,7 +90,7 @@ function ArtistProfile() {
         isMore={isMoreAlbums}
       />
 
-      <MediaList
+      <Discography
         media={singles}
         setMedia={setSingles}
         category={"track"}

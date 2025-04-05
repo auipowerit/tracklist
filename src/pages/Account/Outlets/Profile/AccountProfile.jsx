@@ -14,24 +14,38 @@ import {
 export default function AccountProfile() {
   const { globalData } = useOutletContext();
 
+  const nameLimit = 20;
+  const bioLimit = 155;
+
   const { updateUserDetails } = useAuthContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(globalData.displayname);
   const [bio, setBio] = useState(globalData.bio);
 
-  const nameLimit = 20;
-  const bioLimit = 155;
-
   const [nameInput, setNameInput] = useState(name);
   const [bioInput, setBioInput] = useState(bio);
 
-  async function handleEdit() {
-    if (isEditing) {
-      await handleSave();
-    } else {
-      setIsEditing(true);
+  async function handleEdit(e) {
+    e.preventDefault();
+
+    isEditing ? await handleSave() : setIsEditing(true);
+  }
+
+  function limitName(e) {
+    if (e.target.value.length > nameLimit) {
+      setNameInput(e.target.value.slice(0, nameLimit));
+      return;
     }
+    setNameInput(e.target.value);
+  }
+
+  function limitBio(e) {
+    if (e.target.value.length > bioLimit) {
+      setBioInput(e.target.value.slice(0, bioLimit));
+      return;
+    }
+    setBioInput(e.target.value);
   }
 
   async function handleSave() {
@@ -43,7 +57,7 @@ export default function AccountProfile() {
     setName(nameInput);
     setBio(bioInput);
 
-    resetValues();
+    setIsEditing(false);
   }
 
   function resetValues() {
@@ -55,20 +69,17 @@ export default function AccountProfile() {
   return (
     <div className="flex w-full items-center gap-4">
       <FontAwesomeIcon icon={faUserCircle} className="text-8xl" />
-      <div className="flex flex-col gap-2">
+      <form onSubmit={handleEdit} className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           {isEditing ? (
             <div className="flex items-center gap-2">
               <input
-                onChange={(e) => {
-                  if (e.target.value.length > nameLimit) {
-                    setNameInput(e.target.value.slice(0, nameLimit));
-                    return;
-                  }
-                  setNameInput(e.target.value);
-                }}
+                name="name"
+                type="text"
                 value={nameInput}
-                className="border-1 border-white px-2 py-1 text-xl outline-none"
+                placeholder="Your name"
+                onChange={limitName}
+                className="w-full border-1 border-white px-2 py-1 outline-none"
               />
               <p
                 className={`text-sm text-gray-400 ${nameInput.length >= nameLimit && "text-red-500"}`}
@@ -85,16 +96,14 @@ export default function AccountProfile() {
         {isEditing ? (
           <div className="flex items-center gap-2">
             <input
-              onChange={(e) => {
-                if (e.target.value.length > bioLimit) {
-                  setBioInput(e.target.value.slice(0, bioLimit));
-                  return;
-                }
-                setBioInput(e.target.value);
-              }}
+              name="bio"
+              type="text"
               value={bioInput}
-              className="border-1 border-white px-2 py-1 outline-none"
+              placeholder="Your bio"
+              onChange={limitBio}
+              className="w-full border-1 border-white px-2 py-1 outline-none"
             />
+
             <p
               className={`text-sm text-gray-400 ${bioInput.length >= bioLimit && "text-red-500"}`}
             >
@@ -125,7 +134,7 @@ export default function AccountProfile() {
             </p>
           </div>
           <button
-            onClick={handleEdit}
+            type="submit"
             className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
           >
             <FontAwesomeIcon icon={isEditing ? faCheck : faPen} />
@@ -133,6 +142,7 @@ export default function AccountProfile() {
           </button>
           {isEditing && (
             <button
+              type="button"
               onClick={resetValues}
               className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
             >
@@ -141,7 +151,7 @@ export default function AccountProfile() {
             </button>
           )}
         </div>
-      </div>
+      </form>
     </div>
   );
 }

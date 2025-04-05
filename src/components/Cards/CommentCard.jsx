@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import VoteButton from "../Buttons/VoteButton";
 import { getTimeSince } from "src/utils/date";
-import DeleteButton from "../Buttons/DeleteButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
+import VoteButton from "../Buttons/VoteButton";
+import DeleteButton from "../Buttons/DeleteButton";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;

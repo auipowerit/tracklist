@@ -1,21 +1,6 @@
-import { Link } from "react-router-dom";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-
-export default function ListCard({ id, image, name, length, description }) {
-  const { globalUser, deleteMediaList } = useAuthContext();
-
-  async function deleteList(id) {
-    if (!globalUser || !id) return;
-
-    try {
-      await deleteMediaList(id, globalUser.uid);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+export default function ListCard({ image, name, length, description }) {
   return (
-    <Link to={`${id}`} className="border-box mt-6 flex cursor-pointer gap-4">
+    <div className="border-box mt-6 flex cursor-pointer gap-4">
       <img src={image} className="w-46" />
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">
@@ -26,6 +11,6 @@ export default function ListCard({ id, image, name, length, description }) {
         </div>
         <p>{description}</p>
       </div>
-    </Link>
+    </div>
   );
 }

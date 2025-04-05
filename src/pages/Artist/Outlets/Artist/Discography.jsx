@@ -4,7 +4,7 @@ import SortMusic from "src/components/Sort/SortMusic";
 import MediaCard from "src/components/Cards/MediaCard";
 import { useState } from "react";
 
-export default function MediaList({
+export default function Discography({
   media,
   setMedia,
   loadMedia,

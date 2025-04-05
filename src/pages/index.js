@@ -6,7 +6,7 @@ export { default as AccountPage } from "./Account/AccountPage";
 export { default as AccountProfile } from "./Account/Outlets/Profile/AccountProfile";
 export { default as AccountReviews } from "./Account/Outlets/Reviews/AccountReviews";
 export { default as AccountLists } from "./Account/Outlets/Lists/AccountLists";
-export { default as AccountList } from "./Account/Outlets/Lists/List/AccountList";
+export { default as AccountList } from "./Account/Outlets/Lists/AccountList";
 export { default as AccountLikes } from "./Account/Outlets/Likes/AccountLikes";
 export { default as AccountFriends } from "./Account/Outlets/Friends/AccountFriends";
 export { default as ErrorPage } from "./Error/ErrorPage";

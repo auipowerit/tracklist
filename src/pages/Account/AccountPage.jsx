@@ -15,8 +15,12 @@ export default function AccountPage() {
   const { loadingUser, globalUser, globalData, logout } = useAuthContext();
 
   const navigate = useNavigate();
-
   const location = useLocation();
+
+  const isHomePage =
+    location.pathname === "/account" ||
+    location.pathname === "/account/profile";
+
   const isActive = (page) => {
     return matchPath("/account/" + page, location.pathname) !== null;
   };
@@ -51,7 +55,7 @@ export default function AccountPage() {
       <div className="flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
         <Link
           to="profile"
-          className={`flex items-center gap-2 hover:text-white ${isActive("/") || (isActive("profile") && "text-white")}`}
+          className={`flex items-center gap-2 hover:text-white ${isHomePage && "text-white"}`}
         >
           <FontAwesomeIcon icon={faUserCircle} />
           <p>{globalData?.username}</p>

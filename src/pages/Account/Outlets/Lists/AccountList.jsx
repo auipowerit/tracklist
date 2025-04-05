@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import MediaList from "./MediaList";
-import ListHeader from "./ListHeader";
+import { Link, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import MediaListCard from "src/components/Cards/MediaListCard";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountList() {
@@ -76,6 +75,43 @@ export default function AccountList() {
       <div className="overflow-y-scroll border-t-1 border-white py-10">
         {list && <MediaList mediaList={mediaList} isRanking={list.isRanking} />}
       </div>
+    </div>
+  );
+}
+
+function ListHeader({ name, tags }) {
+  return (
+    <div className="flex items-center justify-between align-middle">
+      <p className="text-2xl text-white">{name}</p>
+      <div className="flex gap-2">
+        {tags.map((tag, index) => {
+          return (
+            <p key={index} className="rounded-sm bg-gray-600 p-2">
+              {tag}
+            </p>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function MediaList({ mediaList, isRanking }) {
+  return (
+    <div className="grid grid-cols-4">
+      {mediaList?.length > 0 &&
+        mediaList.map((media, index) => {
+          return (
+            <Link key={media.id} to={media.link} className="w-48">
+              <MediaListCard
+                title={media.title}
+                subtitle={media.subtitle}
+                image={media.image}
+                index={isRanking && index + 1}
+              />
+            </Link>
+          );
+        })}
     </div>
   );
 }

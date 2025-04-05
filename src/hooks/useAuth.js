@@ -205,8 +205,20 @@ export function useAuth() {
 
       if (!userRef || userDoc.empty) return;
 
+      const likes = userDoc.data().likes;
+      const likeObj = likes.find((like) => like.category === category);
+
+      if (likeObj) {
+        // If the category is already in the likes array, add the contentId to its array
+        likeObj.content = likeObj.content || [];
+        likeObj.content.push(contentId);
+      } else {
+        // If the category is not in the likes array, create a new object and add it to the array
+        likes.push({ category, content: [contentId] });
+      }
+
       await updateDoc(userRef, {
-        likes: arrayUnion({ contentId, category }),
+        likes,
       });
     } catch (error) {
       console.log(error);
@@ -222,10 +234,21 @@ export function useAuth() {
 
       if (!userRef || userDoc.empty) return;
 
+      const likes = userDoc.data().likes;
+      const likeObj = likes.find((like) => like.content.includes(contentId));
+
+      if (likeObj) {
+        // If the contentId is in the likes array, remove it
+        likeObj.content = likeObj.content.filter((id) => id !== contentId);
+
+        // If the content array is empty, remove the like object
+        if (likeObj.content.length === 0) {
+          likes.splice(likes.indexOf(likeObj), 1);
+        }
+      }
+
       await updateDoc(userRef, {
-        likes: userDoc
-          .data()
-          .likes.filter((like) => like.contentId !== contentId),
+        likes,
       });
     } catch (error) {
       console.log(error);

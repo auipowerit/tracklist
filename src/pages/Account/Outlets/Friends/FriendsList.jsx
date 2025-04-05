@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
+import ProfileCard from "src/components/Cards/ProfileCard";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import FriendCard from "./FriendCard";
 
 export default function FriendsList(props) {
   const { userId, category } = props;
@@ -84,7 +84,7 @@ export default function FriendsList(props) {
           <ul className="flex w-full flex-col gap-4">
             {users.map((user) => {
               return (
-                <FriendCard
+                <ProfileCard
                   key={user.id}
                   user={user}
                   handleClick={handleClick}

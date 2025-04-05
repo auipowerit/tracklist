@@ -1,11 +1,11 @@
 import { useState } from "react";
-import SearchBar from "./SearchBar";
-import SearchResults from "./SearchResults";
 import Loading from "src/components/Loading";
 import SortMusic from "src/components/Sort/SortMusic";
 import SortUsers from "src/components/Sort/SortUsers";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import SearchBar from "./SearchBar";
+import SearchResults from "./SearchResults";
 
 export default function SearchMedia(props) {
   const { category, results, setResults } = props;

@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function LikeMediaButton(props) {
   const { user, isLiked, setIsLiked, id, category } = props;
 
-  const { likeContent, unlikeContent } = useAuthContext();
+  const { likeContent, unlikeContent, globalData, updateGlobalDataLikes } =
+    useAuthContext();
 
   async function handleLike() {
     if (!user) return;
@@ -14,6 +15,7 @@ export default function LikeMediaButton(props) {
       ? await unlikeContent(id, user.id)
       : await likeContent(id, category, user.id);
 
+    updateGlobalDataLikes(id, category);
     setIsLiked(!isLiked);
   }
 

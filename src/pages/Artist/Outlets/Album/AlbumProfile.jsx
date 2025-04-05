@@ -6,6 +6,7 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import LikeMediaButton from "src/components/Buttons/LikeMediaButton";
 import TrackList from "./TrackList";
 import MediaBanner from "../../MediaBanner";
+import { ReviewStars } from "src/components/Review/ReviewContent";
 
 function AlbumProfile() {
   const context = useOutletContext();
@@ -18,7 +19,12 @@ function AlbumProfile() {
   const tracks = useMemo(() => album?.tracks.items, [album]);
 
   useEffect(() => {
-    setIsLiked(globalData?.likes.find((like) => like.contentId === album?.id));
+    setIsLiked(
+      globalData?.likes
+        .filter((like) => like.category === "album")
+        .flatMap((like) => like.content)
+        .includes(album?.id),
+    );
   }, []);
 
   return (
@@ -57,3 +63,27 @@ function AlbumProfile() {
   );
 }
 export default memo(AlbumProfile);
+
+function TrackCard({ number, track }) {
+  const { getAvgRating } = useReviewContext();
+  const [rating, setRating] = useState({});
+
+  useEffect(() => {
+    const fetchRating = async () => {
+      const { avgRating, count } = await getAvgRating(track.id);
+
+      setRating({ avgRating, count });
+    };
+
+    fetchRating();
+  }, []);
+
+  return (
+    <div className="flex w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110">
+      {number}. {track.name}
+      <div className="m-auto">
+        <ReviewStars rating={rating?.avgRating || 0} />
+      </div>
+    </div>
+  );
+}

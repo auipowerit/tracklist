@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import Loading from "src/components/Loading";
 import ListCard from "src/components/Cards/ListCard";
 import ListButton from "src/components/Buttons/ListButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import { useOutletContext } from "react-router-dom";
 
 export default function AccountLists() {
   const { globalUser } = useOutletContext();
@@ -66,13 +66,15 @@ export default function AccountLists() {
             {lists.map((list, index) => {
               return (
                 <li key={list.id}>
-                  <ListCard
-                    id={list.id}
-                    image={images[index] || defaultImg}
-                    name={list.name}
-                    length={list.media.length}
-                    description={list.description}
-                  />
+                  <Link to={`${list.id}`}>
+                    <ListCard
+                      id={list.id}
+                      image={images[index] || defaultImg}
+                      name={list.name}
+                      length={list.media.length}
+                      description={list.description}
+                    />
+                  </Link>
                 </li>
               );
             })}

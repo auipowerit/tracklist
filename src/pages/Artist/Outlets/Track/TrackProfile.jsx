@@ -15,7 +15,12 @@ function TrackProfile() {
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    setIsLiked(globalData?.likes.find((like) => like.contentId === track?.id));
+    setIsLiked(
+      globalData?.likes
+        .filter((like) => like.category === "track")
+        .flatMap((like) => like.content)
+        .includes(track?.id),
+    );
   }, []);
 
   return (

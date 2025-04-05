@@ -1,10 +1,10 @@
+import { Link, useNavigate } from "react-router-dom";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  ReviewStars,
   ReviewButtons,
+  ReviewStars,
 } from "src/components/Review/ReviewContent";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function Review({ review, mediaData }) {
   const navigate = useNavigate();

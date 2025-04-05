@@ -78,8 +78,13 @@ function ReviewContent({ review, showComment = true }) {
 }
 
 function ReviewButtons({ review, showComment = true }) {
-  const { globalUser, globalData, likeContent, unlikeContent } =
-    useAuthContext();
+  const {
+    globalUser,
+    globalData,
+    updateGlobalDataLikes,
+    likeContent,
+    unlikeContent,
+  } = useAuthContext();
   const { deleteComment } = useCommentContext();
   const {
     updateReviewState,
@@ -93,23 +98,30 @@ function ReviewButtons({ review, showComment = true }) {
   async function handleLike(reviewId, userId) {
     if (!globalData) return;
 
-    await likeReview(reviewId, userId);
-
-    if (globalData.likes.find((like) => like.contentId === reviewId)) {
+    if (
+      globalData.likes
+        .filter((like) => like.category === "review")
+        .flatMap((like) => like.content)
+        .includes(reviewId)
+    ) {
       await unlikeContent(reviewId, userId);
     } else {
-      await likeContent(reviewId, "reviews", userId);
+      await likeContent(reviewId, "review", userId);
     }
+
+    updateGlobalDataLikes(reviewId, "review");
+
+    return await likeReview(reviewId, userId);
   }
 
   async function handleDislike(reviewId, userId) {
     if (!globalData) return;
 
-    await dislikeReview(reviewId, userId);
-
     if (globalData.likes.find((like) => like.contentId === reviewId)) {
       await unlikeContent(reviewId, userId);
     }
+
+    return await dislikeReview(reviewId, userId);
   }
 
   async function handleDelete() {

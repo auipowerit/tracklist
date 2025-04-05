@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Tabs from "src/components/Tabs";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useReviewContext } from "src/context/Review/ReviewContext";
-import FeedReviewCard from "src/components/Cards/FeedReviewCard";
-import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaCard from "src/components/Cards/MediaCard";
-import { useAuthContext } from "src/context/Auth/AuthContext";
 import ListCard from "src/components/Cards/ListCard";
+import MediaCard from "src/components/Cards/MediaCard";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FeedReviewCard from "src/components/Cards/FeedReviewCard";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountLikes() {
   const { globalData } = useOutletContext();
@@ -53,17 +53,22 @@ export default function AccountLikes() {
 }
 
 function LikedMedia({ likes, category }) {
-  const { getMediaById } = useSpotifyContext();
-  const [media, setMedia] = useState([]);
+  const { getMediaById, getMediaLinks } = useSpotifyContext();
+  const [media, setMedia] = useState(null);
 
   useEffect(() => {
     const fetchMedia = async () => {
       const fetchedMedia = await Promise.all(
         likes
           .filter((like) => like.category === category)
-          .map(async (like) => {
-            const artist = await getMediaById(like.contentId, category);
-            return artist;
+          .flatMap((like) => like.content)
+          .map(async (id) => {
+            const media = await getMediaById(id, category);
+            const data = getMediaLinks(media);
+            return {
+              ...media,
+              ...data,
+            };
           }),
       );
 
@@ -75,24 +80,36 @@ function LikedMedia({ likes, category }) {
 
   return (
     <div>
-      {media.map((m) => {
-        return <MediaCard key={m.id} media={m} />;
-      })}
+      {media &&
+        (media.length > 0 ? (
+          media.map((m) => {
+            return (
+              <Link key={m.id} to={m.titleLink}>
+                <MediaCard media={m} />
+              </Link>
+            );
+          })
+        ) : (
+          <p className="m-20 text-center text-2xl text-gray-300 italic">
+            {`You don't have any liked ${category}s yet.`}
+          </p>
+        ))}
     </div>
   );
 }
 
 function LikedReviews({ likes }) {
   const { getReviewById } = useReviewContext();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
       const fetchedReviews = await Promise.all(
         likes
           .filter((like) => like.category === "review")
-          .map(async (like) => {
-            const review = await getReviewById(like.contentId);
+          .flatMap((like) => like.content)
+          .map(async (id) => {
+            const review = await getReviewById(id);
             return review;
           }),
       );
@@ -105,9 +122,16 @@ function LikedReviews({ likes }) {
 
   return (
     <div>
-      {reviews.map((review) => {
-        return <FeedReviewCard key={review.id} review={review} />;
-      })}
+      {reviews &&
+        (reviews.length > 0 ? (
+          reviews.map((review) => {
+            return <FeedReviewCard key={review.id} review={review} />;
+          })
+        ) : (
+          <p className="m-20 text-center text-2xl text-gray-300 italic">
+            You don't have any liked reviews yet.
+          </p>
+        ))}
     </div>
   );
 }
@@ -116,7 +140,7 @@ function LikedLists({ likes }) {
   const { globalData, getUserListById } = useAuthContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState(null);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -124,8 +148,9 @@ function LikedLists({ likes }) {
       const fetchedLists = await Promise.all(
         likes
           .filter((like) => like.category === "list")
-          .map(async (like) => {
-            const list = await getUserListById(like.contentId, globalData?.id);
+          .flatMap((like) => like.content)
+          .map(async (id) => {
+            const list = await getUserListById(id, globalData?.id);
             return list;
           }),
       );
@@ -152,16 +177,24 @@ function LikedLists({ likes }) {
 
   return (
     <div>
-      {lists.map((list, index) => {
-        return (
-          <ListCard
-            key={list.id}
-            image={images[index] || defaultImg}
-            {...list}
-            length={list.media.length}
-          />
-        );
-      })}
+      {lists &&
+        (lists.length > 0 ? (
+          lists.map((list, index) => {
+            return (
+              <Link to={`/account/lists/${list.id}`} key={list.id}>
+                <ListCard
+                  image={images[index] || defaultImg}
+                  {...list}
+                  length={list.media.length}
+                />
+              </Link>
+            );
+          })
+        ) : (
+          <p className="m-20 text-center text-2xl text-gray-300 italic">
+            You don't have any liked lists yet.
+          </p>
+        ))}
     </div>
   );
 }
