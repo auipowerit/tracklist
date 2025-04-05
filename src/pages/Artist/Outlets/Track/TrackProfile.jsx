@@ -42,7 +42,7 @@ function TrackProfile() {
           isLiked={isLiked}
           setIsLiked={setIsLiked}
           id={track?.id}
-          category={"song"}
+          category={"track"}
         />
       )}
     </div>

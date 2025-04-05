@@ -78,7 +78,8 @@ function ReviewContent({ review, showComment = true }) {
 }
 
 function ReviewButtons({ review, showComment = true }) {
-  const { globalUser } = useAuthContext();
+  const { globalUser, globalData, likeContent, unlikeContent } =
+    useAuthContext();
   const { deleteComment } = useCommentContext();
   const {
     updateReviewState,
@@ -88,6 +89,28 @@ function ReviewButtons({ review, showComment = true }) {
     getReviews,
     deleteReview,
   } = useReviewContext();
+
+  async function handleLike(reviewId, userId) {
+    if (!globalData) return;
+
+    await likeReview(reviewId, userId);
+
+    if (globalData.likes.find((like) => like.contentId === reviewId)) {
+      await unlikeContent(reviewId, userId);
+    } else {
+      await likeContent(reviewId, "reviews", userId);
+    }
+  }
+
+  async function handleDislike(reviewId, userId) {
+    if (!globalData) return;
+
+    await dislikeReview(reviewId, userId);
+
+    if (globalData.likes.find((like) => like.contentId === reviewId)) {
+      await unlikeContent(reviewId, userId);
+    }
+  }
 
   async function handleDelete() {
     const comments = review.comments;
@@ -125,13 +148,13 @@ function ReviewButtons({ review, showComment = true }) {
         <VoteButton
           content={review}
           type="like"
-          handleContent={likeReview}
+          handleContent={handleLike}
           updateContent={updateReviewState}
         />
         <VoteButton
           content={review}
           type="dislike"
-          handleContent={dislikeReview}
+          handleContent={handleDislike}
           updateContent={updateReviewState}
         />
       </div>
