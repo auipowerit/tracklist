@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import MediaCard from "src/components/Cards/MediaCard";
-import UserCard from "src/components/Cards/UserCard";
+import ProfileCard from "src/components/Cards/ProfileCard";
 
 export default function SearchResults({ results, category }) {
   const classes =
@@ -36,13 +36,15 @@ export default function SearchResults({ results, category }) {
   return (
     <div className={classes}>
       {results.map((result) => (
-        <Link key={result.id} to={getUrl(result)}>
+        <div key={result.id}>
           {category === "user" ? (
-            <UserCard user={result} />
+            <ProfileCard user={result} />
           ) : (
-            <MediaCard media={result} category={category} />
+            <Link to={getUrl(result)}>
+              <MediaCard media={result} category={category} />
+            </Link>
           )}
-        </Link>
+        </div>
       ))}
     </div>
   );

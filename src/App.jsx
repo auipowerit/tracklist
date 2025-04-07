@@ -35,6 +35,11 @@ export default function App() {
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
+              path: "/account/profile/callback",
+              element: <Pages.AccountProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
               path: "/account/reviews",
               element: <Pages.AccountReviews />,
               errorElement: <Pages.ErrorPage is404={false} />,

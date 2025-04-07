@@ -9,8 +9,7 @@ import {
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import MediaGradient from "src/components/Layout/MediaGradient";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 
 export default function AccountPage() {
   const { loadingUser, globalUser, globalData, logout } = useAuthContext();
@@ -42,7 +41,6 @@ export default function AccountPage() {
   const children = [
     { id: "reviews", LoadBundleTask: "Reviews" },
     { id: "lists", LoadBundleTask: "Lists" },
-    { id: "tags", LoadBundleTask: "Tags" },
     { id: "likes", LoadBundleTask: "Likes" },
     { id: "friends", LoadBundleTask: "Friends" },
   ];
@@ -58,7 +56,10 @@ export default function AccountPage() {
           to="profile"
           className={`flex items-center gap-2 hover:text-white ${isHomePage && "text-white"}`}
         >
-          <FontAwesomeIcon icon={faUserCircle} />
+          <img
+            src={globalData.profileUrl}
+            className="h-8 w-8 rounded-full object-cover"
+          />
           <p>{globalData?.username}</p>
         </Link>
 

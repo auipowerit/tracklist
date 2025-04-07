@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +7,9 @@ import {
   faCalendar,
   faCheck,
   faPen,
-  faUserCircle,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountProfile() {
   const { globalData } = useOutletContext();
@@ -17,7 +17,12 @@ export default function AccountProfile() {
   const nameLimit = 20;
   const bioLimit = 155;
 
-  const { updateUserDetails } = useAuthContext();
+  const params = new URLSearchParams(window.location.search);
+  const navigate = useNavigate();
+
+  const { updateUserDetails, updateSpotifyInfo } = useAuthContext();
+  const { getAuthAccessToken, redirectToSpotifyAuth, fetchSpotifyProfile } =
+    useSpotifyContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(globalData.displayname);
@@ -66,9 +71,58 @@ export default function AccountProfile() {
     setIsEditing(false);
   }
 
+  async function connectToSpotify() {
+    const fetchedCode = params.get("code") || null;
+
+    if (!fetchedCode) {
+      redirectToSpotifyAuth();
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (localStorage.getItem("profile")) {
+        navigate("/account/profile");
+        return;
+      }
+
+      const fetchedCode = params.get("code") || null;
+      if (!fetchedCode) return;
+
+      const accessToken = await getAuthAccessToken(fetchedCode);
+      if (!accessToken) return;
+
+      const profile = await fetchSpotifyProfile(accessToken);
+      if (!profile) return;
+
+      if (profile) {
+        localStorage.setItem("profile", JSON.stringify(profile));
+
+        await updateSpotifyInfo(
+          globalData.id,
+          profile?.images?.[0].url,
+          profile?.external_urls?.spotify,
+        );
+
+        navigate("/account/profile");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="flex w-full items-center gap-4">
-      <FontAwesomeIcon icon={faUserCircle} className="text-8xl" />
+      <Link
+        to={globalData.spotifyUrl || "#"}
+        target={globalData.spotifyUrl ? "_blank" : "_self"}
+      >
+        <img
+          src={globalData.profileUrl}
+          className="h-36 w-36 rounded-full object-cover"
+        />
+      </Link>
+
       <form onSubmit={handleEdit} className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           {isEditing ? (
@@ -91,6 +145,16 @@ export default function AccountProfile() {
             <p className="text-xl font-bold">{name}</p>
           )}
           <p className="text-gray-400">@{globalData.username}</p>
+
+          {!isEditing && (
+            <button
+              type="button"
+              onClick={connectToSpotify}
+              className="rounded-full bg-green-700 px-3 py-1 hover:text-gray-400"
+            >
+              {globalData.spotifyUrl ? "Reconnect" : "Connect"}
+            </button>
+          )}
         </div>
 
         {isEditing ? (
@@ -135,7 +199,7 @@ export default function AccountProfile() {
           </div>
           <button
             type="submit"
-            className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
+            className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1 hover:text-gray-400"
           >
             <FontAwesomeIcon icon={isEditing ? faCheck : faPen} />
             <p>{isEditing ? "Save" : "Edit"}</p>
@@ -144,7 +208,7 @@ export default function AccountProfile() {
             <button
               type="button"
               onClick={resetValues}
-              className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
+              className="flex items-center gap-2 rounded-sm bg-green-700 px-3 py-1 hover:text-gray-400"
             >
               <FontAwesomeIcon icon={faX} />
               <p>Cancel</p>

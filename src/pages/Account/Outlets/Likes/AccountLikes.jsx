@@ -82,7 +82,7 @@ function LikedMedia({ likes, category }) {
   }, [likes, category]);
 
   return (
-    <div className="grid w-fit grid-cols-4 gap-4">
+    <div className="m-auto grid w-fit grid-cols-4 gap-6">
       {media &&
         (media.length > 0 ? (
           media.map((entry) => {

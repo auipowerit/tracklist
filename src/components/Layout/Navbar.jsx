@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const { globalUser, globalData, logout } = useAuthContext();
@@ -43,7 +45,7 @@ export default function Navbar() {
               `${isActive ? "text-green-700" : "hover:text-gray-400"}`
             }
           >
-            Home
+            <FontAwesomeIcon icon={faHome} />
           </NavLink>
         </li>
         <li>
@@ -53,7 +55,7 @@ export default function Navbar() {
               `${isActive ? "text-green-700" : "hover:text-gray-400"}`
             }
           >
-            Search
+            <FontAwesomeIcon icon={faSearch} />
           </NavLink>
         </li>
         <li className="ml-auto">

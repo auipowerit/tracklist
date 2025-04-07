@@ -1,6 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ReviewButtons,
   ReviewStars,
@@ -34,24 +32,26 @@ export default function Review({ review, mediaData }) {
       </div>
       <div className="flex h-full w-full flex-col justify-between">
         <div className="flex flex-col gap-2">
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full items-start justify-between">
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faUserCircle} />
-              <p className="text-gray-400">
-                Review by{" "}
-                <Link
-                  to={`/users/${review.userId}`}
-                  className="font-bold text-white hover:text-gray-400"
-                >
-                  {review.username}
-                </Link>
-              </p>
+              <img src={review.profileUrl} className="h-10 w-10 rounded-full" />
+              <div className="flex flex-col gap-1">
+                <p className="text-gray-400">
+                  Review by{" "}
+                  <Link
+                    to={`/users/${review.userId}`}
+                    className="font-bold text-white hover:text-gray-400"
+                  >
+                    {review.username}
+                  </Link>
+                </p>
+                <ReviewStars rating={review.rating} />
+              </div>
             </div>
             <p className="text-sm text-gray-400">
               {review.createdAt.toDate().toDateString()}
             </p>
           </div>
-          <ReviewStars rating={review.rating} />
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-xl">{review.content}</p>

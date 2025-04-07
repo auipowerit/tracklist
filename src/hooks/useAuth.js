@@ -35,6 +35,8 @@ export function useAuth() {
         displayname,
         username,
         bio: "",
+        profileUrl: "/images/default-profile-img.jpg",
+        spotifyUrl: "",
         folllowing: [],
         followers: [],
         lists: [],
@@ -81,6 +83,18 @@ export function useAuth() {
 
   function resetPassword(email) {
     return sendPasswordResetEmail(auth, email);
+  }
+
+  async function updateSpotifyInfo(userId, profileUrl, spotifyUrl) {
+    try {
+      if (!userId || !profileUrl || !spotifyUrl) return;
+
+      const userRef = doc(db, "users", userId);
+      await updateDoc(userRef, { profileUrl: profileUrl });
+      await updateDoc(userRef, { spotifyUrl: spotifyUrl });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function getUserById(userId) {
@@ -448,6 +462,7 @@ export function useAuth() {
     getFollowingById,
     getFollowersById,
     updateUserDetails,
+    updateSpotifyInfo,
     likeContent,
     unlikeContent,
     checkIfListExists,

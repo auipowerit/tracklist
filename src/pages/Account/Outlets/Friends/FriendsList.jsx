@@ -6,36 +6,10 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 export default function FriendsList(props) {
   const { userId, category } = props;
 
-  const {
-    getFollowingById,
-    getFollowersById,
-    getUserById,
-    followUser,
-    unfollowUser,
-  } = useAuthContext();
+  const { getFollowingById, getFollowersById, getUserById } = useAuthContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState(null);
-
-  async function handleClick(isFollowingUser, fetchedUserId) {
-    isFollowingUser
-      ? await unfollowUser(userId, fetchedUserId)
-      : await followUser(userId, fetchedUserId);
-
-    const updatedusers = users.map((user) => {
-      if (user.id === fetchedUserId) {
-        return {
-          id: user.id,
-          ...user,
-          followersCount: user.followersCount + (isFollowingUser ? -1 : 1),
-          isFollowing: !user.isFollowing,
-        };
-      }
-      return user;
-    });
-
-    setUsers(updatedusers);
-  }
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -55,9 +29,6 @@ export default function FriendsList(props) {
             return {
               id,
               ...user,
-              followersCount: user.followers.length,
-              followingCount: user.following.length,
-              isFollowing: user.followers.includes(userId),
             };
           }) || [],
         );
@@ -83,13 +54,7 @@ export default function FriendsList(props) {
         (users.length > 0 ? (
           <ul className="flex w-full flex-col gap-4">
             {users.map((user) => {
-              return (
-                <ProfileCard
-                  key={user.id}
-                  user={user}
-                  handleClick={handleClick}
-                />
-              );
+              return <ProfileCard key={user.id} user={user} />;
             })}
           </ul>
         ) : (

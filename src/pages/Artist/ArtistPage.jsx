@@ -43,13 +43,13 @@ export default function ArtistPage() {
           trackId && getTrackById(trackId),
         ]);
 
-        const imageURL =
+        const profileUrl =
           fetchedMedia[1]?.images[0].url || fetchedMedia[0].images[0].url;
 
-        const colors = await getColors(imageURL);
+        const colors = await getColors(profileUrl);
         setColors(colors);
 
-        const palette = await getColorPalette(imageURL);
+        const palette = await getColorPalette(profileUrl);
         setPalette(palette);
 
         setMedia({

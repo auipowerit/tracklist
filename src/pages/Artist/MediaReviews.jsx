@@ -1,5 +1,3 @@
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import PostButton from "src/components/Buttons/PostButton";
 import Placeholder from "src/components/Placeholder";
@@ -52,11 +50,13 @@ export default function MediaReviews(props) {
 function MediaReviewCard({ review }) {
   return (
     <div className="flex gap-2">
-      <FontAwesomeIcon icon={faUserCircle} className="text-4xl" />
+      <img
+        src={review?.profileUrl}
+        className="h-12 w-12 rounded-full object-cover hover:cursor-pointer"
+      />
       {review ? (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <ReviewStars review={review} showIcon={false} />
             <ReviewStars rating={review.rating || 0} />
           </div>
 

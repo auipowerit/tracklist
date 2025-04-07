@@ -1,7 +1,7 @@
 import { getPalette } from "react-palette";
 
-export async function getColors(imageURL) {
-  const palette = await getPalette(imageURL);
+export async function getColors(profileUrl) {
+  const palette = await getPalette(profileUrl);
 
   return {
     light: palette.muted,
@@ -10,8 +10,8 @@ export async function getColors(imageURL) {
   };
 }
 
-export async function getColorPalette(imageURL) {
-  const palette = await getPalette(imageURL);
+export async function getColorPalette(profileUrl) {
+  const palette = await getPalette(profileUrl);
   const colorPalette = Object.keys(palette).map((key) => {
     return {
       name: key,

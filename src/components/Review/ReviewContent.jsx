@@ -5,15 +5,20 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
-import { faComment, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 import VoteButton from "../Buttons/VoteButton";
 import DeleteButton from "../Buttons/DeleteButton";
 
 function ReviewUser({ review, showIcon = true }) {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex cursor-pointer items-center gap-1 hover:text-gray-400">
-        {showIcon && <FontAwesomeIcon icon={faUserCircle} />}
+      <div className="flex cursor-pointer items-center gap-2 hover:text-gray-400">
+        {showIcon && (
+          <img
+            src={review.profileUrl}
+            className="h-8 w-8 rounded-full object-cover"
+          />
+        )}
         <Link
           to={`/users/${review.userId}`}
           className="font-semibold hover:text-gray-300"

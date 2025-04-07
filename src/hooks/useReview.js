@@ -91,10 +91,12 @@ export function useReview() {
 
       const reviews = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
+          const user = await getUserById(doc.data().userId);
           return {
             id: doc.id,
             ...doc.data(),
-            username: (await getUserById(doc.data().userId)).username,
+            username: user.username,
+            profileUrl: user.profileUrl,
             media: await getMediaById(doc.data().mediaId, doc.data().category),
           };
         }),
@@ -124,10 +126,12 @@ export function useReview() {
 
       const reviews = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
+          const user = await getUserById(doc.data().userId);
           return {
             id: doc.id,
             ...doc.data(),
-            username: (await getUserById(doc.data().userId)).username,
+            username: user.username,
+            profileUrl: user.profileUrl,
             media: await getMediaById(doc.data().mediaId, doc.data().category),
           };
         }),
@@ -146,10 +150,12 @@ export function useReview() {
       const reviewDoc = await getDoc(reviewRef);
 
       if (reviewDoc.exists()) {
+        const user = await getUserById(reviewDoc.data().userId);
         return {
           id: reviewDoc.id,
           ...reviewDoc.data(),
-          username: (await getUserById(reviewDoc.data().userId)).username,
+          username: user.username,
+          profileUrl: user.profileUrl,
           media: await getMediaById(
             reviewDoc.data().mediaId,
             reviewDoc.data().category,
