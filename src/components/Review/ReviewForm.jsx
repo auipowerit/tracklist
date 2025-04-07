@@ -36,9 +36,9 @@ export default function ReviewForm(props) {
     const items =
       data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
 
-    const ids = items.map((item) => item.id) || [];
-    const names = items.map((item) => item.name) || [];
-    const subtitles = items.map((item) => item.artists[0].name || []) || [];
+    const ids = items.map((item) => item?.id) || [];
+    const names = items.map((item) => item?.name) || [];
+    const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
 
     setResults(
       ids.map((id, index) => ({
@@ -184,7 +184,7 @@ export default function ReviewForm(props) {
         placeholder="Write your review..."
         rows="5"
         className="w-full bg-white p-2 text-black outline-none"
-      ></textarea>
+      />
 
       <button
         type="submit"
