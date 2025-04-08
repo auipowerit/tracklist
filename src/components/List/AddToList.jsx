@@ -3,12 +3,14 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import FormInput from "../Inputs/FormInput";
+import { useListContext } from "src/context/List/ListContext";
 
 export default function AddToList(props) {
   const { isModalOpen, setIsModalOpen, media, category, setNewList } = props;
   const { mediaId, mediaName } = media;
 
-  const { globalUser, getUserLists, addMediaToList } = useAuthContext();
+  const { globalUser } = useAuthContext();
+  const { getListsByUserId, addToList } = useListContext();
 
   const inputRef = useRef(null);
   const [lists, setLists] = useState(null);
@@ -52,7 +54,7 @@ export default function AddToList(props) {
     if (currentLists.length === 0) return;
 
     for (const list of currentLists) {
-      await addMediaToList(mediaId, category, list, globalUser.uid);
+      await addToList(mediaId, category, list, globalUser.uid);
     }
 
     setIsModalOpen(false);
@@ -74,7 +76,7 @@ export default function AddToList(props) {
         return;
       }
 
-      const fetchedLists = await getUserLists(globalUser.uid);
+      const fetchedLists = await getListsByUserId(globalUser.uid);
       setLists(fetchedLists);
     };
 

@@ -10,6 +10,7 @@ import FeedReviewCard from "src/components/Cards/FeedReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaListCard from "src/components/Cards/MediaListCard";
+import { useListContext } from "src/context/List/ListContext";
 
 export default function AccountLikes() {
   const { globalData } = useOutletContext();
@@ -146,7 +147,8 @@ function LikedReviews({ likes }) {
 }
 
 function LikedLists({ likes }) {
-  const { globalData, getUserListById } = useAuthContext();
+  const { globalData } = useAuthContext();
+  const { getListById } = useListContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
   const [lists, setLists] = useState(null);
@@ -159,7 +161,7 @@ function LikedLists({ likes }) {
           .filter((like) => like.category === "list")
           .flatMap((like) => like.content)
           .map(async (id) => {
-            const list = await getUserListById(id, globalData?.id);
+            const list = await getListById(id, globalData?.id);
             return list;
           }),
       );

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useListContext } from "src/context/List/ListContext";
 import MediaListCard from "src/components/Cards/MediaListCard";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountList() {
-  const { globalUser, getUserListById } = useAuthContext();
+  const { globalUser } = useAuthContext();
+  const { getListById } = useListContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +28,7 @@ export default function AccountList() {
       setIsLoading(true);
 
       try {
-        const fetchedList = await getUserListById(listId, globalUser.uid);
+        const fetchedList = await getListById(listId, globalUser.uid);
         setList(fetchedList);
 
         const mediaData = await Promise.all(
@@ -98,7 +100,7 @@ function ListHeader({ name, tags }) {
 
 function MediaList({ mediaList, isRanking }) {
   return (
-    <div class="flex flex-wrap gap-6">
+    <div className="flex flex-wrap gap-6">
       {mediaList?.length > 0 ? (
         mediaList.map((media, index) => {
           return (

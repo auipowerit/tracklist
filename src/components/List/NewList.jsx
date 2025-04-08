@@ -7,10 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import FormInput from "../Inputs/FormInput";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useListContext } from "src/context/List/ListContext";
 
 export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
-  const { globalUser, checkIfListExists, createNewMediaList } =
-    useAuthContext();
+  const { globalUser } = useAuthContext();
+  const { checkIfListExists, createNewList } = useListContext();
 
   const characterLimit = 150;
 
@@ -47,7 +48,7 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
     const listExists = await checkIfListExists(listData.name, globalUser.uid);
     if (listExists) return;
 
-    await createNewMediaList(listData, globalUser.uid);
+    await createNewList(listData, globalUser.uid);
 
     if (!setNewList) {
       setIsModalOpen(false);

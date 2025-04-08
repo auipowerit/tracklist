@@ -51,7 +51,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
   rating = Math.round(rating * 2) / 2;
 
   function getStarColor(ratingValue) {
-    return ratingValue <= rating ? "#ffc107" : "#e4e5e9";
+    return ratingValue <= rating ? "#ffc107" : "#94969c";
   }
 
   return (
@@ -111,7 +111,7 @@ function ReviewButtons({ review, showComment = true }) {
     likeReview,
     dislikeReview,
     setReviews,
-    getReviews,
+    getNewReviews,
     deleteReview,
   } = useReviewContext();
 
@@ -162,7 +162,7 @@ function ReviewButtons({ review, showComment = true }) {
     await deleteReview(review.id);
 
     // Fetch updated review from Firestore
-    const reviewData = await getReviews();
+    const reviewData = await getNewReviews();
 
     // Filter out any reviews from useState not found in Firestore state
     setReviews((prevReviews) =>

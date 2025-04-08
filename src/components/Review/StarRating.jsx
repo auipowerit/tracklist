@@ -5,7 +5,7 @@ export default function StarRating({ rating, setRating }) {
   const [hover, setHover] = useState(null);
 
   function getStarColor(ratingValue) {
-    return ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9";
+    return ratingValue <= (hover || rating) ? "#ffc107" : "#94969c";
   }
 
   function handleMouseMove(event, ratingValue) {

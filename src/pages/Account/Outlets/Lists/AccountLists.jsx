@@ -3,13 +3,13 @@ import { Link, useOutletContext } from "react-router-dom";
 import Loading from "src/components/Loading";
 import ListCard from "src/components/Cards/ListCard";
 import ListButton from "src/components/Buttons/ListButton";
-import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import { useListContext } from "src/context/List/ListContext";
 
 export default function AccountLists() {
   const { globalUser } = useOutletContext();
 
-  const { getUserLists } = useAuthContext();
+  const { getListsByUserId } = useListContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function AccountLists() {
       setIsLoading(true);
 
       try {
-        const fetchedLists = await getUserLists(globalUser.uid);
+        const fetchedLists = await getListsByUserId(globalUser.uid);
         setLists(fetchedLists);
 
         const fetchedImages = await Promise.all(

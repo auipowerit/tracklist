@@ -10,7 +10,6 @@ import {
   limit,
   orderBy,
   query,
-  startAfter,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -22,7 +21,7 @@ export function useReview() {
   const { getUserById } = useAuthContext();
   const { getMediaById } = useSpotifyContext();
 
-  async function getReviews() {
+  async function getNewReviews() {
     try {
       const reviewsRef = collection(db, "reviews");
       const reviewsDoc = await getDocs(reviewsRef);
@@ -66,31 +65,6 @@ export function useReview() {
 
       const popularReviews = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-            username: (await getUserById(doc.data().userId)).username,
-            media: await getMediaById(doc.data().mediaId, doc.data().category),
-          };
-        }),
-      );
-
-      return popularReviews;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getReviewsByMediaId(mediaId) {
-    try {
-      const reviewsRef = collection(db, "reviews");
-      const q = query(reviewsRef, where("mediaId", "==", mediaId));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) return [];
-
-      const reviews = await Promise.all(
-        querySnapshot.docs.map(async (doc) => {
           const user = await getUserById(doc.data().userId);
           return {
             id: doc.id,
@@ -102,9 +76,32 @@ export function useReview() {
         }),
       );
 
-      return reviews;
+      return popularReviews;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function getReviewById(reviewId) {
+    try {
+      const reviewRef = doc(db, "reviews", reviewId);
+      const reviewDoc = await getDoc(reviewRef);
+
+      if (reviewDoc.exists()) {
+        const user = await getUserById(reviewDoc.data().userId);
+        return {
+          id: reviewDoc.id,
+          ...reviewDoc.data(),
+          username: user.username,
+          profileUrl: user.profileUrl,
+          media: await getMediaById(
+            reviewDoc.data().mediaId,
+            reviewDoc.data().category,
+          ),
+        };
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   }
 
@@ -144,26 +141,67 @@ export function useReview() {
     }
   }
 
-  async function getReviewById(reviewId) {
+  async function getReviewsByMediaId(mediaId) {
     try {
-      const reviewRef = doc(db, "reviews", reviewId);
-      const reviewDoc = await getDoc(reviewRef);
+      const reviewsRef = collection(db, "reviews");
+      const q = query(reviewsRef, where("mediaId", "==", mediaId));
+      const querySnapshot = await getDocs(q);
 
-      if (reviewDoc.exists()) {
-        const user = await getUserById(reviewDoc.data().userId);
-        return {
-          id: reviewDoc.id,
-          ...reviewDoc.data(),
-          username: user.username,
-          profileUrl: user.profileUrl,
-          media: await getMediaById(
-            reviewDoc.data().mediaId,
-            reviewDoc.data().category,
-          ),
-        };
+      if (querySnapshot.empty) return [];
+
+      const reviews = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const user = await getUserById(doc.data().userId);
+          return {
+            id: doc.id,
+            ...doc.data(),
+            username: user.username,
+            profileUrl: user.profileUrl,
+            media: await getMediaById(doc.data().mediaId, doc.data().category),
+          };
+        }),
+      );
+
+      return reviews;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getRatings(mediaId) {
+    try {
+      const ratingsRef = collection(db, "reviews");
+      const q = query(ratingsRef, where("mediaId", "==", mediaId));
+      const querySnapshot = await getDocs(q);
+
+      return querySnapshot;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function getAvgRating(mediaId) {
+    try {
+      if (!mediaId) return;
+
+      const mediaRatings = await getRatings(mediaId);
+
+      if (!mediaRatings.empty) {
+        let totalRating = 0.0;
+
+        mediaRatings.docs.forEach((doc) => {
+          totalRating += doc.data().rating;
+        });
+
+        const count = mediaRatings.docs.length;
+        const avgRating = totalRating / count;
+
+        return { avgRating, count };
+      } else {
+        return 0;
       }
     } catch (error) {
-      console.error(error.message);
+      console.log(error.message);
     }
   }
 
@@ -287,55 +325,21 @@ export function useReview() {
     }
   }
 
-  async function getRatings(mediaId) {
-    try {
-      const ratingsRef = collection(db, "reviews");
-      const q = query(ratingsRef, where("mediaId", "==", mediaId));
-      const querySnapshot = await getDocs(q);
-
-      return querySnapshot;
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  async function getAvgRating(mediaId) {
-    try {
-      if (!mediaId) return;
-
-      const mediaRatings = await getRatings(mediaId);
-
-      if (!mediaRatings.empty) {
-        let totalRating = 0.0;
-
-        mediaRatings.docs.forEach((doc) => {
-          totalRating += doc.data().rating;
-        });
-
-        const count = mediaRatings.docs.length;
-        const avgRating = totalRating / count;
-
-        return { avgRating, count };
-      } else {
-        return 0;
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
   return {
-    getReviews,
+    getNewReviews,
     getPopularReviews,
+
+    getReviewById,
     getReviewsByUserId,
     getReviewsByMediaId,
-    getReviewById,
-    addReview,
-    deleteReview,
-    deleteReviewComment,
-    likeReview,
-    dislikeReview,
+
     getRatings,
     getAvgRating,
+
+    addReview,
+    deleteReview,
+    likeReview,
+    dislikeReview,
+    deleteReviewComment,
   };
 }
