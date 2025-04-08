@@ -1,11 +1,5 @@
 import { useEffect } from "react";
-import {
-  Link,
-  matchPath,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +16,7 @@ export default function AccountPage() {
     location.pathname === "/account/profile";
 
   const isActive = (page) => {
-    return matchPath("/account/" + page, location.pathname) !== null;
+    return location.pathname.startsWith("/account/" + page);
   };
 
   async function handleLogout() {

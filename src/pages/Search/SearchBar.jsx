@@ -11,13 +11,13 @@ export default function SearchBar(props) {
     const searchString = searchInput.current?.value.trim();
     if (!searchString) return;
 
-    await handleSubmit(searchString);
+    await handleSubmit(searchString.toLowerCase());
   }
 
   useEffect(() => {
     const searchString = searchInput.current?.value.trim();
     if (searchString !== "") {
-      handleSubmit(searchString);
+      handleSubmit(searchString.toLowerCase());
     }
   }, [category]);
 

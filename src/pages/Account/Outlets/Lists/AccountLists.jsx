@@ -3,8 +3,8 @@ import { Link, useOutletContext } from "react-router-dom";
 import Loading from "src/components/Loading";
 import ListCard from "src/components/Cards/ListCard";
 import ListButton from "src/components/Buttons/ListButton";
-import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import { useListContext } from "src/context/List/ListContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountLists() {
   const { globalUser } = useOutletContext();

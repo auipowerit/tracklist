@@ -209,6 +209,36 @@ export function useList() {
     }
   }
 
+  async function updateListName(userId, listId, name) {
+    try {
+      if (!userId || !listId || !name) return false;
+      if (await checkIfListExists(name, userId)) return false;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return false;
+
+      const updatedLists = userDoc.data().lists.map((list) => {
+        return list.id === listId
+          ? {
+              ...list,
+              name: name,
+            }
+          : list;
+      });
+
+      await updateDoc(userRef, {
+        lists: updatedLists,
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   async function reorderListItems(userId, listId, newOrder) {
     try {
       if (!userId || !listId || !newOrder) return;
@@ -244,6 +274,7 @@ export function useList() {
     addToList,
     deleteList,
     deleteListItem,
+    updateListName,
     reorderListItems,
   };
 }

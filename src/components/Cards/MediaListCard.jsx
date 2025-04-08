@@ -1,6 +1,6 @@
 export default function MediaListCard({ title, subtitle, image, index }) {
   return (
-    <div className="w-48 border-1 border-transparent hover:border-white">
+    <div className="w-48">
       <div className="relative">
         <img src={image} className="h-48 w-48 object-cover" />
         {index && (

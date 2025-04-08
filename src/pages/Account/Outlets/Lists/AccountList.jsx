@@ -6,22 +6,15 @@ import { closestCenter, DndContext } from "@dnd-kit/core";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useListContext } from "src/context/List/ListContext";
 import MediaListCard from "src/components/Cards/MediaListCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import { faCheck, faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   arrayMove,
-  rectSwappingStrategy,
+  rectSortingStrategy,
   SortableContext,
   useSortable,
 } from "@dnd-kit/sortable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faCircleMinus,
-  faMinus,
-  faPen,
-  faX,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default function AccountList() {
   const { globalUser } = useAuthContext();
@@ -31,7 +24,7 @@ export default function AccountList() {
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [list, setList] = useState(null);
-  const [mediaList, setMediaList] = useState({
+  const [listItems, setListItems] = useState({
     link: "",
     image: defaultImg,
   });
@@ -75,7 +68,7 @@ export default function AccountList() {
           }),
         );
 
-        setMediaList(mediaData);
+        setListItems(mediaData);
       } catch (error) {
         console.log(error);
       } finally {
@@ -94,7 +87,7 @@ export default function AccountList() {
     <div className="flex h-full flex-col gap-4">
       <ListHeader
         listId={list.id}
-        mediaList={mediaList}
+        listItems={listItems}
         name={list.name}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
@@ -104,8 +97,8 @@ export default function AccountList() {
         {list && (
           <MediaList
             listId={list.id}
-            mediaList={mediaList}
-            setMediaList={setMediaList}
+            listItems={listItems}
+            setListItems={setListItems}
             isEditing={isEditing}
             isRanking={list.isRanking}
           />
@@ -115,19 +108,14 @@ export default function AccountList() {
   );
 }
 
-function ListHeader({
-  listId,
-  mediaList,
-  name,
-  isEditing,
-  setIsEditing,
-  tags,
-}) {
+function ListHeader({ listId, listItems, name, isEditing, setIsEditing }) {
   const { globalUser } = useAuthContext();
-  const { reorderListItems } = useListContext();
+  const { reorderListItems, updateListName } = useListContext();
+
+  const [title, setTitle] = useState(name);
 
   async function reorderList() {
-    const newOrder = mediaList.map((item) => {
+    const newOrder = listItems.map((item) => {
       return {
         category: item.category,
         id: item.id,
@@ -138,15 +126,36 @@ function ListHeader({
   }
 
   async function handleClick() {
-    if (isEditing) await reorderList();
+    if (title === "") return;
 
-    setIsEditing(!isEditing);
+    if (isEditing) {
+      await reorderList();
+
+      if (title === name) {
+        setIsEditing(false);
+        return;
+      }
+      if (await updateListName(globalUser.uid, listId, title)) {
+        setIsEditing(false);
+      }
+    } else {
+      setIsEditing(true);
+    }
   }
 
   return (
     <div className="flex items-center justify-between align-middle">
       <div className="flex items-center gap-4">
-        <p className="text-2xl text-white">{name}</p>
+        {isEditing ? (
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="border-1 border-white p-1 text-2xl text-white outline-none"
+          />
+        ) : (
+          <p className="text-2xl text-white">{title}</p>
+        )}
 
         <button
           onClick={handleClick}
@@ -155,35 +164,39 @@ function ListHeader({
           <FontAwesomeIcon icon={isEditing ? faCheck : faPen} />
           {isEditing ? "Done" : "Edit"}
         </button>
-      </div>
 
-      <div className="flex gap-2">
-        {tags.map((tag, index) => {
-          return (
-            <p key={index} className="rounded-sm bg-gray-600 p-2">
-              {tag}
-            </p>
-          );
-        })}
+        {isEditing && (
+          <button
+            onClick={() => setIsEditing(false)}
+            className="flex items-center gap-1 rounded-md bg-gray-700 px-3 py-1 hover:text-gray-400"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+            <p>Cancel</p>
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function MediaList({ mediaList, setMediaList, listId, isEditing, isRanking }) {
+function MediaList({ listItems, setListItems, listId, isEditing, isRanking }) {
   return (
     <div className="flex flex-wrap gap-6">
-      {mediaList?.length > 0 ? (
+      {listItems?.length > 0 ? (
         isEditing ? (
           <DraggableList
             listId={listId}
-            listItems={mediaList}
-            setListItems={setMediaList}
+            listItems={listItems}
+            setListItems={setListItems}
             isRanking={isRanking}
           />
         ) : (
-          mediaList.map((item, index) => (
-            <Link key={item.id} to={item.link} className="w-48">
+          listItems.map((item, index) => (
+            <Link
+              key={item.id}
+              to={item.link}
+              className="border-1 border-transparent hover:border-white"
+            >
               <MediaListCard
                 title={item.title}
                 subtitle={item.subtitle}
@@ -203,9 +216,6 @@ function MediaList({ mediaList, setMediaList, listId, isEditing, isRanking }) {
 }
 
 function DraggableList({ listId, listItems, setListItems, isRanking }) {
-  const { globalUser } = useAuthContext();
-  const { deleteListItem } = useListContext();
-
   function handleDragEnd(event) {
     const { active, over } = event;
     if (active.id === over.id) return;
@@ -216,6 +226,43 @@ function DraggableList({ listId, listItems, setListItems, isRanking }) {
       return arrayMove(items, oldIndex, newIndex);
     });
   }
+
+  return (
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={listItems} strategy={rectSortingStrategy}>
+        {listItems.map((item, index) => (
+          <div key={item.id}>
+            <SortableItem
+              item={item}
+              index={index}
+              listId={listId}
+              isRanking={isRanking}
+            />
+          </div>
+        ))}
+      </SortableContext>
+    </DndContext>
+  );
+}
+
+function SortableItem({ item, index, listId, isRanking }) {
+  const { globalUser } = useAuthContext();
+  const { deleteListItem } = useListContext();
+
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    isDragging,
+    transform,
+    transition,
+  } = useSortable({ id: item.id });
+
+  const style = {
+    cursor: "grab",
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   async function handleDelete(itemId) {
     await deleteListItem(globalUser.uid, listId, itemId);
@@ -228,51 +275,29 @@ function DraggableList({ listId, listItems, setListItems, isRanking }) {
   }
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={listItems} strategy={rectSwappingStrategy}>
-        {listItems.map((item, index) => (
-          <div key={item.id} className="flex flex-col items-center gap-2">
-            <button
-              onClick={() => handleDelete(item.id)}
-              className="flex w-fit items-center gap-1 rounded-sm bg-gray-600 px-2 py-1 text-sm font-bold hover:bg-gray-800"
-            >
-              <FontAwesomeIcon icon={faXmark} />
-              <p>Remove</p>
-            </button>
-
-            <SortableItem item={item} index={index} isRanking={isRanking} />
-          </div>
-        ))}
-      </SortableContext>
-    </DndContext>
-  );
-}
-
-function SortableItem({ item, isRanking, index }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: item.id });
-
-  const style = {
-    transition,
-    cursor: "grab",
-    opacity: isDragging ? 1 : 0.5,
-    transform: CSS.Transform.toString(transform),
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <MediaListCard
-        title={item.title}
-        subtitle={item.subtitle}
-        image={item.image}
-        index={isRanking && index + 1}
-      />
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="relative"
+    >
+      <div
+        className={isDragging ? "opacity-100" : "opacity-50 hover:opacity-100"}
+      >
+        <MediaListCard
+          title={item.title}
+          subtitle={item.subtitle}
+          image={item.image}
+          index={isRanking && index + 1}
+        />
+      </div>
+      <button
+        onClick={() => handleDelete(item.id)}
+        className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-800 p-2 font-bold hover:text-gray-400"
+      >
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
     </div>
   );
 }
