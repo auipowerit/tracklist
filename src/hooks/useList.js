@@ -183,6 +183,58 @@ export function useList() {
     }
   }
 
+  async function deleteListItem(userId, listId, itemId) {
+    try {
+      if (!userId || !listId || !itemId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const updatedLists = userDoc.data().lists.map((list) => {
+        return list.id === listId
+          ? {
+              ...list,
+              media: list.media.filter((media) => media.id !== itemId),
+            }
+          : list;
+      });
+
+      await updateDoc(userRef, {
+        lists: updatedLists,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function reorderListItems(userId, listId, newOrder) {
+    try {
+      if (!userId || !listId || !newOrder) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const updatedLists = userDoc.data().lists.map((list) => {
+        return list.id === listId
+          ? {
+              ...list,
+              media: newOrder,
+            }
+          : list;
+      });
+
+      await updateDoc(userRef, {
+        lists: updatedLists,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     getListById,
     getListByTitle,
@@ -191,5 +243,7 @@ export function useList() {
     createNewList,
     addToList,
     deleteList,
+    deleteListItem,
+    reorderListItems,
   };
 }
