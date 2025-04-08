@@ -31,12 +31,14 @@ export function useComment() {
       const comments = await Promise.all(
         reviewDoc.data().comments.map(async (doc) => {
           const comment = await getCommentById(doc);
-          if (!comment) return null;
-          const username = (await getUserById(comment?.userId))?.username;
+          const user = await getUserById(comment?.userId);
+          if (!comment || !user) return null;
+
           return {
             id: doc,
             ...comment,
-            username,
+            username: user.username,
+            profileUrl: user.profileUrl,
           };
         }),
       );

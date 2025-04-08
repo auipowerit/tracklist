@@ -39,9 +39,10 @@ export default function CommentCard(props) {
         <div className="flex items-center gap-2">
           <Link
             to={`/users/${comment.userId}`}
-            className="cursor-pointer text-sm font-bold hover:text-gray-400"
+            className="flex cursor-pointer items-center gap-2 text-sm font-bold hover:text-gray-400"
           >
-            @{comment.username}
+            <img src={comment.profileUrl} className="h-8 w-8 rounded-full" />
+            <p>@{comment.username}</p>
           </Link>
           <p className="text-sm text-gray-400">
             {getTimeSince(comment.createdAt.toDate())}

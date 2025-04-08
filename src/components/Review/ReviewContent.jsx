@@ -8,6 +8,7 @@ import { useCommentContext } from "src/context/Comment/CommentContext";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import VoteButton from "../Buttons/VoteButton";
 import DeleteButton from "../Buttons/DeleteButton";
+import { useState } from "react";
 
 function ReviewUser({ review, showIcon = true }) {
   return (
@@ -33,7 +34,7 @@ function ReviewUser({ review, showIcon = true }) {
   );
 }
 
-function ReviewMediaTitle({ titleLink, subtitleLink, title, subtitle }) {
+function ReviewMediaTitle({ title, titleLink, subtitle, subtitleLink }) {
   return (
     <div className="flex flex-col">
       <Link to={titleLink} className="text-2xl font-bold hover:text-gray-400">
@@ -74,9 +75,23 @@ function ReviewStars({ rating = 0, size = 20 }) {
 }
 
 function ReviewContent({ review, showComment = true }) {
+  const [showMore, setShowMore] = useState(false);
+
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-lg">{review.content}</p>
+    <div className="h-full">
+      <div className="flex h-full w-full flex-col gap-1 overflow-auto">
+        <p className="text-lg break-words">
+          {showMore ? review.content : `${review.content.slice(0, 200)}...`}
+        </p>
+        {review.content.length > 200 && (
+          <p
+            className="cursor-pointer py-2 text-sm font-semibold text-blue-400 hover:text-gray-400"
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? "Show less" : "Show more"}
+          </p>
+        )}
+      </div>
       <ReviewButtons review={review} showComment={showComment} />
     </div>
   );

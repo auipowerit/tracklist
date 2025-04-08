@@ -33,7 +33,7 @@ export default function CommentList({ review }) {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 pb-12">
       <div className="flex items-center gap-4">
         <h2 className="text-xl font-bold">
           {comments?.length || 0}{" "}

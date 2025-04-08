@@ -6,7 +6,7 @@ export default function SpotifyProvider({ children }) {
   const spotifyMethods = useSpotify();
 
   useEffect(() => {
-    spotifyMethods.fetchAccessToken();
+    spotifyMethods.getAccessToken();
   }, []);
 
   return (

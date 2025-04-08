@@ -7,7 +7,7 @@ import MediaReviews from "./MediaReviews";
 import MediaGradient from "src/components/Layout/MediaGradient";
 
 export default function ArtistPage() {
-  const { getArtistById, getAlbumById, getTrackById } = useSpotifyContext();
+  const { getMediaById } = useSpotifyContext();
   const { getReviewsByMediaId } = useReviewContext();
 
   const params = useParams();
@@ -38,9 +38,9 @@ export default function ArtistPage() {
         const category = trackId ? "track" : albumId ? "album" : "artist";
 
         const fetchedMedia = await Promise.all([
-          artistId && getArtistById(artistId),
-          albumId && getAlbumById(albumId),
-          trackId && getTrackById(trackId),
+          artistId && getMediaById(artistId, "artist"),
+          albumId && getMediaById(albumId, "album"),
+          trackId && getMediaById(trackId, "track"),
         ]);
 
         const profileUrl =
@@ -88,7 +88,7 @@ export default function ArtistPage() {
         <div className="px-6">{!isLoading && <Outlet context={media} />}</div>
       </div>
 
-      <div className="h-full flex-1 bg-[rgba(20,20,20,0.6)]">
+      <div className="h-full w-full flex-1 bg-[rgba(20,20,20,0.6)]">
         <MediaReviews
           key={media?.id}
           mediaId={media?.id}

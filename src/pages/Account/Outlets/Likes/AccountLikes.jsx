@@ -82,20 +82,22 @@ function LikedMedia({ likes, category }) {
   }, [likes, category]);
 
   return (
-    <div className="m-auto grid w-fit grid-cols-4 gap-6">
+    <div>
       {media &&
         (media.length > 0 ? (
-          media.map((entry) => {
-            return (
-              <Link key={entry.id} to={entry.titleLink} className="w-fit">
-                <MediaListCard
-                  title={entry.title}
-                  subtitle={entry.subtitle}
-                  image={entry.image}
-                />
-              </Link>
-            );
-          })
+          <div className="m-auto grid w-fit grid-cols-4 gap-6">
+            {media.map((entry) => {
+              return (
+                <Link key={entry.id} to={entry.titleLink} className="w-fit">
+                  <MediaListCard
+                    title={entry.title}
+                    subtitle={entry.subtitle}
+                    image={entry.image}
+                  />
+                </Link>
+              );
+            })}
+          </div>
         ) : (
           <p className="m-20 text-center text-2xl text-gray-300 italic">
             {`You don't have any liked ${category}s yet.`}
@@ -183,7 +185,7 @@ function LikedLists({ likes }) {
   }, [likes]);
 
   return (
-    <div>
+    <div className="w-fit border-1 border-transparent hover:border-white">
       {lists &&
         (lists.length > 0 ? (
           lists.map((list, index) => {

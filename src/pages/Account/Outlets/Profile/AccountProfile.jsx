@@ -21,7 +21,7 @@ export default function AccountProfile() {
   const navigate = useNavigate();
 
   const { updateUserDetails, updateSpotifyInfo } = useAuthContext();
-  const { getAuthAccessToken, redirectToSpotifyAuth, fetchSpotifyProfile } =
+  const { getAuthAccessToken, redirectToSpotifyAuth, getSpotifyUser } =
     useSpotifyContext();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -92,7 +92,7 @@ export default function AccountProfile() {
       const accessToken = await getAuthAccessToken(fetchedCode);
       if (!accessToken) return;
 
-      const profile = await fetchSpotifyProfile(accessToken);
+      const profile = await getSpotifyUser(accessToken);
       if (!profile) return;
 
       if (profile) {

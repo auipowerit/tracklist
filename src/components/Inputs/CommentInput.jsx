@@ -35,6 +35,7 @@ export default function CommentInput({ review, setComments }) {
         id: newComment.id,
         ...newComment.data(),
         username: globalData?.username || "",
+        profileUrl: globalData?.profileUrl || "",
       },
       ...(prevData || []),
     ]);

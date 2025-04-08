@@ -98,8 +98,8 @@ function ListHeader({ name, tags }) {
 
 function MediaList({ mediaList, isRanking }) {
   return (
-    <div className="grid grid-cols-4">
-      {mediaList?.length > 0 &&
+    <div class="flex flex-wrap gap-6">
+      {mediaList?.length > 0 ? (
         mediaList.map((media, index) => {
           return (
             <Link key={media.id} to={media.link} className="w-48">
@@ -111,7 +111,12 @@ function MediaList({ mediaList, isRanking }) {
               />
             </Link>
           );
-        })}
+        })
+      ) : (
+        <p className="m-20 text-center text-2xl text-gray-300 italic">
+          {`This list is empty.`}
+        </p>
+      )}
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function FeedReviewCard({ review }) {
       <div className="flex items-center gap-4">
         <img
           src={review.media.image}
-          className="aspect-square h-32 cursor-pointer object-cover shadow-lg transition-all duration-300 hover:scale-110"
+          className="aspect-square h-36 w-36 cursor-pointer border-1 border-transparent object-cover shadow-lg hover:border-white"
           onClick={() => navigate(media.titleLink)}
         />
 
@@ -39,7 +39,9 @@ export default function FeedReviewCard({ review }) {
         </div>
       </div>
 
-      <ReviewContent review={review} showComment={true} />
+      <div className="w-4/5">
+        <ReviewContent review={review} showComment={true} />
+      </div>
     </div>
   );
 }
