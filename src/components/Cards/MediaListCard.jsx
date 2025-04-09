@@ -1,6 +1,6 @@
 export default function MediaListCard({ title, subtitle, image, index }) {
   return (
-    <div className="w-48">
+    <div className="flex w-48 flex-col gap-1">
       <div className="relative">
         <img src={image} className="h-48 w-48 object-cover" />
         {index && (
@@ -10,10 +10,12 @@ export default function MediaListCard({ title, subtitle, image, index }) {
         )}
       </div>
 
-      <p className="text-center font-bold text-wrap">{title}</p>
-      {subtitle && (
-        <p className="text-center text-wrap text-gray-400">[{subtitle}]</p>
-      )}
+      <div className="flex flex-col">
+        <p className="text-center font-bold text-wrap">{title}</p>
+        {subtitle && (
+          <p className="text-center text-wrap text-gray-400">[{subtitle}]</p>
+        )}
+      </div>
     </div>
   );
 }

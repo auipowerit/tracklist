@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
 import ListForm from "../List/ListForm";
 
 export default function ListButton(props) {
-  const { isModalOpen, setIsModalOpen, media, category } = props;
+  const { isModalOpen, setIsModalOpen, list, media, category } = props;
 
   const { globalUser } = useAuthContext();
 
@@ -28,17 +28,18 @@ export default function ListButton(props) {
           setIsModalOpen={setIsModalOpen}
           media={media}
           category={category}
+          list={list}
         />
       </Modal>
 
       <button
-        className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
+        className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
         onClick={handleClick}
       >
-        <FontAwesomeIcon icon={faPlus} />
-        <p>{media ? "Add to List" : "Create List"}</p>
+        <FontAwesomeIcon icon={list ? faPen : faPlus} />
+        <p>{media ? "Add to List" : list ? "Edit" : "Create List"}</p>
       </button>
     </div>
   );

@@ -1,22 +1,23 @@
 import { useState } from "react";
-import NewList from "./NewList";
 import AddToList from "./AddToList";
+import CreateList from "./CreateList";
 
-export default function ListForm({
-  isModalOpen,
-  setIsModalOpen,
-  media,
-  category,
-}) {
+export default function ListForm(props) {
+  const { isModalOpen, setIsModalOpen, media, category, list } = props;
+
   const [newList, setNewList] = useState(false);
 
   if (!media || !category)
     return (
-      <NewList isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <CreateList
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        list={list}
+      />
     );
 
   return newList ? (
-    <NewList
+    <CreateList
       isModalOpen={isModalOpen}
       setIsModalOpen={setIsModalOpen}
       setNewList={setNewList}

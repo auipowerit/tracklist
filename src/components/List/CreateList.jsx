@@ -1,38 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useListContext } from "src/context/List/ListContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
+  faCheck,
   faPlus,
+  faSave,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import FormInput from "../Inputs/FormInput";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-import { useListContext } from "src/context/List/ListContext";
 
-export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
+export default function CreateList(props) {
+  const { isModalOpen, setIsModalOpen, setNewList, list } = props;
+
   const { globalUser } = useAuthContext();
-  const { checkIfListExists, createNewList } = useListContext();
+  const { checkIfListExists, createNewList, updateListDetails } =
+    useListContext();
 
-  const characterLimit = 150;
+  const nameLimit = 50;
+  const descriptionLimit = 150;
 
-  const [tags, setTags] = useState([]);
-
-  const nameRef = useRef(null);
-  const tagsRef = useRef(null);
-  const rankingRef = useRef(null);
-  const visibilityRef = useRef(null);
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState(list?.name || "");
+  const [tags, setTags] = useState(list?.tags || []);
+  const [isRanking, setIsRanking] = useState(list?.isRanking || false);
+  const [isPrivate, setIsPrivate] = useState(list?.isPrivate || false);
+  const [description, setDescription] = useState(list?.description || "");
 
   function addTag(e) {
-    if (e.key !== "," || tagsRef.current.value === "") return;
+    if (e.key !== "," || tags === "") return;
 
-    const newTag = tagsRef.current.value.slice(0, -1);
+    const newTag = tags.slice(0, -1);
 
     if (!tags.includes(newTag)) {
       setTags([...tags, newTag]);
     }
 
-    tagsRef.current.value = "";
+    setTags("");
   }
 
   function removeTag(tag) {
@@ -44,6 +47,14 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
 
     const listData = getValues();
     if (!listData) return;
+
+    if (list) {
+      await updateListDetails(globalUser.uid, list.id, listData);
+      setIsModalOpen(false);
+      window.location.reload();
+      resetValues();
+      return;
+    }
 
     const listExists = await checkIfListExists(listData.name, globalUser.uid);
     if (listExists) return;
@@ -61,10 +72,6 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   }
 
   function getValues() {
-    const name = nameRef.current.value;
-    const isRanking = rankingRef.current.checked;
-    const isPrivate = visibilityRef.current.checked;
-
     if (name === "" || description === "" || !globalUser) {
       return;
     }
@@ -82,10 +89,10 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
   }
 
   function resetValues() {
-    nameRef.current.value = "";
-    tagsRef.current.value = "";
-    rankingRef.current.checked = false;
-    visibilityRef.current.checked = false;
+    setName("");
+    setTags([]);
+    setIsRanking(false);
+    setIsPrivate(false);
     setDescription("");
     if (setNewList) setNewList(false);
     setTags([]);
@@ -93,7 +100,15 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
 
   useEffect(() => {
     if (!isModalOpen) resetValues();
-  }, [isModalOpen]);
+
+    if (list) {
+      setName(list.name);
+      setTags(list.tags);
+      setIsRanking(list.isRanking);
+      setIsPrivate(list.isPrivate);
+      setDescription(list.description);
+    }
+  }, [isModalOpen, list]);
 
   return (
     <form
@@ -101,28 +116,41 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
       className="m-auto flex flex-col items-center justify-center gap-8 py-6 text-xl"
     >
       <p className="w-full border-b-1 border-white pb-2 text-2xl font-bold">
-        New List
+        {list ? "Edit" : "Create"} List
       </p>
       <div className="flex h-full justify-center gap-6">
         <div className="flex h-full flex-col gap-8">
           <div className="flex flex-col gap-1">
-            <FormInput
+            <div className="flex items-center justify-between">
+              <label htmlFor="name">Name</label>
+              <p
+                className={`text-sm ${name.length >= nameLimit ? "text-red-600" : "text-gray-400"}`}
+              >
+                {name.length || 0}/{nameLimit}
+              </p>
+            </div>
+            <input
               name="name"
               type="text"
-              ref={nameRef}
-              classes="border-1 border-white"
-              label="Name"
+              value={name}
+              onChange={(e) => {
+                if (e.target.value.length > nameLimit) {
+                  setName(e.target.value.slice(0, nameLimit));
+                  return;
+                }
+                setName(e.target.value);
+              }}
+              className="border-1 border-white px-2 py-1 outline-hidden"
             />
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-1">
-              <FormInput
+              <label htmlFor="tags">Tags (comma separated)</label>
+              <input
                 name="tags"
                 type="text"
-                ref={tagsRef}
                 onKeyUp={addTag}
-                classes="border-1 border-white"
-                label="Tags (comma separated)"
+                className="border-1 border-white px-2 py-1 outline-hidden"
               />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -143,14 +171,22 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <FormInput name="ranking" type="checkbox" ref={rankingRef} />
+              <input
+                name="ranking"
+                type="checkbox"
+                checked={isRanking && "checked"}
+                value={isRanking}
+                onChange={() => setIsRanking(!isRanking)}
+              />
               <label htmlFor="ranking">Ranking</label>
             </div>
             <div className="flex items-center gap-2">
-              <FormInput
+              <input
                 name="visibility"
                 type="checkbox"
-                ref={visibilityRef}
+                checked={isPrivate && "checked"}
+                value={isPrivate}
+                onChange={() => setIsPrivate(!isPrivate)}
               />
               <label htmlFor="visibility">Private</label>
             </div>
@@ -160,9 +196,9 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
           <div className="flex items-center justify-between">
             <label htmlFor="description">Description</label>
             <p
-              className={`text-sm ${description.length >= characterLimit ? "text-red-600" : "text-gray-400"}`}
+              className={`text-sm ${description.length >= descriptionLimit ? "text-red-600" : "text-gray-400"}`}
             >
-              {description.length || 0}/{characterLimit}
+              {description.length || 0}/{descriptionLimit}
             </p>
           </div>
 
@@ -170,8 +206,8 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
             id="description"
             value={description}
             onChange={(e) => {
-              if (e.target.value.length > characterLimit) {
-                setDescription(e.target.value.slice(0, characterLimit));
+              if (e.target.value.length > descriptionLimit) {
+                setDescription(e.target.value.slice(0, descriptionLimit));
                 return;
               }
               setDescription(e.target.value);
@@ -193,10 +229,10 @@ export default function NewList({ isModalOpen, setIsModalOpen, setNewList }) {
         )}
         <button
           type="submit"
-          className="flex items-center justify-center gap-1 rounded-md bg-green-700 px-4 py-2"
+          className="flex items-center justify-center gap-2 rounded-md bg-green-700 px-4 py-2"
         >
-          <p>Create</p>
-          <FontAwesomeIcon icon={faPlus} />
+          <p>{list ? "Save" : "Create"}</p>
+          <FontAwesomeIcon icon={list ? faCheck : faPlus} />
         </button>
       </div>
     </form>
