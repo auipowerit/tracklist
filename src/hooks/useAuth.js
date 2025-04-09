@@ -200,9 +200,9 @@ export function useAuth() {
     }
   }
 
-  async function updateUserDetails(displayname, bio) {
+  async function updateUserDetails(userId, displayname, bio) {
     try {
-      const userRef = doc(db, "users", auth.currentUser.uid);
+      const userRef = doc(db, "users", userId);
       await updateDoc(userRef, { displayname, bio });
     } catch (error) {
       console.log(error);

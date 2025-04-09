@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useListContext } from "src/context/List/ListContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +7,7 @@ import {
   faArrowLeft,
   faCheck,
   faPlus,
-  faSave,
+  faTrash,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,8 +15,10 @@ export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list } = props;
 
   const { globalUser } = useAuthContext();
-  const { checkIfListExists, createNewList, updateListDetails } =
+  const { checkIfListExists, createNewList, updateListDetails, deleteList } =
     useListContext();
+
+  const navigate = useNavigate();
 
   const nameLimit = 50;
   const descriptionLimit = 150;
@@ -86,6 +89,17 @@ export default function CreateList(props) {
     };
 
     return listData;
+  }
+
+  async function handleDelete() {
+    if (!window.confirm("Are you sure you want to delete this list?")) {
+      return;
+    }
+
+    await deleteList(list.id, globalUser.uid);
+
+    setIsModalOpen(false);
+    navigate("/account/lists");
   }
 
   function resetValues() {
@@ -231,9 +245,20 @@ export default function CreateList(props) {
           type="submit"
           className="flex items-center justify-center gap-2 rounded-md bg-green-700 px-4 py-2"
         >
-          <p>{list ? "Save" : "Create"}</p>
           <FontAwesomeIcon icon={list ? faCheck : faPlus} />
+          <p>{list ? "Save" : "Create"}</p>
         </button>
+
+        {list && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="flex items-center gap-2 rounded-md bg-red-700 px-4 py-2"
+          >
+            <FontAwesomeIcon icon={faTrash} />
+            <p>Delete</p>
+          </button>
+        )}
       </div>
     </form>
   );

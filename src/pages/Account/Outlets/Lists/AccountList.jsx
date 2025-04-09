@@ -29,7 +29,7 @@ function RenderList({ list, items, setItems }) {
         {items.length > 0 ? (
           <DraggableList items={items} setItems={setItems} list={list} />
         ) : (
-          <p className="m-20 text-center text-2xl text-gray-300 italic">
+          <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
             {`This list is empty.`}
           </p>
         )}

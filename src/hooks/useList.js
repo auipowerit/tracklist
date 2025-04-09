@@ -1,5 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export function useList() {
@@ -16,7 +23,7 @@ export function useList() {
         .data()
         .lists.find((list) => list.id === listId);
 
-      return existingList;
+      return existingList || null;
     } catch (error) {
       console.log(error);
     }
@@ -177,6 +184,41 @@ export function useList() {
 
       await updateDoc(userRef, {
         lists: userDoc.data().lists.filter((list) => list.id !== listId),
+      });
+
+      const usersRef = collection(db, "users");
+      const usersDoc = await getDocs(usersRef);
+
+      if (usersDoc.empty) return;
+
+      usersDoc.forEach((doc) => {
+        unlikeList(listId, doc.id);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function unlikeList(listId, userId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const likes = userDoc.data().likes;
+      const listLikes = likes.find((like) => like.category === "list");
+      if (!listLikes) return;
+
+      const newListLikes = listLikes.content.filter((id) => id !== listId);
+
+      await updateDoc(userRef, {
+        likes: likes.map((like) => {
+          if (like.category === "list") {
+            return { category: "list", content: newListLikes };
+          }
+          return like;
+        }),
       });
     } catch (error) {
       console.log(error);

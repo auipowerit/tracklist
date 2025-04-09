@@ -37,6 +37,10 @@ export default function DraggableList({ items, setItems, list }) {
   }
 
   async function handleDelete(itemId) {
+    if (!window.confirm("Are you sure you want to delete this item?")) {
+      return;
+    }
+
     await deleteListItem(globalUser.uid, list.id, itemId);
 
     setItems(

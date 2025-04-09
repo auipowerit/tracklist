@@ -162,9 +162,15 @@ function LikedLists({ likes }) {
           .flatMap((like) => like.content)
           .map(async (id) => {
             const list = await getListById(id, globalData?.id);
-            return list;
+            return list || null;
           }),
       );
+
+      if (!fetchedLists || fetchedLists.every((list) => list === null)) {
+        setLists([]);
+        setImages([]);
+        return;
+      }
 
       const fetchedImages = await Promise.all(
         fetchedLists.map(async (list) => {
@@ -187,7 +193,7 @@ function LikedLists({ likes }) {
   }, [likes]);
 
   return (
-    <div className="w-fit border-1 border-transparent hover:border-white">
+    <div className="w-full">
       {lists &&
         (lists.length > 0 ? (
           lists.map((list, index) => {
@@ -202,7 +208,7 @@ function LikedLists({ likes }) {
             );
           })
         ) : (
-          <p className="m-20 text-center text-2xl text-gray-300 italic">
+          <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
             You don't have any liked lists yet.
           </p>
         ))}
