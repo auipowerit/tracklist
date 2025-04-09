@@ -9,7 +9,7 @@ import Discography from "./Discography";
 
 function ArtistProfile() {
   const context = useOutletContext();
-  const { artist, colors } = context ?? {};
+  const { artist } = context ?? {};
 
   const { globalData } = useAuthContext();
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
@@ -59,7 +59,6 @@ function ArtistProfile() {
       <MediaBanner
         mediaId={artist?.id}
         spotifyURL={artist?.external_urls.spotify}
-        color={colors?.dark}
         image={artist?.images[0].url}
         name={artist?.name}
         subtitle={`${artist?.followers.total.toLocaleString()} followers`}

@@ -10,7 +10,7 @@ import { ReviewStars } from "src/components/Review/ReviewContent";
 
 function AlbumProfile() {
   const context = useOutletContext();
-  const { artist, album, colors } = context ?? {};
+  const { artist, album } = context ?? {};
 
   const { globalData } = useAuthContext();
 
@@ -33,7 +33,6 @@ function AlbumProfile() {
         <MediaBanner
           mediaId={album?.id}
           spotifyURL={album?.external_urls.spotify}
-          color={colors?.dark}
           image={album?.images[0].url}
           name={album?.name}
           subtitle={`${album?.tracks.items.length > 0 && album?.tracks.items.length} songs · 

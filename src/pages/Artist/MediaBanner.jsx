@@ -6,7 +6,7 @@ import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function MediaBanner(props) {
-  const { mediaId, spotifyURL, color, image, name, subtitle } = props;
+  const { mediaId, spotifyURL, image, name, subtitle } = props;
 
   const { getAvgRating } = useReviewContext();
   const { defaultImg } = useSpotifyContext();
@@ -31,7 +31,6 @@ export default function MediaBanner(props) {
       data-tooltip-id="media-tooltip"
       data-tooltip-content="Open in Spotify"
       className="flex cursor-pointer items-center gap-4 text-center shadow-md shadow-black/50 transition-all duration-300 hover:shadow-xl hover:shadow-black/75"
-      style={{ backgroundColor: color }}
     >
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
 

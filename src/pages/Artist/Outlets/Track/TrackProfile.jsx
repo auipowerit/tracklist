@@ -7,7 +7,7 @@ import MediaBanner from "../../MediaBanner";
 
 function TrackProfile() {
   const context = useOutletContext();
-  const { track, colors } = context ?? {};
+  const { track } = context ?? {};
 
   const { globalData } = useAuthContext();
 
@@ -29,7 +29,6 @@ function TrackProfile() {
         mediaId={track?.id}
         spotifyURL={track?.external_urls.spotify}
         image={track?.album.images[0].url}
-        color={colors?.dark}
         name={track?.name}
         subtitle={track?.album.name}
       />

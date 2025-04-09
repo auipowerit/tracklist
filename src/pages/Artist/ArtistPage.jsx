@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
-import { getColorPalette, getColors } from "src/utils/colors";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaReviews from "./MediaReviews";
@@ -15,13 +14,6 @@ export default function ArtistPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [media, setMedia] = useState(null);
   const [reviews, setReviews] = useState(null);
-
-  const [colors, setColors] = useState({
-    light: "#ffffff",
-    dark: "#000000",
-    text: "#000000",
-  });
-  const [palette, setPalette] = useState([]);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -43,22 +35,16 @@ export default function ArtistPage() {
           trackId && getMediaById(trackId, "track"),
         ]);
 
-        const profileUrl =
-          fetchedMedia[1]?.images[0].url || fetchedMedia[0].images[0].url;
-
-        const colors = await getColors(profileUrl);
-        setColors(colors);
-
-        const palette = await getColorPalette(profileUrl);
-        setPalette(palette);
-
         setMedia({
           id: mediaId,
           category,
           artist: fetchedMedia[0] || null,
           album: fetchedMedia[1] || null,
           track: fetchedMedia[2] || null,
-          colors: colors,
+          image:
+            fetchedMedia[1]?.images[0].url ||
+            fetchedMedia[0].images[0].url ||
+            "",
         });
 
         const fetchedReviews = await getReviewsByMediaId(mediaId);
@@ -77,14 +63,10 @@ export default function ArtistPage() {
 
   return (
     <div className="flex h-full gap-8">
-      <MediaGradient light={colors.light} dark={colors.dark} />
+      <MediaGradient image={media?.image} />
 
       <div className="flex flex-2 flex-col">
-        <ArtistNavigation
-          media={media}
-          category={media?.category}
-          color={colors?.text}
-        />
+        <ArtistNavigation media={media} category={media?.category} />
         <div className="px-6">{!isLoading && <Outlet context={media} />}</div>
       </div>
 
@@ -101,12 +83,12 @@ export default function ArtistPage() {
   );
 }
 
-function ArtistNavigation({ media, category, color }) {
+function ArtistNavigation({ media, category }) {
   return (
     <div className="flex w-fit items-center gap-2 bg-black/40 px-4 py-2 font-bold tracking-wider">
       <Link
         to={`/artists/${media?.artist.id}`}
-        style={{ color: category === "artist" ? color : "" }}
+        style={{ color: category === "artist" ? "lightblue" : "" }}
       >
         {media?.artist.name}
       </Link>
@@ -116,7 +98,7 @@ function ArtistNavigation({ media, category, color }) {
           <span>&rsaquo;</span>
           <Link
             to={`/artists/${media?.artist.id}/albums/${media?.album.id}`}
-            style={{ color: category === "album" ? color : "" }}
+            style={{ color: category === "album" ? "lightblue" : "" }}
           >
             {media?.album.name}
           </Link>
@@ -125,7 +107,7 @@ function ArtistNavigation({ media, category, color }) {
               <span>&rsaquo;</span>
               <Link
                 to={`/artists/${media?.artist.id}/albums/${media?.album.id}/tracks/${media?.track.id}`}
-                style={{ color: category === "track" ? color : "" }}
+                style={{ color: category === "track" ? "lightblue" : "" }}
               >
                 {media?.track.name}
               </Link>

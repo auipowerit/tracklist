@@ -93,7 +93,7 @@ export default function AccountList() {
         setIsEditing={setIsEditing}
         tags={list.tags}
       />
-      <div className="overflow-y-scroll border-t-1 border-white py-10">
+      <div className="overflow-y-auto border-t-1 border-white py-10">
         {list && (
           <MediaList
             listId={list.id}
@@ -234,6 +234,8 @@ function DraggableList({ listId, listItems, setListItems, isRanking }) {
           <div key={item.id}>
             <SortableItem
               item={item}
+              listItems={listItems}
+              setListItems={setListItems}
               index={index}
               listId={listId}
               isRanking={isRanking}
@@ -245,7 +247,14 @@ function DraggableList({ listId, listItems, setListItems, isRanking }) {
   );
 }
 
-function SortableItem({ item, index, listId, isRanking }) {
+function SortableItem({
+  item,
+  listItems,
+  setListItems,
+  index,
+  listId,
+  isRanking,
+}) {
   const { globalUser } = useAuthContext();
   const { deleteListItem } = useListContext();
 
@@ -275,14 +284,9 @@ function SortableItem({ item, index, listId, isRanking }) {
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="relative"
-    >
+    <div ref={setNodeRef} style={style} {...attributes} className="relative">
       <div
+        {...listeners}
         className={isDragging ? "opacity-100" : "opacity-50 hover:opacity-100"}
       >
         <MediaListCard
@@ -293,6 +297,7 @@ function SortableItem({ item, index, listId, isRanking }) {
         />
       </div>
       <button
+        type="button"
         onClick={() => handleDelete(item.id)}
         className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-800 p-2 font-bold hover:text-gray-400"
       >
