@@ -31,7 +31,7 @@ export default function MediaBanner(props) {
   }, []);
 
   return (
-    <div className="flex h-64 items-center gap-4 text-center shadow-md shadow-black/50">
+    <div className="flex h-64 items-center text-center shadow-md shadow-black/50">
       <div
         onClick={() => window.open(spotifyURL)}
         data-tooltip-id="media-tooltip"
@@ -41,7 +41,7 @@ export default function MediaBanner(props) {
         <img src={image || defaultImg} className="h-64 w-64" />
         <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
       </div>
-      <div className="flex h-full flex-col items-center justify-between p-2">
+      <div className="flex h-full flex-col items-center justify-between bg-black/40 p-2">
         <div className="m-auto flex w-80 flex-col items-center gap-1">
           <p className="text-4xl font-bold">{name}</p>
           <p className="text-gray-300">{subtitle}</p>

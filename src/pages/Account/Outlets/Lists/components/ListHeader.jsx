@@ -2,7 +2,8 @@ import { useState } from "react";
 import ListButton from "src/components/Buttons/ListButton";
 
 export default function ListHeader({ list }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-between align-middle">
@@ -12,11 +13,19 @@ export default function ListHeader({ list }) {
           <p className="text-gray-400">{list.description}</p>
         </div>
 
-        <ListButton
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          list={list}
-        />
+        <div className="flex items-center gap-4">
+          <ListButton
+            isModalOpen={isAddModalOpen}
+            setIsModalOpen={setIsAddModalOpen}
+            list={list}
+            isAdding={true}
+          />
+          <ListButton
+            isModalOpen={isEditModalOpen}
+            setIsModalOpen={setIsEditModalOpen}
+            list={list}
+          />
+        </div>
       </div>
     </div>
   );

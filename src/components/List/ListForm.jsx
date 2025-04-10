@@ -1,11 +1,24 @@
 import { useState } from "react";
-import AddToList from "./AddToList";
 import CreateList from "./CreateList";
+import AddList from "./AddList";
 
 export default function ListForm(props) {
-  const { isModalOpen, setIsModalOpen, media, category, list } = props;
+  const { isModalOpen, setIsModalOpen, media, category, list, isAdding } =
+    props;
 
   const [newList, setNewList] = useState(false);
+
+  if (isAdding) {
+    return (
+      <AddList
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        media={media}
+        listId={list?.id}
+        category={category}
+      />
+    );
+  }
 
   if (!media || !category)
     return (
@@ -23,10 +36,10 @@ export default function ListForm(props) {
       setNewList={setNewList}
     />
   ) : (
-    <AddToList
+    <AddList
       isModalOpen={isModalOpen}
       setIsModalOpen={setIsModalOpen}
-      media={media}
+      mediaId={media.mediaId}
       category={category}
       setNewList={setNewList}
     />

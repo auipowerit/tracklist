@@ -44,7 +44,7 @@ function MediaReviewCard({ review }) {
       {review ? (
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <img src={review.profileUrl} className="h-16 w-16 rounded-full" />
+            <img src={review.profileUrl} className="h-12 w-12 rounded-full" />
 
             <div className="flex w-full items-start justify-between">
               <div className="flex flex-col gap-1">

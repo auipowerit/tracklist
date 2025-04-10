@@ -53,10 +53,6 @@ export function formatDateDMD(date) {
   return dayjs(date).format("dddd, MMMM D");
 }
 
-export function getIsReleased(releaseDate) {
-  return dayjs().toDate() > new Date(releaseDate);
-}
-
 export function getTimeSince(date) {
   const now = new Date();
   const seconds = Math.round((now - date) / 1000);

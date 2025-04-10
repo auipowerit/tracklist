@@ -53,7 +53,7 @@ export default function RatingBar({ mediaId }) {
               key={key}
               style={{ height: `${(ratings[key] / total) * 100}%` }}
               data-tooltip-id="media-tooltip"
-              data-tooltip-content={`${ratings[key]} ratings of ${key} stars (${(ratings[key] / total).toFixed(2) * 100}%)`}
+              data-tooltip-content={`${ratings[key]} ratings of ${key} stars (${(ratings[key] / total).toFixed(2) * 100 || 0}%)`}
               className="min-h-0.5 w-4 cursor-pointer rounded-t-xs bg-gray-400 transition-all duration-300 hover:bg-gray-300"
             >
               <Tooltip

@@ -11,6 +11,7 @@ export default function ListButton(props) {
     isModalOpen,
     setIsModalOpen,
     showIcon = false,
+    isAdding = false,
     list,
     media,
     category,
@@ -37,6 +38,7 @@ export default function ListButton(props) {
           media={media}
           category={category}
           list={list}
+          isAdding={isAdding}
         />
       </Modal>
 
@@ -57,8 +59,8 @@ export default function ListButton(props) {
           data-modal-toggle="default-modal"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={list ? faPen : faPlus} />
-          <p>{media ? "Add to List" : list ? "Edit" : "Create List"}</p>
+          <FontAwesomeIcon icon={isAdding ? faPlus : list ? faPen : faPlus} />
+          <p>{isAdding ? "Add to list" : list ? "Edit" : "Create List"}</p>
         </button>
       )}
     </div>
