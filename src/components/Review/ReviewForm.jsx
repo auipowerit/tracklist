@@ -1,20 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import StarRating from "./StarRating";
-import FormInput from "../Inputs/FormInput";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import StarRating from "./StarRating";
 
 export default function ReviewForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
-
-  const characterLimit = 500;
-
-  const { globalUser, getUserById } = useAuthContext();
-  const { defaultImg, searchByName, getMediaById } = useSpotifyContext();
-  const { addReview, setReviews } = useReviewContext();
 
   const [type, setType] = useState("artist");
   const [results, setResults] = useState([]);
@@ -22,8 +15,30 @@ export default function ReviewForm(props) {
   const [rating, setRating] = useState(null);
   const [content, setContent] = useState("");
 
-  const formRef = useRef(null);
   const inputRef = useRef(null);
+
+  const { globalUser, getUserById } = useAuthContext();
+  const { searchByName, getMediaById } = useSpotifyContext();
+  const { addReview, setReviews } = useReviewContext();
+
+  useEffect(() => {
+    handleModal();
+    fetchMedia();
+  }, [isModalOpen]);
+
+  function handleModal() {
+    if (isModalOpen) resetValues();
+  }
+
+  async function fetchMedia() {
+    if (!mediaId || !category || !inputRef.current) return;
+
+    const fetchedMedia = await getMediaById(mediaId, category);
+
+    inputRef.current.value = fetchedMedia.name;
+    setType(category);
+    setMedia(fetchedMedia);
+  }
 
   function handleChange(e) {
     setType(e.target.value);
@@ -34,21 +49,23 @@ export default function ReviewForm(props) {
 
   async function handleSearch() {
     const data = await searchByName(inputRef.current.value, type, 20);
+    const items = getMediaData(data);
+    setResults(items);
+  }
 
-    const items =
-      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
+  function getMediaData(data) {
+    const items = data?.[`${type}s`]?.items;
 
-    const ids = items.map((item) => item?.id) || [];
-    const names = items.map((item) => item?.name) || [];
-    const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
+    return items.map((item) => {
+      const name = item.name || item.title;
+      const subtitle = item.artists?.[0]?.name || item.album?.name || "";
 
-    setResults(
-      ids.map((id, index) => ({
-        id,
-        name: names[index],
-        subtitle: subtitles[index],
-      })),
-    );
+      return {
+        id: item.id,
+        name,
+        subtitle,
+      };
+    });
   }
 
   async function handleClick(id, name) {
@@ -98,7 +115,6 @@ export default function ReviewForm(props) {
       ].sort((a, b) => b.createdAt - a.createdAt),
     );
 
-    formRef.current.reset();
     resetValues();
     setIsModalOpen(false);
     window.location.reload();
@@ -114,104 +130,144 @@ export default function ReviewForm(props) {
     setContent("");
   }
 
-  useEffect(() => {
-    const fetchMedia = async () => {
-      if (!mediaId || !category || !inputRef.current) return;
-
-      const fetchedMedia = await getMediaById(mediaId, category);
-
-      inputRef.current.value = fetchedMedia.name;
-      setType(category);
-      setMedia(fetchedMedia);
-    };
-
-    if (isModalOpen) resetValues();
-
-    return fetchMedia;
-  }, [isModalOpen]);
-
   return (
     <form
-      ref={formRef}
       onSubmit={handleSubmit}
       className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
     >
-      <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
-        Add a review
-      </p>
+      <FormHeader />
+
       <div className="flex flex-col">
         <div className="flex w-full items-center justify-center gap-6">
-          <img
-            src={media.image || defaultImg}
-            className="aspect-square h-48 object-cover shadow-lg"
-          />
+          <FormImage media={media} />
+
           <div className="flex h-48 flex-col justify-center gap-2 text-xl">
-            <div className="relative flex gap-2">
-              <FormInput
-                type="search"
-                ref={inputRef}
-                placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
-                onKeyUp={handleSearch}
-                classes="border-1"
-              />
+            <FormInput
+              inputRef={inputRef}
+              type={type}
+              results={results}
+              handleSearch={handleSearch}
+              handleChange={handleChange}
+              handleClick={handleClick}
+            />
 
-              <select value={type} onChange={handleChange}>
-                <option value="artist">artist</option>
-                <option value="album">album</option>
-                <option value="track">song</option>
-              </select>
-
-              <div
-                className={`absolute top-10 right-0 left-0 flex flex-col bg-green-700 ${results.length > 0 && "h-46 overflow-auto"}`}
-              >
-                {results.map(({ id, name, subtitle }) => (
-                  <button
-                    key={id}
-                    onClick={() => handleClick(id, name)}
-                    className="px-2 py-1 text-start hover:bg-gray-600"
-                  >
-                    <p>{name}</p>
-                    {type !== "artist" && <p className="text-sm">{subtitle}</p>}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-xl">
-              <StarRating rating={rating} setRating={setRating} />
-            </div>
+            <StarRating rating={rating} setRating={setRating} />
           </div>
         </div>
 
-        <div className="flex w-full flex-col gap-2">
-          <p
-            className={`self-end ${content.length >= characterLimit ? "text-red-600" : "text-gray-400"}`}
-          >
-            {content.length || 0}/{characterLimit}
-          </p>
-          <textarea
-            placeholder="Write your review..."
-            value={content}
-            onChange={(e) => {
-              if (e.target.value.length > characterLimit) {
-                setContent(e.target.value.slice(0, characterLimit));
-                return;
-              }
-              setContent(e.target.value);
-            }}
-            rows="5"
-            className="w-full border-1 p-2 outline-none"
-          />
-        </div>
+        <FormReview content={content} setContent={setContent} />
       </div>
 
-      <button
-        type="submit"
-        className="flex items-center gap-1 rounded-md bg-green-700 p-3 text-2xl hover:text-gray-400"
-      >
-        <FontAwesomeIcon icon={faPlus} />
-        <p>Post</p>
-      </button>
+      <FormButton />
     </form>
+  );
+}
+
+function FormHeader() {
+  return (
+    <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
+      Add a review
+    </p>
+  );
+}
+
+function FormImage({ media }) {
+  const { defaultImg } = useSpotifyContext();
+
+  return (
+    <img
+      src={media?.image || defaultImg}
+      className="aspect-square h-48 object-cover shadow-lg"
+    />
+  );
+}
+
+function FormInput(props) {
+  const { inputRef, type, handleSearch, handleChange, results, handleClick } =
+    props;
+
+  return (
+    <div className="relative flex gap-2">
+      <input
+        type="search"
+        ref={inputRef}
+        placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
+        onKeyUp={handleSearch}
+        className="border-1 px-2 py-1 outline-hidden"
+      />
+
+      <select value={type} onChange={handleChange}>
+        <option value="artist">artist</option>
+        <option value="album">album</option>
+        <option value="track">song</option>
+      </select>
+
+      <FormSearchResults
+        results={results}
+        handleClick={handleClick}
+        type={type}
+      />
+    </div>
+  );
+}
+
+function FormSearchResults({ results, handleClick, type }) {
+  return (
+    <div
+      className={`absolute top-10 right-0 left-0 flex flex-col bg-green-700 ${results.length > 0 && "h-46 overflow-auto"}`}
+    >
+      {results.map(({ id, name, subtitle }) => (
+        <button
+          key={id}
+          onClick={() => handleClick(id, name)}
+          className="px-2 py-1 text-start hover:bg-gray-600"
+        >
+          <p>{name}</p>
+          {type !== "artist" && <p className="text-sm">{subtitle}</p>}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function FormReview({ content, setContent }) {
+  const CHARACTER_LIMIT = 500;
+
+  function handleChange(e) {
+    if (e.target.value.length > CHARACTER_LIMIT) {
+      setContent(e.target.value.slice(0, CHARACTER_LIMIT));
+      return;
+    }
+    setContent(e.target.value);
+  }
+
+  const color =
+    content.length >= CHARACTER_LIMIT ? "text-red-600" : "text-gray-400";
+
+  return (
+    <div className="flex w-full flex-col gap-2">
+      <p className={`self-end ${color}`}>
+        {content.length || 0}/{CHARACTER_LIMIT}
+      </p>
+      <textarea
+        placeholder="Write your review..."
+        value={content}
+        onChange={handleChange}
+        rows="5"
+        className="w-full border-1 p-2 outline-none"
+      />
+    </div>
+  );
+}
+
+function FormButton() {
+  return (
+    <button
+      type="submit"
+      className="flex items-center gap-1 rounded-md bg-green-700 p-3 text-2xl hover:text-gray-400"
+    >
+      <FontAwesomeIcon icon={faPlus} />
+      <p>Post</p>
+    </button>
   );
 }

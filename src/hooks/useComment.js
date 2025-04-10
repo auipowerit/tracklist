@@ -87,7 +87,7 @@ export function useComment() {
     }
   }
 
-  async function likeComment(commentId, uid) {
+  async function likeComment(commentId, userId) {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -97,21 +97,21 @@ export function useComment() {
         const dislikes = commentDoc.data().dislikes;
 
         // User already liked comment, remove like
-        if (likes.includes(uid)) {
+        if (likes.includes(userId)) {
           await updateDoc(commentRef, {
-            likes: arrayRemove(uid),
+            likes: arrayRemove(userId),
           });
         } else {
           // User disliked comment, remove dislike
-          if (dislikes.includes(uid)) {
+          if (dislikes.includes(userId)) {
             await updateDoc(commentRef, {
-              dislikes: arrayRemove(uid),
+              dislikes: arrayRemove(userId),
             });
           }
 
           // Add user ID to likes array
           await updateDoc(commentRef, {
-            likes: arrayUnion(uid),
+            likes: arrayUnion(userId),
           });
         }
 
@@ -122,7 +122,7 @@ export function useComment() {
     }
   }
 
-  async function dislikeComment(commentId, uid) {
+  async function dislikeComment(commentId, userId) {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -132,21 +132,21 @@ export function useComment() {
         const likes = commentDoc.data().likes;
 
         // User already disliked comment, remove dislike
-        if (dislikes.includes(uid)) {
+        if (dislikes.includes(userId)) {
           await updateDoc(commentRef, {
-            dislikes: arrayRemove(uid),
+            dislikes: arrayRemove(userId),
           });
         } else {
           // User liked comment, remove like
-          if (likes.includes(uid)) {
+          if (likes.includes(userId)) {
             await updateDoc(commentRef, {
-              likes: arrayRemove(uid),
+              likes: arrayRemove(userId),
             });
           }
 
           // Add user ID to dislikes array
           await updateDoc(commentRef, {
-            dislikes: arrayUnion(uid),
+            dislikes: arrayUnion(userId),
           });
         }
 

@@ -233,7 +233,7 @@ export function useReview() {
     }
   }
 
-  async function likeReview(reviewId, uid) {
+  async function likeReview(reviewId, userId) {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -243,21 +243,21 @@ export function useReview() {
         const dislikes = reviewDoc.data().dislikes;
 
         // User already liked review, remove like
-        if (likes.includes(uid)) {
+        if (likes.includes(userId)) {
           await updateDoc(reviewRef, {
-            likes: arrayRemove(uid),
+            likes: arrayRemove(userId),
           });
         } else {
           // User disliked review, remove dislike
-          if (dislikes.includes(uid)) {
+          if (dislikes.includes(userId)) {
             await updateDoc(reviewRef, {
-              dislikes: arrayRemove(uid),
+              dislikes: arrayRemove(userId),
             });
           }
 
           // Add user ID to likes array
           await updateDoc(reviewRef, {
-            likes: arrayUnion(uid),
+            likes: arrayUnion(userId),
           });
         }
 
@@ -268,7 +268,7 @@ export function useReview() {
     }
   }
 
-  async function dislikeReview(reviewId, uid) {
+  async function dislikeReview(reviewId, userId) {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -278,21 +278,21 @@ export function useReview() {
         const likes = reviewDoc.data().likes;
 
         // User already disliked review, remove dislike
-        if (dislikes.includes(uid)) {
+        if (dislikes.includes(userId)) {
           await updateDoc(reviewRef, {
-            dislikes: arrayRemove(uid),
+            dislikes: arrayRemove(userId),
           });
         } else {
           // User liked review, remove like
-          if (likes.includes(uid)) {
+          if (likes.includes(userId)) {
             await updateDoc(reviewRef, {
-              likes: arrayRemove(uid),
+              likes: arrayRemove(userId),
             });
           }
 
           // Add user ID to dislikes array
           await updateDoc(reviewRef, {
-            dislikes: arrayUnion(uid),
+            dislikes: arrayUnion(userId),
           });
         }
 

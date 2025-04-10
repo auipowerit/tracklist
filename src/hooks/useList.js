@@ -29,25 +29,6 @@ export function useList() {
     }
   }
 
-  async function getListByTitle(name, userId) {
-    try {
-      if (!userId || !name) return;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return;
-
-      const existingList = userDoc
-        .data()
-        .lists.find((list) => list.name === name);
-
-      return existingList;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async function getListsByUserId(userId) {
     try {
       if (!userId) return;
@@ -225,7 +206,7 @@ export function useList() {
     }
   }
 
-  async function deleteListItem(userId, listId, itemId) {
+  async function deleteListItem(itemId, listId, userId) {
     try {
       if (!userId || !listId || !itemId) return;
 
@@ -251,7 +232,7 @@ export function useList() {
     }
   }
 
-  async function updateListDetails(userId, listId, details) {
+  async function updateListDetails(listId, details, userId) {
     try {
       if (!userId || !listId || !details) return false;
 
@@ -278,37 +259,7 @@ export function useList() {
     }
   }
 
-  async function updateListName(userId, listId, name) {
-    try {
-      if (!userId || !listId || !name) return false;
-      if (await checkIfListExists(name, userId)) return false;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return false;
-
-      const updatedLists = userDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              name: name,
-            }
-          : list;
-      });
-
-      await updateDoc(userRef, {
-        lists: updatedLists,
-      });
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
-  async function reorderListItems(userId, listId, newOrder) {
+  async function reorderListItems(listId, newOrder, userId) {
     try {
       if (!userId || !listId || !newOrder) return;
 
@@ -336,15 +287,16 @@ export function useList() {
 
   return {
     getListById,
-    getListByTitle,
     getListsByUserId,
+
     checkIfListExists,
     createNewList,
+
     addToList,
     deleteList,
     deleteListItem,
+
     updateListDetails,
-    updateListName,
     reorderListItems,
   };
 }

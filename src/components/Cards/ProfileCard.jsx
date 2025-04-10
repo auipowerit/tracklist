@@ -8,8 +8,8 @@ export default function ProfileCard({ user: propUser }) {
 
   async function handleClick() {
     user.isFollowing
-      ? await unfollowUser(globalUser.uid, user.id)
-      : await followUser(globalUser.uid, user.id);
+      ? await unfollowUser(user.id, globalUser.uid)
+      : await followUser(user.id, globalUser.uid);
 
     setUser({
       ...user,

@@ -138,7 +138,7 @@ export function useAuth() {
     }
   }
 
-  async function followUser(userId, followerId) {
+  async function followUser(followerId, userId) {
     try {
       const usersRef = collection(db, "users");
       const currentUserRef = doc(usersRef, userId);
@@ -158,7 +158,7 @@ export function useAuth() {
     }
   }
 
-  async function unfollowUser(userId, unfollowedId) {
+  async function unfollowUser(unfollowedId, userId) {
     try {
       const usersRef = collection(db, "users");
       const currentUserRef = doc(usersRef, userId);

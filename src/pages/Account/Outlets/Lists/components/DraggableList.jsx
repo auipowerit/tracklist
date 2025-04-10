@@ -33,7 +33,7 @@ export default function DraggableList({ items, setItems, list }) {
       };
     });
 
-    await reorderListItems(globalUser.uid, list.id, newOrder);
+    await reorderListItems(list.id, newOrder, globalUser.uid);
   }
 
   async function handleDelete(itemId) {
@@ -41,7 +41,7 @@ export default function DraggableList({ items, setItems, list }) {
       return;
     }
 
-    await deleteListItem(globalUser.uid, list.id, itemId);
+    await deleteListItem(itemId, list.id, globalUser.uid);
 
     setItems(
       items.filter((item) => {
