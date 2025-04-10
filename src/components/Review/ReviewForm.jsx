@@ -9,6 +9,10 @@ import StarRating from "./StarRating";
 export default function ReviewForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
 
+  const { globalUser, getUserById } = useAuthContext();
+  const { searchByName, getMediaById } = useSpotifyContext();
+  const { addReview, setReviews } = useReviewContext();
+
   const [type, setType] = useState("artist");
   const [results, setResults] = useState([]);
   const [media, setMedia] = useState({});
@@ -16,10 +20,6 @@ export default function ReviewForm(props) {
   const [content, setContent] = useState("");
 
   const inputRef = useRef(null);
-
-  const { globalUser, getUserById } = useAuthContext();
-  const { searchByName, getMediaById } = useSpotifyContext();
-  const { addReview, setReviews } = useReviewContext();
 
   useEffect(() => {
     handleModal();

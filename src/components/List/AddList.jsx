@@ -8,6 +8,10 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 export default function AddList(props) {
   const { isModalOpen, setIsModalOpen, mediaId, listId, category } = props;
 
+  const { globalUser } = useAuthContext();
+  const { getListsByUserId, addToList, getListById } = useListContext();
+  const { getMediaById, searchByName } = useSpotifyContext();
+
   const [media, setMedia] = useState(null);
   const [listResults, setListResults] = useState([]);
   const [mediaResults, setMediaResults] = useState([]);
@@ -17,10 +21,6 @@ export default function AddList(props) {
 
   const mediaInputRef = useRef(null);
   const listInputRef = useRef(null);
-
-  const { globalUser } = useAuthContext();
-  const { getListsByUserId, addToList, getListById } = useListContext();
-  const { getMediaById, searchByName } = useSpotifyContext();
 
   useEffect(() => {
     handleModal();

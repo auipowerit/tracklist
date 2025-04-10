@@ -14,16 +14,16 @@ import {
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list } = props;
 
+  const { globalUser } = useAuthContext();
+  const { checkIfListExists, createNewList, updateListDetails } =
+    useListContext();
+
   const [name, setName] = useState(list?.name || "");
 
   const [tags, setTags] = useState(list?.tags || []);
   const [isRanking, setIsRanking] = useState(list?.isRanking || false);
   const [isPrivate, setIsPrivate] = useState(list?.isPrivate || false);
   const [description, setDescription] = useState(list?.description || "");
-
-  const { globalUser } = useAuthContext();
-  const { checkIfListExists, createNewList, updateListDetails } =
-    useListContext();
 
   useEffect(() => {
     handleModal();
