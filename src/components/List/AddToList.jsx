@@ -90,7 +90,7 @@ export default function AddToList(props) {
       onSubmit={handleSubmit}
       className="m-auto flex flex-col items-center justify-center gap-6 py-6 text-xl"
     >
-      <p>Add "{mediaName}" to your list</p>
+      <p className="text-2xl font-bold">Add "{mediaName}" to your list</p>
 
       <div className="flex flex-col">
         <div className="flex w-full items-center justify-center gap-4">
@@ -120,15 +120,6 @@ export default function AddToList(props) {
                 })}
               </div>
             </div>
-
-            <button
-              type="button"
-              onClick={() => setNewList(true)}
-              className="flex items-center gap-2"
-            >
-              <FontAwesomeIcon icon={faPlus} />
-              <p>New List</p>
-            </button>
           </div>
         </div>
         <div
@@ -153,13 +144,24 @@ export default function AddToList(props) {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="m-auto flex w-fit items-center gap-2 rounded-md bg-green-700 px-4 py-2"
-      >
-        <FontAwesomeIcon icon={faPlus} />
-        <p>Add</p>
-      </button>
+      <div className="flex justify-center gap-4">
+        <button
+          type="submit"
+          className="m-auto flex w-fit items-center gap-2 rounded-md bg-green-700 px-4 py-2"
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p>Add</p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setNewList(true)}
+          className="flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2"
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p>New List</p>
+        </button>
+      </div>
     </form>
   );
 }

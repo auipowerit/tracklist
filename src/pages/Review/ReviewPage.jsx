@@ -6,7 +6,6 @@ import Loading from "src/components/Loading";
 import BackButton from "src/components/Buttons/BackButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaGradient from "src/components/Layout/MediaGradient";
 
 export default function ReviewPage() {
   const { getReviewById } = useReviewContext();
@@ -49,7 +48,6 @@ export default function ReviewPage() {
 
   return (
     <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-6">
-      <MediaGradient image={mediaData.image} />
       <BackButton />
       <Review review={review} mediaData={mediaData} />
       <CommentList review={review} />

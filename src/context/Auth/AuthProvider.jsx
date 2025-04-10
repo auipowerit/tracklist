@@ -8,7 +8,6 @@ import AuthContext from "./AuthContext";
 export default function AuthProvider({ children }) {
   const [loadingUser, setLoadingUser] = useState(true);
   const [globalUser, setGlobalUser] = useState(null);
-  const [globalData, setGlobalData] = useState(null);
 
   const useAuthMethods = useAuth();
 
@@ -17,14 +16,16 @@ export default function AuthProvider({ children }) {
       setLoadingUser(true);
 
       try {
-        setGlobalUser(user);
-        if (!user) return;
+        if (!user) {
+          setGlobalUser(null);
+          return;
+        }
 
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
-          setGlobalData({ id: user.uid, ...userDoc.data() });
+          setGlobalUser({ uid: user.uid, ...userDoc.data() });
         }
       } catch (error) {
         console.log(error);
@@ -36,9 +37,9 @@ export default function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  function updateGlobalDataLikes(id, category) {
-    // Filter globalData
-    const newLikes = globalData?.likes.map((like) => {
+  function updateGlobalUserLikes(id, category) {
+    // Filter globalUser
+    const newLikes = globalUser?.likes.map((like) => {
       if (like.category === category) {
         // Remove ID if not found in content, add if found
         const newContent = like.content.includes(id)
@@ -56,14 +57,13 @@ export default function AuthProvider({ children }) {
       newLikes.push({ category, content: [id] });
     }
 
-    setGlobalData({ ...globalData, likes: newLikes });
+    setGlobalUser({ ...globalUser, likes: newLikes });
   }
 
   const authMethods = {
     loadingUser,
     globalUser,
-    globalData,
-    updateGlobalDataLikes,
+    updateGlobalUserLikes,
     ...useAuthMethods,
   };
 

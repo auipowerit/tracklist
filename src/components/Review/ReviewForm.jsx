@@ -12,7 +12,7 @@ export default function ReviewForm(props) {
 
   const characterLimit = 500;
 
-  const { globalUser, globalData, getUserById } = useAuthContext();
+  const { globalUser, getUserById } = useAuthContext();
   const { defaultImg, searchByName, getMediaById } = useSpotifyContext();
   const { addReview, setReviews } = useReviewContext();
 
@@ -91,7 +91,7 @@ export default function ReviewForm(props) {
           id: newReview.id,
           ...newReview.data(),
           username,
-          profileUrl: globalData.profileURL,
+          profileUrl: globalUser.profileURL,
           media,
         },
         ...(prevReviews || []),
@@ -136,7 +136,9 @@ export default function ReviewForm(props) {
       onSubmit={handleSubmit}
       className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
     >
-      <p className="text-3xl font-bold">Add a review</p>
+      <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
+        Add a review
+      </p>
       <div className="flex flex-col">
         <div className="flex w-full items-center justify-center gap-6">
           <img
@@ -150,7 +152,7 @@ export default function ReviewForm(props) {
                 ref={inputRef}
                 placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
                 onKeyUp={handleSearch}
-                classes="bg-white text-black"
+                classes="border-1"
               />
 
               <select value={type} onChange={handleChange}>
@@ -198,7 +200,7 @@ export default function ReviewForm(props) {
               setContent(e.target.value);
             }}
             rows="5"
-            className="w-full bg-white p-2 text-black outline-none"
+            className="w-full border-1 p-2 outline-none"
           />
         </div>
       </div>
@@ -208,7 +210,7 @@ export default function ReviewForm(props) {
         className="flex items-center gap-1 rounded-md bg-green-700 p-3 text-2xl hover:text-gray-400"
       >
         <FontAwesomeIcon icon={faPlus} />
-        <p>Add Post</p>
+        <p>Post</p>
       </button>
     </form>
   );

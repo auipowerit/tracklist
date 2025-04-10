@@ -78,12 +78,16 @@ function ReviewContent({ review, showComment = true }) {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="h-full">
-      <div className="flex h-full w-full flex-col gap-1 overflow-auto">
+    <div className="flex h-full flex-col gap-2">
+      <div className="h-full w-full overflow-auto">
         <p className="text-lg break-words">
-          {showMore ? review.content : `${review.content.slice(0, 200)}...`}
+          {review.content.length > 150
+            ? showMore
+              ? review.content
+              : `${review.content.slice(0, 150)}...`
+            : review.content}
         </p>
-        {review.content.length > 200 && (
+        {review.content.length > 150 && (
           <p
             className="cursor-pointer py-2 text-sm font-semibold text-blue-400 hover:text-gray-400"
             onClick={() => setShowMore(!showMore)}
@@ -98,13 +102,8 @@ function ReviewContent({ review, showComment = true }) {
 }
 
 function ReviewButtons({ review, showComment = true }) {
-  const {
-    globalUser,
-    globalData,
-    updateGlobalDataLikes,
-    likeContent,
-    unlikeContent,
-  } = useAuthContext();
+  const { globalUser, updateGlobalUserLikes, likeContent, unlikeContent } =
+    useAuthContext();
   const { deleteComment } = useCommentContext();
   const {
     updateReviewState,
@@ -116,10 +115,10 @@ function ReviewButtons({ review, showComment = true }) {
   } = useReviewContext();
 
   async function handleLike(reviewId, userId) {
-    if (!globalData) return;
+    if (!globalUser) return;
 
     if (
-      globalData.likes
+      globalUser.likes
         .filter((like) => like.category === "review")
         .flatMap((like) => like.content)
         .includes(reviewId)
@@ -129,15 +128,15 @@ function ReviewButtons({ review, showComment = true }) {
       await likeContent(reviewId, "review", userId);
     }
 
-    updateGlobalDataLikes(reviewId, "review");
+    updateGlobalUserLikes(reviewId, "review");
 
     return await likeReview(reviewId, userId);
   }
 
   async function handleDislike(reviewId, userId) {
-    if (!globalData) return;
+    if (!globalUser) return;
 
-    if (globalData.likes.find((like) => like.contentId === reviewId)) {
+    if (globalUser.likes.find((like) => like.contentId === reviewId)) {
       await unlikeContent(reviewId, userId);
     }
 

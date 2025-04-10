@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
-  const { globalUser, globalData, logout } = useAuthContext();
+  const { globalUser, logout } = useAuthContext();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -99,7 +99,7 @@ export default function Navbar() {
     return (
       <ul className="flex flex-col gap-2 px-4 py-2">
         <li>
-          <p className="font-bold text-nowrap">Hi, {globalData?.username}</p>
+          <p className="font-bold text-nowrap">Hi, {globalUser?.username}</p>
         </li>
         {items.map(({ label, path, action }) => (
           <li

@@ -13,7 +13,7 @@ import MediaListCard from "src/components/Cards/MediaListCard";
 import { useListContext } from "src/context/List/ListContext";
 
 export default function AccountLikes() {
-  const { globalData } = useOutletContext();
+  const { globalUser } = useOutletContext();
   const [activeTab, setActiveTab] = useState("artist");
 
   const tabs = [
@@ -42,11 +42,11 @@ export default function AccountLikes() {
 
         <div className="p-4">
           {activeTab === "review" ? (
-            <LikedReviews likes={globalData?.likes} />
+            <LikedReviews likes={globalUser?.likes} />
           ) : activeTab === "list" ? (
-            <LikedLists likes={globalData?.likes} />
+            <LikedLists likes={globalUser?.likes} />
           ) : (
-            <LikedMedia likes={globalData?.likes} category={activeTab} />
+            <LikedMedia likes={globalUser?.likes} category={activeTab} />
           )}
         </div>
       </div>
@@ -147,7 +147,7 @@ function LikedReviews({ likes }) {
 }
 
 function LikedLists({ likes }) {
-  const { globalData } = useAuthContext();
+  const { globalUser } = useAuthContext();
   const { getListById } = useListContext();
   const { defaultImg, getMediaById } = useSpotifyContext();
 
@@ -161,7 +161,7 @@ function LikedLists({ likes }) {
           .filter((like) => like.category === "list")
           .flatMap((like) => like.content)
           .map(async (id) => {
-            const list = await getListById(id, globalData?.id);
+            const list = await getListById(id, globalUser?.uid);
             return list || null;
           }),
       );

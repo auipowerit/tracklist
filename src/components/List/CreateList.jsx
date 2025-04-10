@@ -129,7 +129,7 @@ export default function CreateList(props) {
       onSubmit={handleSubmit}
       className="m-auto flex flex-col items-center justify-center gap-8 py-6 text-xl"
     >
-      <p className="w-full border-b-1 border-white pb-2 text-2xl font-bold">
+      <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
         {list ? "Edit" : "Create"} List
       </p>
       <div className="flex h-full justify-center gap-6">

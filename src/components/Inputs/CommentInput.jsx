@@ -4,7 +4,7 @@ import { useCommentContext } from "src/context/Comment/CommentContext";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function CommentInput({ review, setComments }) {
-  const { globalUser, globalData } = useAuthContext();
+  const { globalUser } = useAuthContext();
   const { addComment } = useCommentContext();
   const { updateReviewState } = useReviewContext();
 
@@ -34,8 +34,8 @@ export default function CommentInput({ review, setComments }) {
       {
         id: newComment.id,
         ...newComment.data(),
-        username: globalData?.username || "",
-        profileUrl: globalData?.profileUrl || "",
+        username: globalUser?.username || "",
+        profileUrl: globalUser?.profileUrl || "",
       },
       ...(prevData || []),
     ]);

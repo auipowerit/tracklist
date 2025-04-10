@@ -1,25 +1,19 @@
 import { memo, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import ListButton from "src/components/Buttons/ListButton";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-import LikeMediaButton from "src/components/Buttons/LikeMediaButton";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaBanner from "../../MediaBanner";
+import MediaBanner from "../../compontents/MediaBanner";
 import Discography from "./Discography";
 
 function ArtistProfile() {
   const context = useOutletContext();
   const { artist } = context ?? {};
 
-  const { globalData } = useAuthContext();
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState([]);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
 
   async function loadMedia(start, category) {
     if (category === "album") {
@@ -44,13 +38,6 @@ function ArtistProfile() {
         console.log(error);
       }
     };
-
-    setIsLiked(
-      globalData?.likes
-        .filter((like) => like.category === "artist")
-        .flatMap((like) => like.content)
-        .includes(artist?.id),
-    );
     getArtistData();
   }, []);
 
@@ -62,24 +49,8 @@ function ArtistProfile() {
         image={artist?.images[0].url}
         name={artist?.name}
         subtitle={`${artist?.followers.total.toLocaleString()} followers`}
-      />
-
-      <ListButton
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        media={{ mediaId: artist?.id, mediaName: artist?.name }}
         category={"artist"}
       />
-
-      {globalData && (
-        <LikeMediaButton
-          user={globalData}
-          isLiked={isLiked}
-          setIsLiked={setIsLiked}
-          id={artist?.id}
-          category={"artist"}
-        />
-      )}
 
       <Discography
         media={albums}

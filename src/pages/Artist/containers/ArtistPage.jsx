@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaReviews from "./MediaReviews";
-import MediaGradient from "src/components/Layout/MediaGradient";
+import MediaReviews from "../compontents/MediaReviews";
+import MediaGradient from "src/components/MediaGradient";
 
 export default function ArtistPage() {
   const { getMediaById } = useSpotifyContext();
@@ -70,7 +70,7 @@ export default function ArtistPage() {
         <div className="px-6">{!isLoading && <Outlet context={media} />}</div>
       </div>
 
-      <div className="h-full w-full flex-1 bg-[rgba(20,20,20,0.6)]">
+      <div className="h-full w-full flex-1 bg-black/50">
         <MediaReviews
           key={media?.id}
           mediaId={media?.id}

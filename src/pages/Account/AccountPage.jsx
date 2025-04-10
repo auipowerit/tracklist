@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 
 export default function AccountPage() {
-  const { loadingUser, globalUser, globalData, logout } = useAuthContext();
+  const { loadingUser, globalUser, logout } = useAuthContext();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,19 +27,19 @@ export default function AccountPage() {
   useEffect(() => {
     if (loadingUser) return;
 
-    if (!globalData || !globalUser) {
+    if (!globalUser) {
       navigate("/authenticate", { replace: true });
     }
-  }, [globalUser, globalData, loadingUser]);
+  }, [globalUser, loadingUser]);
 
   const children = [
-    { id: "reviews", LoadBundleTask: "Reviews" },
-    { id: "lists", LoadBundleTask: "Lists" },
-    { id: "likes", LoadBundleTask: "Likes" },
-    { id: "friends", LoadBundleTask: "Friends" },
+    { id: "reviews", title: "Reviews" },
+    { id: "lists", title: "Lists" },
+    { id: "likes", title: "Likes" },
+    { id: "friends", title: "Friends" },
   ];
 
-  if (loadingUser) {
+  if (loadingUser || !globalUser) {
     return <Loading />;
   }
 
@@ -51,10 +51,10 @@ export default function AccountPage() {
           className={`flex items-center gap-2 hover:text-white ${isHomePage && "text-white"}`}
         >
           <img
-            src={globalData.profileUrl}
+            src={globalUser?.profileUrl}
             className="h-8 w-8 rounded-full object-cover"
           />
-          <p>{globalData?.username}</p>
+          <p>{globalUser?.username}</p>
         </Link>
 
         <div className="flex items-center gap-4">
@@ -64,7 +64,7 @@ export default function AccountPage() {
               to={child.id}
               className={`flex items-center gap-2 hover:text-white ${isActive(child.id) && "text-white"}`}
             >
-              {child.LoadBundleTask}
+              {child.title}
             </Link>
           ))}
         </div>
@@ -78,7 +78,7 @@ export default function AccountPage() {
       </div>
 
       <div className="m-auto my-6 w-3/5">
-        <Outlet context={{ globalUser, globalData }} />
+        <Outlet context={{ globalUser, globalUser }} />
       </div>
     </div>
   );

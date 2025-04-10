@@ -6,21 +6,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountForm({ isModalOpen, setIsModalOpen }) {
-  const { globalData, updateUserDetails } = useAuthContext();
+  const { globalUser, updateUserDetails } = useAuthContext();
   const { redirectToSpotifyAuth } = useSpotifyContext();
 
   const nameLimit = 25;
   const bioLimit = 100;
 
-  const [name, setName] = useState(globalData?.displayname || "");
-  const [bio, setBio] = useState(globalData?.bio || "");
+  const [name, setName] = useState(globalUser?.displayname || "");
+  const [bio, setBio] = useState(globalUser?.bio || "");
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!globalData || name === "" || bio === "") return;
+    if (!globalUser || name === "" || bio === "") return;
 
-    await updateUserDetails(globalData.id, name, bio);
+    await updateUserDetails(globalUser.uid, name, bio);
 
     setIsModalOpen(false);
     window.location.reload();
@@ -35,11 +35,11 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   useEffect(() => {
     if (!isModalOpen) resetValues();
 
-    if (globalData) {
-      setName(globalData.displayname);
-      setBio(globalData.bio);
+    if (globalUser) {
+      setName(globalUser.displayname);
+      setBio(globalUser.bio);
     }
-  }, [isModalOpen, globalData]);
+  }, [isModalOpen, globalUser]);
 
   return (
     <form
@@ -52,7 +52,7 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
       <div className="flex gap-6">
         <div className="flex flex-col items-center gap-4">
           <img
-            src={globalData?.profileUrl}
+            src={globalUser?.profileUrl}
             className="h-48 w-48 rounded-full"
           />
           <button
@@ -61,7 +61,7 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
             className="flex items-center justify-center gap-2 rounded-md border-2 border-white px-3 py-2 hover:text-gray-400"
           >
             <FaSpotify />
-            <p>{globalData.spotifyUrl ? "Resync" : "Sync"}</p>
+            <p>{globalUser.spotifyUrl ? "Resync" : "Sync"}</p>
           </button>
         </div>
 
@@ -91,7 +91,7 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
           </div>
           <div className="flex h-full flex-col gap-1">
             <div className="flex items-center justify-between">
-              <label htmlFor="bio">bio</label>
+              <label htmlFor="bio">Bio</label>
               <p
                 className={`text-sm ${bio.length >= bioLimit ? "text-red-600" : "text-gray-400"}`}
               >

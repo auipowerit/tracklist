@@ -8,9 +8,10 @@ import { faCalendar, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 import AccountForm from "./AccountForm";
+import { Tooltip } from "react-tooltip";
 
 export default function AccountProfile() {
-  const { globalData } = useOutletContext();
+  const { globalUser } = useOutletContext();
 
   const params = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function AccountProfile() {
         localStorage.setItem("profile", JSON.stringify(profile));
 
         await updateSpotifyInfo(
-          globalData.id,
+          globalUser.uid,
           profile?.images?.[0].url,
           profile?.external_urls?.spotify,
         );
@@ -62,40 +63,55 @@ export default function AccountProfile() {
       </Modal>
 
       <div className="flex items-center gap-4">
-        <Link
-          to={globalData.spotifyUrl || "#"}
-          target={globalData.spotifyUrl ? "_blank" : "_self"}
-        >
+        {globalUser.spotifyUrl ? (
+          <Link
+            to={globalUser.spotifyUrl}
+            target="_blank"
+            data-tooltip-id="profile-tooltip"
+            data-tooltip-content="Open Spotify Profile"
+          >
+            <img
+              src={globalUser.profileUrl}
+              className="h-36 w-36 rounded-full object-cover"
+            />
+            <Tooltip
+              id="profile-tooltip"
+              place="top"
+              type="dark"
+              effect="float"
+            />
+          </Link>
+        ) : (
           <img
-            src={globalData.profileUrl}
+            src={globalUser.profileUrl}
             className="h-36 w-36 rounded-full object-cover"
           />
-        </Link>
+        )}
 
         <form className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <p className="text-xl font-bold">{globalData.displayname}</p>
-            <p className="text-gray-400">@{globalData.username}</p>
+            <p className="text-xl font-bold">{globalUser.displayname}</p>
+            <p className="text-gray-400">@{globalUser.username}</p>
           </div>
 
-          <p>{globalData.bio}</p>
+          <p>{globalUser.bio}</p>
 
           <div className="flex items-center gap-1 text-gray-400">
             <FontAwesomeIcon icon={faCalendar} className="text-sm" />
-            <p>Joined on {formatDateMDYLong(globalData.createdAt.toDate())}</p>
+            <p>Joined on {formatDateMDYLong(globalUser.createdAt.toDate())}</p>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <p className="text-gray-400">
                 <span className="font-bold text-white">
-                  {globalData.followers.length}
+                  {globalUser.followers.length}
                 </span>{" "}
                 followers
               </p>
               <p className="text-gray-400">
                 <span className="font-bold text-white">
-                  {globalData.followers.length}
+                  {globalUser.followers.length}
                 </span>{" "}
                 following
               </p>

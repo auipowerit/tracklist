@@ -4,15 +4,10 @@ import SortMusic from "src/components/Sort/SortMusic";
 import MediaCard from "src/components/Cards/MediaCard";
 import { useState } from "react";
 
-export default function Discography({
-  media,
-  setMedia,
-  loadMedia,
-  category,
-  isMore,
-}) {
-  const title = `${category.charAt(0).toUpperCase()}${category.slice(1)}s`;
+export default function Discography(props) {
+  const { media, setMedia, loadMedia, category, isMore } = props;
 
+  const title = `${category.charAt(0).toUpperCase()}${category.slice(1)}s`;
   const [page, setPage] = useState(0);
 
   function loadMore() {

@@ -1,7 +1,7 @@
 export { default as HomePage } from "./Home/HomePage";
 export { default as AuthPage } from "./Auth/AuthPage";
 export { default as SearchPage } from "./Search/SearchPage";
-export { default as ArtistPage } from "./Artist/ArtistPage";
+export { default as ArtistPage } from "./Artist/containers/ArtistPage";
 export { default as AccountPage } from "./Account/AccountPage";
 export { default as AccountProfile } from "./Account/Outlets/Profile/AccountProfile";
 export { default as AccountReviews } from "./Account/Outlets/Reviews/AccountReviews";
@@ -11,6 +11,6 @@ export { default as AccountLikes } from "./Account/Outlets/Likes/AccountLikes";
 export { default as AccountFriends } from "./Account/Outlets/Friends/AccountFriends";
 export { default as ErrorPage } from "./Error/ErrorPage";
 export { default as ReviewPage } from "./Review/ReviewPage";
-export { default as ArtistProfile } from "./Artist/Outlets/Artist/ArtistProfile";
-export { default as AlbumProfile } from "./Artist/Outlets/Album/AlbumProfile";
-export { default as TrackProfile } from "./Artist/Outlets/Track/TrackProfile";
+export { default as ArtistProfile } from "./Artist/features/Artist/ArtistProfile";
+export { default as AlbumProfile } from "./Artist/features/Album/AlbumProfile";
+export { default as TrackProfile } from "./Artist/features/Track/TrackProfile";
