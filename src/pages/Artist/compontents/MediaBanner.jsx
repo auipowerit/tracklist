@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import RatingBar from "src/components/Review/RatingBar";
 import PostButton from "src/components/Buttons/PostButton";
@@ -10,59 +10,86 @@ import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import LikeMediaButton from "src/pages/Artist/compontents/LikeMediaButton";
 import ShareMediaButton from "./ShareMediaButton";
 
-export default function MediaBanner(props) {
-  const { mediaId, spotifyURL, image, name, subtitle, category } = props;
-
+function MediaBanner({ media, category }) {
   const { getAvgRating } = useReviewContext();
-  const { defaultImg } = useSpotifyContext();
+  const { getMediaLinks } = useSpotifyContext();
 
-  const [rating, setRating] = useState({
-    avgRating: 0,
-    count: 0,
-  });
+  const [rating, setRating] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { avgRating, count } = (await getAvgRating(mediaId)) || {};
-      setRating({ avgRating, count });
-    };
-
-    fetchData();
+    if (!media) return;
+    fetchRating();
   }, []);
+
+  async function fetchRating() {
+    const { avgRating, count } = (await getAvgRating(media.id)) || {};
+    setRating({ avgRating, count });
+
+    const fetchedData = getMediaLinks(media);
+    setData(fetchedData);
+  }
+
+  if (!data) return;
 
   return (
     <div className="flex h-64 items-center text-center shadow-md shadow-black/50">
-      <div
-        onClick={() => window.open(spotifyURL)}
-        data-tooltip-id="media-tooltip"
-        data-tooltip-content="Open in Spotify"
-        className="cursor-pointer shadow-black/50 transition-all duration-300 hover:shadow-xl hover:shadow-black/75"
-      >
-        <img src={image || defaultImg} className="h-64 w-64" />
-        <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
-      </div>
-      <div className="flex h-full flex-col items-center justify-between bg-black/40 p-2">
-        <div className="m-auto flex w-80 flex-col items-center gap-1">
-          <p className="text-4xl font-bold">{name}</p>
-          <p className="text-gray-300">{subtitle}</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <RatingBar mediaId={mediaId} />
-            <div className="mt-auto flex items-center justify-center gap-1">
-              <p>{rating.avgRating?.toFixed(1) || ""}</p>
-              <ReviewStars rating={rating.avgRating || 0} />
-              <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>
-            </div>
-            <MediaButtons mediaId={mediaId} name={name} category={category} />
-          </div>
+      <SpotifyImage
+        image={data.image}
+        spotifyURL={media.external_urls.spotify}
+      />
+
+      <div className="flex h-full w-fit flex-col items-center justify-between bg-black/40 p-4">
+        <Title name={data.title} subtitle={data.subtitle} />
+
+        <div className="flex flex-col gap-4">
+          <Rating mediaId={media.id} rating={rating} />
+          <Buttons mediaId={media.id} name={data.title} category={category} />
         </div>
       </div>
     </div>
   );
 }
 
-function MediaButtons({ mediaId, name, category }) {
+function SpotifyImage({ image, spotifyURL }) {
+  const { defaultImg } = useSpotifyContext();
+
+  return (
+    <div
+      onClick={() => window.open(spotifyURL)}
+      data-tooltip-id="media-tooltip"
+      data-tooltip-content="Open in Spotify"
+      className="cursor-pointer shadow-black/50 transition-all duration-300 hover:shadow-xl hover:shadow-black/75"
+    >
+      <img src={image || defaultImg} className="h-64 w-64" />
+      <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
+    </div>
+  );
+}
+
+function Title({ name, subtitle }) {
+  return (
+    <div className="m-auto flex max-w-150 min-w-80 flex-col items-center gap-1">
+      <p className="text-4xl font-bold">{name}</p>
+      <p className="text-gray-300">{subtitle}</p>
+    </div>
+  );
+}
+
+function Rating({ mediaId, rating }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <RatingBar mediaId={mediaId} />
+      <div className="mt-auto flex items-center justify-center gap-1">
+        <p>{rating.avgRating?.toFixed(1) || ""}</p>
+        <ReviewStars rating={rating.avgRating || 0} />
+        <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>
+      </div>
+    </div>
+  );
+}
+
+function Buttons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
 
   const [isListModalOpen, setIsListModalOpen] = useState(false);
@@ -77,6 +104,7 @@ function MediaButtons({ mediaId, name, category }) {
         .includes(mediaId),
     );
   }, []);
+
   return (
     <div className="flex items-center gap-6 text-2xl">
       <LikeMediaButton
@@ -104,3 +132,5 @@ function MediaButtons({ mediaId, name, category }) {
     </div>
   );
 }
+
+export default memo(MediaBanner);

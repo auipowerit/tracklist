@@ -23,7 +23,7 @@ export default function Navigation({ artist, album, track, category }) {
             <>
               <span>&rsaquo;</span>
               <NavLink
-                to={`/artists/${artist.id}/albums/${album.id}/tracks/${track.id}`}
+                link={`/artists/${artist.id}/albums/${album.id}/tracks/${track.id}`}
                 category={category}
                 label="track"
                 title={track.name}

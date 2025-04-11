@@ -47,6 +47,7 @@ export default function ListButton(props) {
           onClick={handleClick}
           className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
           data-tooltip-content="Add to list"
+          data-tooltip-id="list-tooltip"
         >
           <FontAwesomeIcon icon={faList} />
           <Tooltip id="list-tooltip" place="top" type="dark" effect="float" />

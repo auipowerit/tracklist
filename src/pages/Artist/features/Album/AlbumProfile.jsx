@@ -1,37 +1,50 @@
-import { memo, useEffect, useMemo, useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import { formatDateMDYLong } from "src/utils/date";
-import TrackList from "./TrackList";
-import MediaBanner from "../../compontents/MediaBanner";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import { ReviewStars } from "src/components/Review/ReviewContent";
+import { useReviewContext } from "src/context/Review/ReviewContext";
+import MediaBanner from "../../compontents/MediaBanner";
 
-function AlbumProfile() {
+export default function AlbumProfile() {
   const context = useOutletContext();
-  const { artist, album } = context ?? {};
+  const { artist, album } = context;
 
   const tracks = useMemo(() => album?.tracks.items, [album]);
 
   return (
-    <div className="flex min-h-screen flex-2 flex-col gap-8 p-10">
-      <div className="m-auto flex w-fit flex-col items-center justify-center gap-8">
-        <MediaBanner
-          mediaId={album?.id}
-          spotifyURL={album?.external_urls.spotify}
-          image={album?.images[0].url}
-          name={album?.name}
-          subtitle={`${album?.tracks.items.length > 0 && album?.tracks.items.length} songs · 
-              ${formatDateMDYLong(album?.release_date)}`}
-          category={"album"}
-        />
-      </div>
-
+    <div className="m-auto flex min-h-screen w-full flex-2 flex-col items-center gap-8 p-10">
+      <MediaBanner media={album} category={"album"} />
       <TrackList artistId={artist?.id} albumId={album?.id} tracks={tracks} />
     </div>
   );
 }
-export default memo(AlbumProfile);
 
-function TrackCard({ number, track }) {
+function TrackList({ artistId, albumId, tracks }) {
+  return (
+    <div className="flex flex-col items-center">
+      <p className="text-4xl font-bold">Tracks</p>
+
+      <div className="flex min-h-80 flex-2 items-start justify-center gap-8">
+        {tracks && tracks.length > 0 && (
+          <ul className="grid grid-cols-2 gap-4 p-4">
+            {tracks.map((track) => {
+              return (
+                <li key={track.id}>
+                  <TrackCard
+                    track={track}
+                    artistId={artistId}
+                    albumId={albumId}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TrackCard({ track, artistId, albumId }) {
   const { getAvgRating } = useReviewContext();
   const [rating, setRating] = useState({});
 
@@ -46,11 +59,14 @@ function TrackCard({ number, track }) {
   }, []);
 
   return (
-    <div className="flex w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110">
-      {number}. {track.name}
+    <Link
+      to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
+      className="flex w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110"
+    >
+      {track.track_number}. {track.name}
       <div className="m-auto">
         <ReviewStars rating={rating?.avgRating || 0} />
       </div>
-    </div>
+    </Link>
   );
 }
