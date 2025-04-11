@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
-import CommentCard from "./components/CommentCard";
+import CommentCard from "./CommentCard";
 import SortComments from "src/components/Sort/SortComments";
 import CommentInput from "src/components/Inputs/CommentInput";
 import { useCommentContext } from "src/context/Comment/CommentContext";

@@ -1,12 +1,12 @@
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaBanner from "../../compontents/MediaBanner";
 import Discography from "./Discography";
 
-function ArtistProfile() {
+export default function ArtistProfile() {
   const context = useOutletContext();
-  const { artist } = context ?? {};
+  const { artist } = context;
 
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
@@ -15,31 +15,35 @@ function ArtistProfile() {
   const [singles, setSingles] = useState([]);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
 
-  async function loadMedia(start, category) {
-    if (category === "album") {
-      const fetchedAlbums = await getArtistAlbums(artist?.id, start, 7);
-
-      setIsMoreAlbums(fetchedAlbums.length === 7);
-      setAlbums([...albums, ...fetchedAlbums.splice(0, 6)]);
-    } else if (category === "track") {
-      const fetchedSingles = await getArtistSingles(artist?.id, start, 7);
-
-      setIsMoreSingles(fetchedSingles.length === 7);
-      setSingles([...singles, ...fetchedSingles.splice(0, 6)]);
-    }
-  }
-
   useEffect(() => {
     const getArtistData = async () => {
       try {
-        await loadMedia(0, "album");
-        await loadMedia(0, "track");
+        await loadAlbums(0);
+        await loadSingles(0);
       } catch (error) {
         console.log(error);
       }
     };
     getArtistData();
   }, []);
+
+  async function loadAlbums(start) {
+    const fetchedAlbums = await getArtistAlbums(artist?.id, start, 7);
+
+    setIsMoreAlbums(fetchedAlbums.length === 7);
+    setAlbums([...albums, ...fetchedAlbums.splice(0, 6)]);
+  }
+
+  async function loadSingles(start) {
+    const fetchedSingles = await getArtistSingles(artist?.id, start, 7);
+
+    setIsMoreSingles(fetchedSingles.length === 7);
+    setSingles([...singles, ...fetchedSingles.splice(0, 6)]);
+  }
+
+  if (!albums && !singles) {
+    return;
+  }
 
   return (
     <div className="m-auto flex min-h-screen w-full flex-2 flex-col items-center gap-8 p-10">
@@ -56,7 +60,8 @@ function ArtistProfile() {
         media={albums}
         setMedia={setAlbums}
         category={"album"}
-        loadMedia={loadMedia}
+        title={"Albums"}
+        loadMedia={loadAlbums}
         isMore={isMoreAlbums}
       />
 
@@ -64,11 +69,10 @@ function ArtistProfile() {
         media={singles}
         setMedia={setSingles}
         category={"track"}
-        loadMedia={loadMedia}
+        title={"Singles"}
+        loadMedia={loadSingles}
         isMore={isMoreSingles}
       />
     </div>
   );
 }
-
-export default memo(ArtistProfile);

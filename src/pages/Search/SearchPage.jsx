@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SearchMedia from "./SearchMedia";
 import Tabs from "src/components/Tabs";
+import SearchMedia from "./components/SearchMedia";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");
@@ -9,7 +9,7 @@ export default function SearchPage() {
   const tabs = [
     { id: "artists", label: "Artists", category: "artist" },
     { id: "albums", label: "Albums", category: "album" },
-    { id: "tracks", label: "Songs", category: "track" },
+    { id: "tracks", label: "Tracks", category: "track" },
     { id: "users", label: "Users", category: "user" },
   ];
 

@@ -5,14 +5,13 @@ import MediaCard from "src/components/Cards/MediaCard";
 import { useState } from "react";
 
 export default function Discography(props) {
-  const { media, setMedia, loadMedia, category, isMore } = props;
+  const { media, setMedia, loadMedia, category, title, isMore } = props;
 
-  const title = `${category.charAt(0).toUpperCase()}${category.slice(1)}s`;
   const [page, setPage] = useState(0);
 
   function loadMore() {
     const start = (page + 1) * 6;
-    loadMedia(start, category);
+    loadMedia(start);
     setPage(page + 1);
   }
 

@@ -5,7 +5,7 @@ import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-export default function AddList(props) {
+export default function AddToList(props) {
   const { isModalOpen, setIsModalOpen, mediaId, listId, category } = props;
 
   const { globalUser } = useAuthContext();
@@ -32,6 +32,8 @@ export default function AddList(props) {
   }
 
   async function handleData() {
+    if (!globalUser) return;
+
     if (listId) {
       const fetchedList = await getListById(listId, globalUser.uid);
       setCurrentLists([fetchedList.name]);

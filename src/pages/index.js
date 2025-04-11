@@ -1,7 +1,7 @@
 export { default as HomePage } from "./Home/HomePage";
 export { default as AuthPage } from "./Auth/AuthPage";
 export { default as SearchPage } from "./Search/SearchPage";
-export { default as ArtistPage } from "./Artist/containers/ArtistPage";
+export { default as ArtistPage } from "./Artist/ArtistPage";
 export { default as AccountPage } from "./Account/AccountPage";
 export { default as AccountProfile } from "./Account/features/Profile/AccountProfile";
 export { default as AccountReviews } from "./Account/features/Reviews/AccountReviews";

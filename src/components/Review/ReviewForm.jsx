@@ -35,6 +35,7 @@ export default function ReviewForm(props) {
 
     const fetchedMedia = await getMediaById(mediaId, category);
 
+    if (!inputRef.current) return;
     inputRef.current.value = fetchedMedia.name;
     setType(category);
     setMedia(fetchedMedia);

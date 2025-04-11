@@ -15,7 +15,7 @@ export default function AccountLikes() {
   const tabs = [
     { id: "artist", label: "Artists" },
     { id: "album", label: "Albums" },
-    { id: "track", label: "Songs" },
+    { id: "track", label: "Tracks" },
     { id: "review", label: "Reviews" },
     { id: "list", label: "Lists" },
   ];

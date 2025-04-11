@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { getColors } from "src/utils/colors";
 
-export default function MediaGradient({ image }) {
+function MediaGradient({ image }) {
   const [colors, setColors] = useState({ light: "#ffffff", dark: "#000000" });
 
   useEffect(() => {
@@ -10,6 +10,7 @@ export default function MediaGradient({ image }) {
       const colors = await getColors(image);
       setColors(colors);
     };
+
     fetchColors();
   }, [image]);
 
@@ -29,3 +30,5 @@ export default function MediaGradient({ image }) {
     />
   );
 }
+
+export default memo(MediaGradient);

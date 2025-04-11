@@ -4,7 +4,7 @@ import Loading from "src/components/Loading";
 import BackButton from "src/components/Buttons/BackButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { ReviewButtons } from "src/components/Review/ReviewContent";
-import CommentList from "./CommentList";
+import CommentList from "./components/CommentList";
 import MediaDetails from "./components/MediaDetails";
 import ReviewDetails from "./components/ReviewDetails";
 
