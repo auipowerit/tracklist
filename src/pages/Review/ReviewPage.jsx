@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Review from "./Review";
-import CommentList from "./CommentList";
 import Loading from "src/components/Loading";
 import BackButton from "src/components/Buttons/BackButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
-import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import { ReviewButtons } from "src/components/Review/ReviewContent";
+import CommentList from "./CommentList";
+import MediaDetails from "./components/MediaDetails";
+import ReviewDetails from "./components/ReviewDetails";
 
 export default function ReviewPage() {
-  const { getReviewById } = useReviewContext();
-  const { getMediaLinks } = useSpotifyContext();
-
-  const navigate = useNavigate();
-
   const params = useParams();
   const reviewId = params?.reviewId;
 
+  const navigate = useNavigate();
+
+  const { getReviewById } = useReviewContext();
+
   const [isLoading, setIsLoading] = useState(true);
   const [review, setReview] = useState({});
-  const [mediaData, setMediaData] = useState({});
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -27,9 +26,6 @@ export default function ReviewPage() {
       try {
         const fetchedReview = await getReviewById(reviewId);
         setReview(fetchedReview);
-
-        const fetchedMedia = getMediaLinks(fetchedReview?.media || {});
-        setMediaData(fetchedMedia);
       } catch (error) {
         console.log(error);
       } finally {
@@ -49,8 +45,21 @@ export default function ReviewPage() {
   return (
     <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-6">
       <BackButton />
-      <Review review={review} mediaData={mediaData} />
+      <Review review={review} />
       <CommentList review={review} />
+    </div>
+  );
+}
+
+function Review({ review }) {
+  return (
+    <div className="flex w-full items-center gap-4 border-b-1 border-white pb-4">
+      <MediaDetails review={review} />
+
+      <div className="flex h-full w-full flex-col justify-between overflow-auto">
+        <ReviewDetails review={review} />
+        <ReviewButtons review={review} onPage={true} />
+      </div>
     </div>
   );
 }

@@ -3,25 +3,24 @@ import Loading from "src/components/Loading";
 import ProfileCard from "src/components/Cards/ProfileCard";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 
-export default function FriendsList(props) {
-  const { userId, category } = props;
-
-  const { getFollowingById, getFollowersById, getUserById } = useAuthContext();
+export default function FriendsList(activeTab) {
+  const { globalUser, getFollowingById, getFollowersById, getUserById } =
+    useAuthContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
     const fetchFriends = async () => {
-      if (!userId) return;
+      if (!globalUser) return;
 
       setIsLoading(true);
 
       try {
         const fetchedUsers =
-          category === "following"
-            ? await getFollowingById(userId)
-            : await getFollowersById(userId);
+          activeTab === "following"
+            ? await getFollowingById(globalUser.uid)
+            : await getFollowersById(globalUser.uid);
 
         const fetchedUsersDetails = await Promise.all(
           fetchedUsers?.map(async (id) => {
@@ -42,7 +41,7 @@ export default function FriendsList(props) {
     };
 
     fetchFriends();
-  }, [userId, category]);
+  }, [globalUser, activeTab]);
 
   if (isLoading) {
     return <Loading />;
@@ -59,7 +58,7 @@ export default function FriendsList(props) {
           </ul>
         ) : (
           <p className="m-20 text-center text-2xl text-gray-300 italic">
-            {category === "following"
+            {activeTab === "following"
               ? "You're not following anyone yet."
               : "You don't have any followers yet."}
           </p>

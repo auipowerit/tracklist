@@ -52,6 +52,10 @@ export default function CommentInput({ review, setComments }) {
     closeComment();
   }
 
+  if (!globalUser) {
+    return;
+  }
+
   return (
     <form className="`flex gap-1" onSubmit={handleSubmit}>
       <input

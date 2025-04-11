@@ -122,7 +122,7 @@ export function useSpotify() {
       );
 
       if (response.status === 400) {
-        throw new Error("No media found!");
+        return null;
       }
 
       const media = await response.json();
@@ -135,13 +135,15 @@ export function useSpotify() {
         image,
       };
 
-      return formattedMedia || [];
+      return formattedMedia || null;
     } catch (error) {
       console.error(error);
     }
   }
 
   function getMediaLinks(media) {
+    if (!media) return {};
+
     const artist = media?.artists?.[0] || media || {};
     const artistURL = `/artists/${artist?.id}`;
 

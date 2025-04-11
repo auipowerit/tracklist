@@ -1,11 +1,26 @@
+import { useEffect, useState } from "react";
+import Tabs from "src/components/Tabs";
 import Loading from "src/components/Loading";
-import Feed from "./Feed";
+import PostButton from "src/components/Buttons/PostButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useReviewContext } from "src/context/Review/ReviewContext";
+import FeedResults from "./components/FeedResults";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();
-  const { reviews } = useReviewContext();
+  const { reviews, getPopularReviews } = useReviewContext();
+
+  const [popularReviews, setPopularReviews] = useState([]);
+  const [activeTab, setActiveTab] = useState("newest");
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const fetchedReviews = await getPopularReviews();
+      setPopularReviews(fetchedReviews);
+    };
+
+    fetchReviews();
+  }, [activeTab]);
 
   if (!globalUser) {
     return (
@@ -22,5 +37,31 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  return <Feed reviews={reviews} />;
+  return (
+    <div className="m-auto mt-6 flex h-screen w-3/5 flex-col gap-4">
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <FeedResults
+        results={activeTab === "newest" ? reviews : popularReviews}
+      />
+    </div>
+  );
+}
+
+function Header({ activeTab, setActiveTab }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const tabs = [
+    { id: "newest", label: "Newest", category: "newest" },
+    { id: "popular", label: "For You", category: "popular" },
+  ];
+
+  return (
+    <div className="flex items-center justify-center">
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      <div className="ml-auto">
+        <PostButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      </div>
+    </div>
+  );
 }

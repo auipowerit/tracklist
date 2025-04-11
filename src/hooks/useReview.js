@@ -99,6 +99,8 @@ export function useReview() {
             reviewDoc.data().category,
           ),
         };
+      } else {
+        return null;
       }
     } catch (error) {
       console.error(error.message);
