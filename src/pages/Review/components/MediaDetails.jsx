@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function MediaDetails({ review }) {
-  const { getMediaLinks, defaultImg } = useSpotifyContext();
+  const { getMediaLinks, DEFAULT_IMG } = useSpotifyContext();
 
   const [mediaData, setMediaData] = useState({});
 
@@ -18,7 +18,10 @@ export default function MediaDetails({ review }) {
 
   return (
     <div className="flex min-w-64 flex-col items-center justify-center border-1 border-gray-400 p-2 hover:border-white">
-      <MediaImage image={mediaData.image || defaultImg} link={mediaData.link} />
+      <MediaImage
+        image={mediaData.image || DEFAULT_IMG}
+        link={mediaData.link}
+      />
       <MediaInfo mediaData={mediaData} />
     </div>
   );

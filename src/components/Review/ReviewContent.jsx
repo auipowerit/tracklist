@@ -21,7 +21,7 @@ function ReviewUser({ review, showIcon = true }) {
           />
         )}
         <Link
-          to={`/users/${review.userId}`}
+          to={`/users/${review.username}`}
           className="font-semibold hover:text-gray-300"
         >
           {review.username}

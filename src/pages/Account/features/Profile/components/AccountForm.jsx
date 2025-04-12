@@ -84,7 +84,7 @@ function FormImage({ globalUser }) {
         className="flex items-center justify-center gap-2 rounded-md border-2 border-white px-3 py-2 hover:text-gray-400"
       >
         <FaSpotify />
-        <p>{globalUser.spotifyUrl ? "Resync" : "Sync"}</p>
+        <p>{globalUser?.spotifyUrl ? "Resync" : "Sync"}</p>
       </button>
     </div>
   );

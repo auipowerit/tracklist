@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ListCard from "src/components/Cards/ListCard";
-import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useListContext } from "src/context/List/ListContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
-export default function LikedLists({ globalUser }) {
+export default function LikedLists({ user }) {
   const { getListById } = useListContext();
-  const { defaultImg, getMediaById } = useSpotifyContext();
+  const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
 
   const [lists, setLists] = useState(null);
   const [images, setImages] = useState([]);
@@ -15,11 +14,11 @@ export default function LikedLists({ globalUser }) {
   useEffect(() => {
     const fetchData = async () => {
       const fetchedLists = await Promise.all(
-        globalUser?.likes
+        user?.likes
           .filter((like) => like.category === "list")
           .flatMap((like) => like.content)
           .map(async (id) => {
-            const list = await getListById(id, globalUser?.uid);
+            const list = await getListById(id, user?.uid);
             return list;
           }),
       ).then((values) => values.filter(Boolean));
@@ -32,14 +31,14 @@ export default function LikedLists({ globalUser }) {
 
       const fetchedImages = await Promise.all(
         fetchedLists.map(async (list) => {
-          if (list.media.length === 0) return defaultImg;
+          if (list.media.length === 0) return DEFAULT_IMG;
 
           const fetchedMedia = await getMediaById(
             list.media[0].id,
             list.media[0].category,
           );
 
-          return fetchedMedia.image || defaultImg;
+          return fetchedMedia.image || DEFAULT_IMG;
         }),
       );
 
@@ -48,7 +47,7 @@ export default function LikedLists({ globalUser }) {
     };
 
     fetchData();
-  }, [globalUser]);
+  }, [user]);
 
   return (
     <div className="w-full">
@@ -56,9 +55,12 @@ export default function LikedLists({ globalUser }) {
         (lists.length > 0 ? (
           lists.map((list, index) => {
             return (
-              <Link to={`/account/lists/${list.id}`} key={list.id}>
+              <Link
+                to={`/users/${user.username}/lists/${list.id}`}
+                key={list.id}
+              >
                 <ListCard
-                  image={images[index] || defaultImg}
+                  image={images[index] || DEFAULT_IMG}
                   {...list}
                   length={list.media.length}
                 />
@@ -67,7 +69,7 @@ export default function LikedLists({ globalUser }) {
           })
         ) : (
           <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
-            You don't have any liked lists yet.
+            There are no liked lists yet!
           </p>
         ))}
     </div>

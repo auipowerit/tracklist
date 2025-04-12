@@ -21,7 +21,7 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
-          path: "/account",
+          path: "/profile",
           element: <Pages.AccountPage />,
           children: [
             {
@@ -30,37 +30,53 @@ export default function App() {
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/profile",
+              path: "/profile/callback",
+              element: <Pages.AccountProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+          ],
+        },
+        {
+          path: "/users/:username",
+          element: <Pages.AccountPage />,
+          children: [
+            {
+              index: true,
               element: <Pages.AccountProfile />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/profile/callback",
+              path: "/users/:username/profile",
               element: <Pages.AccountProfile />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/reviews",
+              path: "/users/:username/profile/callback",
+              element: <Pages.AccountProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/users/:username/reviews",
               element: <Pages.AccountReviews />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/lists",
+              path: "/users/:username/lists",
               element: <Pages.AccountLists />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/lists/:listId",
+              path: "/users/:username/lists/:listId",
               element: <Pages.AccountList />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/likes",
+              path: "/users/:username/likes",
               element: <Pages.AccountLikes />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },
             {
-              path: "/account/friends",
+              path: "/users/:username/friends",
               element: <Pages.AccountFriends />,
               errorElement: <Pages.ErrorPage is404={false} />,
             },

@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import FeedReviewCard from "src/components/Cards/FeedReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 
-export default function LikedReviews({ globalUser }) {
+export default function LikedReviews({ user }) {
   const { getReviewById } = useReviewContext();
   const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
       const fetchedReviews = await Promise.all(
-        globalUser?.likes
+        user?.likes
           .filter((like) => like.category === "review")
           .flatMap((like) => like.content)
           .map(async (id) => {
@@ -22,7 +22,7 @@ export default function LikedReviews({ globalUser }) {
     };
 
     fetchReviews();
-  }, [globalUser]);
+  }, [user]);
 
   return (
     <div>
@@ -33,7 +33,7 @@ export default function LikedReviews({ globalUser }) {
           })
         ) : (
           <p className="m-20 text-center text-2xl text-gray-300 italic">
-            You don't have any liked reviews yet.
+            There are no liked reviews yet!
           </p>
         ))}
     </div>

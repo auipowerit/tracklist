@@ -7,7 +7,7 @@ import Navigation from "./compontents/Navigation";
 import Loading from "src/components/Loading";
 
 export default function ArtistPage() {
-  const { defaultImg, getMediaById } = useSpotifyContext();
+  const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
   const params = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +90,7 @@ export default function ArtistPage() {
   return (
     <div className="flex h-full gap-8">
       <MediaGradient
-        image={memoizedMedia.album?.images?.[0]?.url || defaultImg}
+        image={memoizedMedia.album?.images?.[0]?.url || DEFAULT_IMG}
       />
 
       <div className="flex flex-2 flex-col">

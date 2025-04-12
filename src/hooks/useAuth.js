@@ -101,9 +101,37 @@ export function useAuth() {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
-      if (userDoc.exists()) {
-        return userDoc.data();
-      }
+      if (!userDoc.exists()) return null;
+
+      const user = userDoc.data();
+
+      return {
+        uid: userRef.id,
+        ...user,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUserByUsername(username) {
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("username", "==", username));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) return null;
+
+      const userRef = snapshot.docs[0].ref;
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) return null;
+
+      const user = userDoc.data();
+      return {
+        uid: userRef.id,
+        ...user,
+      };
     } catch (error) {
       console.log(error);
     }
@@ -276,6 +304,7 @@ export function useAuth() {
     resetPassword,
 
     getUserById,
+    getUserByUsername,
     searchByUsername,
 
     getFollowingById,

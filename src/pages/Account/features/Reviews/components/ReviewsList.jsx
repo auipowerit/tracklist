@@ -4,7 +4,7 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import FeedReviewCard from "src/components/Cards/FeedReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 
-export default function ReviewsList() {
+export default function ReviewsList({ user }) {
   const { globalUser } = useAuthContext();
   const { getReviewsByUserId } = useReviewContext();
 
@@ -13,12 +13,10 @@ export default function ReviewsList() {
 
   useEffect(() => {
     const fetchReviews = async () => {
-      if (!globalUser) return;
-
       setIsLoading(true);
 
       try {
-        const fetchedReviews = await getReviewsByUserId(globalUser.uid);
+        const fetchedReviews = await getReviewsByUserId(user.uid);
         setReviews(fetchedReviews);
       } catch (error) {
         console.log(error);
@@ -28,7 +26,7 @@ export default function ReviewsList() {
     };
 
     fetchReviews();
-  }, [globalUser]);
+  }, [user]);
 
   if (isLoading) {
     return <Loading />;
@@ -44,7 +42,7 @@ export default function ReviewsList() {
       </ul>
     ) : (
       <p className="m-20 text-center text-2xl text-gray-300 italic">
-        You don't have any reviews yet.
+        There are no reviews yet!
       </p>
     ))
   );

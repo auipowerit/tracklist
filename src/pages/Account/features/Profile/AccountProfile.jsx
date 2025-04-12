@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import Modal from "src/components/Modal";
 import { formatDateMDYLong } from "src/utils/date";
 import { useAuthContext } from "src/context/Auth/AuthContext";
@@ -10,6 +10,8 @@ import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import AccountForm from "./components/AccountForm";
 
 export default function AccountProfile() {
+  const { user, canEdit } = useOutletContext();
+
   const params = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
 
@@ -34,7 +36,8 @@ export default function AccountProfile() {
 
   function handleNavigate() {
     if (localStorage.getItem("profile")) {
-      navigate("/account/profile");
+      localStorage.removeItem("profile");
+      navigate("/profile");
     }
   }
 
@@ -60,7 +63,7 @@ export default function AccountProfile() {
       profile?.external_urls?.spotify,
     );
 
-    navigate("/account/profile");
+    window.location.reload();
   }
 
   return (
@@ -72,42 +75,42 @@ export default function AccountProfile() {
         />
       </Modal>
 
-      <Header />
+      <Header setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
 
       <div className="flex w-full items-start justify-between">
         <div className="flex items-center gap-4">
-          {globalUser.spotifyUrl ? (
-            <SpotifyImage globalUser={globalUser} />
+          {user.spotifyUrl ? (
+            <SpotifyImage user={user} />
           ) : (
-            <ProfileImage globalUser={globalUser} />
+            <ProfileImage user={user} />
           )}
 
-          <ProfileDetails globalUser={globalUser} />
+          <ProfileDetails user={user} />
         </div>
       </div>
     </div>
   );
 }
 
-function Header({ setIsModalOpen }) {
+function Header({ setIsModalOpen, canEdit }) {
   return (
     <div className="flex items-center justify-between border-b-1 border-white pb-4 align-middle">
       <p className="text-2xl text-white">Profile</p>
-      <EditProfileButton setIsModalOpen={setIsModalOpen} />
+      {canEdit && <EditProfileButton setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }
 
-function SpotifyImage({ globalUser }) {
+function SpotifyImage({ user }) {
   return (
     <Link
-      to={globalUser.spotifyUrl}
+      to={user.spotifyUrl}
       target="_blank"
       data-tooltip-id="profile-tooltip"
       data-tooltip-content="Open Spotify Profile"
     >
       <img
-        src={globalUser.profileUrl}
+        src={user.profileUrl}
         className="h-36 w-36 rounded-full object-cover"
       />
       <Tooltip id="profile-tooltip" place="top" type="dark" effect="float" />
@@ -115,41 +118,41 @@ function SpotifyImage({ globalUser }) {
   );
 }
 
-function ProfileImage({ globalUser }) {
+function ProfileImage({ user }) {
   return (
     <img
-      src={globalUser.profileUrl}
+      src={user.profileUrl}
       className="h-36 w-36 rounded-full object-cover"
     />
   );
 }
 
-function ProfileDetails({ globalUser }) {
+function ProfileDetails({ user }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <p className="text-xl font-bold">{globalUser.displayname}</p>
-        <p className="text-gray-400">@{globalUser.username}</p>
+        <p className="text-xl font-bold">{user.displayname}</p>
+        <p className="text-gray-400">@{user.username}</p>
       </div>
 
-      <p>{globalUser.bio}</p>
+      <p>{user.bio}</p>
 
       <div className="flex items-center gap-1 text-gray-400">
         <FontAwesomeIcon icon={faCalendar} className="text-sm" />
-        <p>Joined on {formatDateMDYLong(globalUser.createdAt.toDate())}</p>
+        <p>Joined on {formatDateMDYLong(user.createdAt.toDate())}</p>
       </div>
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <p className="text-gray-400">
             <span className="font-bold text-white">
-              {globalUser.followers.length}
+              {user.followers.length}
             </span>{" "}
             followers
           </p>
           <p className="text-gray-400">
             <span className="font-bold text-white">
-              {globalUser.followers.length}
+              {user.followers.length}
             </span>{" "}
             following
           </p>

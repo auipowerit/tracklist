@@ -52,7 +52,7 @@ function MediaBanner({ media, category }) {
 }
 
 function SpotifyImage({ image, spotifyURL }) {
-  const { defaultImg } = useSpotifyContext();
+  const { DEFAULT_IMG } = useSpotifyContext();
 
   return (
     <div
@@ -61,7 +61,7 @@ function SpotifyImage({ image, spotifyURL }) {
       data-tooltip-content="Open in Spotify"
       className="cursor-pointer shadow-black/50 transition-all duration-300 hover:shadow-xl hover:shadow-black/75"
     >
-      <img src={image || defaultImg} className="h-64 w-64" />
+      <img src={image || DEFAULT_IMG} className="h-64 w-64" />
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
     </div>
   );

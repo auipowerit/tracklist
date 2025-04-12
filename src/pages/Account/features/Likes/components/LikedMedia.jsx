@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MediaListCard from "src/components/Cards/MediaListCard";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
-export default function LikedMedia({ globalUser, activeTab }) {
+export default function LikedMedia({ user, activeTab }) {
   const { getMediaById, getMediaLinks } = useSpotifyContext();
   const [media, setMedia] = useState(null);
 
@@ -12,7 +12,7 @@ export default function LikedMedia({ globalUser, activeTab }) {
 
     const fetchMedia = async () => {
       const fetchedMedia = await Promise.all(
-        globalUser?.likes
+        user?.likes
           .filter((like) => like.category === activeTab)
           .flatMap((like) => like.content)
           .map(async (id) => {
@@ -30,7 +30,7 @@ export default function LikedMedia({ globalUser, activeTab }) {
     };
 
     fetchMedia();
-  }, [globalUser, activeTab]);
+  }, [user, activeTab]);
 
   return (
     <div>
@@ -51,7 +51,7 @@ export default function LikedMedia({ globalUser, activeTab }) {
           </div>
         ) : (
           <p className="m-20 text-center text-2xl text-gray-300 italic">
-            {`You don't have any liked ${activeTab}s yet.`}
+            {`There are no liked ${activeTab}s yet!`}
           </p>
         ))}
     </div>

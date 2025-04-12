@@ -298,7 +298,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
     await deleteList(list.id, globalUser.uid);
 
     setIsModalOpen(false);
-    navigate("/account/lists");
+    navigate(`/users/${globalUser.uid}/lists`);
   }
 
   return (

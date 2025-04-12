@@ -3,9 +3,9 @@ import { useState } from "react";
 export function useSpotify() {
   const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID_BACKUP;
   const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET_BACKUP;
-  const redirect_uri = "http://localhost:5173/account/profile/callback";
 
-  const defaultImg = "/images/default-img.jpg";
+  const REDIRECT_URI = "http://localhost:5173/profile/callback";
+  const DEFAULT_IMG = "/images/default-img.jpg";
 
   const [accessToken, setAccessToken] = useState("");
 
@@ -33,7 +33,7 @@ export function useSpotify() {
     const result = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `client_id=${CLIENT_ID}&grant_type=authorization_code&code=${AUTH_CODE}&redirect_uri=${redirect_uri}&code_verifier=${verifier}`,
+      body: `client_id=${CLIENT_ID}&grant_type=authorization_code&code=${AUTH_CODE}&redirect_uri=${REDIRECT_URI}&code_verifier=${verifier}`,
     });
 
     const { access_token } = await result.json();
@@ -46,7 +46,7 @@ export function useSpotify() {
 
     localStorage.setItem("verifier", verifier);
 
-    document.location = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${redirect_uri}&scope=user-read-private user-read-email&code_challenge_method=S256&code_challenge=${challenge}`;
+    document.location = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=user-read-private user-read-email&code_challenge_method=S256&code_challenge=${challenge}`;
   }
 
   function generateCodeVerifier(length) {
@@ -128,7 +128,7 @@ export function useSpotify() {
       const media = await response.json();
 
       const image =
-        media.images?.[0]?.url || media.album?.images?.[0]?.url || defaultImg;
+        media.images?.[0]?.url || media.album?.images?.[0]?.url || DEFAULT_IMG;
 
       const formattedMedia = {
         ...media,
@@ -153,7 +153,9 @@ export function useSpotify() {
       subtitle: "",
       subtitleLink: artistURL,
       image:
-        media?.images?.[0]?.url || media?.album?.images?.[0]?.url || defaultImg,
+        media?.images?.[0]?.url ||
+        media?.album?.images?.[0]?.url ||
+        DEFAULT_IMG,
     };
 
     if (media.type === "artist") {
@@ -243,7 +245,7 @@ export function useSpotify() {
   }
 
   return {
-    defaultImg,
+    DEFAULT_IMG,
 
     getAccessToken,
     getAuthAccessToken,

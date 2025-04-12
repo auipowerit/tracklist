@@ -10,7 +10,7 @@ export default function MediaCard(props) {
   const defaultDate = "01/01/2000";
 
   const { getAvgRating } = useReviewContext();
-  const { defaultImg } = useSpotifyContext();
+  const { DEFAULT_IMG } = useSpotifyContext();
 
   const [fetchedMedia, setFetchedMedia] = useState({});
 
@@ -40,7 +40,7 @@ export default function MediaCard(props) {
           image:
             media.album?.images?.[0]?.url ||
             media.images?.[0]?.url ||
-            defaultImg,
+            DEFAULT_IMG,
         };
 
         setFetchedMedia({ avgRating, count, data });
@@ -57,7 +57,7 @@ export default function MediaCard(props) {
       className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
       onClick={onClick}
     >
-      <img src={fetchedMedia.data?.image || defaultImg} className="h-72" />
+      <img src={fetchedMedia.data?.image || DEFAULT_IMG} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
         <p className="text-xl font-bold">{fetchedMedia.data?.title || ""}</p>
         <p className="text-sm font-light">

@@ -19,7 +19,7 @@ export default function AuthPage() {
 
   function handleUser() {
     if (globalUser) {
-      navigate("/account", { replace: true });
+      navigate(`/users/${globalUser.username}/profile`, { replace: true });
     }
   }
 

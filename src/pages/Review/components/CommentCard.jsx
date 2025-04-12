@@ -40,7 +40,7 @@ function Header({ comment }) {
 function UserInfo({ comment }) {
   return (
     <Link
-      to={`/users/${comment.userId}`}
+      to={`/users/${comment.username}`}
       className="flex cursor-pointer items-center gap-2 text-sm font-bold hover:text-gray-400"
     >
       <img src={comment.profileUrl} className="h-8 w-8 rounded-full" />

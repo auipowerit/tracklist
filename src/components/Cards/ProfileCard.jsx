@@ -8,8 +8,8 @@ export default function ProfileCard({ user: propUser }) {
 
   async function handleClick() {
     user.isFollowing
-      ? await unfollowUser(user.id, globalUser.uid)
-      : await followUser(user.id, globalUser.uid);
+      ? await unfollowUser(user.id, globalUser?.uid)
+      : await followUser(user.id, globalUser?.uid);
 
     setUser({
       ...user,
@@ -23,7 +23,7 @@ export default function ProfileCard({ user: propUser }) {
       ...propUser,
       followersCount: propUser.followers.length,
       followingCount: propUser.following.length,
-      isFollowing: propUser.followers.includes(globalUser.uid),
+      isFollowing: propUser.followers.includes(globalUser?.uid),
     });
   }, []);
 
@@ -33,7 +33,7 @@ export default function ProfileCard({ user: propUser }) {
 
   return (
     <div className="my-4 flex w-full items-center justify-between border-1 border-gray-500 px-2">
-      <Link to={`/users/${user.id}`}>
+      <Link to={`/users/${user.username}`}>
         <div className="flex w-fit cursor-pointer items-center gap-4 p-4 text-lg">
           <img
             src={user.profileUrl}
@@ -54,12 +54,14 @@ export default function ProfileCard({ user: propUser }) {
         </div>
       </Link>
 
-      <button
-        onClick={() => handleClick()}
-        className="h-fit w-fit rounded-2xl border-1 border-white px-4 py-2 hover:text-gray-400"
-      >
-        {user.isFollowing ? "Unfollow" : "Follow"}
-      </button>
+      {globalUser && user.id !== globalUser?.uid && (
+        <button
+          onClick={() => handleClick()}
+          className="h-fit w-fit rounded-2xl border-1 border-white px-4 py-2 hover:text-gray-400"
+        >
+          {user.isFollowing ? "Unfollow" : "Follow"}
+        </button>
+      )}
     </div>
   );
 }

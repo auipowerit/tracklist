@@ -173,11 +173,11 @@ function FormHeader() {
 }
 
 function FormImage({ media }) {
-  const { defaultImg } = useSpotifyContext();
+  const { DEFAULT_IMG } = useSpotifyContext();
 
   return (
     <img
-      src={media?.image || defaultImg}
+      src={media?.image || DEFAULT_IMG}
       className="aspect-square h-48 object-cover shadow-lg"
     />
   );

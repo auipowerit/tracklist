@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-export default function NavLinks() {
+export default function NavLinks({ username }) {
   const children = [
     { id: "reviews", title: "Reviews" },
     { id: "lists", title: "Lists" },
@@ -11,7 +11,7 @@ export default function NavLinks() {
   const location = useLocation();
 
   const isActive = (page) => {
-    return location.pathname.startsWith("/account/" + page);
+    return location.pathname.startsWith(`/users/${username}/${page}`);
   };
 
   return (
@@ -19,7 +19,7 @@ export default function NavLinks() {
       {children.map((child) => (
         <Link
           key={child.id}
-          to={child.id}
+          to={`/users/${username}/${child.id}`}
           className={`flex items-center gap-2 hover:text-white ${isActive(child.id) && "text-white"}`}
         >
           {child.title}

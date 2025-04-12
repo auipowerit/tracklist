@@ -3,23 +3,15 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSearch, faSignOut } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
-  const { globalUser, logout } = useAuthContext();
+  const navigate = useNavigate();
+
+  const { globalUser } = useAuthContext();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-
-  const navigate = useNavigate();
-
-  function handleUserClick() {
-    if (globalUser) {
-      setShowDropdown(!showDropdown);
-    } else {
-      navigate("/authenticate");
-    }
-  }
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -34,6 +26,14 @@ export default function Navbar() {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  function handleUserClick() {
+    if (globalUser) {
+      setShowDropdown(!showDropdown);
+    } else {
+      navigate("/authenticate");
+    }
+  }
 
   return (
     <div className="items-center bg-[#121212] py-4 text-2xl">
@@ -63,7 +63,7 @@ export default function Navbar() {
             <FaUser
               onClick={handleUserClick}
               className={`cursor-pointer text-4xl ${
-                location.pathname.startsWith("/account")
+                location.pathname.startsWith("/users")
                   ? "text-green-700"
                   : "text-white hover:text-gray-400"
               }`}
@@ -77,16 +77,19 @@ export default function Navbar() {
             >
               <DropdownMenu
                 items={[
-                  { label: "Profile", path: "/account" },
-                  { label: "Lists", path: "/account/lists" },
-                  { label: "Friends", path: "/account/network" },
+                  { label: "Inbox", path: "/profile" },
+                  { label: "Profile", path: "/profile" },
                   {
-                    label: "Logout",
-                    path: "/authenticate",
-                    action: logout,
+                    label: "Lists",
+                    path: `/users/${globalUser?.username}/lists`,
+                  },
+                  {
+                    label: "Friends",
+                    path: `/users/${globalUser?.username}/friends`,
                   },
                 ]}
                 onClose={() => setShowDropdown(false)}
+                globalUser={globalUser}
               />
             </div>
           </div>
@@ -94,30 +97,42 @@ export default function Navbar() {
       </ul>
     </div>
   );
+}
 
-  function DropdownMenu({ items, onClose }) {
-    return (
-      <ul className="flex flex-col gap-2 px-4 py-2">
-        <li>
-          <p className="font-bold text-nowrap">Hi, {globalUser?.username}</p>
-        </li>
-        {items.map(({ label, path, action }) => (
-          <li
-            key={label}
-            className="transition-all duration-150 hover:text-gray-400"
-          >
-            <Link
-              to={path}
-              onClick={() => {
-                if (action) action();
-                onClose();
-              }}
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
+function DropdownMenu({ items, onClose, globalUser }) {
+  const navigate = useNavigate();
+  const { logout } = useAuthContext();
+
+  async function handleLogout() {
+    onClose();
+    await logout();
+    navigate("/authenticate", { replace: true });
   }
+
+  return (
+    <ul className="flex flex-col gap-2 px-4 py-2">
+      <li>
+        <p className="font-bold text-nowrap">Hi, {globalUser?.username}</p>
+      </li>
+      {items.map(({ label, path }) => (
+        <li
+          key={label}
+          className="transition-all duration-150 hover:text-gray-400"
+        >
+          <Link to={path} onClick={onClose}>
+            {label}
+          </Link>
+        </li>
+      ))}
+      <li>
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center justify-between transition-all duration-150 hover:text-gray-400"
+        >
+          <p>Logout</p>
+          <FontAwesomeIcon icon={faSignOut} />
+        </button>
+      </li>
+    </ul>
+  );
 }

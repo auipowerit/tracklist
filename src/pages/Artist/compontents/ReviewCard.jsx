@@ -44,7 +44,7 @@ function UserInfo({ review }) {
     <p className="text-gray-400">
       Review by{" "}
       <Link
-        to={`/users/${review.userId}`}
+        to={`/users/${review.username}`}
         className="font-bold text-white hover:text-gray-400"
       >
         {review.username}

@@ -39,7 +39,7 @@ function ResultCard({ result, category }) {
       case "track":
         return `/artists/${result.artists[0].id}/albums/${result.album.id}/tracks/${result.id}`;
       default:
-        return `/users/${result.id}`;
+        return `/users/${result.username}`;
     }
   }
 
