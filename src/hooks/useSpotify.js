@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export function useSpotify() {
-  const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID_BACKUP;
-  const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET_BACKUP;
+  const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
   const REDIRECT_URI = "http://localhost:5173/profile/callback";
   const DEFAULT_IMG = "/images/default-img.jpg";

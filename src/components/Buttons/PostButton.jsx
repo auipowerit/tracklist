@@ -43,7 +43,7 @@ export default function PostButton(props) {
           onClick={handleClick}
           className="cursor-pointer transition-all duration-300 hover:text-gray-400"
           data-tooltip-id="review-tooltip"
-          data-tooltip-content="Post review"
+          data-tooltip-content="Review"
         >
           <FontAwesomeIcon icon={faPencil} />
           <Tooltip id="review-tooltip" place="top" type="dark" effect="float" />

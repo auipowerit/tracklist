@@ -1,14 +1,10 @@
 import { memo, useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import RatingBar from "src/components/Review/RatingBar";
-import PostButton from "src/components/Buttons/PostButton";
-import ListButton from "src/components/Buttons/ListButton";
-import { useAuthContext } from "src/context/Auth/AuthContext";
 import { ReviewStars } from "src/components/Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import LikeMediaButton from "src/pages/Artist/compontents/LikeMediaButton";
-import ShareMediaButton from "./ShareMediaButton";
+import BannerButtons from "./BannerButtons";
 
 function MediaBanner({ media, category }) {
   const { getAvgRating } = useReviewContext();
@@ -44,7 +40,11 @@ function MediaBanner({ media, category }) {
 
         <div className="flex flex-col gap-4">
           <Rating mediaId={media.id} rating={rating} />
-          <Buttons mediaId={media.id} name={data.title} category={category} />
+          <BannerButtons
+            mediaId={media.id}
+            name={data.title}
+            category={category}
+          />
         </div>
       </div>
     </div>
@@ -85,50 +85,6 @@ function Rating({ mediaId, rating }) {
         <ReviewStars rating={rating.avgRating || 0} />
         <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>
       </div>
-    </div>
-  );
-}
-
-function Buttons({ mediaId, name, category }) {
-  const { globalUser } = useAuthContext();
-
-  const [isListModalOpen, setIsListModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    setIsLiked(
-      globalUser?.likes
-        .filter((like) => like.category === "artist")
-        .flatMap((like) => like.content)
-        .includes(mediaId),
-    );
-  }, []);
-
-  return (
-    <div className="flex items-center gap-6 text-2xl">
-      <LikeMediaButton
-        isLiked={isLiked}
-        setIsLiked={setIsLiked}
-        id={mediaId}
-        category={category}
-      />
-      <ListButton
-        isModalOpen={isListModalOpen}
-        setIsModalOpen={setIsListModalOpen}
-        showIcon={true}
-        media={{ mediaId, mediaName: name }}
-        category={category}
-      />
-      <PostButton
-        isModalOpen={isReviewModalOpen}
-        setIsModalOpen={setIsReviewModalOpen}
-        showIcon={true}
-        mediaId={mediaId}
-        category={category}
-      />
-
-      <ShareMediaButton />
     </div>
   );
 }

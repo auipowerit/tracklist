@@ -56,6 +56,7 @@ export function useReview() {
         reviewsRef,
         where("createdAt", ">", earliestDate),
         orderBy("likes", "desc"),
+        orderBy("dislikes", "asc"),
         orderBy("createdAt", "desc"),
         limit(20),
       );

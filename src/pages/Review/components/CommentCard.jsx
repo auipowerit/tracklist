@@ -10,7 +10,7 @@ export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <Header comment={comment} />
 
       <Buttons
@@ -25,7 +25,7 @@ export default function CommentCard(props) {
 
 function Header({ comment }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
         <UserInfo comment={comment} />
         <p className="text-sm text-gray-400">

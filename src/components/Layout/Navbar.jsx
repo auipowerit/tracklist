@@ -77,8 +77,8 @@ export default function Navbar() {
             >
               <DropdownMenu
                 items={[
-                  { label: "Inbox", path: "/profile" },
                   { label: "Profile", path: "/profile" },
+                  { label: "Inbox", path: "/profile" },
                   {
                     label: "Lists",
                     path: `/users/${globalUser?.username}/lists`,

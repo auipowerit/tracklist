@@ -45,8 +45,8 @@ export default function ListButton(props) {
       {showIcon ? (
         <button
           onClick={handleClick}
-          className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
-          data-tooltip-content="Add to list"
+          className="cursor-pointer transition-all duration-300 hover:text-gray-400"
+          data-tooltip-content="Save"
           data-tooltip-id="list-tooltip"
         >
           <FontAwesomeIcon icon={faList} />

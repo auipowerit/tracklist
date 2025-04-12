@@ -16,14 +16,14 @@ export default function LikeMediaButton(props) {
   async function handleLike() {
     if (!globalUser) return;
 
-    isLiked
-      ? await unlikeContent(id, globalUser.uid)
-      : await likeContent(id, category, globalUser.uid);
-
     if (!isLiked) {
       setIsActive(true);
       setTimeout(() => setIsActive(false), 500);
     }
+
+    isLiked
+      ? await unlikeContent(id, globalUser.uid)
+      : await likeContent(id, category, globalUser.uid);
 
     updateGlobalUserLikes(id, category);
     setIsLiked(!isLiked);

@@ -1,3 +1,5 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useReviewContext } from "src/context/Review/ReviewContext";
@@ -48,22 +50,28 @@ export default function RatingBar({ mediaId }) {
       {ratings &&
         Object.keys(ratings)
           .sort((a, b) => parseFloat(a) - parseFloat(b))
-          .map((key) => (
-            <div
-              key={key}
-              style={{ height: `${(ratings[key] / total) * 100}%` }}
-              data-tooltip-id="media-tooltip"
-              data-tooltip-content={`${ratings[key]} ratings of ${key} stars (${(ratings[key] / total).toFixed(2) * 100 || 0}%)`}
-              className="min-h-0.5 w-4 cursor-pointer rounded-t-xs bg-gray-400 transition-all duration-300 hover:bg-gray-300"
-            >
-              <Tooltip
-                id="media-tooltip"
-                place="top"
-                type="dark"
-                effect="float"
-              />
-            </div>
-          ))}
+          .map((key) => {
+            const count = ratings[key];
+            const percentage = (count / total).toFixed(2) * 100 || 0;
+            const content = `${count} ratings of ${key} stars (${percentage}%)`;
+            return (
+              <div
+                key={key}
+                data-tooltip-id="media-tooltip"
+                data-tooltip-content={content}
+                style={{ height: `${percentage}%` }}
+                className="group relative min-h-0.5 w-4 cursor-pointer rounded-t-xs bg-gray-400 transition-all duration-300 hover:bg-gray-300"
+              >
+                <div className="absolute -top-4 -right-2 -bottom-0 -left-2" />
+                <Tooltip
+                  id="media-tooltip"
+                  place="top"
+                  type="dark"
+                  effect="float"
+                />
+              </div>
+            );
+          })}
     </div>
   );
 }

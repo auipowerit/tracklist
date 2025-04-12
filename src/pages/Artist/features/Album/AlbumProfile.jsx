@@ -20,12 +20,14 @@ export default function AlbumProfile() {
 
 function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div className="flex flex-col items-center">
-      <p className="text-4xl font-bold">Tracks</p>
+    <div className="flex w-full flex-col">
+      <p className="mb-4 w-fit border-b-2 border-white pr-6 pb-2 text-4xl font-bold">
+        Tracks
+      </p>
 
-      <div className="flex min-h-80 flex-2 items-start justify-center gap-8">
+      <div className="flex min-h-80 flex-2 items-start gap-8">
         {tracks && tracks.length > 0 && (
-          <ul className="grid grid-cols-2 gap-4 p-4">
+          <ul className="grid grid-cols-3 gap-4 p-4">
             {tracks.map((track) => {
               return (
                 <li key={track.id}>
@@ -61,7 +63,7 @@ function TrackCard({ track, artistId, albumId }) {
   return (
     <Link
       to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
-      className="flex w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110"
+      className="flex max-w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110"
     >
       {track.track_number}. {track.name}
       <div className="m-auto">

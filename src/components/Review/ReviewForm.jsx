@@ -232,7 +232,7 @@ function FormSearchResults({ results, handleClick, type }) {
 }
 
 function FormReview({ content, setContent }) {
-  const CHARACTER_LIMIT = 500;
+  const CHARACTER_LIMIT = 1000;
 
   function handleChange(e) {
     if (e.target.value.length > CHARACTER_LIMIT) {

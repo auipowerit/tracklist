@@ -23,7 +23,7 @@ export default function Discography(props) {
 
 function Header({ title, media, setMedia, category }) {
   return (
-    <div className="mb-4 flex w-fit items-center gap-4 border-b-2 border-white pr-10 pb-2">
+    <div className="mb-4 flex w-fit items-center justify-between gap-6 border-b-2 border-white pb-2">
       <p className="text-4xl font-bold">{title}</p>
 
       <SortMusic

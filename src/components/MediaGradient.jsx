@@ -7,6 +7,7 @@ function MediaGradient({ image }) {
   useEffect(() => {
     const fetchColors = async () => {
       if (!image) return;
+
       const colors = await getColors(image);
       setColors(colors);
     };
