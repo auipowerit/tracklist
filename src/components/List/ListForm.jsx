@@ -9,13 +9,20 @@ export default function ListForm(props) {
   const [newList, setNewList] = useState(false);
 
   if (isAdding) {
-    return (
+    return newList ? (
+      <CreateList
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        setNewList={setNewList}
+      />
+    ) : (
       <AddToList
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         media={media}
         listId={list?.id}
         category={category}
+        setNewList={setNewList}
       />
     );
   }

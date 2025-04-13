@@ -6,21 +6,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddToList(props) {
-  const { isModalOpen, setIsModalOpen, mediaId, listId, category } = props;
+  const { isModalOpen, setIsModalOpen, mediaId, listId, category, setNewList } =
+    props;
 
   const { globalUser } = useAuthContext();
   const { getListsByUserId, addToList, getListById } = useListContext();
-  const { getMediaById, searchByName } = useSpotifyContext();
+  const { getMediaById } = useSpotifyContext();
 
   const [media, setMedia] = useState(null);
-  const [listResults, setListResults] = useState([]);
   const [mediaResults, setMediaResults] = useState([]);
   const [lists, setLists] = useState([]);
   const [currentLists, setCurrentLists] = useState([]);
   const [type, setType] = useState("artist");
 
+  const selectRef = useRef(null);
   const mediaInputRef = useRef(null);
-  const listInputRef = useRef(null);
 
   useEffect(() => {
     handleModal();
@@ -36,7 +36,7 @@ export default function AddToList(props) {
 
     if (listId) {
       const fetchedList = await getListById(listId, globalUser.uid);
-      setCurrentLists([fetchedList.name]);
+      setCurrentLists([fetchedList]);
     }
 
     if (!mediaId || !category) return;
@@ -52,64 +52,23 @@ export default function AddToList(props) {
     setLists(fetchedLists);
   }
 
-  async function handleSearch() {
-    const data = await searchByName(mediaInputRef.current.value, type, 20);
-
-    const items =
-      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
-
-    const ids = items.map((item) => item?.id) || [];
-    const names = items.map((item) => item?.name) || [];
-    const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
-
-    setMediaResults(
-      ids.map((id, index) => ({
-        id,
-        name: names[index],
-        subtitle: subtitles[index],
-      })),
-    );
-  }
-
-  function handleChange(e) {
-    setType(e.target.value);
-
-    setMediaResults([]);
-    setMedia(null);
-  }
-
-  async function handleClick(id, name) {
-    mediaInputRef.current.value = name;
-
-    const fetchedMedia = await getMediaById(id, type);
-    setMedia(fetchedMedia);
-
-    setMediaResults([]);
-  }
-
-  function searchForList() {
-    if (!globalUser) return;
-
-    const searchString = listInputRef.current.value;
-
-    if (searchString === "") {
-      setListResults([]);
+  function addToCurrentLists(id) {
+    if (id === "_new") {
+      setNewList(true);
       return;
     }
 
-    const filteredLists = lists.filter((item) =>
-      item.name.toLowerCase().includes(searchString.toLowerCase()),
-    );
+    const selectedList = lists.find((list) => list.id === id);
 
-    setListResults(filteredLists);
+    setCurrentLists([...currentLists, selectedList]);
+
+    selectRef.current.value = "";
+    setLists(lists.filter((item) => item.id !== id));
   }
 
-  function addToCurrentLists(list) {
-    setCurrentLists([...currentLists, list.name]);
-
-    listInputRef.current.value = "";
-    setListResults([]);
-    setLists(lists.filter((item) => item.name !== list.name));
+  function removeFromCurrentLists(list) {
+    setCurrentLists(currentLists.filter((item) => item.id !== list.id));
+    setLists([...lists, list]);
   }
 
   async function handleSubmit(event) {
@@ -120,7 +79,7 @@ export default function AddToList(props) {
     if (currentLists.length === 0) return;
 
     for (const list of currentLists) {
-      await addToList(media.id, type, list, globalUser.uid);
+      await addToList(media.id, type, list.name, globalUser.uid);
     }
 
     setIsModalOpen(false);
@@ -130,13 +89,12 @@ export default function AddToList(props) {
 
   function resetValues() {
     setMedia(null);
-    setListResults([]);
     setMediaResults([]);
     setLists([]);
     setCurrentLists([]);
     setType("artist");
+    selectRef.current.value = "";
     mediaInputRef.current.value = "";
-    listInputRef.current.value = "";
   }
 
   return (
@@ -145,33 +103,29 @@ export default function AddToList(props) {
       className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
     >
       <FormHeader />
+
       <div className="flex flex-col gap-4">
         <div className="flex w-full items-center justify-center gap-6">
           <FormImage media={media} />
-          <div className="flex flex-col gap-2">
+
+          <div className="flex flex-col items-stretch gap-2">
             <FormMediaInput
               type={type}
               setType={setType}
               mediaInputRef={mediaInputRef}
               mediaResults={mediaResults}
               setMediaResults={setMediaResults}
-              handleClick={handleClick}
-              handleSearch={handleSearch}
-              handleChange={handleChange}
             />
 
             <FormListInput
-              listInputRef={listInputRef}
-              searchForList={searchForList}
-              listResults={listResults}
+              selectRef={selectRef}
               addToCurrentLists={addToCurrentLists}
+              lists={lists}
             />
 
             <FormLists
-              lists={lists}
-              setLists={setLists}
               currentLists={currentLists}
-              setCurrentLists={setCurrentLists}
+              removeFromCurrentLists={removeFromCurrentLists}
             />
           </div>
         </div>
@@ -201,14 +155,35 @@ function FormImage({ media }) {
 }
 
 function FormMediaInput(props) {
-  const {
-    type,
-    mediaInputRef,
-    mediaResults,
-    handleClick,
-    handleSearch,
-    handleChange,
-  } = props;
+  const { type, setType, mediaInputRef, mediaResults, setMediaResults } = props;
+
+  const { searchByName } = useSpotifyContext();
+
+  function handleChange(e) {
+    setType(e.target.value);
+
+    setMediaResults([]);
+    setMedia(null);
+  }
+
+  async function handleSearch() {
+    const data = await searchByName(mediaInputRef.current.value, type, 20);
+
+    const items =
+      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
+
+    const ids = items.map((item) => item?.id) || [];
+    const names = items.map((item) => item?.name) || [];
+    const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
+
+    setMediaResults(
+      ids.map((id, index) => ({
+        id,
+        name: names[index],
+        subtitle: subtitles[index],
+      })),
+    );
+  }
 
   return (
     <div className="relative flex gap-2">
@@ -226,74 +201,85 @@ function FormMediaInput(props) {
         <option value="track">song</option>
       </select>
 
-      <div
-        className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${mediaResults.length > 0 && "h-46 overflow-auto"}`}
-      >
-        {mediaResults.map(({ id, name, subtitle }) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => handleClick(id, name)}
-            className="px-2 py-1 text-start hover:bg-gray-600"
-          >
-            <p>{name}</p>
-            {type !== "artist" && <p className="text-sm">{subtitle}</p>}
-          </button>
-        ))}
-      </div>
+      <FormMediaResults
+        mediaInputRef={mediaInputRef}
+        mediaResults={mediaResults}
+        setMediaResults={setMediaResults}
+        type={type}
+      />
+    </div>
+  );
+}
+
+function FormMediaResults(props) {
+  const { mediaInputRef, mediaResults, setMediaResults, type } = props;
+
+  const { getMediaById } = useSpotifyContext();
+
+  async function handleClick(id, name) {
+    mediaInputRef.current.value = name;
+
+    const fetchedMedia = await getMediaById(id, type);
+    setMedia(fetchedMedia);
+
+    setMediaResults([]);
+  }
+
+  return (
+    <div
+      className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${mediaResults.length > 0 && "h-46 overflow-auto"}`}
+    >
+      {mediaResults.map(({ id, name, subtitle }) => (
+        <button
+          key={id}
+          type="button"
+          onClick={() => handleClick(id, name)}
+          className="px-2 py-1 text-start hover:bg-gray-600"
+        >
+          <p>{name}</p>
+          {type !== "artist" && <p className="text-sm">{subtitle}</p>}
+        </button>
+      ))}
     </div>
   );
 }
 
 function FormListInput(props) {
-  const { listInputRef, listResults, searchForList, addToCurrentLists } = props;
+  const { selectRef, addToCurrentLists, lists } = props;
 
   return (
-    <div className="relative flex gap-2">
-      <input
-        type="search"
-        ref={listInputRef}
-        placeholder="Search for a list..."
-        onKeyUp={searchForList}
-        className="border-1 px-2 py-1 outline-none"
-      />
-
-      <div
-        className={`absolute top-10 right-0 left-0 flex w-full flex-col items-start bg-green-700 ${listResults.length > 0 && "overflow-auto p-2"}`}
-      >
-        {listResults?.map((list, index) => {
-          return (
-            <button
-              key={index}
-              type="button"
-              onClick={() => addToCurrentLists(list)}
-              className="hover:text-gray-400"
-            >
-              {list.name}
-            </button>
-          );
-        })}
-      </div>
-    </div>
+    <select
+      ref={selectRef}
+      defaultValue=""
+      onChange={(e) => addToCurrentLists(e.target.value)}
+      className="w-full border-1 px-2 py-1 outline-none"
+    >
+      <option value="" disabled hidden>
+        -- Select an option --
+      </option>
+      {lists.map((item) => {
+        return (
+          <option key={item.id} value={item.id}>
+            {item.name}
+          </option>
+        );
+      })}
+      <option value="_new">Create new list</option>
+    </select>
   );
 }
 
-function FormLists({ lists, setLists, currentLists, setCurrentLists }) {
-  function removeFromCurrentLists(name) {
-    setCurrentLists(currentLists.filter((item) => item !== name));
-    setLists([...lists, { name }]);
-  }
-
+function FormLists({ currentLists, removeFromCurrentLists }) {
   return (
     <div className="flex h-20 flex-col items-start gap-2 overflow-auto p-2">
-      {currentLists?.map((name, index) => {
+      {currentLists?.map((list) => {
         return (
           <div
-            key={index}
+            key={list.id}
             className="flex items-center gap-2 rounded-sm bg-gray-700 px-2 py-1"
           >
-            <p>{name}</p>
-            <button type="button" onClick={() => removeFromCurrentLists(name)}>
+            <p>{list.name}</p>
+            <button type="button" onClick={() => removeFromCurrentLists(list)}>
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </div>

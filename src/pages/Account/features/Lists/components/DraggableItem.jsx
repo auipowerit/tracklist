@@ -27,21 +27,15 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
       {...attributes}
       className="flex flex-col justify-center gap-1"
     >
-      <FontAwesomeIcon
-        icon={faGripLines}
-        className="cursor-grab text-lg"
-        {...listeners}
-      />
-
-      <div className={`relative ${isDragging && "opacity-50"}`}>
-        <Link to={item.titleLink}>
+      <div className={`relative ${!isDragging && "opacity-50"}`}>
+        <div {...listeners} className="cursor-grab">
           <MediaListCard
             title={item.title}
             subtitle={item.subtitle}
             image={item.image}
             index={list.isRanking && index + 1}
           />
-        </Link>
+        </div>
 
         <button
           type="button"

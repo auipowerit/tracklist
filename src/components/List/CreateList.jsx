@@ -140,7 +140,7 @@ export default function CreateList(props) {
 }
 
 function FormHeader({ list }) {
-  const title = list ? "Edit" : "Create";
+  const title = list ? "Edit List" : "Create New List";
 
   return (
     <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">

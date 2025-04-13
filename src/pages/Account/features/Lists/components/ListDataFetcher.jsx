@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { useListContext } from "src/context/List/ListContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
-export default function ListDataFetcher({ listId }) {
-  const { globalUser } = useAuthContext();
+export default function ListDataFetcher({ listId, user, canEdit }) {
+  const navigate = useNavigate();
+
   const { getListById } = useListContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
@@ -12,34 +13,41 @@ export default function ListDataFetcher({ listId }) {
   const [items, setItems] = useState(null);
 
   useEffect(() => {
-    if (!globalUser || !listId) return;
+    if (!listId || !user) return;
 
-    const fetchData = async () => {
-      try {
-        const list = await getListById(listId, globalUser.uid);
+    fetchListData();
+  }, [listId, user]);
 
-        const listItems = await Promise.all(
-          list.media.map(async (media) => {
-            const fetchedMedia = await getMediaById(media.id, media.category);
-            const data = getMediaLinks(fetchedMedia);
+  async function fetchListData() {
+    try {
+      const list = await getListById(listId, user.uid);
 
-            return {
-              id: fetchedMedia.id,
-              category: media.category,
-              ...data,
-            };
-          }),
-        );
+      if (!list) return;
 
-        setList(list);
-        setItems(listItems);
-      } catch (error) {
-        console.log(error);
+      if (list.isPrivate && !canEdit) {
+        navigate(`/users/${user.username}/lists`);
+        return;
       }
-    };
 
-    fetchData();
-  }, [globalUser, listId]);
+      const listItems = await Promise.all(
+        list.media.map(async (media) => {
+          const fetchedMedia = await getMediaById(media.id, media.category);
+          const data = getMediaLinks(fetchedMedia);
+
+          return {
+            id: fetchedMedia.id,
+            category: media.category,
+            ...data,
+          };
+        }),
+      );
+
+      setList(list);
+      setItems(listItems);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return { list, items, setItems };
 }

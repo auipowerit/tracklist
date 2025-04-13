@@ -5,6 +5,7 @@ import ListCard from "src/components/Cards/ListCard";
 import ListButton from "src/components/Buttons/ListButton";
 import { useListContext } from "src/context/List/ListContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function AccountLists() {
   const { user, canEdit } = useOutletContext();
@@ -31,6 +32,7 @@ function Header({ canEdit }) {
 }
 
 function Lists({ user }) {
+  const { globalUser } = useAuthContext();
   const { getListsByUserId } = useListContext();
   const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
 
@@ -43,7 +45,15 @@ function Lists({ user }) {
       setIsLoading(true);
 
       try {
-        const fetchedLists = await getListsByUserId(user.uid);
+        let fetchedLists = await getListsByUserId(user.uid);
+
+        // Filter out private lists if logged in user is not the owner
+        if (user.uid !== globalUser.uid) {
+          fetchedLists = fetchedLists.filter(
+            (list) => list.isPrivate === false,
+          );
+        }
+
         setLists(fetchedLists);
 
         const fetchedImages = await getImages(fetchedLists);

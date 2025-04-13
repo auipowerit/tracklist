@@ -60,7 +60,9 @@ export default function ListButton(props) {
           onClick={handleClick}
         >
           <FontAwesomeIcon icon={isAdding ? faPlus : list ? faPen : faPlus} />
-          <p>{isAdding ? "Add to list" : list ? "Edit" : "Create List"}</p>
+          <p>
+            {isAdding ? "Add to list" : list ? "List Details" : "Create List"}
+          </p>
         </button>
       )}
     </div>
