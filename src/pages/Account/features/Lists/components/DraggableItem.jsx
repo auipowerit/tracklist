@@ -1,9 +1,8 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-import { faGripLines, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import MediaListCard from "src/components/Cards/MediaListCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 
 export default function DraggableItem({ item, index, handleDelete, list }) {
   const {
@@ -27,8 +26,11 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
       {...attributes}
       className="flex flex-col justify-center gap-1"
     >
-      <div className={`relative ${!isDragging && "opacity-50"}`}>
-        <div {...listeners} className="cursor-grab">
+      <div className="relative">
+        <div
+          {...listeners}
+          className={`cursor-grab ${!isDragging && "opacity-50"}`}
+        >
           <MediaListCard
             title={item.title}
             subtitle={item.subtitle}
@@ -40,7 +42,7 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
         <button
           type="button"
           onClick={() => handleDelete(item.id)}
-          className="absolute top-0 right-0 flex h-7 w-7 items-center justify-center bg-red-800 p-2 opacity-75 hover:opacity-100"
+          className="absolute top-1 right-1 flex h-7 w-7 items-center justify-center rounded-full bg-red-700/80 p-2 hover:opacity-75"
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>

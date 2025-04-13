@@ -59,11 +59,10 @@ export default function AddToList(props) {
     }
 
     const selectedList = lists.find((list) => list.id === id);
-
     setCurrentLists([...currentLists, selectedList]);
 
-    selectRef.current.value = "";
     setLists(lists.filter((item) => item.id !== id));
+    selectRef.current.value = "";
   }
 
   function removeFromCurrentLists(list) {
@@ -74,13 +73,13 @@ export default function AddToList(props) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!globalUser || !media) return;
+    if (!globalUser || !media || currentLists.length === 0) return;
 
-    if (currentLists.length === 0) return;
-
-    for (const list of currentLists) {
-      await addToList(media.id, type, list.name, globalUser.uid);
-    }
+    await Promise.all(
+      currentLists.map((list) =>
+        addToList(media.id, type, list.name, globalUser.uid),
+      ),
+    );
 
     setIsModalOpen(false);
     resetValues();
@@ -113,6 +112,7 @@ export default function AddToList(props) {
               type={type}
               setType={setType}
               mediaInputRef={mediaInputRef}
+              setMedia={setMedia}
               mediaResults={mediaResults}
               setMediaResults={setMediaResults}
             />
@@ -155,7 +155,14 @@ function FormImage({ media }) {
 }
 
 function FormMediaInput(props) {
-  const { type, setType, mediaInputRef, mediaResults, setMediaResults } = props;
+  const {
+    type,
+    setType,
+    setMedia,
+    mediaInputRef,
+    mediaResults,
+    setMediaResults,
+  } = props;
 
   const { searchByName } = useSpotifyContext();
 
@@ -203,6 +210,7 @@ function FormMediaInput(props) {
 
       <FormMediaResults
         mediaInputRef={mediaInputRef}
+        setMedia={setMedia}
         mediaResults={mediaResults}
         setMediaResults={setMediaResults}
         type={type}
@@ -212,7 +220,8 @@ function FormMediaInput(props) {
 }
 
 function FormMediaResults(props) {
-  const { mediaInputRef, mediaResults, setMediaResults, type } = props;
+  const { mediaInputRef, setMedia, mediaResults, setMediaResults, type } =
+    props;
 
   const { getMediaById } = useSpotifyContext();
 
@@ -252,19 +261,21 @@ function FormListInput(props) {
       ref={selectRef}
       defaultValue=""
       onChange={(e) => addToCurrentLists(e.target.value)}
-      className="w-full border-1 px-2 py-1 outline-none"
+      className="option:bg-gray-700 w-full border-1 px-2 py-1 outline-none"
     >
       <option value="" disabled hidden>
         -- Select an option --
       </option>
       {lists.map((item) => {
         return (
-          <option key={item.id} value={item.id}>
+          <option key={item.id} value={item.id} className="bg-gray-700">
             {item.name}
           </option>
         );
       })}
-      <option value="_new">Create new list</option>
+      <option value="_new" className="bg-gray-700">
+        Create new list
+      </option>
     </select>
   );
 }
