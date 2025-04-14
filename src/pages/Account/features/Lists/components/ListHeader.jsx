@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import ListButton from "src/components/Buttons/ListButton";
+import SaveButton from "src/components/Buttons/SaveButton";
 
 export default function ListHeader({ list, canEdit, isEditing, setIsEditing }) {
+  const { user } = useOutletContext();
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const handleToggle = () => {
+  function handleToggle() {
     setIsEditing(!isEditing);
-  };
+  }
 
   return (
     <div className="flex items-center justify-between align-middle">
@@ -17,7 +21,7 @@ export default function ListHeader({ list, canEdit, isEditing, setIsEditing }) {
           <p className="text-gray-400">{list.description}</p>
         </div>
 
-        {canEdit && (
+        {canEdit ? (
           <div className="flex flex-col items-end gap-2">
             <div className="flex items-center gap-4">
               <ListButton
@@ -40,6 +44,8 @@ export default function ListHeader({ list, canEdit, isEditing, setIsEditing }) {
               {isEditing ? "On" : "Off"}
             </button>
           </div>
+        ) : (
+          <SaveButton list={list} user={user} />
         )}
       </div>
     </div>

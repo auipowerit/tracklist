@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
+import LikeButton from "src/components/Buttons/LikeButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import DeleteButton from "src/components/Buttons/DeleteButton";
+import DislikeButton from "src/components/Buttons/DislikeButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
-import VoteButton from "src/components/Buttons/VoteButton";
-import DeleteButton from "src/components/Buttons/DeleteButton";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
@@ -76,15 +77,13 @@ function Buttons({ comment, review, comments, setComments }) {
 
   return (
     <div className="flex items-center gap-1">
-      <VoteButton
+      <LikeButton
         content={comment}
-        type="like"
         handleContent={likeComment}
         updateContent={updateCommentState}
       />
-      <VoteButton
+      <DislikeButton
         content={comment}
-        type="dislike"
         handleContent={dislikeComment}
         updateContent={updateCommentState}
       />

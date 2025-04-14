@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PostButton from "src/components/Buttons/PostButton";
+import ReviewButton from "src/components/Buttons/ReviewButton";
 import ListButton from "src/components/Buttons/ListButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import LikeMediaButton from "./LikeMediaButton";
@@ -30,7 +30,7 @@ export default function BannerButtons({ mediaId, name, category }) {
         category={category}
       />
 
-      <PostButton
+      <ReviewButton
         isModalOpen={isReviewModalOpen}
         setIsModalOpen={setIsReviewModalOpen}
         showIcon={true}

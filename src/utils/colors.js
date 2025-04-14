@@ -1,4 +1,4 @@
-import { getPalette } from "./getPalette";
+import { Vibrant } from "node-vibrant/browser";
 
 export async function getColors(profileUrl) {
   const palette = await getPalette(profileUrl);
@@ -8,6 +8,17 @@ export async function getColors(profileUrl) {
     dark: palette.DarkMuted,
     text: palette.LightVibrant,
   };
+}
+
+async function getPalette(src) {
+  const palette = await new Vibrant(src).getPalette();
+
+  const formattedPalette = Object.keys(palette).reduce((acc, key) => {
+    acc[key] = palette[key].hex;
+    return acc;
+  }, {});
+
+  return formattedPalette;
 }
 
 export async function getColorPalette(profileUrl) {

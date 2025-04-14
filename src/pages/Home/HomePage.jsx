@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Tabs from "src/components/Tabs";
 import Loading from "src/components/Loading";
-import PostButton from "src/components/Buttons/PostButton";
+import ReviewButton from "src/components/Buttons/ReviewButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import FeedResults from "./components/FeedResults";
@@ -60,7 +60,10 @@ function Header({ activeTab, setActiveTab }) {
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div className="ml-auto">
-        <PostButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <ReviewButton
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       </div>
     </div>
   );

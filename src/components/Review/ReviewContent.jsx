@@ -1,14 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
-import VoteButton from "../Buttons/VoteButton";
+import LikeButton from "../Buttons/LikeButton";
 import DeleteButton from "../Buttons/DeleteButton";
-import { useState } from "react";
+import DislikeButton from "../Buttons/DislikeButton";
 
 function ReviewUser({ review, showIcon = true }) {
   return (
@@ -129,7 +130,7 @@ function ReviewButtons({ review, showComment = true }) {
     }
 
     updateGlobalUserLikes(reviewId, "review");
-
+    
     return await likeReview(reviewId, userId);
   }
 
@@ -176,15 +177,13 @@ function ReviewButtons({ review, showComment = true }) {
   return (
     <div className="ml-1 flex items-center gap-4">
       <div className="flex items-center">
-        <VoteButton
+        <LikeButton
           content={review}
-          type="like"
           handleContent={handleLike}
           updateContent={updateReviewState}
         />
-        <VoteButton
+        <DislikeButton
           content={review}
-          type="dislike"
           handleContent={handleDislike}
           updateContent={updateReviewState}
         />

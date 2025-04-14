@@ -81,6 +81,8 @@ export function useList() {
       listData = {
         id: uuidv4(),
         ...listData,
+        likes: [],
+        dislikes: [],
         createdAt: new Date(),
       };
 
@@ -173,33 +175,78 @@ export function useList() {
       if (usersDoc.empty) return;
 
       usersDoc.forEach((doc) => {
-        unlikeList(listId, doc.id);
+        unsaveList(listId, userId, doc.id);
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function unlikeList(listId, userId) {
+  async function saveList(listId, ownerId, userId) {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
       if (!userRef || userDoc.empty) return;
 
-      const likes = userDoc.data().likes;
-      const listLikes = likes.find((like) => like.category === "list");
-      if (!listLikes) return;
+      if (userDoc.data().savedLists.includes(listId)) {
+        await unsaveList(listId, ownerId, userId);
+        return;
+      } else {
+        await updateDoc(userRef, {
+          savedLists: arrayUnion(listId),
+        });
+      }
 
-      const newListLikes = listLikes.content.filter((id) => id !== listId);
+      const ownerRef = doc(db, "users", ownerId);
+      const ownerDoc = await getDoc(ownerRef);
+
+      if (!ownerRef || ownerDoc.empty) return;
+
+      const mergedList = ownerDoc.data().lists.map((list) => {
+        return list.id === listId
+          ? {
+              ...list,
+              saves: [...list.saves, userId],
+            }
+          : list;
+      });
+
+      await updateDoc(ownerRef, {
+        lists: mergedList,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function unsaveList(listId, ownerId, userId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
 
       await updateDoc(userRef, {
-        likes: likes.map((like) => {
-          if (like.category === "list") {
-            return { category: "list", content: newListLikes };
-          }
-          return like;
-        }),
+        savedLists: userDoc.data().savedLists.filter((id) => id !== listId),
+      });
+
+      const ownerRef = doc(db, "users", ownerId);
+      const ownerDoc = await getDoc(ownerRef);
+
+      if (!ownerRef || ownerDoc.empty) return;
+
+      const updatedLists = ownerDoc.data().lists.map((list) => {
+        return list.id === listId
+          ? {
+              ...list,
+              saves: list.saves.filter((id) => id !== userId),
+            }
+          : list;
+      });
+
+      await updateDoc(ownerRef, {
+        lists: updatedLists,
       });
     } catch (error) {
       console.log(error);
@@ -295,6 +342,8 @@ export function useList() {
     addToList,
     deleteList,
     deleteListItem,
+    saveList,
+    unsaveList,
 
     updateListDetails,
     reorderListItems,

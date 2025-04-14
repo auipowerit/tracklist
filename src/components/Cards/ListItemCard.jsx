@@ -1,6 +1,6 @@
-export default function MediaListCard({ title, subtitle, image, index }) {
+export default function ListItemCard({ title, subtitle, image, index }) {
   return (
-    <div className="flex w-48 flex-col gap-1">
+    <div className="flex w-48 flex-col gap-1 border-1 border-transparent hover:border-white">
       <div className="relative">
         <img src={image} className="h-48 w-48 object-cover" />
         {index && (

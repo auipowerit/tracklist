@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PostButton from "src/components/Buttons/PostButton";
+import ReviewButton from "src/components/Buttons/ReviewButton";
 import ReviewsList from "./components/ReviewsList";
 import { useOutletContext } from "react-router-dom";
 
@@ -24,7 +24,10 @@ function Header({ canEdit }) {
     <div className="flex items-center justify-between border-b-1 border-white pb-4 align-middle">
       <p className="text-2xl text-white">Reviews</p>
       {canEdit && (
-        <PostButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <ReviewButton
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </div>
   );

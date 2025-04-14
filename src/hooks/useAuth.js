@@ -39,6 +39,7 @@ export function useAuth() {
         folllowing: [],
         followers: [],
         lists: [],
+        savedLists: [],
         likes: [],
         createdAt: new Date(),
       };

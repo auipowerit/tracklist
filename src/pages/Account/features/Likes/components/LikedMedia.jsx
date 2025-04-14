@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import MediaListCard from "src/components/Cards/MediaListCard";
+import ListItemCard from "src/components/Cards/ListItemCard";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function LikedMedia({ user, activeTab }) {
@@ -40,7 +40,7 @@ export default function LikedMedia({ user, activeTab }) {
             {media.map((entry) => {
               return (
                 <Link key={entry.id} to={entry.titleLink} className="w-fit">
-                  <MediaListCard
+                  <ListItemCard
                     title={entry.title}
                     subtitle={entry.subtitle}
                     image={entry.image}

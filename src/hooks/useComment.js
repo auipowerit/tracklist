@@ -160,8 +160,10 @@ export function useComment() {
   return {
     getCommentById,
     getReviewComments,
+    
     addComment,
     deleteComment,
+
     likeComment,
     dislikeComment,
   };

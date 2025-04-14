@@ -8,7 +8,7 @@ import {
   ReviewUser,
 } from "../Review/ReviewContent";
 
-export default function FeedReviewCard({ review }) {
+export default function ReviewCard({ review }) {
   const { getMediaLinks } = useSpotifyContext();
 
   const navigate = useNavigate();

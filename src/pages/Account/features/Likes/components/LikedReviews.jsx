@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FeedReviewCard from "src/components/Cards/FeedReviewCard";
+import ReviewCard from "src/components/Cards/ReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function LikedReviews({ user }) {
@@ -29,7 +29,7 @@ export default function LikedReviews({ user }) {
       {reviews &&
         (reviews.length > 0 ? (
           reviews.map((review) => {
-            return <FeedReviewCard key={review.id} review={review} />;
+            return <ReviewCard key={review.id} review={review} />;
           })
         ) : (
           <p className="m-20 text-center text-2xl text-gray-300 italic">

@@ -1,12 +1,12 @@
 import { closestCenter, DndContext } from "@dnd-kit/core";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useListContext } from "src/context/List/ListContext";
 import {
   arrayMove,
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
 import DraggableItem from "./DraggableItem";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-import { useListContext } from "src/context/List/ListContext";
 
 export default function DraggableList({ items, setItems, list }) {
   const { globalUser } = useAuthContext();

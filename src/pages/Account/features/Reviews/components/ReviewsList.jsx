@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import FeedReviewCard from "src/components/Cards/FeedReviewCard";
+import ReviewCard from "src/components/Cards/ReviewCard";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 
 export default function ReviewsList({ user }) {
@@ -37,7 +37,7 @@ export default function ReviewsList({ user }) {
     (reviews.length > 0 ? (
       <ul className="flex w-full flex-col gap-4">
         {reviews.map((review) => {
-          return <FeedReviewCard key={review.id} review={review} />;
+          return <ReviewCard key={review.id} review={review} />;
         })}
       </ul>
     ) : (

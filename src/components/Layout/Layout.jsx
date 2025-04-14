@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import ToTopButton from "../Buttons/ToTopButton";
+import ToTop from "./ToTop.jsx";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 
@@ -12,7 +12,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <ToTopButton />
+      <ToTop />
 
       <Footer />
     </div>

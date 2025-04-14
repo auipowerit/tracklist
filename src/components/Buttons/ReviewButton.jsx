@@ -6,7 +6,7 @@ import Modal from "../Modal";
 import ReviewForm from "../Review/ReviewForm";
 import { Tooltip } from "react-tooltip";
 
-export default function PostButton(props) {
+export default function ReviewButton(props) {
   const {
     isModalOpen,
     setIsModalOpen,

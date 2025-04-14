@@ -89,7 +89,7 @@ function Profile({ user }) {
 
   return (
     <Link
-      to="/profile"
+      to={`/users/${user.username}`}
       className={`flex items-center gap-2 hover:text-white ${isHomePage && "text-white"}`}
     >
       <img

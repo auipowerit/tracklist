@@ -4,7 +4,6 @@ import Tabs from "src/components/Tabs";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LikedMedia from "./components/LikedMedia";
-import LikedLists from "./components/LikedLists";
 import LikedReviews from "./components/LikedReviews";
 
 export default function AccountLikes() {
@@ -16,7 +15,6 @@ export default function AccountLikes() {
     { id: "album", label: "Albums" },
     { id: "track", label: "Tracks" },
     { id: "review", label: "Reviews" },
-    { id: "list", label: "Lists" },
   ];
 
   return (
@@ -53,8 +51,6 @@ function LikedContent({ activeTab, user }) {
     <div className="p-4">
       {activeTab === "review" ? (
         <LikedReviews user={user} />
-      ) : activeTab === "list" ? (
-        <LikedLists user={user} />
       ) : (
         <LikedMedia user={user} activeTab={activeTab} />
       )}

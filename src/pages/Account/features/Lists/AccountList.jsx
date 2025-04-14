@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
+import ListItemCard from "src/components/Cards/ListItemCard";
 import ListHeader from "./components/ListHeader";
 import DraggableList from "./components/DraggableList";
 import ListDataFetcher from "./components/ListDataFetcher";
-import { useState } from "react";
-import MediaListCard from "src/components/Cards/MediaListCard";
+import StaticList from "./components/StaticList";
 
 export default function AccountList() {
   const params = useParams();
@@ -45,7 +46,7 @@ function RenderList({ list, items, setItems, isEditing }) {
           isEditing ? (
             <DraggableList items={items} setItems={setItems} list={list} />
           ) : (
-            <List items={items} list={list} />
+            <StaticList items={items} list={list} />
           )
         ) : (
           <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
@@ -55,19 +56,4 @@ function RenderList({ list, items, setItems, isEditing }) {
       </div>
     </div>
   );
-}
-
-function List({ items, list }) {
-  return items.map((item, index) => (
-    <div key={item.id}>
-      <Link to={item.titleLink}>
-        <MediaListCard
-          title={item.title}
-          subtitle={item.subtitle}
-          image={item.image}
-          index={list.isRanking && index + 1}
-        />
-      </Link>
-    </div>
-  ));
 }

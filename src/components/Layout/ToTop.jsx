@@ -2,7 +2,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-export default function ToTopButton() {
+export default function ToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

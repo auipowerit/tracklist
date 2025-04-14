@@ -1,7 +1,7 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import MediaListCard from "src/components/Cards/MediaListCard";
+import ListItemCard from "src/components/Cards/ListItemCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function DraggableItem({ item, index, handleDelete, list }) {
@@ -17,6 +17,7 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    touchAction: "none",
   };
 
   return (
@@ -31,7 +32,7 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
           {...listeners}
           className={`cursor-grab ${!isDragging && "opacity-50"}`}
         >
-          <MediaListCard
+          <ListItemCard
             title={item.title}
             subtitle={item.subtitle}
             image={item.image}
