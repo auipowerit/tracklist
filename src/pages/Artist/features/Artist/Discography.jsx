@@ -5,17 +5,8 @@ import SortMusic from "src/components/Sort/SortMusic";
 import MediaCard from "src/components/Cards/MediaCard";
 
 export default function Discography(props) {
-  const { title, media, setMedia, category } = props;
-
   return (
-    <div className="flex w-full flex-col">
-      <Header
-        title={title}
-        media={media}
-        setMedia={setMedia}
-        category={category}
-      />
-
+    <div className="flex w-full flex-col items-center">
       <MediaList {...props} />
     </div>
   );
@@ -37,15 +28,23 @@ function Header({ title, media, setMedia, category }) {
   );
 }
 
-function MediaList({ media, category, isMore, loadMedia }) {
+function MediaList({ media, setMedia, isMore, loadMedia }) {
   const [page, setPage] = useState(0);
 
   return (
-    <div>
+    <div className="flex w-full flex-col justify-center gap-6">
+      <SortMusic
+        results={media}
+        setResults={setMedia}
+        initialResults={media}
+        category={"album"}
+        search={false}
+      />
+
       {media &&
         (media.length > 0 ? (
-          <div className="grid h-full w-fit gap-8 gap-x-8 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-            <MediaItems media={media} category={category} />
+          <div className="flex h-full w-full flex-wrap justify-center gap-8">
+            <MediaItems media={media} />
 
             {isMore && (
               <LoadMoreButton
@@ -62,7 +61,7 @@ function MediaList({ media, category, isMore, loadMedia }) {
   );
 }
 
-function MediaItems({ media, category }) {
+function MediaItems({ media }) {
   return (
     <>
       {media.map((music) => {
@@ -74,7 +73,6 @@ function MediaItems({ media, category }) {
               key={music.id}
               media={music}
               defaultSubtitle={formatDateMDYLong(music.release_date)}
-              category={category}
             />
           </Link>
         );

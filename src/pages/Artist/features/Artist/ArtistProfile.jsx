@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import MediaBanner from "../../compontents/MediaBanner";
 import Discography from "./Discography";
+import Tabs from "src/components/Tabs";
+import MediaReviews from "../../compontents/MediaReviews";
 
 export default function ArtistProfile() {
   const context = useOutletContext();
@@ -14,6 +16,13 @@ export default function ArtistProfile() {
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState(null);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
+  const [activeTab, setActiveTab] = useState("albums");
+
+  const tabs = [
+    { id: "albums", label: "Albums" },
+    { id: "singles", label: "Singles" },
+    { id: "reviews", label: "Reviews" },
+  ];
 
   useEffect(() => {
     const getArtistData = async () => {
@@ -46,26 +55,32 @@ export default function ArtistProfile() {
   }
 
   return (
-    <div className="m-auto flex min-h-screen w-full flex-2 flex-col items-center gap-8 p-10">
+    <div className="flex min-h-screen w-full flex-col items-center gap-8">
       <MediaBanner media={artist} category={"artist"} />
 
-      <Discography
-        media={albums}
-        setMedia={setAlbums}
-        category={"album"}
-        title={"Albums"}
-        loadMedia={loadAlbums}
-        isMore={isMoreAlbums}
-      />
+      <div className="mt-6 flex h-full w-full justify-center bg-black/50">
+        <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
+          <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <Discography
-        media={singles}
-        setMedia={setSingles}
-        category={"track"}
-        title={"Singles"}
-        loadMedia={loadSingles}
-        isMore={isMoreSingles}
-      />
+          {activeTab === "reviews" ? (
+            <MediaReviews mediaId={artist?.id} />
+          ) : activeTab === "albums" ? (
+            <Discography
+              media={albums}
+              setMedia={setAlbums}
+              isMore={isMoreAlbums}
+              loadMedia={loadAlbums}
+            />
+          ) : (
+            <Discography
+              media={singles}
+              setMedia={setSingles}
+              isMore={isMoreSingles}
+              loadMedia={loadSingles}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

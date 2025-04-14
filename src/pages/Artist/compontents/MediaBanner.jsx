@@ -29,7 +29,7 @@ function MediaBanner({ media, category }) {
   if (!data) return;
 
   return (
-    <div className="flex h-64 items-center text-center shadow-md shadow-black/50">
+    <div className="mt-10 mb-20 flex h-64 items-center text-center shadow-md shadow-black/50">
       <SpotifyImage
         image={data.image}
         spotifyURL={media.external_urls.spotify}

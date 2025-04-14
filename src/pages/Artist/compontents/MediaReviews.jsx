@@ -18,8 +18,10 @@ export default function MediaReviews({ mediaId }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 p-6">
-      <Header setReviews={setReviews} reviews={reviews} />
+    <div className="flex w-full flex-col gap-4">
+      {reviews?.length > 0 && (
+        <SortReviews reviews={reviews} setReviews={setReviews} />
+      )}
       {reviews && <Reviews reviews={reviews} />}
     </div>
   );
@@ -36,7 +38,7 @@ function Header({ setReviews, reviews }) {
 
 function Reviews({ reviews }) {
   return (
-    <div className="flex flex-col gap-6 border-t-1 border-white py-6">
+    <div className="ml-6 flex flex-col gap-6">
       {reviews &&
         (reviews.length > 0 ? (
           reviews.map((review) => {

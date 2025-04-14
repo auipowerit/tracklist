@@ -28,7 +28,7 @@ export default function DislikeButton(props) {
   return (
     <button
       onClick={handleClick}
-      className={`text-md flex w-12 items-center gap-1 font-light transition-colors duration-150 ${userVoted ? "text-red-700" : "hover:text-red-700"}`}
+      className={`text-md flex w-12 items-center gap-1 font-light transition-colors duration-150 ${userVoted ? "text-red-500" : "hover:text-red-500"}`}
     >
       <FontAwesomeIcon icon={faThumbsDown} className={isActive && "fa-beat"} />
       <p>{content?.dislikes.length}</p>

@@ -3,31 +3,50 @@ import { Link, useOutletContext } from "react-router-dom";
 import { ReviewStars } from "src/components/Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import MediaBanner from "../../compontents/MediaBanner";
+import Tabs from "src/components/Tabs";
+import MediaReviews from "../../compontents/MediaReviews";
 
 export default function AlbumProfile() {
   const context = useOutletContext();
   const { artist, album } = context;
 
+  const [activeTab, setActiveTab] = useState("tracks");
   const tracks = useMemo(() => album?.tracks.items, [album]);
 
+  const tabs = [
+    { id: "tracks", label: "Tracks" },
+    { id: "reviews", label: "Reviews" },
+  ];
+
   return (
-    <div className="m-auto flex min-h-screen w-full flex-2 flex-col items-center gap-8 p-10">
+    <div className="flex min-h-screen w-full flex-col items-center gap-8">
       <MediaBanner media={album} category={"album"} />
-      <TrackList artistId={artist?.id} albumId={album?.id} tracks={tracks} />
+
+      <div className="mt-6 flex h-full w-full justify-center bg-black/50">
+        <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
+          <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+
+          {activeTab === "reviews" ? (
+            <MediaReviews mediaId={album?.id} />
+          ) : (
+            <TrackList
+              artistId={artist?.id}
+              albumId={album?.id}
+              tracks={tracks}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
 
 function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div className="flex w-full flex-col">
-      <p className="mb-4 w-fit border-b-2 border-white pr-6 pb-2 text-4xl font-bold">
-        Tracks
-      </p>
-
-      <div className="flex min-h-80 flex-2 items-start gap-8">
+    <div className="flex w-full flex-col items-center">
+      <div className="flex min-h-80 w-full flex-2 items-start gap-8">
         {tracks && tracks.length > 0 && (
-          <ul className="grid grid-cols-3 gap-4 p-4">
+          <ul className="grid w-full grid-cols-4 gap-4 p-4">
             {tracks.map((track) => {
               return (
                 <li key={track.id}>

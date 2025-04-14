@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaReviews from "./compontents/MediaReviews";
 import MediaGradient from "src/components/MediaGradient";
 import Navigation from "./compontents/Navigation";
 import Loading from "src/components/Loading";
@@ -90,7 +89,11 @@ export default function ArtistPage() {
   return (
     <div className="flex h-full gap-8">
       <MediaGradient
-        image={memoizedMedia.album?.images?.[0]?.url || DEFAULT_IMG}
+        image={
+          memoizedMedia.album?.images?.[0]?.url ||
+          memoizedMedia.artist?.images?.[0]?.url ||
+          DEFAULT_IMG
+        }
       />
 
       <div className="flex flex-2 flex-col">
@@ -100,19 +103,13 @@ export default function ArtistPage() {
           track={memoizedMedia.track}
           category={category}
         />
-        <div className="px-6">
-          <Outlet
-            context={{
-              artist: memoizedMedia.artist,
-              album: memoizedMedia.album,
-              track: memoizedMedia.track,
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="h-full w-full flex-1 bg-black/50">
-        <MediaReviews mediaId={mediaId} />
+        <Outlet
+          context={{
+            artist: memoizedMedia.artist,
+            album: memoizedMedia.album,
+            track: memoizedMedia.track,
+          }}
+        />
       </div>
     </div>
   );

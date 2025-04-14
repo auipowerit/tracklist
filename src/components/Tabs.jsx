@@ -14,7 +14,7 @@ export default function Tabs(props) {
           className={`border-b-2 px-4 pb-2 text-2xl font-semibold ${
             activeTab === tab.id
               ? "border-green-700 text-green-700"
-              : "border-transparent text-gray-500 hover:text-green-700"
+              : "border-transparent text-gray-300 hover:text-green-700"
           }`}
           onClick={() => handleClick(tab)}
         >
