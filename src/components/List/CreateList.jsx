@@ -15,8 +15,7 @@ export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list } = props;
 
   const { globalUser } = useAuthContext();
-  const { checkIfListExists, createNewList, updateListDetails } =
-    useListContext();
+  const { createNewList, updateListDetails } = useListContext();
 
   const [name, setName] = useState(list?.name || "");
 
@@ -51,15 +50,12 @@ export default function CreateList(props) {
     if (!listData) return;
 
     if (list) {
-      await updateListDetails(list.id, listData, globalUser.uid);
+      await updateListDetails(list.id, listData);
       setIsModalOpen(false);
       window.location.reload();
       resetValues();
       return;
     }
-
-    const listExists = await checkIfListExists(listData.name, globalUser.uid);
-    if (listExists) return;
 
     await createNewList(listData, globalUser.uid);
 

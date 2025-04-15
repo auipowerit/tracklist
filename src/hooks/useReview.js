@@ -88,21 +88,19 @@ export function useReview() {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
 
-      if (reviewDoc.exists()) {
-        const user = await getUserById(reviewDoc.data().userId);
-        return {
-          id: reviewDoc.id,
-          ...reviewDoc.data(),
-          username: user.username,
-          profileUrl: user.profileUrl,
-          media: await getMediaById(
-            reviewDoc.data().mediaId,
-            reviewDoc.data().category,
-          ),
-        };
-      } else {
-        return null;
-      }
+      if (!reviewDoc.exists()) return null;
+
+      const user = await getUserById(reviewDoc.data().userId);
+      return {
+        id: reviewDoc.id,
+        ...reviewDoc.data(),
+        username: user.username,
+        profileUrl: user.profileUrl,
+        media: await getMediaById(
+          reviewDoc.data().mediaId,
+          reviewDoc.data().category,
+        ),
+      };
     } catch (error) {
       console.error(error.message);
     }

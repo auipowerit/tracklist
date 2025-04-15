@@ -20,7 +20,7 @@ export default function ListDataFetcher({ listId, user, canEdit }) {
 
   async function fetchListData() {
     try {
-      const list = await getListById(listId, user.uid);
+      const list = await getListById(listId);
 
       if (!list) return;
 

@@ -28,7 +28,7 @@ export default function SaveButton({ list, user }) {
 
     setSaves(isSaved ? saves - 1 : saves + 1);
     setIsSaved(!isSaved);
-    await saveList(list.id, user.uid, globalUser.uid);
+    await saveList(list.id, globalUser.uid);
   }
 
   return (

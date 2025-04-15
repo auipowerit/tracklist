@@ -35,7 +35,7 @@ export default function AddToList(props) {
     if (!globalUser) return;
 
     if (listId) {
-      const fetchedList = await getListById(listId, globalUser.uid);
+      const fetchedList = await getListById(listId);
       setCurrentLists([fetchedList]);
     }
 
@@ -76,9 +76,7 @@ export default function AddToList(props) {
     if (!globalUser || !media || currentLists.length === 0) return;
 
     await Promise.all(
-      currentLists.map((list) =>
-        addToList(media.id, type, list.name, globalUser.uid),
-      ),
+      currentLists.map((list) => addToList(media.id, type, list.id)),
     );
 
     setIsModalOpen(false);

@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
 import {
+  addDoc,
   arrayUnion,
   collection,
   doc,
@@ -10,20 +10,19 @@ import {
 import { db } from "../config/firebase";
 
 export function useList() {
-  async function getListById(listId, userId) {
+  async function getListById(listId) {
     try {
-      if (!userId || !listId) return;
+      if (!listId) return;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!listDoc.exists()) return null;
 
-      const existingList = userDoc
-        .data()
-        .lists.find((list) => list.id === listId);
-
-      return existingList || null;
+      return {
+        id: listDoc.id,
+        ...listDoc.data(),
+      };
     } catch (error) {
       console.log(error);
     }
@@ -38,28 +37,16 @@ export function useList() {
 
       if (!userRef || userDoc.empty) return;
 
-      return userDoc.data().lists;
+      const lists = userDoc.data().lists.map((id) => doc(db, "lists", id));
+      const listDocs = await Promise.all(
+        lists.map((listRef) => getDoc(listRef)),
+      );
+
+      return listDocs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  async function checkIfListExists(name, userId) {
-    try {
-      if (!name || !userId) return false;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return false;
-
-      const existingList =
-        userDoc.data().lists.find((list) => list.name === name) || null;
-
-      return existingList !== null;
-    } catch (error) {
-      console.log(error);
-      return false;
     }
   }
 
@@ -67,66 +54,44 @@ export function useList() {
     try {
       if (!listData || !userId) return;
 
+      const list = {
+        ...listData,
+        userId: userId,
+        saves: [],
+        createdAt: new Date(),
+      };
+
+      const listRef = collection(db, "lists");
+      const newList = await addDoc(listRef, list);
+
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
       if (!userRef || userDoc.empty) return;
 
-      const listExists = userDoc
-        .data()
-        .lists.find((list) => list.name === listData.title);
-
-      if (listExists) return;
-
-      listData = {
-        id: uuidv4(),
-        ...listData,
-        likes: [],
-        dislikes: [],
-        createdAt: new Date(),
-      };
-
       await updateDoc(userRef, {
-        lists: arrayUnion(listData),
+        lists: arrayUnion(newList.id),
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function addToList(mediaId, category, name, userId) {
+  async function addToList(mediaId, category, listId) {
     try {
-      if (!mediaId || !category || !name || !userId) return false;
+      if (!mediaId || !category || !listId) return false;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
 
-      if (!userRef || userDoc.empty) return false;
+      if (!listRef || listDoc.empty) return false;
 
-      if (
-        !(await checkIfListExists(name, userId)) ||
-        (await checkIfMediaExistsInList(name, mediaId, userId))
-      ) {
+      if (listDoc.data().media.some((media) => media.id === mediaId)) {
         return false;
       }
 
-      const newMedia = {
-        id: mediaId,
-        category: category,
-      };
-
-      // Create new merged list with existing media and new media
-      const mergedList = userDoc.data().lists.map((list) => {
-        return list.name === name
-          ? {
-              ...list,
-              media: [...list.media, newMedia],
-            }
-          : list;
-      });
-
-      await updateDoc(userRef, {
-        lists: mergedList,
+      await updateDoc(listRef, {
+        media: arrayUnion({ id: mediaId, category: category }),
       });
 
       return true;
@@ -136,38 +101,23 @@ export function useList() {
     }
   }
 
-  async function checkIfMediaExistsInList(name, mediaId, userId) {
+  async function deleteList(listId) {
     try {
-      if (!mediaId || !name || !userId) return false;
+      if (!listId) return;
 
-      const userRef = doc(db, "users", userId);
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
+
+      const userRef = doc(db, "users", listDoc.data().userId);
       const userDoc = await getDoc(userRef);
 
-      if (!userRef || userDoc.empty) return false;
-
-      const existingList = userDoc
-        .data()
-        .lists.find((list) => list.name === name);
-
-      return existingList.media.find((media) => media.id === mediaId);
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
-  async function deleteList(listId, userId) {
-    try {
-      if (!listId || !userId) return;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return;
+      if (!listRef || listDoc.empty || !userRef || userDoc.empty) return;
 
       await updateDoc(userRef, {
-        lists: userDoc.data().lists.filter((list) => list.id !== listId),
+        lists: userDoc.data().lists.filter((id) => id !== listId),
       });
+
+      await deleteDoc(listRef);
 
       const usersRef = collection(db, "users");
       const usersDoc = await getDocs(usersRef);
@@ -175,157 +125,113 @@ export function useList() {
       if (usersDoc.empty) return;
 
       usersDoc.forEach((doc) => {
-        unsaveList(listId, userId, doc.id);
+        unsaveList(listId, doc.id);
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function saveList(listId, ownerId, userId) {
+  async function saveList(listId, userId) {
     try {
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
+
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!listRef || listDoc.empty || !userRef || userDoc.empty) return;
+
+      await updateDoc(listRef, {
+        saves: arrayUnion(userId),
+      });
 
       if (userDoc.data().savedLists.includes(listId)) {
-        await unsaveList(listId, ownerId, userId);
+        unsaveList(listId, userId);
         return;
       } else {
         await updateDoc(userRef, {
           savedLists: arrayUnion(listId),
         });
       }
-
-      const ownerRef = doc(db, "users", ownerId);
-      const ownerDoc = await getDoc(ownerRef);
-
-      if (!ownerRef || ownerDoc.empty) return;
-
-      const mergedList = ownerDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              saves: [...list.saves, userId],
-            }
-          : list;
-      });
-
-      await updateDoc(ownerRef, {
-        lists: mergedList,
-      });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function unsaveList(listId, ownerId, userId) {
+  async function unsaveList(listId, userId) {
     try {
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
+
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!listRef || listDoc.empty || !userRef || userDoc.empty) return;
+
+      await updateDoc(listRef, {
+        saves: listDoc.data().saves.filter((id) => id !== userId),
+      });
 
       await updateDoc(userRef, {
         savedLists: userDoc.data().savedLists.filter((id) => id !== listId),
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      const ownerRef = doc(db, "users", ownerId);
-      const ownerDoc = await getDoc(ownerRef);
+  async function deleteListItem(itemId, listId) {
+    try {
+      if (!itemId || !listId) return;
 
-      if (!ownerRef || ownerDoc.empty) return;
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
 
-      const updatedLists = ownerDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              saves: list.saves.filter((id) => id !== userId),
-            }
-          : list;
-      });
+      if (!listRef || listDoc.empty) return;
 
-      await updateDoc(ownerRef, {
-        lists: updatedLists,
+      await updateDoc(listRef, {
+        media: listDoc.data().media.filter((item) => item.id !== itemId),
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function deleteListItem(itemId, listId, userId) {
+  async function updateListDetails(listId, details) {
     try {
-      if (!userId || !listId || !itemId) return;
+      if (!listId || !details) return false;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!listRef || listDoc.empty) return false;
 
-      const updatedLists = userDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              media: list.media.filter((media) => media.id !== itemId),
-            }
-          : list;
-      });
+      const updatedList = {
+        ...listDoc.data(),
+        ...details,
+        media: listDoc.data().media,
+      };
 
-      await updateDoc(userRef, {
-        lists: updatedLists,
-      });
+      await updateDoc(listRef, updatedList);
+
+      return true;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function updateListDetails(listId, details, userId) {
+  async function reorderListItems(listId, newOrder) {
     try {
-      if (!userId || !listId || !details) return false;
+      if (!listId || !newOrder) return;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const listRef = doc(db, "lists", listId);
+      const listDoc = await getDoc(listRef);
 
-      if (!userRef || userDoc.empty) return false;
+      if (!listRef || listDoc.empty) return;
 
-      const updatedLists = userDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              ...details,
-              media: list.media,
-            }
-          : list;
-      });
-
-      await updateDoc(userRef, {
-        lists: updatedLists,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function reorderListItems(listId, newOrder, userId) {
-    try {
-      if (!userId || !listId || !newOrder) return;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return;
-
-      const updatedLists = userDoc.data().lists.map((list) => {
-        return list.id === listId
-          ? {
-              ...list,
-              media: newOrder,
-            }
-          : list;
-      });
-
-      await updateDoc(userRef, {
-        lists: updatedLists,
+      await updateDoc(listRef, {
+        media: newOrder,
       });
     } catch (error) {
       console.log(error);
@@ -336,7 +242,6 @@ export function useList() {
     getListById,
     getListsByUserId,
 
-    checkIfListExists,
     createNewList,
 
     addToList,

@@ -46,6 +46,7 @@ function Lists({ user }) {
 
       try {
         let fetchedLists = await getListsByUserId(user.uid);
+        if (!fetchedLists) return;
 
         // Filter out private lists if logged in user is not the owner
         if (user.uid !== globalUser.uid) {
