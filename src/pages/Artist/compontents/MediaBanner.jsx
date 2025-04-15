@@ -16,7 +16,7 @@ function MediaBanner({ media, category }) {
   useEffect(() => {
     if (!media) return;
     fetchRating();
-  }, []);
+  }, [media]);
 
   async function fetchRating() {
     const { avgRating, count } = (await getAvgRating(media.id)) || {};

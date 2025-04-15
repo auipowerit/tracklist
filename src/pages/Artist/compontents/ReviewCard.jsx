@@ -23,8 +23,12 @@ export default function ReviewCard({ review }) {
 function Header({ review }) {
   return (
     <div className="flex items-center gap-2">
-      <img src={review.profileUrl} className="h-12 w-12 rounded-full" />
-
+      <Link
+        to={`/users/${review.username}`}
+        className="font-semibold hover:text-gray-300"
+      >
+        <img src={review.profileUrl} className="h-12 w-12 rounded-full" />
+      </Link>
       <div className="flex w-full items-start justify-between">
         <div className="flex flex-col gap-1">
           <UserInfo review={review} />

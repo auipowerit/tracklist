@@ -19,7 +19,7 @@ import {
 import { auth, db } from "../config/firebase";
 
 export function useAuth() {
-  async function signup(email, password, displayname, username) {
+  async function signup(email, password, displayname, username, profileUrl) {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -34,7 +34,7 @@ export function useAuth() {
         displayname,
         username,
         bio: "",
-        profileUrl: "/images/default-profile-img.jpg",
+        profileUrl: profileUrl || "/images/default-profile-img.jpg",
         spotifyUrl: "",
         folllowing: [],
         followers: [],

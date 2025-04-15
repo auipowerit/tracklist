@@ -14,3 +14,4 @@ export { default as ReviewPage } from "./Review/ReviewPage";
 export { default as ArtistProfile } from "./Artist/features/Artist/ArtistProfile";
 export { default as AlbumProfile } from "./Artist/features/Album/AlbumProfile";
 export { default as TrackProfile } from "./Artist/features/Track/TrackProfile";
+export { default as ChatPage } from "./Chat/ChatPage";

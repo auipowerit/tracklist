@@ -21,6 +21,11 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
+          path: "/authenticate/callback",
+          element: <Pages.AuthPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
           path: "/profile",
           element: <Pages.AccountPage />,
           children: [
@@ -81,6 +86,11 @@ export default function App() {
               errorElement: <Pages.ErrorPage is404={false} />,
             },
           ],
+        },
+        {
+          path: "/chats",
+          element: <Pages.ChatPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
           path: "/search",

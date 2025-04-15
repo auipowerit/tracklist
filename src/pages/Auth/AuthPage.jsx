@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 export default function AuthPage() {
   const navigate = useNavigate();

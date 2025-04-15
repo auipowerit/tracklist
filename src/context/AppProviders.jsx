@@ -1,17 +1,20 @@
+import ChatProvder from "./Chat/ChatProvider";
 import AuthProvider from "./Auth/AuthProvider";
+import ListProvider from "./List/ListProvider";
 import ReviewProvider from "./Review/ReviewProvider";
 import CommentProvder from "./Comment/CommentProvider";
 import SpotifyProvider from "./Spotify/SpotifyProvider";
-import ListProvider from "./List/ListProvider";
 
 export default function AppProviders({ children }) {
   return (
     <AuthProvider>
       <ListProvider>
         <SpotifyProvider>
-          <ReviewProvider>
-            <CommentProvder>{children}</CommentProvder>
-          </ReviewProvider>
+          <ChatProvder>
+            <ReviewProvider>
+              <CommentProvder>{children}</CommentProvder>
+            </ReviewProvider>
+          </ChatProvder>
         </SpotifyProvider>
       </ListProvider>
     </AuthProvider>

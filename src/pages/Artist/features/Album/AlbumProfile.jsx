@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { ReviewStars } from "src/components/Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
-import MediaBanner from "../../compontents/MediaBanner";
 import Tabs from "src/components/Tabs";
 import MediaReviews from "../../compontents/MediaReviews";
 
@@ -19,24 +18,14 @@ export default function AlbumProfile() {
   ];
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center gap-8">
-      <MediaBanner media={album} category={"album"} />
+    <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div className="mt-6 flex h-full w-full justify-center bg-black/50">
-        <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
-          <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-
-          {activeTab === "reviews" ? (
-            <MediaReviews mediaId={album?.id} />
-          ) : (
-            <TrackList
-              artistId={artist?.id}
-              albumId={album?.id}
-              tracks={tracks}
-            />
-          )}
-        </div>
-      </div>
+      {activeTab === "reviews" ? (
+        <MediaReviews mediaId={album?.id} />
+      ) : (
+        <TrackList artistId={artist?.id} albumId={album?.id} tracks={tracks} />
+      )}
     </div>
   );
 }

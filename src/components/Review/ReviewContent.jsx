@@ -130,7 +130,7 @@ function ReviewButtons({ review, showComment = true }) {
     }
 
     updateGlobalUserLikes(reviewId, "review");
-    
+
     return await likeReview(reviewId, userId);
   }
 

@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
-import MediaGradient from "src/components/MediaGradient";
-import Navigation from "./compontents/Navigation";
 import Loading from "src/components/Loading";
+import MediaGradient from "src/components/MediaGradient";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import Navigation from "./compontents/Navigation";
+import MediaBanner from "./compontents/MediaBanner";
 
 export default function ArtistPage() {
   const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
@@ -103,13 +104,24 @@ export default function ArtistPage() {
           track={memoizedMedia.track}
           category={category}
         />
-        <Outlet
-          context={{
-            artist: memoizedMedia.artist,
-            album: memoizedMedia.album,
-            track: memoizedMedia.track,
-          }}
-        />
+        <div className="flex min-h-screen w-full flex-col items-center gap-8">
+          <MediaBanner
+            media={
+              memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
+            }
+            category={category}
+          />
+
+          <div className="mt-6 flex h-full w-full justify-center bg-black/50">
+            <Outlet
+              context={{
+                artist: memoizedMedia.artist,
+                album: memoizedMedia.album,
+                track: memoizedMedia.track,
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
