@@ -46,8 +46,6 @@ export function useChat() {
         createdAt: new Date(),
       });
 
-      console.log(newChatDoc.id);
-
       await addUserChat(senderId, recipientId, newChatDoc.id);
       await addUserChat(recipientId, senderId, newChatDoc.id);
 
@@ -69,7 +67,6 @@ export function useChat() {
               chatId,
               lastMessage: "",
               recipientId,
-              isLiked: false,
               updatedAt: new Date(),
             },
           ],
@@ -80,7 +77,6 @@ export function useChat() {
             chatId,
             lastMessage: "",
             recipientId,
-            isLiked: false,
             updatedAt: new Date(),
           }),
         });
@@ -92,10 +88,14 @@ export function useChat() {
 
   async function sendMessage(chatId, senderId, recipientId, text) {
     try {
+      const id = Date.now().toString();
+
       await updateDoc(doc(db, "chats", chatId), {
         messages: arrayUnion({
+          id,
           senderId: senderId,
           text,
+          isLiked: false,
           createdAt: new Date(),
         }),
       });
@@ -122,6 +122,28 @@ export function useChat() {
 
         await updateDoc(userChatsRef, { chats: userChatsData.chats });
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function likeMessage(messageId, chatId, isLiked) {
+    try {
+      const chatDoc = doc(db, "chats", chatId);
+      const chatData = await getDoc(chatDoc);
+      const messages = chatData.data().messages;
+
+      const existingMessage = messages.find(
+        (message) => message.id === messageId,
+      );
+
+      if (existingMessage) {
+        await updateDoc(chatDoc, {
+          messages: messages.map((message) =>
+            message.id === messageId ? { ...message, isLiked } : message,
+          ),
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -155,5 +177,6 @@ export function useChat() {
 
     sendMessage,
     readMessage,
+    likeMessage,
   };
 }

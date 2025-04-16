@@ -34,7 +34,7 @@ export default function ChatInput({ recipient, chatId }) {
   return (
     <form
       onSubmit={handleNewMessage}
-      className="flex items-center justify-between gap-2 rounded-lg border-1 border-gray-500 bg-gray-800 px-4 py-4 pb-8"
+      className="flex items-center justify-between gap-2 rounded-lg border-1 border-gray-500 bg-gray-800 p-4 pb-8"
     >
       <input
         ref={inputRef}

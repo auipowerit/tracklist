@@ -30,9 +30,11 @@ export default function ChatWindow(props) {
       async (doc) => {
         const messageData = await Promise.all(
           doc.data().messages.map(async (message) => {
-            const user = await getUserById(message.senderId);
             await readMessage(chatId, message.senderId);
+
+            const user = await getUserById(message.senderId);
             return {
+              chatId,
               ...message,
               username: user.username,
               profileUrl: user.profileUrl,
@@ -49,7 +51,7 @@ export default function ChatWindow(props) {
   }
 
   return (
-    <div className="flex flex-2 flex-col gap-2 bg-gray-900 p-6">
+    <div className="flex flex-2 flex-col gap-2 bg-gray-900 px-4 py-4">
       {chatId === "-1" ? (
         <SearchUsers
           setActiveChatId={setActiveChatId}
@@ -149,13 +151,13 @@ function Messages({ messages }) {
   }
 
   return (
-    <div className="flex grow-1 flex-col gap-4 overflow-y-auto px-4">
+    <div className="flex grow-1 flex-col gap-4 overflow-y-auto">
       {messages &&
         messages.length > 0 &&
         messages.map((message, index) => {
           return (
             <MessageCard
-              key={index}
+              key={message.id}
               message={message}
               index={index}
               messages={messages}
@@ -170,13 +172,15 @@ function Messages({ messages }) {
 function MessageCard({ message, index, messages }) {
   const { globalUser } = useAuthContext();
 
+  const isCurrentUser = message.senderId === globalUser.uid;
+
   return (
-    <div
-      className={`flex w-full flex-col gap-1 ${message.senderId === globalUser.uid && "ml-auto items-end"}`}
-    >
+    <div className={"flex flex-col gap-1"}>
       <MessageDate message={message} index={index} messages={messages} />
 
-      <div className="flex items-center gap-2">
+      <div
+        className={`flex w-fit items-center gap-2 rounded-lg px-4 py-2 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
+      >
         <MessageImage message={message} />
         <div className="flex flex-col">
           <MessageUsername message={message} />
