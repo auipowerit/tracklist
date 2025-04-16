@@ -88,7 +88,12 @@ export default function App() {
           ],
         },
         {
-          path: "/chats",
+          path: "/messaging",
+          element: <Pages.ChatPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
+          path: "/messaging/:username",
           element: <Pages.ChatPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
         },

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInbox, faMessage } from "@fortawesome/free-solid-svg-icons";
+import ChatButton from "src/components/Buttons/ChatButton";
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -58,17 +59,11 @@ export default function AccountPage() {
         <NavLinks username={user.username} />
         {canEdit ? (
           <div className="flex items-center gap-4">
-            <FontAwesomeIcon
-              icon={faInbox}
-              className="cursor-pointer text-gray-400 hover:text-white"
-            />
+            <ChatButton />
             <LogoutButton />
           </div>
         ) : (
-          <FontAwesomeIcon
-            icon={faMessage}
-            className="cursor-pointer text-gray-400 hover:text-white"
-          />
+          <ChatButton username={user.username} />
         )}
       </div>
 

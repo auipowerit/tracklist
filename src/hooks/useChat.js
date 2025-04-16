@@ -11,7 +11,6 @@ import {
 export function useChat() {
   async function getChatById(chatId) {
     try {
-      console.log(chatId);
       const chatRef = doc(db, "chats", chatId);
       const chatDocSnap = await getDoc(chatRef);
 
@@ -69,26 +68,27 @@ export function useChat() {
             },
           ],
         });
-        return;
+      } else {
+        await updateDoc(doc(userChatsRef, friendId), {
+          chats: arrayUnion({
+            chatId: newChatDoc.id,
+            lastMessage: "",
+            recieverId: currentUserId,
+            updatedAt: new Date(),
+          }),
+        });
+
+        await updateDoc(doc(userChatsRef, currentUserId), {
+          chats: arrayUnion({
+            chatId: newChatDoc.id,
+            lastMessage: "",
+            recieverId: friendId,
+            updatedAt: new Date(),
+          }),
+        });
       }
 
-      await updateDoc(doc(userChatsRef, friendId), {
-        chats: arrayUnion({
-          chatId: newChatDoc.id,
-          lastMessage: "",
-          recieverId: currentUserId,
-          updatedAt: new Date(),
-        }),
-      });
-
-      await updateDoc(doc(userChatsRef, currentUserId), {
-        chats: arrayUnion({
-          chatId: newChatDoc.id,
-          lastMessage: "",
-          recieverId: friendId,
-          updatedAt: new Date(),
-        }),
-      });
+      return newChatDoc.id;
     } catch (error) {
       console.log(error);
     }
@@ -119,7 +119,7 @@ export function useChat() {
 
         userChatsData.chats[chatIndex].lastMessage = text;
         userChatsData.chats[chatIndex].isSeen =
-          userId === recieverId ? true : false;
+          userId === senderId ? true : false;
         userChatsData.chats[chatIndex].updatedAt = new Date();
 
         await updateDoc(userChatsDoc, { chats: userChatsData.chats });

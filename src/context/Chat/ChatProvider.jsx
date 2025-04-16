@@ -6,7 +6,7 @@ import ChatContext from "./ChatContext";
 import { useAuthContext } from "../Auth/AuthContext";
 
 export default function ChatProvder({ children }) {
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState(null);
 
   const { globalUser, getUserById } = useAuthContext();
   const useChatMethods = useChat();
@@ -14,9 +14,14 @@ export default function ChatProvder({ children }) {
   useEffect(() => {
     if (!globalUser) return;
 
-    const unsubscribe = onSnapshot(
+    const fetchUserChats = onSnapshot(
       doc(db, "userchats", globalUser.uid),
       async (doc) => {
+        if (!doc.exists()) {
+          setChats([]);
+          return;
+        }
+
         const chatData = await Promise.all(
           doc.data().chats.map(async (chat) => {
             const user = await getUserById(chat.recieverId);
@@ -31,7 +36,7 @@ export default function ChatProvder({ children }) {
       },
     );
 
-    return unsubscribe;
+    return fetchUserChats;
   }, [globalUser]);
 
   const chatMethods = {
