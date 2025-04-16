@@ -72,7 +72,7 @@ export default function ChatWindow(props) {
 function Header({ recipient }) {
   return (
     <p className="border-b-1 border-gray-400 pb-4 text-2xl font-bold">
-      Chatting with {recipient.displayname || "user"}
+      {recipient.displayname || "Display Name"}
     </p>
   );
 }
@@ -179,12 +179,12 @@ function MessageCard({ message, index, messages }) {
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`flex w-fit items-center gap-2 rounded-lg px-4 py-2 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
+        className={`flex w-fit items-center gap-2 overflow-auto rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
       >
         <MessageImage message={message} />
-        <div className="flex flex-col">
+        <div className="flex max-w-[400px] flex-col">
           <MessageUsername message={message} />
-          <p className="text-lg text-gray-300">{message.text}</p>
+          <p className="text-lg">{message.text}</p>
         </div>
       </div>
     </div>

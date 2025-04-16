@@ -85,7 +85,11 @@ function ChatCard({ handleOpenChat, chat, activeUser }) {
         <img src={chat.profileUrl} className="h-7 w-7 rounded-full" />
         <p>{chat.username}</p>
       </Link>
-      <p className={color}>{chat.lastMessage}</p>
+      <p className={color}>
+        {chat.lastMessage.length > 40
+          ? `${chat.lastMessage.slice(0, 40)}...`
+          : chat.lastMessage}
+      </p>
     </div>
   );
 }
