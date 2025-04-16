@@ -24,7 +24,7 @@ export default function ChatProvder({ children }) {
 
         const chatData = await Promise.all(
           doc.data().chats.map(async (chat) => {
-            const user = await getUserById(chat.recieverId);
+            const user = await getUserById(chat.recipientId);
             return {
               ...chat,
               ...user,

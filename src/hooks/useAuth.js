@@ -167,19 +167,19 @@ export function useAuth() {
     }
   }
 
-  async function searchFollowersByUsername(username, userId) {
+  async function searchFollowingByUsername(username, userId) {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
       if (!userRef || userDoc.empty) return [];
 
-      const followers = userDoc.data().followers;
+      const following = userDoc.data().following;
 
-      if (followers.length === 0) return [];
+      if (following.length === 0) return [];
 
-      const followersData = await Promise.all(
-        followers.map(async (followerId) => {
+      const followingData = await Promise.all(
+        following.map(async (followerId) => {
           const followerRef = doc(db, "users", followerId);
           const followerDoc = await getDoc(followerRef);
 
@@ -192,11 +192,11 @@ export function useAuth() {
         }),
       );
 
-      const foundFollowers = followersData.filter((follower) =>
-        follower.username.includes(username),
+      const foundFollowing = followingData.filter((following) =>
+        following.username.includes(username),
       );
 
-      return foundFollowers;
+      return foundFollowing;
     } catch (error) {
       console.log(error);
     }
@@ -342,7 +342,7 @@ export function useAuth() {
     getUserById,
     getUserByUsername,
     searchByUsername,
-    searchFollowersByUsername,
+    searchFollowingByUsername,
 
     getFollowingById,
     getFollowersById,

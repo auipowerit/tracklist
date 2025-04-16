@@ -76,7 +76,7 @@ function Header({ recipient }) {
 }
 
 function SearchUsers({ setActiveChatId, setActiveUser }) {
-  const { globalUser, getUserById, searchFollowersByUsername } =
+  const { globalUser, getUserById, searchFollowingByUsername } =
     useAuthContext();
   const { chats, addChat } = useChatContext();
 
@@ -88,7 +88,7 @@ function SearchUsers({ setActiveChatId, setActiveUser }) {
 
     if (e.target.value === "") return;
 
-    const fetchedUsers = await searchFollowersByUsername(input, globalUser.uid);
+    const fetchedUsers = await searchFollowingByUsername(input, globalUser.uid);
     setUsers(fetchedUsers);
   }
 
@@ -96,7 +96,7 @@ function SearchUsers({ setActiveChatId, setActiveUser }) {
     setUsers([]);
     setInput("");
 
-    const foundChat = chats.find((chat) => chat.recieverId === friendId);
+    const foundChat = chats.find((chat) => chat.recipientId === friendId);
 
     if (foundChat) {
       setActiveChatId(foundChat.chatId);
