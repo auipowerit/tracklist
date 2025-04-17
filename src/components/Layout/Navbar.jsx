@@ -1,26 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faHome,
-  faMailBulk,
   faSearch,
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useChatContext } from "src/context/Chat/ChatContext";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   const { globalUser } = useAuthContext();
+  const { chats, getUnreadChatsByUserId } = useChatContext();
 
+  const [unreadCount, setUnreadCount] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    const fetchUnreadChats = async () => {
+      if (!globalUser) return;
+      const count = await getUnreadChatsByUserId(globalUser.uid);
+      setUnreadCount(count);
+    };
+
+    fetchUnreadChats();
+
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
@@ -32,7 +41,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [globalUser, chats]);
 
   function handleUserClick() {
     if (globalUser) {
@@ -66,7 +75,7 @@ export default function Navbar() {
           </NavLink>
         </li>
         <div className="ml-auto flex items-center gap-6">
-          <li>
+          <li className="relative">
             <NavLink
               to="/messaging"
               className={({ isActive }) =>
@@ -75,6 +84,7 @@ export default function Navbar() {
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </NavLink>
+            {unreadCount > 0 && <NotificationBadge unreadCount={unreadCount} />}
           </li>
           <li>
             <div ref={dropdownRef} className="relative">
@@ -117,6 +127,14 @@ export default function Navbar() {
           </li>
         </div>
       </ul>
+    </div>
+  );
+}
+
+function NotificationBadge({ unreadCount }) {
+  return (
+    <div className="absolute -top-1 -right-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-700 text-sm font-bold text-white">
+      <p>{unreadCount}</p>
     </div>
   );
 }

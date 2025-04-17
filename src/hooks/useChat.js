@@ -55,6 +55,23 @@ export function useChat() {
     }
   }
 
+  async function getUnreadChatsByUserId(userId) {
+    try {
+      const userChatsRef = doc(db, "userchats", userId);
+      const userChatsDoc = await getDoc(userChatsRef);
+
+      if (!userChatsDoc.exists()) return null;
+
+      const unreadChats = userChatsDoc.data().chats.filter((chat) => {
+        return !chat.isSeen;
+      });
+
+      return unreadChats.length;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function addUserChat(senderId, recipientId, chatId) {
     try {
       const userChatRef = doc(db, "userchats", senderId);
@@ -200,12 +217,12 @@ export function useChat() {
 
       await Promise.all(
         [senderId, recipientId].map(async (userId) => {
-          const userChatsDoc = doc(db, "userchats", userId);
-          const userChatsDocSnap = await getDoc(userChatsDoc);
+          const userChatsRef = doc(db, "userchats", userId);
+          const userChatsDoc = await getDoc(userChatsRef);
 
-          if (userChatsDocSnap.empty) return;
+          if (userChatsDoc.empty) return;
 
-          const userChatsData = userChatsDocSnap.data();
+          const userChatsData = userChatsDoc.data();
           const chatIndex = userChatsData.chats.findIndex(
             (chat) => chat.chatId === chatId,
           );
@@ -216,7 +233,7 @@ export function useChat() {
             "This message was deleted.";
           userChatsData.chats[chatIndex].isSeen = true;
 
-          await updateDoc(userChatsDoc, { chats: userChatsData.chats });
+          await updateDoc(userChatsRef, { chats: userChatsData.chats });
         }),
       );
     } catch (error) {
@@ -227,6 +244,7 @@ export function useChat() {
   return {
     getChatById,
     getChatsByUserId,
+    getUnreadChatsByUserId,
 
     addChat,
 
