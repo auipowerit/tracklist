@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
-import ProfileCard from "src/components/Cards/ProfileCard";
+import UserCard from "src/components/Cards/UserCard";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 
 export default function FriendsList({ activeTab, user }) {
@@ -20,10 +20,10 @@ export default function FriendsList({ activeTab, user }) {
             : await getFollowersById(user.uid);
 
         const fetchedUsersDetails = await Promise.all(
-          fetchedUsers?.map(async (id) => {
-            const user = await getUserById(id);
+          fetchedUsers?.map(async (uid) => {
+            const user = await getUserById(uid);
             return {
-              id,
+              uid,
               ...user,
             };
           }) || [],
@@ -50,7 +50,7 @@ export default function FriendsList({ activeTab, user }) {
         (users.length > 0 ? (
           <ul className="flex w-full flex-col gap-4">
             {users.map((user) => {
-              return <ProfileCard key={user.id} user={user} />;
+              return <UserCard key={user.uid} user={user} />;
             })}
           </ul>
         ) : (

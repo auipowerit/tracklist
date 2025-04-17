@@ -1,22 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import FollowButton from "../Buttons/FollowButton";
 
-export default function ProfileCard({ user: propUser }) {
-  const { globalUser, followUser, unfollowUser } = useAuthContext();
+export default function UserCard({ user: propUser }) {
+  const { globalUser } = useAuthContext();
   const [user, setUser] = useState(null);
-
-  async function handleClick() {
-    user.isFollowing
-      ? await unfollowUser(user.id, globalUser?.uid)
-      : await followUser(user.id, globalUser?.uid);
-
-    setUser({
-      ...user,
-      isFollowing: !user.isFollowing,
-      followersCount: user.followersCount + (user.isFollowing ? -1 : 1),
-    });
-  }
 
   useEffect(() => {
     setUser({
@@ -54,13 +43,8 @@ export default function ProfileCard({ user: propUser }) {
         </div>
       </Link>
 
-      {globalUser && user.id !== globalUser?.uid && (
-        <button
-          onClick={() => handleClick()}
-          className="h-fit w-fit rounded-2xl border-1 border-white px-4 py-2 hover:text-gray-400"
-        >
-          {user.isFollowing ? "Unfollow" : "Follow"}
-        </button>
+      {globalUser && user.uid !== globalUser?.uid && (
+        <FollowButton user={user} setUser={setUser} />
       )}
     </div>
   );

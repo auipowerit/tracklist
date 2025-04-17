@@ -3,9 +3,9 @@ import { FaPaperPlane } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 
-export default function ChatInput({ recipient, chatId }) {
+export default function ChatInput() {
   const { globalUser } = useAuthContext();
-  const { sendMessage } = useChatContext();
+  const { activeChatId, activeChatUser, sendMessage } = useChatContext();
 
   const inputRef = useRef(null);
 
@@ -13,18 +13,18 @@ export default function ChatInput({ recipient, chatId }) {
     e.preventDefault();
 
     if (
-      !recipient ||
+      !activeChatUser ||
       !globalUser ||
-      !chatId ||
+      !activeChatId ||
       !inputRef ||
       inputRef.current.value.trim() === ""
     )
       return;
 
     await sendMessage(
-      chatId,
+      activeChatId,
       globalUser.uid,
-      recipient.uid,
+      activeChatUser.uid,
       inputRef.current.value,
     );
 
@@ -39,7 +39,7 @@ export default function ChatInput({ recipient, chatId }) {
       <input
         ref={inputRef}
         text="text"
-        placeholder={`Message ${recipient.displayname || "user"}...`}
+        placeholder={`Message ${activeChatUser.displayname || "user"}...`}
         className="flex-grow outline-0"
       />
       <button

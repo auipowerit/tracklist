@@ -93,11 +93,6 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
-          path: "/messaging/:username",
-          element: <Pages.ChatPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
           path: "/search",
           element: <Pages.SearchPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
@@ -139,12 +134,12 @@ export default function App() {
   ]);
 
   return (
-    <ErrorBoundary
-      FallbackComponent={(props) => <Pages.ErrorPage {...props} />}
-    >
-      <AppProviders>
-        <RouterProvider router={router} />
-      </AppProviders>
-    </ErrorBoundary>
+    <AppProviders>
+      <RouterProvider router={router}>
+        <ErrorBoundary
+          FallbackComponent={(props) => <Pages.ErrorPage {...props} />}
+        />
+      </RouterProvider>
+    </AppProviders>
   );
 }

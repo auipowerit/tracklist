@@ -1,57 +1,43 @@
 import { useEffect, useState } from "react";
 import ChatList from "./components/ChatList";
 import ChatWindow from "./components/ChatWindow";
-import { useParams } from "react-router-dom";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatPage() {
-  const { globalUser, getUserByUsername } = useAuthContext();
-  const { chats, addChat } = useChatContext();
+  const { globalUser, loadingUser } = useAuthContext();
+  const { setActiveChatId, setActiveChatUser, readMessage } = useChatContext();
 
-  const [activeChatId, setActiveChatId] = useState("-1");
-  const [activeUser, setActiveUser] = useState({});
+  const [chatWindowKey, setChatWindowKey] = useState(0);
 
-  const params = useParams();
-  const username = params.username;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserChat();
-  }, [username, globalUser, chats]);
+    const fetchUser = async () => {
+      if (loadingUser) return;
 
-  async function fetchUserChat() {
-    if (!username || !globalUser || !chats) return;
-
-    try {
-      const foundChat = chats.find((chat) => chat.username === username);
-      const recipient = await getUserByUsername(username);
-
-      if (foundChat) {
-        setActiveChatId(foundChat.chatId);
-        setActiveUser(recipient);
-      } else {
-        const chatId = await addChat(globalUser.uid, recipient.uid);
-        setActiveChatId(chatId);
-        setActiveUser(recipient);
+      if (!globalUser) {
+        navigate("/authenticate");
+        return;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    };
+
+    fetchUser();
+  }, [loadingUser, globalUser]);
+
+  async function handleOpenChat(chat) {
+    setActiveChatUser(chat);
+    setActiveChatId(chat.chatId);
+    setChatWindowKey(chat.chatId);
+
+    await readMessage(chat.chatId, globalUser.uid);
   }
 
   return (
     <div className="m-auto flex h-[750px] w-3/5 items-stretch">
-      <ChatList
-        activeUser={activeUser}
-        setActiveUser={setActiveUser}
-        setActiveChatId={setActiveChatId}
-      />
-      <ChatWindow
-        chatId={activeChatId}
-        setActiveChatId={setActiveChatId}
-        setActiveUser={setActiveUser}
-        recipient={activeUser}
-      />
+      <ChatList handleOpenChat={handleOpenChat} />
+      <ChatWindow key={chatWindowKey} />
     </div>
   );
 }

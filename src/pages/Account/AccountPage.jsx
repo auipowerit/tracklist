@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Link,
   Outlet,
@@ -5,14 +6,11 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import Loading from "src/components/Loading";
+import ChatButton from "src/components/Buttons/ChatButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import NavLinks from "./components/NavLinks";
 import LogoutButton from "./components/LogoutButton";
-import { useEffect, useState } from "react";
-import Loading from "src/components/Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInbox, faMessage } from "@fortawesome/free-solid-svg-icons";
-import ChatButton from "src/components/Buttons/ChatButton";
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -57,14 +55,7 @@ export default function AccountPage() {
       <div className="flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
         <Profile user={user} />
         <NavLinks username={user.username} />
-        {canEdit ? (
-          <div className="flex items-center gap-4">
-            <ChatButton />
-            <LogoutButton />
-          </div>
-        ) : (
-          <ChatButton username={user.username} />
-        )}
+        {canEdit ? <LogoutButton /> : <ChatButton username={user.username} />}
       </div>
 
       <div className="m-auto my-6 w-3/5">

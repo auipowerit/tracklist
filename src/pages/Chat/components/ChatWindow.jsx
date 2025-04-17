@@ -4,37 +4,33 @@ import { db } from "src/config/firebase";
 import { formatDateDMD } from "src/utils/date";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import ChatInput from "./ChatInput";
 import { useChatContext } from "src/context/Chat/ChatContext";
+import ChatInput from "./ChatInput";
 
-export default function ChatWindow(props) {
-  const { chatId, setActiveChatId, setActiveUser, recipient } = props;
-
-  const { getUserById } = useAuthContext();
-  const { readMessage } = useChatContext();
+export default function ChatWindow() {
+  const { globalUser, getUserById } = useAuthContext();
+  const { activeChatId, activeChatUser, readMessage } = useChatContext();
 
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     fetchMessages();
-  }, [chatId, recipient]);
+  }, [activeChatId, activeChatUser]);
 
   async function fetchMessages() {
-    if (!chatId || chatId === "-1") {
+    if (!activeChatId || activeChatId === "-1") {
       setMessages([]);
       return;
     }
 
     onSnapshot(
-      doc(db, "chats", chatId),
+      doc(db, "chats", activeChatId),
       async (doc) => {
         const messageData = await Promise.all(
           doc.data().messages.map(async (message) => {
-            await readMessage(chatId, message.senderId);
-
             const user = await getUserById(message.senderId);
             return {
-              chatId,
+              activeChatId,
               ...message,
               username: user.username,
               profileUrl: user.profileUrl,
@@ -52,35 +48,34 @@ export default function ChatWindow(props) {
 
   return (
     <div className="flex flex-2 flex-col gap-2 bg-gray-900 px-4 py-4">
-      {chatId === "-1" ? (
-        <SearchUsers
-          setActiveChatId={setActiveChatId}
-          setActiveUser={setActiveUser}
-        />
+      {activeChatId === "-1" ? (
+        <SearchUsers />
       ) : (
         <>
-          <Header recipient={recipient} />
+          <Header />
 
           <Messages messages={messages} />
-          <ChatInput recipient={recipient} chatId={chatId} />
+          <ChatInput />
         </>
       )}
     </div>
   );
 }
 
-function Header({ recipient }) {
+function Header() {
+  const { activeChatUser } = useChatContext();
+
   return (
     <p className="border-b-1 border-gray-400 pb-4 text-2xl font-bold">
-      {recipient.displayname || "Display Name"}
+      {activeChatUser.displayname || "Display Name"}
     </p>
   );
 }
 
-function SearchUsers({ setActiveChatId, setActiveUser }) {
-  const { globalUser, getUserById, searchFollowingByUsername } =
-    useAuthContext();
-  const { chats, addChat } = useChatContext();
+function SearchUsers() {
+  const { globalUser, getUserById, searchByUsername } = useAuthContext();
+  const { chats, addChat, setActiveChatId, setActiveChatUser } =
+    useChatContext();
 
   const [input, setInput] = useState("");
   const [users, setUsers] = useState([]);
@@ -88,9 +83,20 @@ function SearchUsers({ setActiveChatId, setActiveUser }) {
   async function handleSearch(e) {
     setInput(e.target.value);
 
-    if (e.target.value === "") return;
+    if (e.target.value === "") {
+      setUsers([]);
+      return;
+    }
 
-    const fetchedUsers = await searchFollowingByUsername(input, globalUser.uid);
+    const fetchedUsers = await searchByUsername(input, globalUser.uid);
+
+    fetchedUsers.sort((a, b) => {
+      return (
+        globalUser.following.includes(b.uid) -
+        globalUser.following.includes(a.uid)
+      );
+    });
+
     setUsers(fetchedUsers);
   }
 
@@ -102,12 +108,12 @@ function SearchUsers({ setActiveChatId, setActiveUser }) {
 
     if (foundChat) {
       setActiveChatId(foundChat.chatId);
-      setActiveUser(foundChat);
+      setActiveChatUser(foundChat);
     } else {
       const chatId = await addChat(globalUser.uid, friendId);
       const recipient = await getUserById(friendId);
       setActiveChatId(chatId);
-      setActiveUser(recipient);
+      setActiveChatUser(recipient);
     }
   }
 
@@ -123,14 +129,18 @@ function SearchUsers({ setActiveChatId, setActiveUser }) {
       <div
         className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${users.length > 0 && "h-fit max-h-46 overflow-auto"}`}
       >
-        {users.map(({ uid, username }) => (
+        {users.map((user) => (
           <button
-            key={uid}
+            key={user.uid}
             type="button"
-            onClick={() => handleAddUser(uid)}
-            className="px-2 py-1 text-start hover:bg-gray-600"
+            onClick={() => handleAddUser(user.uid)}
+            className="flex items-center gap-2 px-2 py-1 text-start hover:bg-gray-600"
           >
-            <p>{username}</p>
+            <img src={user.profileUrl} className="h-10 w-10 rounded-full" />
+            <div className="flex flex-col">
+              <p className="font-bold">{user.displayname}</p>
+              <p className="text-gray-300">@{user.username}</p>
+            </div>
           </button>
         ))}
       </div>
@@ -164,6 +174,7 @@ function Messages({ messages }) {
             />
           );
         })}
+
       <AlwaysScrollToBottom />
     </div>
   );

@@ -102,26 +102,28 @@ export function useChat() {
 
       const userIds = [senderId, recipientId];
 
-      userIds.forEach(async (userId) => {
-        const userChatsRef = doc(db, "userchats", userId);
-        const userChatsDoc = await getDoc(userChatsRef);
+      await Promise.all(
+        userIds.map(async (userId) => {
+          const userChatRef = doc(db, "userchats", userId);
+          const userChatDoc = await getDoc(userChatRef);
 
-        if (!userChatsDoc.exists()) return;
+          if (!userChatDoc.exists()) return;
 
-        const userChatsData = userChatsDoc.data();
-        const chatIndex = userChatsData.chats.findIndex(
-          (chat) => chat.chatId === chatId,
-        );
+          const userChatsData = userChatDoc.data();
+          const chatIndex = userChatsData.chats.findIndex(
+            (chat) => chat.chatId === chatId,
+          );
 
-        if (chatIndex === -1) return;
+          if (chatIndex === -1) return;
 
-        userChatsData.chats[chatIndex].lastMessage = text;
-        userChatsData.chats[chatIndex].isSeen =
-          userId === senderId ? true : false;
-        userChatsData.chats[chatIndex].updatedAt = new Date();
+          userChatsData.chats[chatIndex].lastMessage = text;
+          userChatsData.chats[chatIndex].isSeen =
+            userId === senderId ? true : false;
+          userChatsData.chats[chatIndex].updatedAt = new Date();
 
-        await updateDoc(userChatsRef, { chats: userChatsData.chats });
-      });
+          await updateDoc(userChatRef, { chats: userChatsData.chats });
+        }),
+      );
     } catch (error) {
       console.log(error);
     }
@@ -160,6 +162,8 @@ export function useChat() {
       const chatIndex = userChatsData.chats.findIndex(
         (chat) => chat.chatId === chatId,
       );
+
+      if (chatIndex === -1) return;
 
       userChatsData.chats[chatIndex].isSeen = true;
 

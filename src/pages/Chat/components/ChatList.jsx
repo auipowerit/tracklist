@@ -4,38 +4,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-export default function ChatList(props) {
-  const { activeUser, setActiveUser, setActiveChatId } = props;
-
-  const { globalUser } = useAuthContext();
-  const { chats, readMessage } = useChatContext();
-
-  async function handleOpenChat(chat) {
-    setActiveUser(chat);
-    setActiveChatId(chat.chatId);
-    await readMessage(chat.chatId, globalUser.uid);
-  }
-
-  async function handleNewChat() {
-    if (!activeUser || !globalUser) return;
-    setActiveChatId("-1");
-    setActiveUser({});
-  }
-
+export default function ChatList({ handleOpenChat }) {
   return (
     <div className="flex flex-1 flex-col border-r-2 border-white bg-green-700/30">
-      <Header handleNewChat={handleNewChat} />
-
-      <Chats
-        chats={chats}
-        activeUser={activeUser}
-        handleOpenChat={handleOpenChat}
-      />
+      <Header />
+      <Chats handleOpenChat={handleOpenChat} />
     </div>
   );
 }
 
-function Header({ handleNewChat }) {
+function Header() {
+  const { globalUser } = useAuthContext();
+  const { setActiveChatId, activeChatUser, setActiveChatUser } =
+    useChatContext();
+
+  async function handleNewChat() {
+    if (!activeChatUser || !globalUser) return;
+    setActiveChatId("-1");
+    setActiveChatUser({});
+  }
+
   return (
     <div className="flex items-center justify-between p-4 text-lg font-bold">
       <p>All chats</p>
@@ -50,7 +38,9 @@ function Header({ handleNewChat }) {
   );
 }
 
-function Chats({ chats, activeUser, handleOpenChat }) {
+function Chats({ handleOpenChat }) {
+  const { chats } = useChatContext();
+
   return (
     <div className="flex flex-col overflow-y-auto">
       {chats &&
@@ -59,9 +49,8 @@ function Chats({ chats, activeUser, handleOpenChat }) {
           return (
             <ChatCard
               key={chat.chatId}
-              handleOpenChat={handleOpenChat}
               chat={chat}
-              activeUser={activeUser}
+              handleOpenChat={handleOpenChat}
             />
           );
         })}
@@ -69,9 +58,16 @@ function Chats({ chats, activeUser, handleOpenChat }) {
   );
 }
 
-function ChatCard({ handleOpenChat, chat, activeUser }) {
-  const isActive = activeUser.uid === chat.uid;
-  const color = chat.isSeen ? "text-gray-300" : "font-bold";
+function ChatCard({ chat, handleOpenChat }) {
+  const { activeChatId, activeChatUser } = useChatContext();
+
+  const isActive = activeChatUser.uid === chat.uid;
+  const color =
+    activeChatId === chat.chatId
+      ? "text-gray-300"
+      : chat.isSeen
+        ? "text-gray-300"
+        : "font-bold";
 
   return (
     <div

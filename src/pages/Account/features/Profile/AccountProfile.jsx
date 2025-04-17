@@ -4,6 +4,7 @@ import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import Modal from "src/components/Modal";
 import { formatDateMDYLong } from "src/utils/date";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import FollowButton from "src/components/Buttons/FollowButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
@@ -75,7 +76,7 @@ export default function AccountProfile() {
         />
       </Modal>
 
-      <Header setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
+      <Header user={user} setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
 
       <div className="flex w-full items-start justify-between">
         <div className="flex items-center gap-4">
@@ -92,11 +93,15 @@ export default function AccountProfile() {
   );
 }
 
-function Header({ setIsModalOpen, canEdit }) {
+function Header({ user, setIsModalOpen, canEdit }) {
   return (
     <div className="flex items-center justify-between border-b-1 border-white pb-4 align-middle">
       <p className="text-2xl text-white">Profile</p>
-      {canEdit && <EditProfileButton setIsModalOpen={setIsModalOpen} />}
+      {canEdit ? (
+        <EditProfileButton setIsModalOpen={setIsModalOpen} />
+      ) : (
+        <FollowButton user={user} />
+      )}
     </div>
   );
 }

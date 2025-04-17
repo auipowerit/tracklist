@@ -3,7 +3,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faSearch, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faHome,
+  faMailBulk,
+  faSearch,
+  faSignOut,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -58,42 +65,57 @@ export default function Navbar() {
             <FontAwesomeIcon icon={faSearch} />
           </NavLink>
         </li>
-        <li className="ml-auto">
-          <div ref={dropdownRef} className="relative">
-            <FaUser
-              onClick={handleUserClick}
-              className={`cursor-pointer text-4xl ${
-                location.pathname.startsWith("/users")
-                  ? "text-green-700"
-                  : "text-white hover:text-gray-400"
-              }`}
-            />
-            <div
-              className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
-                showDropdown
-                  ? "max-h-screen p-2 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
+        <div className="ml-auto flex items-center gap-6">
+          <li>
+            <NavLink
+              to="/messaging"
+              className={({ isActive }) =>
+                `text-4xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+              }
             >
-              <DropdownMenu
-                items={[
-                  { label: "Profile", path: "/profile" },
-                  { label: "Chats", path: "/messaging" },
-                  {
-                    label: "Lists",
-                    path: `/users/${globalUser?.username}/lists`,
-                  },
-                  {
-                    label: "Friends",
-                    path: `/users/${globalUser?.username}/friends`,
-                  },
-                ]}
-                onClose={() => setShowDropdown(false)}
-                globalUser={globalUser}
-              />
+              <FontAwesomeIcon icon={faEnvelope} />
+            </NavLink>
+          </li>
+          <li>
+            <div ref={dropdownRef} className="relative">
+              <button
+                type="button"
+                onClick={handleUserClick}
+                className={`cursor-pointer text-4xl ${
+                  location.pathname.startsWith("/users")
+                    ? "text-green-700"
+                    : "text-white hover:text-gray-400"
+                }`}
+              >
+                <FontAwesomeIcon icon={faUser} />
+              </button>
+
+              <div
+                className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+                  showDropdown
+                    ? "max-h-screen p-2 opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <DropdownMenu
+                  items={[
+                    { label: "Profile", path: "/profile" },
+                    {
+                      label: "Lists",
+                      path: `/users/${globalUser?.username}/lists`,
+                    },
+                    {
+                      label: "Friends",
+                      path: `/users/${globalUser?.username}/friends`,
+                    },
+                  ]}
+                  onClose={() => setShowDropdown(false)}
+                  globalUser={globalUser}
+                />
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
+        </div>
       </ul>
     </div>
   );

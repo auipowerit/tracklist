@@ -105,7 +105,6 @@ export function useAuth() {
       if (!userDoc.exists()) return null;
 
       const user = userDoc.data();
-
       return {
         uid: userRef.id,
         ...user,
@@ -129,6 +128,7 @@ export function useAuth() {
       if (!userDoc.exists()) return null;
 
       const user = userDoc.data();
+
       return {
         uid: userRef.id,
         ...user,
@@ -138,7 +138,7 @@ export function useAuth() {
     }
   }
 
-  async function searchByUsername(username) {
+  async function searchByUsername(username, currentUserId) {
     try {
       const end = username.replace(/.$/, (c) =>
         String.fromCharCode(c.charCodeAt(0) + 1),
@@ -156,47 +156,14 @@ export function useAuth() {
 
       const users = querySnapshot.docs.map((doc) => {
         return {
-          id: doc.id,
+          uid: doc.id,
           ...doc.data(),
         };
       });
 
-      return users;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+      const filteredUsers = users.filter((user) => user.uid !== currentUserId);
 
-  async function searchFollowingByUsername(username, userId) {
-    try {
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return [];
-
-      const following = userDoc.data().following;
-
-      if (following.length === 0) return [];
-
-      const followingData = await Promise.all(
-        following.map(async (followerId) => {
-          const followerRef = doc(db, "users", followerId);
-          const followerDoc = await getDoc(followerRef);
-
-          if (!followerRef || followerDoc.empty) return null;
-
-          return {
-            uid: followerRef.id,
-            username: followerDoc.data().username,
-          };
-        }),
-      );
-
-      const foundFollowing = followingData.filter((following) =>
-        following.username.includes(username),
-      );
-
-      return foundFollowing;
+      return filteredUsers;
     } catch (error) {
       console.log(error);
     }
@@ -342,7 +309,6 @@ export function useAuth() {
     getUserById,
     getUserByUsername,
     searchByUsername,
-    searchFollowingByUsername,
 
     getFollowingById,
     getFollowersById,

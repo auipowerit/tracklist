@@ -7,6 +7,8 @@ import { useAuthContext } from "../Auth/AuthContext";
 
 export default function ChatProvder({ children }) {
   const [chats, setChats] = useState(null);
+  const [activeChatId, setActiveChatId] = useState("-1");
+  const [activeChatUser, setActiveChatUser] = useState({});
 
   const { globalUser, getUserById } = useAuthContext();
   const useChatMethods = useChat();
@@ -22,7 +24,7 @@ export default function ChatProvder({ children }) {
           return;
         }
 
-        const chatData = await Promise.all(
+        const fetchedChats = await Promise.all(
           doc.data().chats.map(async (chat) => {
             const user = await getUserById(chat.recipientId);
             return {
@@ -32,7 +34,7 @@ export default function ChatProvder({ children }) {
           }),
         );
 
-        setChats(chatData);
+        setChats(fetchedChats);
       },
     );
 
@@ -41,6 +43,10 @@ export default function ChatProvder({ children }) {
 
   const chatMethods = {
     chats,
+    activeChatId,
+    setActiveChatId,
+    activeChatUser,
+    setActiveChatUser,
     ...useChatMethods,
   };
 

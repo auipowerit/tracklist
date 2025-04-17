@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import MediaCard from "src/components/Cards/MediaCard";
-import ProfileCard from "src/components/Cards/ProfileCard";
+import UserCard from "src/components/Cards/UserCard";
 
 export default function Results({ results, category }) {
   if (!results) {
@@ -23,7 +23,11 @@ export default function Results({ results, category }) {
       }`}
     >
       {results.map((result) => (
-        <ResultCard key={result.id} result={result} category={category} />
+        <ResultCard
+          key={result.id || result.uid}
+          result={result}
+          category={category}
+        />
       ))}
     </div>
   );
@@ -46,7 +50,7 @@ function ResultCard({ result, category }) {
   return (
     <>
       {category === "user" ? (
-        <ProfileCard user={result} />
+        <UserCard user={result} />
       ) : (
         <Link to={getUrl(result)}>
           <MediaCard media={result} category={category} />
