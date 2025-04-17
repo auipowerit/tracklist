@@ -3,13 +3,14 @@ import ReviewButton from "src/components/Buttons/ReviewButton";
 import ListButton from "src/components/Buttons/ListButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import LikeMediaButton from "./LikeMediaButton";
-import PlayMediaButton from "./PlayMediaButton";
+import ShareMediaButton from "./ShareMediaButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
 
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function BannerButtons({ mediaId, name, category }) {
         mediaId={mediaId}
         category={category}
       />
+
       <ListButton
         isModalOpen={isListModalOpen}
         setIsModalOpen={setIsListModalOpen}
@@ -44,7 +46,13 @@ export default function BannerButtons({ mediaId, name, category }) {
         media={{ mediaId, mediaName: name }}
         category={category}
       />
-      <PlayMediaButton />
+
+      <ShareMediaButton
+        isModalOpen={isShareModalOpen}
+        setIsModalOpen={setIsShareModalOpen}
+        mediaId={mediaId}
+        category={category}
+      />
     </div>
   );
 }

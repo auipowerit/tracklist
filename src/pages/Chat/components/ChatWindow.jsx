@@ -7,11 +7,13 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import ChatInput from "./ChatInput";
 
 export default function ChatWindow() {
   const { getUserById } = useAuthContext();
   const { activeChatId, activeChatUser } = useChatContext();
+  const { getMediaById, getMediaLinks } = useSpotifyContext();
 
   const [messages, setMessages] = useState([]);
 
@@ -31,6 +33,18 @@ export default function ChatWindow() {
         const messageData = await Promise.all(
           doc.data().messages.map(async (message) => {
             const user = await getUserById(message.senderId);
+            if (message.category) {
+              const media = await getMediaById(message.text, message.category);
+              const mediaData = await getMediaLinks(media);
+              return {
+                chatId: activeChatId,
+                ...message,
+                username: user.username,
+                profileUrl: user.profileUrl,
+                media,
+                mediaData,
+              };
+            }
             return {
               chatId: activeChatId,
               ...message,
@@ -191,7 +205,7 @@ function MessageCard({ message, index, messages }) {
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`parent group relative flex w-fit items-center gap-2 rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
+        className={`parent group relative flex w-fit items-start gap-2 rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
       >
         <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
 
@@ -205,7 +219,22 @@ function MessageCard({ message, index, messages }) {
         <MessageImage message={message} />
         <div className="flex max-w-[200px] flex-col text-wrap">
           <MessageUsername message={message} />
-          <p className="text-lg break-words">{message.text}</p>
+
+          {message.media ? (
+            <Link
+              to={message.mediaData.titleLink}
+              className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
+            >
+              <img
+                src={message.mediaData.image}
+                className="h-40 w-40 object-cover"
+              />
+              <p className="w-fit font-bold">{message.mediaData.title}</p>
+              <p className="text-sm">{message.mediaData.subtitle}</p>
+            </Link>
+          ) : (
+            <p className="text-lg break-words">{message.text}</p>
+          )}
         </div>
       </div>
     </div>

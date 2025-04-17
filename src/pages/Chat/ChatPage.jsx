@@ -24,6 +24,12 @@ export default function ChatPage() {
     };
 
     checkUser();
+
+    // reset state when user leaves page
+    return () => {
+      setActiveChatId("-1");
+      setActiveChatUser({});
+    };
   }, [loadingUser, globalUser]);
 
   async function handleOpenChat(chat) {

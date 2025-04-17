@@ -86,7 +86,13 @@ export function useChat() {
     }
   }
 
-  async function sendMessage(chatId, senderId, recipientId, text) {
+  async function sendMessage(
+    chatId,
+    senderId,
+    recipientId,
+    text,
+    category = "",
+  ) {
     try {
       const id = Date.now().toString();
 
@@ -95,10 +101,15 @@ export function useChat() {
           id,
           senderId: senderId,
           text,
+          category,
           isLiked: false,
           createdAt: new Date(),
         }),
       });
+
+      text = category
+        ? `Message contains ${category === "track" ? "a track" : `an ${category}`}`
+        : text;
 
       await Promise.all(
         [senderId, recipientId].map(async (userId) => {
