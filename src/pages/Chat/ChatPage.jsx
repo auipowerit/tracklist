@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ChatList from "./components/ChatList";
-import ChatWindow from "./components/ChatWindow";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
-import { useNavigate } from "react-router-dom";
+import ChatList from "./components/ChatList";
+import ChatWindow from "./components/ChatWindow";
 
 export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();
@@ -14,7 +14,7 @@ export default function ChatPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const checkUser = () => {
       if (loadingUser) return;
 
       if (!globalUser) {
@@ -23,7 +23,7 @@ export default function ChatPage() {
       }
     };
 
-    fetchUser();
+    checkUser();
   }, [loadingUser, globalUser]);
 
   async function handleOpenChat(chat) {

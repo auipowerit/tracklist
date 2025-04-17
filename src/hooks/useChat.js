@@ -12,11 +12,11 @@ export function useChat() {
   async function getChatById(chatId) {
     try {
       const chatRef = doc(db, "chats", chatId);
-      const chatDocSnap = await getDoc(chatRef);
+      const chatRefSnap = await getDoc(chatRef);
 
-      if (!chatDocSnap.exists()) return null;
+      if (!chatRefSnap.exists()) return null;
 
-      return chatDocSnap.data();
+      return chatRefSnap.data();
     } catch (error) {
       console.log(error);
     }
@@ -39,17 +39,17 @@ export function useChat() {
     try {
       const chatRef = collection(db, "chats");
 
-      const newChatDoc = doc(chatRef);
+      const newchatRef = doc(chatRef);
 
-      await setDoc(newChatDoc, {
+      await setDoc(newchatRef, {
         messages: [],
         createdAt: new Date(),
       });
 
-      await addUserChat(senderId, recipientId, newChatDoc.id);
-      await addUserChat(recipientId, senderId, newChatDoc.id);
+      await addUserChat(senderId, recipientId, newchatRef.id);
+      await addUserChat(recipientId, senderId, newchatRef.id);
 
-      return newChatDoc.id;
+      return newchatRef.id;
     } catch (error) {
       console.log(error);
     }
@@ -58,9 +58,9 @@ export function useChat() {
   async function addUserChat(senderId, recipientId, chatId) {
     try {
       const userChatRef = doc(db, "userchats", senderId);
-      const userChatDoc = await getDoc(userChatRef);
+      const userchatRef = await getDoc(userChatRef);
 
-      if (!userChatDoc.exists()) {
+      if (!userchatRef.exists()) {
         await setDoc(userChatRef, {
           chats: [
             {
@@ -100,16 +100,14 @@ export function useChat() {
         }),
       });
 
-      const userIds = [senderId, recipientId];
-
       await Promise.all(
-        userIds.map(async (userId) => {
+        [senderId, recipientId].map(async (userId) => {
           const userChatRef = doc(db, "userchats", userId);
-          const userChatDoc = await getDoc(userChatRef);
+          const userchatRef = await getDoc(userChatRef);
 
-          if (!userChatDoc.exists()) return;
+          if (!userchatRef.exists()) return;
 
-          const userChatsData = userChatDoc.data();
+          const userChatsData = userchatRef.data();
           const chatIndex = userChatsData.chats.findIndex(
             (chat) => chat.chatId === chatId,
           );
@@ -131,16 +129,16 @@ export function useChat() {
 
   async function likeMessage(messageId, chatId, isLiked) {
     try {
-      const chatDoc = doc(db, "chats", chatId);
-      const chatData = await getDoc(chatDoc);
-      const messages = chatData.data().messages;
+      const chatRef = doc(db, "chats", chatId);
+      const chatDoc = await getDoc(chatRef);
+      const messages = chatDoc.data().messages;
 
       const existingMessage = messages.find(
         (message) => message.id === messageId,
       );
 
       if (existingMessage) {
-        await updateDoc(chatDoc, {
+        await updateDoc(chatRef, {
           messages: messages.map((message) =>
             message.id === messageId ? { ...message, isLiked } : message,
           ),
@@ -173,6 +171,48 @@ export function useChat() {
     }
   }
 
+  async function deleteMessage(messageId, chatId, senderId, recipientId) {
+    try {
+      const chatRef = doc(db, "chats", chatId);
+      const chatDoc = await getDoc(chatRef);
+      const messages = chatDoc.data().messages;
+
+      const index = messages.findIndex((message) => message.id === messageId);
+      if (index === -1) return;
+
+      await updateDoc(chatRef, {
+        messages: messages.filter((message) => message.id !== messageId),
+      });
+
+      // Stop if deleted message was not last message sent
+      if (index !== messages.length - 1) return;
+
+      await Promise.all(
+        [senderId, recipientId].map(async (userId) => {
+          const userChatsDoc = doc(db, "userchats", userId);
+          const userChatsDocSnap = await getDoc(userChatsDoc);
+
+          if (userChatsDocSnap.empty) return;
+
+          const userChatsData = userChatsDocSnap.data();
+          const chatIndex = userChatsData.chats.findIndex(
+            (chat) => chat.chatId === chatId,
+          );
+
+          if (chatIndex === -1) return;
+
+          userChatsData.chats[chatIndex].lastMessage =
+            "This message was deleted.";
+          userChatsData.chats[chatIndex].isSeen = true;
+
+          await updateDoc(userChatsDoc, { chats: userChatsData.chats });
+        }),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     getChatById,
     getChatsByUserId,
@@ -182,5 +222,6 @@ export function useChat() {
     sendMessage,
     readMessage,
     likeMessage,
+    deleteMessage,
   };
 }

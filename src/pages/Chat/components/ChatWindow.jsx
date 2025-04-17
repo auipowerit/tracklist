@@ -5,11 +5,13 @@ import { formatDateDMD } from "src/utils/date";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ChatInput from "./ChatInput";
 
 export default function ChatWindow() {
-  const { globalUser, getUserById } = useAuthContext();
-  const { activeChatId, activeChatUser, readMessage } = useChatContext();
+  const { getUserById } = useAuthContext();
+  const { activeChatId, activeChatUser } = useChatContext();
 
   const [messages, setMessages] = useState([]);
 
@@ -30,7 +32,7 @@ export default function ChatWindow() {
           doc.data().messages.map(async (message) => {
             const user = await getUserById(message.senderId);
             return {
-              activeChatId,
+              chatId: activeChatId,
               ...message,
               username: user.username,
               profileUrl: user.profileUrl,
@@ -161,7 +163,7 @@ function Messages({ messages }) {
   }
 
   return (
-    <div className="flex grow-1 flex-col gap-4 overflow-y-auto">
+    <div className="flex grow-1 flex-col gap-4 overflow-y-auto px-4">
       {messages &&
         messages.length > 0 &&
         messages.map((message, index) => {
@@ -182,7 +184,6 @@ function Messages({ messages }) {
 
 function MessageCard({ message, index, messages }) {
   const { globalUser } = useAuthContext();
-
   const isCurrentUser = message.senderId === globalUser.uid;
 
   return (
@@ -190,15 +191,73 @@ function MessageCard({ message, index, messages }) {
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`flex w-fit items-center gap-2 overflow-auto rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
+        className={`parent group relative flex w-fit items-center gap-2 rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
       >
+        <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
+
+        {isCurrentUser && (
+          <MessageDeleteButton
+            message={message}
+            isCurrentUser={isCurrentUser}
+          />
+        )}
+
         <MessageImage message={message} />
-        <div className="flex max-w-[400px] flex-col">
+        <div className="flex max-w-[200px] flex-col text-wrap">
           <MessageUsername message={message} />
-          <p className="text-lg">{message.text}</p>
+          <p className="text-lg break-words">{message.text}</p>
         </div>
       </div>
     </div>
+  );
+}
+
+function MessageDeleteButton({ message, isCurrentUser }) {
+  const { globalUser } = useAuthContext();
+  const { deleteMessage, activeChatUser } = useChatContext();
+
+  async function handleDelete() {
+    if (!isCurrentUser) return;
+
+    await deleteMessage(
+      message.id,
+      message.chatId,
+      activeChatUser.uid,
+      globalUser.uid,
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleDelete}
+      className={`absolute top-1/2 -left-8 h-7 w-7 -translate-y-1/2 rounded-full bg-gray-700/50 text-gray-300 opacity-0 shadow-sm shadow-black group-hover:opacity-100`}
+    >
+      <FontAwesomeIcon icon={faTrash} />
+    </button>
+  );
+}
+
+function MessageLikeButton({ message, isCurrentUser }) {
+  const { likeMessage } = useChatContext();
+
+  async function handleLike() {
+    if (isCurrentUser) return;
+    await likeMessage(message.id, message.chatId, !message.isLiked);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleLike}
+      className={`invisible absolute -top-3 flex h-7 w-7 items-center justify-center rounded-full shadow-sm shadow-black ${
+        message.isLiked
+          ? "visible bg-blue-700 text-red-500"
+          : !isCurrentUser && "bg-gray-700/50 text-gray-300 group-hover:visible"
+      } ${isCurrentUser ? "-left-3" : "-right-3"}`}
+    >
+      <FontAwesomeIcon icon={faHeart} />
+    </button>
   );
 }
 

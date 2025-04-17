@@ -8,8 +8,6 @@ export default function FollowButton({ user, setUser }) {
     user.followers.includes(globalUser?.uid) || false,
   );
 
-  console.log(isFollowing);
-
   async function handleClick() {
     isFollowing
       ? await unfollowUser(user.uid, globalUser?.uid)
