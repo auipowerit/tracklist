@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Tabs from "src/components/Tabs";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FriendsList from "./components/FriendsList";
 
@@ -36,8 +36,8 @@ function Header({ canEdit }) {
           to="/search"
           className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
         >
-          <FontAwesomeIcon icon={faPlus} />
-          <p>Follow More Friends</p>
+          <FontAwesomeIcon icon={faSearch} />
+          <p>Find more friends</p>
         </Link>
       )}
     </div>

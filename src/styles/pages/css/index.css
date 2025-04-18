@@ -35,11 +35,11 @@ button {
   20% {
     transform: translateX(0%);
   }
-  80% {
-    transform: translateX(-115%);
+  90% {
+    transform: translateX(-105%);
   }
   100% {
-    transform: translateX(-115%);
+    transform: translateX(-105%);
   }
 }
 

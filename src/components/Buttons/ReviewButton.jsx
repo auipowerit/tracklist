@@ -56,7 +56,7 @@ export default function ReviewButton(props) {
           onClick={handleClick}
         >
           <FontAwesomeIcon icon={faPlus} />
-          <p>Post</p>
+          <p>Post review</p>
         </button>
       )}
     </div>

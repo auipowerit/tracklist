@@ -17,7 +17,7 @@ function ReviewHeader({ review }) {
 
       <div className="flex w-full items-start justify-between">
         <div className="flex flex-col gap-1">
-          <p className="text-gray-400">
+          <p className="text-lg text-gray-400">
             Review by{" "}
             <Link
               to={`/users/${review.username}`}
@@ -39,6 +39,8 @@ function ReviewHeader({ review }) {
 
 function ReviewContent({ review }) {
   return (
-    <p className="overflow-auto pl-2 text-xl break-words">{review.content}</p>
+    <p className="overflow-auto mask-b-from-90% pl-2 text-xl break-words">
+      {review.content}
+    </p>
   );
 }

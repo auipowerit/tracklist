@@ -25,7 +25,7 @@ function Header() {
   }
 
   return (
-    <div className="flex items-center justify-between p-4 text-lg font-bold">
+    <div className="flex items-center justify-between p-4 text-xl font-bold">
       <p>All chats</p>
       <button
         type="button"

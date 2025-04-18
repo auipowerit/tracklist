@@ -61,7 +61,7 @@ export default function ListButton(props) {
         >
           <FontAwesomeIcon icon={isAdding ? faPlus : list ? faPen : faPlus} />
           <p>
-            {isAdding ? "Add to list" : list ? "List Details" : "Create List"}
+            {isAdding ? "Add items" : list ? "List details" : "Create list"}
           </p>
         </button>
       )}

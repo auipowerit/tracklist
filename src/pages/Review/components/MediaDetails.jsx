@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
@@ -17,7 +17,7 @@ export default function MediaDetails({ review }) {
   }, []);
 
   return (
-    <div className="flex min-w-64 flex-col items-center justify-center border-1 border-gray-400 p-2 hover:border-white">
+    <div className="ming-w-100 flex max-w-100 flex-col items-center justify-center p-2">
       <MediaImage
         image={mediaData.image || DEFAULT_IMG}
         link={mediaData.link}
@@ -40,18 +40,33 @@ function MediaImage({ image, link }) {
 }
 
 function MediaInfo({ mediaData }) {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const isOverflowing =
+      titleRef.current.scrollWidth > titleRef.current.parentNode.clientWidth;
+
+    if (isOverflowing) {
+      titleRef.current.classList.add("scrolling-text");
+    } else {
+      titleRef.current.classList.remove("scrolling-text");
+    }
+  }, [mediaData]);
+
   return (
-    <div className="flex flex-col p-1 text-center">
+    <div className="flex flex-col p-1 px-2 text-center">
       <Link
         to={mediaData.titleLink}
-        className="text-xl font-bold hover:text-gray-400"
+        className="max-w-100 min-w-100 overflow-hidden mask-r-from-80% mask-l-from-95% px-2"
       >
-        {mediaData.title}
+        <p
+          ref={titleRef}
+          className="px-2 text-lg font-bold whitespace-nowrap hover:text-gray-400"
+        >
+          {mediaData.title}
+        </p>
       </Link>
-      <Link
-        to={mediaData.subtitleLink}
-        className="text-sm text-gray-400 hover:text-white"
-      >
+      <Link to={mediaData.subtitleLink} className="text-sm text-gray-400">
         {mediaData.subtitle}
       </Link>
     </div>

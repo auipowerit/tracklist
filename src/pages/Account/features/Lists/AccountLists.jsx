@@ -1,19 +1,31 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import Tabs from "src/components/Tabs";
 import Loading from "src/components/Loading";
 import ListCard from "src/components/Cards/ListCard";
 import ListButton from "src/components/Buttons/ListButton";
 import { useListContext } from "src/context/List/ListContext";
-import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function AccountLists() {
   const { user, canEdit } = useOutletContext();
 
+  const [activeTab, setActiveTab] = useState("created");
+
+  const tabs = [
+    { id: "created", label: "Created" },
+    { id: "saved", label: "Saved" },
+  ];
+
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Header canEdit={canEdit} />
-      <Lists user={user} />
+
+      <div>
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Lists user={user} activeTab={activeTab} />
+      </div>
     </div>
   );
 }
@@ -31,7 +43,7 @@ function Header({ canEdit }) {
   );
 }
 
-function Lists({ user }) {
+function Lists({ user, activeTab }) {
   const { globalUser } = useAuthContext();
   const { getListsByUserId } = useListContext();
   const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
@@ -91,7 +103,7 @@ function Lists({ user }) {
   }
 
   return (
-    <div className="overflow-y-scroll">
+    <div className="overflow-y-scroll pt-4">
       {lists && lists.length > 0 ? (
         <ul className="flex w-full flex-col gap-4">
           {lists.map((list, index) => {

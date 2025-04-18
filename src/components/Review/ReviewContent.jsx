@@ -38,7 +38,10 @@ function ReviewUser({ review, showIcon = true }) {
 function ReviewMediaTitle({ title, titleLink, subtitle, subtitleLink }) {
   return (
     <div className="flex flex-col">
-      <Link to={titleLink} className="text-2xl font-bold hover:text-gray-400">
+      <Link
+        to={titleLink}
+        className="max-w-150 truncate text-2xl font-bold whitespace-nowrap hover:text-gray-400"
+      >
         {title}
       </Link>
       <Link to={subtitleLink} className="font-light hover:text-gray-400">

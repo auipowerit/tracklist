@@ -56,7 +56,7 @@ function Header({ activeTab, setActiveTab }) {
   ];
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center border-b-1 border-white pb-4">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div className="ml-auto">

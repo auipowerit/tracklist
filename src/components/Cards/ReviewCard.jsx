@@ -29,10 +29,10 @@ export default function ReviewCard({ review }) {
           onClick={() => navigate(media.titleLink)}
         />
 
-        <div className="flex flex-col justify-center gap-4">
+        <div className="flex h-36 max-h-36 flex-col justify-between">
           <ReviewUser review={review} />
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <ReviewMediaTitle {...media} />
             <ReviewStars rating={review.rating || 0} />
           </div>

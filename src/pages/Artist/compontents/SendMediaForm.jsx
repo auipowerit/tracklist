@@ -16,6 +16,7 @@ export default function SendMediaForm(props) {
 
   const [media, setMedia] = useState(null);
   const [input, setInput] = useState("");
+  const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
   const [currentUsers, setCurrentUser] = useState([]);
 
@@ -66,6 +67,10 @@ export default function SendMediaForm(props) {
 
       // Send message to user with media ID and media category
       await sendMessage(chatId, globalUser.uid, user.uid, media.id, category);
+
+      // Send message to user after sending media
+      if (message === "") return;
+      await sendMessage(chatId, globalUser.uid, user.uid, message);
     });
 
     resetValues();
@@ -80,6 +85,7 @@ export default function SendMediaForm(props) {
     setInput("");
     setUsers([]);
     setCurrentUser([]);
+    setMessage("");
   }
 
   return (
@@ -106,10 +112,12 @@ export default function SendMediaForm(props) {
               currentUsers={currentUsers}
               setCurrentUser={setCurrentUser}
             />
+
+            <FormMessage message={message} setMessage={setMessage} />
           </div>
         </div>
       </div>
-      <FormButton />
+      <FormButton currentUsers={currentUsers} />
     </form>
   );
 }
@@ -128,7 +136,7 @@ function FormImage({ media }) {
   return (
     <img
       src={media?.image || DEFAULT_IMG}
-      className="aspect-square h-48 object-cover shadow-lg"
+      className="aspect-square h-50 object-cover shadow-lg"
     />
   );
 }
@@ -205,7 +213,7 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
   }
 
   return (
-    <div className="flex h-30 flex-col items-start gap-2 overflow-auto p-2">
+    <div className="flex h-24 flex-col items-start gap-2 overflow-auto p-2">
       {currentUsers?.map((user) => {
         return (
           <div
@@ -223,14 +231,30 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
   );
 }
 
-function FormButton() {
+function FormMessage({ message, setMessage }) {
+  function handleChange(e) {
+    setMessage(e.target.value);
+  }
+
+  return (
+    <input
+      type="text"
+      value={message}
+      onChange={handleChange}
+      placeholder="Include a message..."
+      className="w-full border-2 border-white px-2 py-1"
+    />
+  );
+}
+
+function FormButton({ currentUsers }) {
   return (
     <button
       type="submit"
       className="m-auto flex w-fit items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
     >
       <FaPaperPlane />
-      <p>Send</p>
+      <p>{`Send ${currentUsers.length > 1 ? "seperately" : ""} `}</p>
     </button>
   );
 }

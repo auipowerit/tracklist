@@ -81,10 +81,12 @@ function Title({ name, subtitle }) {
   }, [name]);
 
   return (
-    <div className="flex max-w-100 min-w-100 flex-col gap-1 overflow-hidden mask-r-from-80% mask-l-from-95% px-2">
-      <p ref={titleRef} className="text-4xl font-bold whitespace-nowrap">
-        {name}
-      </p>
+    <div className="flex flex-col gap-1">
+      <div className="max-w-100 min-w-100 overflow-hidden mask-r-from-80% mask-l-from-95% px-2">
+        <p ref={titleRef} className="text-4xl font-bold whitespace-nowrap">
+          {name}
+        </p>
+      </div>
 
       <p className="text-gray-300">{subtitle}</p>
     </div>

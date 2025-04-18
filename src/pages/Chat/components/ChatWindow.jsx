@@ -32,7 +32,6 @@ export default function ChatWindow() {
       async (doc) => {
         const messageData = await Promise.all(
           doc.data().messages.map(async (message) => {
-            
             const user = await getUserById(message.senderId);
 
             if (message.category) {
@@ -174,7 +173,7 @@ function Messages({ messages }) {
   return (
     <div
       ref={chatRef}
-      className="flex grow-1 flex-col gap-4 overflow-y-auto px-4"
+      className="flex grow-1 flex-col gap-4 overflow-y-auto mask-t-from-95% p-4"
     >
       {messages &&
         messages.length > 0 &&
