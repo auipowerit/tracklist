@@ -25,9 +25,7 @@ button {
 }
 
 .scrolling-text {
-  animation: scroll 12s linear infinite;
-  animation-delay: 3s;
-  animation-fill-mode: forwards;
+  animation: scroll 15s linear infinite;
 }
 
 @keyframes scroll {
@@ -38,10 +36,10 @@ button {
     transform: translateX(0%);
   }
   80% {
-    transform: translateX(-110%);
+    transform: translateX(-115%);
   }
   100% {
-    transform: translateX(-110%);
+    transform: translateX(-115%);
   }
 }
 

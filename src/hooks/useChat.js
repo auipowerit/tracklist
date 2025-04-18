@@ -7,6 +7,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { use } from "react";
 
 export function useChat() {
   async function getChatById(chatId) {
@@ -55,23 +56,6 @@ export function useChat() {
     }
   }
 
-  async function getUnreadChatsByUserId(userId) {
-    try {
-      const userChatsRef = doc(db, "userchats", userId);
-      const userChatsDoc = await getDoc(userChatsRef);
-
-      if (!userChatsDoc.exists()) return null;
-
-      const unreadChats = userChatsDoc.data().chats.filter((chat) => {
-        return !chat.isSeen;
-      });
-
-      return unreadChats.length;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async function addUserChat(senderId, recipientId, chatId) {
     try {
       const userChatRef = doc(db, "userchats", senderId);
@@ -98,6 +82,24 @@ export function useChat() {
           }),
         });
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUnreadChatsByUserId(userId) {
+    try {
+      const userChatsRef = doc(db, "userchats", userId);
+      const userChatsDoc = await getDoc(userChatsRef);
+
+      if (!userChatsDoc.exists()) return null;
+
+      const userChatsData = userChatsDoc.data();
+      const totalCount = userChatsData.chats.reduce((acc, chat) => {
+        return acc + chat.unread;
+      }, 0);
+
+      return totalCount;
     } catch (error) {
       console.log(error);
     }
@@ -143,8 +145,12 @@ export function useChat() {
           if (chatIndex === -1) return;
 
           userChatsData.chats[chatIndex].lastMessage = text;
-          userChatsData.chats[chatIndex].isSeen =
-            userId === senderId ? true : false;
+
+          const unreadCount = userChatsData.chats[chatIndex].unread;
+
+          userChatsData.chats[chatIndex].unread =
+            userId === senderId ? unreadCount : unreadCount + 1;
+
           userChatsData.chats[chatIndex].updatedAt = new Date();
 
           await updateDoc(userChatRef, { chats: userChatsData.chats });
@@ -191,7 +197,7 @@ export function useChat() {
 
       if (chatIndex === -1) return;
 
-      userChatsData.chats[chatIndex].isSeen = true;
+      userChatsData.chats[chatIndex].unread = 0;
 
       await updateDoc(userChatsDoc, { chats: userChatsData.chats });
     } catch (error) {
@@ -231,7 +237,10 @@ export function useChat() {
 
           userChatsData.chats[chatIndex].lastMessage =
             "This message was deleted.";
-          userChatsData.chats[chatIndex].isSeen = true;
+
+          if (userChatsData.chats[chatIndex].unread !== 0) {
+            userChatsData.chats[chatIndex].unread--;
+          }
 
           await updateDoc(userChatsRef, { chats: userChatsData.chats });
         }),

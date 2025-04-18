@@ -32,7 +32,9 @@ export default function ChatWindow() {
       async (doc) => {
         const messageData = await Promise.all(
           doc.data().messages.map(async (message) => {
+            
             const user = await getUserById(message.senderId);
+
             if (message.category) {
               const media = await getMediaById(message.text, message.category);
               const mediaData = await getMediaLinks(media);
@@ -104,7 +106,6 @@ function SearchUsers() {
     }
 
     const fetchedUsers = await searchByUsername(input, globalUser.uid);
-
     fetchedUsers.sort((a, b) => {
       return (
         globalUser.following.includes(b.uid) -
@@ -168,18 +169,7 @@ function Messages({ messages }) {
 
   useLayoutEffect(() => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
-  }, [messages]);
-
-  function AlwaysScrollToBottom() {
-    const divRef = useRef();
-
-    useEffect(() => {
-      const parentDiv = divRef.current.parentElement;
-      parentDiv.scrollTo({ top: parentDiv.scrollHeight, behavior: "smooth" });
-    });
-
-    return <div ref={divRef} />;
-  }
+  }, [chatRef.current]);
 
   return (
     <div

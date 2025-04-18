@@ -35,7 +35,7 @@ function MediaBanner({ media, category }) {
         spotifyURL={media.external_urls.spotify}
       />
       <div className="flex h-full w-fit items-center justify-between bg-black/40">
-        <div className="flex h-full flex-col items-center justify-between overflow-x-auto bg-black/50 py-4">
+        <div className="flex h-full flex-col items-center justify-between overflow-x-auto bg-black/50 p-4">
           <Title name={data.title} subtitle={data.subtitle} />
           <Rating mediaId={media.id} rating={rating} />
         </div>
@@ -71,7 +71,8 @@ function Title({ name, subtitle }) {
 
   useEffect(() => {
     const isOverflowing =
-      titleRef.current.scrollWidth > titleRef.current.clientWidth;
+      titleRef.current.scrollWidth > titleRef.current.parentNode.clientWidth;
+
     if (isOverflowing) {
       titleRef.current.classList.add("scrolling-text");
     } else {
@@ -80,10 +81,11 @@ function Title({ name, subtitle }) {
   }, [name]);
 
   return (
-    <div className="flex max-w-100 min-w-100 flex-col gap-1 overflow-hidden px-2">
+    <div className="flex max-w-100 min-w-100 flex-col gap-1 overflow-hidden mask-r-from-80% mask-l-from-95% px-2">
       <p ref={titleRef} className="text-4xl font-bold whitespace-nowrap">
         {name}
       </p>
+
       <p className="text-gray-300">{subtitle}</p>
     </div>
   );

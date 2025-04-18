@@ -65,9 +65,9 @@ function ChatCard({ chat, handleOpenChat }) {
   const color =
     activeChatId === chat.chatId
       ? "text-gray-300"
-      : chat.isSeen
-        ? "text-gray-300"
-        : "font-bold";
+      : chat.unread > 0
+        ? "font-bold"
+        : "text-gray-300";
 
   return (
     <div
