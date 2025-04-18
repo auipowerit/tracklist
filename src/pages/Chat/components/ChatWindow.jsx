@@ -168,7 +168,7 @@ function Messages({ messages }) {
 
   useLayoutEffect(() => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
-  }, [chatRef.current]);
+  }, [messages]);
 
   return (
     <div
