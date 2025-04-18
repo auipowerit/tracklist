@@ -43,7 +43,7 @@ function NavLink({ link, category, label, title }) {
   const color = isActive ? ACTIVE_COLOR : "";
 
   return (
-    <Link to={link} style={{ color }}>
+    <Link to={link} style={{ color }} className="max-w-50 truncate">
       {title}
     </Link>
   );

@@ -9,6 +9,7 @@ export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();
   const { setActiveChatId, setActiveChatUser, readMessage } = useChatContext();
 
+  const [mounted, setMounted] = useState(false);
   const [chatWindowKey, setChatWindowKey] = useState(0);
 
   const navigate = useNavigate();
@@ -27,10 +28,14 @@ export default function ChatPage() {
 
     // reset state when user leaves page
     return () => {
+      if (!mounted) {
+        setMounted(true);
+        return;
+      }
       setActiveChatId("-1");
       setActiveChatUser({});
     };
-  }, [loadingUser, globalUser]);
+  }, [loadingUser, globalUser, mounted]);
 
   async function handleOpenChat(chat) {
     setActiveChatUser(chat);

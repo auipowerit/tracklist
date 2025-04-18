@@ -46,7 +46,7 @@ export default function RatingBar({ mediaId }) {
   }, [mediaId]);
 
   return (
-    <div className="flex h-12 items-end gap-[2px]">
+    <div className="flex h-16 items-end gap-[2px]">
       {ratings &&
         Object.keys(ratings)
           .sort((a, b) => parseFloat(a) - parseFloat(b))
@@ -60,7 +60,7 @@ export default function RatingBar({ mediaId }) {
                 data-tooltip-id="media-tooltip"
                 data-tooltip-content={content}
                 style={{ height: `${percentage}%` }}
-                className="group relative min-h-0.5 w-4 cursor-pointer rounded-t-xs bg-gray-400 transition-all duration-300 hover:bg-gray-300"
+                className="group relative min-h-0.5 w-5 cursor-pointer rounded-t-xs bg-gray-400 transition-all duration-300 hover:bg-gray-300"
               >
                 <div className="absolute -top-4 -right-2 -bottom-0 -left-2" />
                 <Tooltip

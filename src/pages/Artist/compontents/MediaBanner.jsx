@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import RatingBar from "src/components/Review/RatingBar";
 import { ReviewStars } from "src/components/Review/ReviewContent";
@@ -34,18 +34,17 @@ function MediaBanner({ media, category }) {
         image={data.image}
         spotifyURL={media.external_urls.spotify}
       />
-
-      <div className="flex h-full w-fit flex-col items-center justify-between bg-black/40 p-4">
-        <Title name={data.title} subtitle={data.subtitle} />
-
-        <div className="flex flex-col gap-4">
+      <div className="flex h-full w-fit items-center justify-between bg-black/40">
+        <div className="flex h-full flex-col items-center justify-between overflow-x-auto bg-black/50 py-4">
+          <Title name={data.title} subtitle={data.subtitle} />
           <Rating mediaId={media.id} rating={rating} />
-          <BannerButtons
-            mediaId={media.id}
-            name={data.title}
-            category={category}
-          />
         </div>
+
+        <BannerButtons
+          mediaId={media.id}
+          name={data.title}
+          category={category}
+        />
       </div>
     </div>
   );
@@ -68,9 +67,23 @@ function SpotifyImage({ image, spotifyURL }) {
 }
 
 function Title({ name, subtitle }) {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const isOverflowing =
+      titleRef.current.scrollWidth > titleRef.current.clientWidth;
+    if (isOverflowing) {
+      titleRef.current.classList.add("scrolling-text");
+    } else {
+      titleRef.current.classList.remove("scrolling-text");
+    }
+  }, [name]);
+
   return (
-    <div className="m-auto flex max-w-150 min-w-80 flex-col items-center gap-1">
-      <p className="text-4xl font-bold">{name}</p>
+    <div className="flex max-w-100 min-w-100 flex-col gap-1 overflow-hidden px-2">
+      <p ref={titleRef} className="text-4xl font-bold whitespace-nowrap">
+        {name}
+      </p>
       <p className="text-gray-300">{subtitle}</p>
     </div>
   );
@@ -78,11 +91,12 @@ function Title({ name, subtitle }) {
 
 function Rating({ mediaId, rating }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col items-center gap-4 text-2xl">
       <RatingBar mediaId={mediaId} />
-      <div className="mt-auto flex items-center justify-center gap-1">
+
+      <div className="flex items-center justify-center gap-2">
         <p>{rating.avgRating?.toFixed(1) || ""}</p>
-        <ReviewStars rating={rating.avgRating || 0} />
+        <ReviewStars rating={rating.avgRating || 0} size={22} />
         <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>
       </div>
     </div>

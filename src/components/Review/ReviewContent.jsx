@@ -56,7 +56,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
   }
 
   return (
-    <div className="flex flex-row gap-1">
+    <div className="flex flex-row items-center gap-1">
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = rating === ratingValue - 0.5;

@@ -24,6 +24,27 @@ button {
   animation: move-gradient 5s ease-in-out infinite alternate;
 }
 
+.scrolling-text {
+  animation: scroll 12s linear infinite;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  20% {
+    transform: translateX(0%);
+  }
+  80% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(-110%);
+  }
+}
+
 @keyframes pulse {
   0% {
     background-color: #333;

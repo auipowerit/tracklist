@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "src/config/firebase";
 import { formatDateDMD } from "src/utils/date";
@@ -69,7 +69,6 @@ export default function ChatWindow() {
       ) : (
         <>
           <Header />
-
           <Messages messages={messages} />
           <ChatInput />
         </>
@@ -165,6 +164,12 @@ function SearchUsers() {
 }
 
 function Messages({ messages }) {
+  const chatRef = useRef();
+
+  useLayoutEffect(() => {
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }, [messages]);
+
   function AlwaysScrollToBottom() {
     const divRef = useRef();
 
@@ -177,7 +182,10 @@ function Messages({ messages }) {
   }
 
   return (
-    <div className="flex grow-1 flex-col gap-4 overflow-y-auto px-4">
+    <div
+      ref={chatRef}
+      className="flex grow-1 flex-col gap-4 overflow-y-auto px-4"
+    >
       {messages &&
         messages.length > 0 &&
         messages.map((message, index) => {
@@ -190,8 +198,6 @@ function Messages({ messages }) {
             />
           );
         })}
-
-      <AlwaysScrollToBottom />
     </div>
   );
 }

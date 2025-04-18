@@ -254,11 +254,16 @@ function FormMediaResults(props) {
 function FormListInput(props) {
   const { selectRef, addToCurrentLists, lists } = props;
 
+  function handleSelect(e) {
+    e.stopPropagation();
+    addToCurrentLists(e.target.value);
+  }
+
   return (
     <select
       ref={selectRef}
       defaultValue=""
-      onChange={(e) => addToCurrentLists(e.target.value)}
+      onChange={handleSelect}
       className="option:bg-gray-700 w-full border-1 px-2 py-1 outline-none"
     >
       <option value="" disabled hidden>

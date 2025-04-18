@@ -23,7 +23,7 @@ export default function BannerButtons({ mediaId, name, category }) {
   }, []);
 
   return (
-    <div className="flex items-center gap-6 text-2xl">
+    <div className="flex h-full flex-col items-center justify-evenly px-4 text-2xl">
       <LikeMediaButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}
