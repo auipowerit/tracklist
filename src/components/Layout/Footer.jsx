@@ -8,7 +8,7 @@ export default function Footer() {
         <Link
           to="https://code.visualstudio.com"
           target="_blank"
-          className="text-white"
+          className="text-white hover:text-green-700"
         >
           Visual Studio Code&nbsp;
         </Link>
@@ -16,7 +16,7 @@ export default function Footer() {
         <Link
           to="https://www.linkedin.com/in/zachary-betters-916a74116/"
           target="_blank"
-          className="text-white"
+          className="text-white hover:text-green-700"
         >
           Zachary Betters
         </Link>
@@ -27,7 +27,7 @@ export default function Footer() {
         <Link
           to="https://www.netlify.com"
           target="_blank"
-          className="text-white"
+          className="text-white hover:text-green-700"
         >
           Netlify
         </Link>
@@ -37,7 +37,7 @@ export default function Footer() {
         <Link
           to="https://rsms.me/inter/"
           target="_blank"
-          className="text-white"
+          className="text-white hover:text-green-700"
         >
           Inter typeface
         </Link>

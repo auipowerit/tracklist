@@ -53,8 +53,8 @@ export default function Navbar() {
 
   return (
     <div className="items-center bg-[#121212] py-4 text-2xl">
-      <ul className="m-auto flex w-3/5 items-center justify-evenly gap-6">
-        <li>
+      <div className="m-auto flex w-3/5 items-center justify-between">
+        <div className="flex items-center gap-6">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -63,8 +63,7 @@ export default function Navbar() {
           >
             <p>TrackList</p>
           </NavLink>
-        </li>
-        <li>
+
           <NavLink
             to="/search"
             className={({ isActive }) =>
@@ -73,9 +72,48 @@ export default function Navbar() {
           >
             <FontAwesomeIcon icon={faSearch} />
           </NavLink>
-        </li>
-        <div className="ml-auto flex items-center gap-6">
-          <li className="relative">
+        </div>
+        <div className="flex items-center gap-6">
+          <div ref={dropdownRef} className="relative">
+            <button
+              type="button"
+              onClick={handleUserClick}
+              className={`cursor-pointer text-3xl ${
+                location.pathname.startsWith(
+                  `/users/${globalUser?.username}`,
+                ) || location.pathname === "/profile"
+                  ? "text-green-700"
+                  : "text-white hover:text-gray-400"
+              }`}
+            >
+              <FontAwesomeIcon icon={faUser} />
+            </button>
+
+            <div
+              className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+                showDropdown
+                  ? "max-h-screen p-2 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <DropdownMenu
+                items={[
+                  { label: "Profile", path: "/profile" },
+                  {
+                    label: "Lists",
+                    path: `/users/${globalUser?.username}/lists`,
+                  },
+                  {
+                    label: "Friends",
+                    path: `/users/${globalUser?.username}/friends`,
+                  },
+                ]}
+                onClose={() => setShowDropdown(false)}
+                globalUser={globalUser}
+              />
+            </div>
+          </div>
+          <div className="relative">
             <NavLink
               to="/messaging"
               className={({ isActive }) =>
@@ -85,50 +123,9 @@ export default function Navbar() {
               <FontAwesomeIcon icon={faEnvelope} />
             </NavLink>
             {unreadCount > 0 && <NotificationBadge unreadCount={unreadCount} />}
-          </li>
-          <li>
-            <div ref={dropdownRef} className="relative">
-              <button
-                type="button"
-                onClick={handleUserClick}
-                className={`cursor-pointer text-3xl ${
-                  location.pathname.startsWith(
-                    `/users/${globalUser?.username}`,
-                  ) || location.pathname === "/profile"
-                    ? "text-green-700"
-                    : "text-white hover:text-gray-400"
-                }`}
-              >
-                <FontAwesomeIcon icon={faUser} />
-              </button>
-
-              <div
-                className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
-                  showDropdown
-                    ? "max-h-screen p-2 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
-              >
-                <DropdownMenu
-                  items={[
-                    { label: "Profile", path: "/profile" },
-                    {
-                      label: "Lists",
-                      path: `/users/${globalUser?.username}/lists`,
-                    },
-                    {
-                      label: "Friends",
-                      path: `/users/${globalUser?.username}/friends`,
-                    },
-                  ]}
-                  onClose={() => setShowDropdown(false)}
-                  globalUser={globalUser}
-                />
-              </div>
-            </div>
-          </li>
+          </div>
         </div>
-      </ul>
+      </div>
     </div>
   );
 }

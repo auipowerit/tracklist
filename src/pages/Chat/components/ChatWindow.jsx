@@ -11,7 +11,7 @@ import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import ChatInput from "./ChatInput";
 
 export default function ChatWindow() {
-  const { getUserById } = useAuthContext();
+  const { globalUser } = useAuthContext();
   const { activeChatId, activeChatUser } = useChatContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
@@ -30,20 +30,22 @@ export default function ChatWindow() {
     onSnapshot(
       doc(db, "chats", activeChatId),
       async (doc) => {
-        
         const messages = doc
           .data()
           .messages.sort((a, b) => a.createdAt - b.createdAt);
 
-        const trimmed = messages.splice(messages.length - 10, 10);
+        if (messages.length === 0) return;
 
         const messageData = await Promise.all(
-          trimmed.map(async (message) => {
-            const user = await getUserById(message.senderId);
+          messages.map(async (message) => {
+            // Check if message sender is current user
+            const user =
+              message.senderId === globalUser.uid ? globalUser : activeChatUser;
 
             if (message.category) {
               const media = await getMediaById(message.text, message.category);
               const mediaData = await getMediaLinks(media);
+
               return {
                 chatId: activeChatId,
                 ...message,
@@ -182,18 +184,16 @@ function Messages({ messages }) {
       ref={chatRef}
       className="flex grow-1 flex-col gap-4 overflow-y-auto mask-t-from-95% p-4"
     >
-      {messages &&
-        messages.length > 0 &&
-        messages.map((message, index) => {
-          return (
-            <MessageCard
-              key={message.id}
-              message={message}
-              index={index}
-              messages={messages}
-            />
-          );
-        })}
+      {messages.map((message, index) => {
+        return (
+          <MessageCard
+            key={message.id}
+            message={message}
+            index={index}
+            messages={messages}
+          />
+        );
+      })}
     </div>
   );
 }

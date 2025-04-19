@@ -7,7 +7,6 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { use } from "react";
 
 export function useChat() {
   async function getChatById(chatId) {
