@@ -52,8 +52,16 @@ export default function Navbar() {
   }
 
   return (
-    <div className="items-center bg-[#121212] py-4 text-2xl">
+    <div className="relative items-center bg-[#121212] py-4 text-2xl">
       <ul className="m-auto flex w-3/5 items-center justify-evenly gap-6">
+        <li>
+          <Link
+            to="/"
+            className="absolute top-3 left-6 text-4xl font-bold text-green-700 text-shadow-sm text-shadow-white/10"
+          >
+            <p>TrackList</p>
+          </Link>
+        </li>
         <li>
           <NavLink
             to="/"
@@ -92,7 +100,9 @@ export default function Navbar() {
                 type="button"
                 onClick={handleUserClick}
                 className={`cursor-pointer text-4xl ${
-                  location.pathname.startsWith("/users")
+                  location.pathname.startsWith(
+                    `/users/${globalUser?.username}`,
+                  ) || location.pathname === "/profile"
                     ? "text-green-700"
                     : "text-white hover:text-gray-400"
                 }`}

@@ -53,7 +53,7 @@ export default function ReviewPage() {
 
 function Review({ review }) {
   return (
-    <div className="flex w-full items-center border-b-1 border-white pb-4">
+    <div className="flex w-full items-center gap-2 border-b-1 border-white pb-4">
       <MediaDetails review={review} />
 
       <div className="flex h-full w-full flex-col justify-between overflow-auto">

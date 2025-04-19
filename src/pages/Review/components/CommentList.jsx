@@ -78,7 +78,7 @@ function Comments({ comments, setComments, review }) {
           })}
         </div>
       ) : (
-        <p className="m-auto text-center text-3xl text-gray-400">
+        <p className="m-20 text-center text-2xl text-gray-300 italic">
           No comments yet!
         </p>
       )}

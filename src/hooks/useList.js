@@ -50,6 +50,28 @@ export function useList() {
     }
   }
 
+  async function getSavedListsByUserId(userId) {
+    try {
+      if (!userId) return;
+
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      const lists = userDoc.data().savedLists.map((id) => doc(db, "lists", id));
+      const listDocs = await Promise.all(
+        lists.map((listRef) => getDoc(listRef)),
+      );
+
+      return listDocs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function createNewList(listData, userId) {
     try {
       if (!listData || !userId) return;
@@ -241,6 +263,7 @@ export function useList() {
   return {
     getListById,
     getListsByUserId,
+    getSavedListsByUserId,
 
     createNewList,
 

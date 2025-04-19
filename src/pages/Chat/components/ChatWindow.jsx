@@ -30,8 +30,15 @@ export default function ChatWindow() {
     onSnapshot(
       doc(db, "chats", activeChatId),
       async (doc) => {
+        
+        const messages = doc
+          .data()
+          .messages.sort((a, b) => a.createdAt - b.createdAt);
+
+        const trimmed = messages.splice(messages.length - 10, 10);
+
         const messageData = await Promise.all(
-          doc.data().messages.map(async (message) => {
+          trimmed.map(async (message) => {
             const user = await getUserById(message.senderId);
 
             if (message.category) {

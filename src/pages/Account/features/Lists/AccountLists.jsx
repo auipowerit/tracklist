@@ -45,7 +45,7 @@ function Header({ canEdit }) {
 
 function Lists({ user, activeTab }) {
   const { globalUser } = useAuthContext();
-  const { getListsByUserId } = useListContext();
+  const { getListsByUserId, getSavedListsByUserId } = useListContext();
   const { DEFAULT_IMG, getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +57,11 @@ function Lists({ user, activeTab }) {
       setIsLoading(true);
 
       try {
-        let fetchedLists = await getListsByUserId(user.uid);
+        let fetchedLists =
+          activeTab === "created"
+            ? await getListsByUserId(user.uid)
+            : await getSavedListsByUserId(user.uid);
+
         if (!fetchedLists) return;
 
         // Filter out private lists if logged in user is not the owner
@@ -79,7 +83,7 @@ function Lists({ user, activeTab }) {
     };
 
     fetchLists();
-  }, [user]);
+  }, [user, activeTab]);
 
   async function getImages(lists) {
     const fetchedImages = await Promise.all(
@@ -103,7 +107,7 @@ function Lists({ user, activeTab }) {
   }
 
   return (
-    <div className="overflow-y-scroll pt-4">
+    <div className="overflow-y-scroll pt-6">
       {lists && lists.length > 0 ? (
         <ul className="flex w-full flex-col gap-4">
           {lists.map((list, index) => {
@@ -124,8 +128,27 @@ function Lists({ user, activeTab }) {
 }
 
 function ListItem({ item, image }) {
+  const { user } = useOutletContext();
+  const { getUserById } = useAuthContext();
+
+  const [link, setLink] = useState(item.id);
+  const [listUser, setListUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (item.userId !== user.uid) {
+        const fetchedUser = await getUserById(item.userId);
+        setLink(`/users/${fetchedUser.username}/lists/${item.id}`);
+        setListUser(fetchedUser.username);
+      }
+    };
+
+    fetchUser();
+  }, [item]);
+
   return (
-    <Link to={`${item.id}`}>
+    <Link to={link} className="flex flex-col gap-2">
+      {listUser && <p className="text-gray-400">{`Created by ${listUser}`}</p>}
       <ListCard
         id={item.id}
         image={image}

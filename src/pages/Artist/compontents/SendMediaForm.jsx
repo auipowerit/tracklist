@@ -242,7 +242,7 @@ function FormMessage({ message, setMessage }) {
       value={message}
       onChange={handleChange}
       placeholder="Include a message..."
-      className="w-full border-2 border-white px-2 py-1"
+      className="w-full border-2 border-white px-2 py-1 outline-none"
     />
   );
 }

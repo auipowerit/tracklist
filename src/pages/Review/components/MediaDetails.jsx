@@ -17,7 +17,7 @@ export default function MediaDetails({ review }) {
   }, []);
 
   return (
-    <div className="ming-w-100 flex max-w-100 flex-col items-center justify-center p-2">
+    <div className="flex max-w-75 min-w-75 flex-col items-center justify-center p-2">
       <MediaImage
         image={mediaData.image || DEFAULT_IMG}
         link={mediaData.link}
