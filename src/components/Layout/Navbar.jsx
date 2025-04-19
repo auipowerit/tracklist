@@ -52,31 +52,23 @@ export default function Navbar() {
   }
 
   return (
-    <div className="relative items-center bg-[#121212] py-4 text-2xl">
+    <div className="items-center bg-[#121212] py-4 text-2xl">
       <ul className="m-auto flex w-3/5 items-center justify-evenly gap-6">
-        <li>
-          <Link
-            to="/"
-            className="absolute top-3 left-6 text-4xl font-bold text-green-700 text-shadow-sm text-shadow-white/10"
-          >
-            <p>TrackList</p>
-          </Link>
-        </li>
         <li>
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `${isActive ? "text-green-700" : "hover:text-gray-400"}`
+              `text-4xl font-bold ${isActive ? "text-green-700" : "hover:text-gray-400"} `
             }
           >
-            <FontAwesomeIcon icon={faHome} />
+            <p>TrackList</p>
           </NavLink>
         </li>
         <li>
           <NavLink
             to="/search"
             className={({ isActive }) =>
-              `${isActive ? "text-green-700" : "hover:text-gray-400"}`
+              `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
             }
           >
             <FontAwesomeIcon icon={faSearch} />
@@ -87,7 +79,7 @@ export default function Navbar() {
             <NavLink
               to="/messaging"
               className={({ isActive }) =>
-                `text-4xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+                `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
               }
             >
               <FontAwesomeIcon icon={faEnvelope} />
@@ -99,7 +91,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleUserClick}
-                className={`cursor-pointer text-4xl ${
+                className={`cursor-pointer text-3xl ${
                   location.pathname.startsWith(
                     `/users/${globalUser?.username}`,
                   ) || location.pathname === "/profile"
