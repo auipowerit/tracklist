@@ -80,7 +80,7 @@ function FormImage({ globalUser }) {
 
       <button
         type="button"
-        onClick={redirectToSpotifyAuth}
+        onClick={() => redirectToSpotifyAuth(false)}
         className="flex items-center justify-center gap-2 rounded-md border-2 border-white px-3 py-2 hover:text-gray-400"
       >
         <FaSpotify />

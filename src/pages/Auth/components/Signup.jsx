@@ -1,13 +1,59 @@
-import { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useRef } from "react";
+import { FaSpotify } from "react-icons/fa";
 import AuthInput from "src/components/Inputs/AuthInput";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function Signup({ setIsRegistration }) {
   const { signup, usernameAvailable } = useAuthContext();
+  const { redirectToSpotifyAuth, getAuthAccessToken, getSpotifyUser } =
+    useSpotifyContext();
+
+  const params = new URLSearchParams(window.location.search);
 
   const formRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (localStorage.getItem("profile")) {
+        localStorage.removeItem("profile");
+      }
+
+      const profile = await handleProfile();
+      if (profile) {
+        await handleLogin(profile);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  async function handleProfile() {
+    const fetchedCode = params.get("code") || null;
+    if (!fetchedCode) return;
+
+    const accessToken = await getAuthAccessToken(fetchedCode, true);
+    if (!accessToken) return;
+
+    const profile = await getSpotifyUser(accessToken);
+
+    return profile || null;
+  }
+
+  async function handleLogin(profile) {
+    await signup(
+      profile.email,
+      "password",
+      profile.display_name,
+      profile.id,
+      profile.images?.[0].url,
+      profile.external_urls?.spotify,
+    );
+
+    localStorage.removeItem("isRegistration");
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -33,6 +79,7 @@ export default function Signup({ setIsRegistration }) {
   function resetForm() {
     setIsRegistration(false);
     formRef.current?.reset();
+    localStorage.removeItem("isRegistration");
   }
 
   return (
@@ -54,6 +101,15 @@ export default function Signup({ setIsRegistration }) {
           Submit
         </button>
       </form>
+
+      <button
+        type="button"
+        onClick={() => redirectToSpotifyAuth(true)}
+        className="flex items-center gap-2 border-1 border-white px-4 py-2 hover:text-green-500"
+      >
+        <FaSpotify />
+        <p>Signup</p>
+      </button>
 
       <button
         onClick={() => setIsRegistration(false)}

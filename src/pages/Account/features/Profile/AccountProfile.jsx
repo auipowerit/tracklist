@@ -46,7 +46,7 @@ export default function AccountProfile() {
     const fetchedCode = params.get("code") || null;
     if (!fetchedCode) return;
 
-    const accessToken = await getAuthAccessToken(fetchedCode);
+    const accessToken = await getAuthAccessToken(fetchedCode, false);
     if (!accessToken) return;
 
     const profile = await getSpotifyUser(accessToken);
