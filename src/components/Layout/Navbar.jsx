@@ -4,10 +4,8 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
-  faHome,
   faSearch,
   faSignOut,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useChatContext } from "src/context/Chat/ChatContext";
 
@@ -53,76 +51,63 @@ export default function Navbar() {
 
   return (
     <div className="items-center bg-[#121212] py-4 text-2xl">
-      <div className="m-auto flex w-3/5 items-center justify-between">
-        <div className="flex items-center gap-6">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `text-4xl font-bold ${isActive ? "text-green-700" : "hover:text-gray-400"} `
-            }
-          >
-            <p>TrackList</p>
-          </NavLink>
+      <div className="m-auto flex w-3/5 items-center justify-end gap-6">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `mr-auto text-4xl font-bold ${isActive ? "text-green-700" : "hover:text-gray-400"} `
+          }
+        >
+          <p>TrackList</p>
+        </NavLink>
 
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+          }
+        >
+          <FontAwesomeIcon icon={faSearch} />
+        </NavLink>
+        <div className="relative">
           <NavLink
-            to="/search"
+            to="/messaging"
             className={({ isActive }) =>
               `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
             }
           >
-            <FontAwesomeIcon icon={faSearch} />
+            <FontAwesomeIcon icon={faEnvelope} />
           </NavLink>
+          {unreadCount > 0 && <NotificationBadge unreadCount={unreadCount} />}
         </div>
-        <div className="flex items-center gap-6">
-          <div ref={dropdownRef} className="relative">
-            <button
-              type="button"
-              onClick={handleUserClick}
-              className={`cursor-pointer text-3xl ${
-                location.pathname.startsWith(
-                  `/users/${globalUser?.username}`,
-                ) || location.pathname === "/profile"
-                  ? "text-green-700"
-                  : "text-white hover:text-gray-400"
-              }`}
-            >
-              <FontAwesomeIcon icon={faUser} />
-            </button>
-
-            <div
-              className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
-                showDropdown
-                  ? "max-h-screen p-2 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <DropdownMenu
-                items={[
-                  { label: "Profile", path: "/profile" },
-                  {
-                    label: "Lists",
-                    path: `/users/${globalUser?.username}/lists`,
-                  },
-                  {
-                    label: "Friends",
-                    path: `/users/${globalUser?.username}/friends`,
-                  },
-                ]}
-                onClose={() => setShowDropdown(false)}
-                globalUser={globalUser}
-              />
-            </div>
-          </div>
-          <div className="relative">
-            <NavLink
-              to="/messaging"
-              className={({ isActive }) =>
-                `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
-              }
-            >
-              <FontAwesomeIcon icon={faEnvelope} />
-            </NavLink>
-            {unreadCount > 0 && <NotificationBadge unreadCount={unreadCount} />}
+        <div ref={dropdownRef} className="relative">
+          <img
+            src={globalUser?.profileUrl || "/images/default-profile-img.jpg"}
+            onClick={handleUserClick}
+            className="h-10 w-10 cursor-pointer rounded-full object-cover"
+          />
+          <div
+            className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+              showDropdown
+                ? "max-h-screen p-2 opacity-100"
+                : "max-h-0 opacity-0"
+            }`}
+          >
+            <DropdownMenu
+              items={[
+                { label: "Profile", path: "/profile" },
+                {
+                  label: "Lists",
+                  path: `/users/${globalUser?.username}/lists`,
+                },
+                {
+                  label: "Friends",
+                  path: `/users/${globalUser?.username}/friends`,
+                },
+              ]}
+              onClose={() => setShowDropdown(false)}
+              globalUser={globalUser}
+            />
           </div>
         </div>
       </div>

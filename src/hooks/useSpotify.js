@@ -4,8 +4,7 @@ export function useSpotify() {
   const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
   const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
-  const LOGIN_REDIRECT_URI = "http://localhost:5173/authenticate/callback";
-  const PROFILE_REDIRECT_URI = "http://localhost:5173/profile/callback";
+  const REDIRECT_URI = "http://localhost:5173/profile/callback";
   const DEFAULT_IMG = "/images/default-img.jpg";
 
   const [accessToken, setAccessToken] = useState("");
@@ -28,30 +27,26 @@ export function useSpotify() {
     }
   }
 
-  async function getAuthAccessToken(AUTH_CODE, isLogin) {
+  async function getAuthAccessToken(AUTH_CODE) {
     const verifier = localStorage.getItem("verifier");
-
-    const redirect_uri = isLogin ? LOGIN_REDIRECT_URI : PROFILE_REDIRECT_URI;
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `client_id=${CLIENT_ID}&grant_type=authorization_code&code=${AUTH_CODE}&redirect_uri=${redirect_uri}&code_verifier=${verifier}`,
+      body: `client_id=${CLIENT_ID}&grant_type=authorization_code&code=${AUTH_CODE}&redirect_uri=${REDIRECT_URI}&code_verifier=${verifier}`,
     });
 
     const { access_token } = await result.json();
     return access_token;
   }
 
-  async function redirectToSpotifyAuth(isLogin) {
+  async function redirectToSpotifyAuth() {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
 
     localStorage.setItem("verifier", verifier);
 
-    const redirect_uri = isLogin ? LOGIN_REDIRECT_URI : PROFILE_REDIRECT_URI;
-
-    document.location = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${redirect_uri}&scope=user-read-private user-read-email&code_challenge_method=S256&code_challenge=${challenge}`;
+    document.location = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=user-read-private user-read-email&code_challenge_method=S256&code_challenge=${challenge}`;
   }
 
   function generateCodeVerifier(length) {

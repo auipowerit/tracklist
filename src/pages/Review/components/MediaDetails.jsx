@@ -20,7 +20,7 @@ export default function MediaDetails({ review }) {
     <div className="flex max-w-75 min-w-75 flex-col items-center justify-center p-2">
       <MediaImage
         image={mediaData.image || DEFAULT_IMG}
-        link={mediaData.link}
+        link={mediaData.titleLink}
       />
       <MediaInfo mediaData={mediaData} />
     </div>
@@ -29,7 +29,7 @@ export default function MediaDetails({ review }) {
 
 function MediaImage({ image, link }) {
   const navigate = useNavigate();
-
+  console.log(link);
   return (
     <img
       src={image}

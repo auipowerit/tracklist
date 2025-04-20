@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import {
+  ReviewButtons,
   ReviewContent,
   ReviewMediaTitle,
   ReviewStars,
@@ -22,26 +23,37 @@ export default function ReviewCard({ review }) {
 
   return (
     <div className="flex flex-col gap-2 p-2">
-      <div className="flex items-center gap-4">
-        <img
-          src={review.media.image}
-          className="aspect-square h-36 w-36 cursor-pointer border-1 border-transparent object-cover shadow-lg hover:border-white"
-          onClick={() => navigate(media.titleLink)}
-        />
+      <div
+        onClick={() => navigate(`/reviews/${review.id}`)}
+        className="flex cursor-pointer flex-col gap-2 p-2 hover:bg-gray-800"
+      >
+        <div className="flex items-center gap-4">
+          <img
+            src={review.media.image}
+            className="aspect-square h-36 w-36 border-1 border-transparent object-cover shadow-lg"
+          />
 
-        <div className="flex h-36 max-h-36 flex-col justify-between">
-          <ReviewUser review={review} />
+          <div className="flex h-36 max-h-36 flex-col justify-between">
+            <ReviewUser review={review} />
 
-          <div className="flex flex-col gap-2">
-            <ReviewMediaTitle {...media} />
-            <ReviewStars rating={review.rating || 0} />
+            <div className="flex flex-col gap-2">
+              <ReviewMediaTitle
+                title={media.title}
+                subtitle={media.subtitle}
+                category={review.category}
+              />
+              <ReviewStars rating={review.rating || 0} />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="w-4/5">
-        <ReviewContent review={review} showComment={true} />
+        <p className="pr-6 text-lg break-words">
+          {review.content.length > 150
+            ? `${review.content.slice(0, 150)}...`
+            : review.content}
+        </p>
       </div>
+      <ReviewButtons review={review} showComment={true} />
     </div>
   );
 }

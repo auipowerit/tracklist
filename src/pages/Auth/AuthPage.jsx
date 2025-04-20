@@ -9,14 +9,7 @@ export default function AuthPage() {
   const navigate = useNavigate();
 
   const { globalUser, isLoading } = useAuthContext();
-  const [isRegistration, setIsRegistration] = useState(() => {
-    const storedValue = localStorage.getItem("isRegistration");
-    return storedValue === "true" ? true : false;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("isRegistration", isRegistration.toString());
-  }, [isRegistration]);
+  const [isRegistration, setIsRegistration] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;

@@ -19,14 +19,7 @@ import {
 import { auth, db } from "../config/firebase";
 
 export function useAuth() {
-  async function signup(
-    email,
-    password,
-    displayname,
-    username,
-    profileUrl,
-    spotifyURL,
-  ) {
+  async function signup(email, password, displayname, username, profileUrl) {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -42,7 +35,7 @@ export function useAuth() {
         username,
         bio: "",
         profileUrl: profileUrl || "/images/default-profile-img.jpg",
-        spotifyUrl: spotifyURL || "",
+        spotifyUrl: "",
         following: [],
         followers: [],
         lists: [],
@@ -125,30 +118,6 @@ export function useAuth() {
     try {
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("username", "==", username));
-      const snapshot = await getDocs(q);
-
-      if (snapshot.empty) return null;
-
-      const userRef = snapshot.docs[0].ref;
-      const userDoc = await getDoc(userRef);
-
-      if (!userDoc.exists()) return null;
-
-      const user = userDoc.data();
-
-      return {
-        uid: userRef.id,
-        ...user,
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getUserByEmail(email) {
-    try {
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("email", "==", email));
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) return null;
@@ -339,7 +308,6 @@ export function useAuth() {
 
     getUserById,
     getUserByUsername,
-    getUserByEmail,
     searchByUsername,
 
     getFollowingById,

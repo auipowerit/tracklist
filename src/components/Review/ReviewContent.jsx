@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 import { getTimeSince } from "src/utils/date";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
+import {
+  faComment,
+  faCompactDisc,
+  faMicrophoneLines,
+  faMusic,
+} from "@fortawesome/free-solid-svg-icons";
 import LikeButton from "../Buttons/LikeButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import DislikeButton from "../Buttons/DislikeButton";
@@ -14,19 +20,14 @@ import DislikeButton from "../Buttons/DislikeButton";
 function ReviewUser({ review, showIcon = true }) {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex cursor-pointer items-center gap-2 hover:text-gray-400">
+      <div className="flex items-center gap-2">
         {showIcon && (
           <img
             src={review.profileUrl}
             className="h-8 w-8 rounded-full object-cover"
           />
         )}
-        <Link
-          to={`/users/${review.username}`}
-          className="font-semibold hover:text-gray-300"
-        >
-          {review.username}
-        </Link>
+        <p className="font-semibold">{review.username}</p>
       </div>
       <p className="text-sm font-light text-gray-400">
         {getTimeSince(review.createdAt.toDate())}
@@ -35,18 +36,39 @@ function ReviewUser({ review, showIcon = true }) {
   );
 }
 
-function ReviewMediaTitle({ title, titleLink, subtitle, subtitleLink }) {
+function ReviewMediaTitle({ title, subtitle, category }) {
+  const icon =
+    category === "track"
+      ? faMusic
+      : category === "album"
+        ? faCompactDisc
+        : faMicrophoneLines;
+
+  const capitalizeFirstLetter = (str) => {
+    return str[0].toUpperCase() + str.slice(1);
+  };
+
   return (
     <div className="flex flex-col">
-      <Link
-        to={titleLink}
-        className="max-w-150 truncate text-2xl font-bold whitespace-nowrap hover:text-gray-400"
-      >
-        {title}
-      </Link>
-      <Link to={subtitleLink} className="font-light hover:text-gray-400">
-        {subtitle}
-      </Link>
+      <div className="flex items-center gap-2">
+        <div
+          data-tooltip-content={capitalizeFirstLetter(category)}
+          data-tooltip-id="category-tooltip"
+        >
+          <FontAwesomeIcon icon={icon} className="text-gray-400" />
+          <Tooltip
+            id="category-tooltip"
+            place="top"
+            type="dark"
+            effect="float"
+          />
+        </div>
+        <p className="max-w-150 truncate text-2xl font-bold whitespace-nowrap">
+          {title}
+        </p>
+      </div>
+
+      <p className="font-light">{subtitle}</p>
     </div>
   );
 }
@@ -78,7 +100,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
   );
 }
 
-function ReviewContent({ review, showComment = true }) {
+function ReviewContent({ review }) {
   const [showMore, setShowMore] = useState(false);
 
   return (
@@ -100,7 +122,6 @@ function ReviewContent({ review, showComment = true }) {
           </p>
         )}
       </div>
-      <ReviewButtons review={review} showComment={showComment} />
     </div>
   );
 }
@@ -178,7 +199,7 @@ function ReviewButtons({ review, showComment = true }) {
   }
 
   return (
-    <div className="ml-1 flex items-center gap-4">
+    <div className="ml-1 flex items-center gap-4 pl-2">
       <div className="flex items-center">
         <LikeButton
           content={review}
