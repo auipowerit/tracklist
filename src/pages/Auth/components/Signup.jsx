@@ -36,21 +36,14 @@ export default function Signup({ setIsRegistration }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-evenly gap-6 p-4 align-middle text-2xl">
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4"
-      >
+    <div className="signup-container">
+      <form ref={formRef} onSubmit={handleSubmit} className="signup-form">
         <AuthInput label="Display Name" name="displayname" type="text" />
         <AuthInput label="Username" name="username" type="text" />
         <AuthInput label="Email Address" name="email" type="text" />
         <AuthInput label="Password" name="password" type="password" />
 
-        <button
-          type="submit"
-          className="m-auto self-start rounded-md bg-green-700 px-5 py-2"
-        >
+        <button type="submit" className="signup-submit-btn">
           Submit
         </button>
       </form>

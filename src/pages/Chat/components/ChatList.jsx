@@ -62,12 +62,18 @@ function ChatCard({ chat, handleOpenChat }) {
   const { activeChatId, activeChatUser } = useChatContext();
 
   const isActive = activeChatUser.uid === chat.uid;
+
   const color =
     activeChatId === chat.chatId
       ? "text-gray-300"
       : chat.unread > 0
         ? "font-bold"
         : "text-gray-300";
+
+  const lastMessage =
+    chat.lastMessage.length > 40
+      ? `${chat.lastMessage.slice(0, 40)}...`
+      : chat.lastMessage;
 
   return (
     <div
@@ -81,11 +87,7 @@ function ChatCard({ chat, handleOpenChat }) {
         <img src={chat.profileUrl} className="h-7 w-7 rounded-full" />
         <p>{chat.username}</p>
       </Link>
-      <p className={color}>
-        {chat.lastMessage.length > 40
-          ? `${chat.lastMessage.slice(0, 40)}...`
-          : chat.lastMessage}
-      </p>
+      <p className={color}>{lastMessage}</p>
     </div>
   );
 }

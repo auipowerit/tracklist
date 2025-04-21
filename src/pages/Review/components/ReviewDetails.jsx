@@ -3,7 +3,7 @@ import { ReviewStars } from "src/components/Review/ReviewContent";
 
 export default function ReviewDetails({ review }) {
   return (
-    <div className="flex h-64 w-full flex-col gap-4">
+    <div className="flex h-72 w-full flex-col gap-4">
       <ReviewHeader review={review} />
       <ReviewContent review={review} />
     </div>
@@ -39,7 +39,7 @@ function ReviewHeader({ review }) {
 
 function ReviewContent({ review }) {
   return (
-    <p className="overflow-auto mask-b-from-90% pl-2 text-xl break-words">
+    <p className="overflow-auto mask-b-from-90% pb-2 pl-2 text-xl break-words">
       {review.content}
     </p>
   );

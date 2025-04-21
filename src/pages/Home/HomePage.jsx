@@ -38,7 +38,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="m-auto mt-6 flex h-screen w-3/5 flex-col gap-4">
+    <div className="m-auto mt-6 flex h-screen w-3/5 flex-col">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <FeedResults
         results={activeTab === "newest" ? reviews : popularReviews}

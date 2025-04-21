@@ -1,0 +1,24 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1em;
+  font-size: calc(1rem + 0.5vw);
+  gap: 1em;
+  vertical-align: middle;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.signup-submit-btn {
+  align-self: flex-start;
+  margin: auto;
+  padding: 0.25em 0.75em;
+  border-radius: 12px;
+  background-color: green;
+}

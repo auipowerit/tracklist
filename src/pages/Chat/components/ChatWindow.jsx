@@ -47,7 +47,7 @@ export default function ChatWindow() {
 
             if (message.category === "review") {
               const review = await getReviewById(message.text);
-              const mediaData = await getMediaLinks(review.media);
+              const mediaData = getMediaLinks(review.media);
 
               return {
                 chatId: activeChatId,
@@ -57,9 +57,11 @@ export default function ChatWindow() {
                 review,
                 mediaData,
               };
-            } else if (message.category) {
+            }
+
+            if (message.category) {
               const media = await getMediaById(message.text, message.category);
-              const mediaData = await getMediaLinks(media);
+              const mediaData = getMediaLinks(media);
 
               return {
                 chatId: activeChatId,
@@ -69,14 +71,14 @@ export default function ChatWindow() {
                 media,
                 mediaData,
               };
-            } else {
-              return {
-                chatId: activeChatId,
-                ...message,
-                username: user.username,
-                profileUrl: user.profileUrl,
-              };
             }
+
+            return {
+              chatId: activeChatId,
+              ...message,
+              username: user.username,
+              profileUrl: user.profileUrl,
+            };
           }),
         );
 
@@ -225,14 +227,14 @@ function MessageCard({ message, index, messages }) {
       <div
         className={`parent group relative flex w-fit items-start gap-2 rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
       >
-        <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
-
         {isCurrentUser && (
           <MessageDeleteButton
             message={message}
             isCurrentUser={isCurrentUser}
           />
         )}
+
+        <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
 
         <MessageImage message={message} />
         <div className="flex max-w-[200px] flex-col text-wrap">
@@ -244,37 +246,21 @@ function MessageCard({ message, index, messages }) {
   );
 }
 
-function MessageContent({ message, category }) {
-  if (category === "review") {
-    return (
-      <Link
-        to={`/reviews/${message.review.id}`}
-        className="mt-2 flex flex-col items-center justify-center gap-1 bg-white p-2 text-center text-black"
-      >
-        <p>
-          Review by{" "}
-          <span className="font-bold">@{message.review.username}</span>
-        </p>
-        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
-        <ReviewStars rating={message.review.rating} />
-      </Link>
-    );
-  }
+function MessageDate({ message, index, messages }) {
+  const date = message.createdAt.toDate();
 
-  if (category !== "") {
-    return (
-      <Link
-        to={message.mediaData.titleLink}
-        className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
-      >
-        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
-        <p className="w-fit font-bold">{message.mediaData.title}</p>
-        <p className="text-sm">{message.mediaData.subtitle}</p>
-      </Link>
-    );
-  }
+  const isDifferentDate =
+    index === 0
+      ? date !== new Date()
+      : date.getDate() !== messages[index - 1].createdAt.toDate().getDate();
 
-  return <p className="text-lg break-words">{message.text}</p>;
+  if (!isDifferentDate) return;
+
+  return (
+    <p className="self-center py-4 text-sm text-gray-400">
+      {formatDateDMD(date)}
+    </p>
+  );
 }
 
 function MessageDeleteButton({ message, isCurrentUser }) {
@@ -326,23 +312,6 @@ function MessageLikeButton({ message, isCurrentUser }) {
   );
 }
 
-function MessageDate({ message, index, messages }) {
-  const date = message.createdAt.toDate();
-
-  const isDifferentDate =
-    index === 0
-      ? date !== new Date()
-      : date.getDate() !== messages[index - 1].createdAt.toDate().getDate();
-
-  if (!isDifferentDate) return;
-
-  return (
-    <p className="self-center py-4 text-sm text-gray-400">
-      {formatDateDMD(date)}
-    </p>
-  );
-}
-
 function MessageImage({ message }) {
   const { globalUser } = useAuthContext();
 
@@ -368,4 +337,37 @@ function MessageUsername({ message }) {
       </p>
     </div>
   );
+}
+
+function MessageContent({ message, category }) {
+  if (category === "review") {
+    return (
+      <Link
+        to={`/reviews/${message.review.id}`}
+        className="mt-2 flex flex-col items-center justify-center gap-1 bg-white p-2 text-center text-black"
+      >
+        <p>
+          Review by{" "}
+          <span className="font-bold">@{message.review.username}</span>
+        </p>
+        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
+        <ReviewStars rating={message.review.rating} />
+      </Link>
+    );
+  }
+
+  if (category !== "") {
+    return (
+      <Link
+        to={message.mediaData.titleLink}
+        className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
+      >
+        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
+        <p className="w-fit font-bold">{message.mediaData.title}</p>
+        <p className="text-sm">{message.mediaData.subtitle}</p>
+      </Link>
+    );
+  }
+
+  return <p className="text-lg break-words">{message.text}</p>;
 }

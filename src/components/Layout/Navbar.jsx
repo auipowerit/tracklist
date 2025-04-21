@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { useChatContext } from "src/context/Chat/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faSearch,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
-import { useChatContext } from "src/context/Chat/ChatContext";
+import "src/styles/layout/navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -50,12 +51,12 @@ export default function Navbar() {
   }
 
   return (
-    <div className="items-center bg-[#121212] py-4 text-2xl">
-      <div className="m-auto flex w-3/5 items-center justify-end gap-6">
+    <div className="navbar">
+      <div className="nav-items">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `mr-auto text-4xl font-bold ${isActive ? "text-green-700" : "hover:text-gray-400"} `
+            `navlink nav-logo ${isActive ? "text-green-700" : "hover:text-gray-400"} `
           }
         >
           <p>TrackList</p>
@@ -64,7 +65,7 @@ export default function Navbar() {
         <NavLink
           to="/search"
           className={({ isActive }) =>
-            `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            `navlink ${isActive ? "text-green-700" : "hover:text-gray-400"}`
           }
         >
           <FontAwesomeIcon icon={faSearch} />
@@ -73,7 +74,7 @@ export default function Navbar() {
           <NavLink
             to="/messaging"
             className={({ isActive }) =>
-              `text-3xl ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+              `navlink ${isActive ? "text-green-700" : "hover:text-gray-400"}`
             }
           >
             <FontAwesomeIcon icon={faEnvelope} />
@@ -84,10 +85,10 @@ export default function Navbar() {
           <img
             src={globalUser?.profileUrl || "/images/default-profile-img.jpg"}
             onClick={handleUserClick}
-            className="h-10 w-10 cursor-pointer rounded-full object-cover"
+            className="nav-profile"
           />
           <div
-            className={`absolute top-10 right-0 z-30 w-fit overflow-hidden rounded-lg bg-green-700 text-white transition-all duration-300 ease-in-out ${
+            className={`nav-profile-dropdown ${
               showDropdown
                 ? "max-h-screen p-2 opacity-100"
                 : "max-h-0 opacity-0"
@@ -117,7 +118,7 @@ export default function Navbar() {
 
 function NotificationBadge({ unreadCount }) {
   return (
-    <div className="absolute -top-1 -right-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-700 text-sm font-bold text-white">
+    <div className="notification-badge">
       <p>{unreadCount}</p>
     </div>
   );
@@ -134,15 +135,14 @@ function DropdownMenu({ items, onClose, globalUser }) {
   }
 
   return (
-    <ul className="flex flex-col gap-2 px-4 py-2">
+    <ul className="nav-profile-dropdown-list">
       <li>
-        <p className="font-bold text-nowrap">Hi, {globalUser?.username}</p>
+        <p className="nav-profile-dropdown-header">
+          Hi, {globalUser?.username}
+        </p>
       </li>
       {items.map(({ label, path }) => (
-        <li
-          key={label}
-          className="transition-all duration-150 hover:text-gray-400"
-        >
+        <li key={label} className="nav-profile-dropdown-item">
           <Link to={path} onClick={onClose}>
             {label}
           </Link>
@@ -151,7 +151,7 @@ function DropdownMenu({ items, onClose, globalUser }) {
       <li>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center justify-between transition-all duration-150 hover:text-gray-400"
+          className="nav-profile-dropdown-logout nav-profile-dropdown-item"
         >
           <p>Logout</p>
           <FontAwesomeIcon icon={faSignOut} />

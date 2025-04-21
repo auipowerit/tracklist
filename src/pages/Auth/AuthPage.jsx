@@ -4,6 +4,7 @@ import Loading from "src/components/Loading";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import "src/styles/pages/css/auth.css";
 
 export default function AuthPage() {
   const navigate = useNavigate();

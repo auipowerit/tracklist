@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
+import "src/styles/layout/footer.css";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col items-center gap-2 bg-black/50 p-10 pt-6">
-      <p className="space-y-2 text-center text-sm text-gray-400">
+    <footer>
+      <p className="footer-text">
         Coded in&nbsp;
         <Link
           to="https://code.visualstudio.com"
           target="_blank"
-          className="text-white hover:text-green-700"
+          className="footer-link"
         >
           Visual Studio Code&nbsp;
         </Link>
@@ -16,7 +17,7 @@ export default function Footer() {
         <Link
           to="https://www.linkedin.com/in/zachary-betters-916a74116/"
           target="_blank"
-          className="text-white hover:text-green-700"
+          className="footer-link"
         >
           Zachary Betters
         </Link>
@@ -27,7 +28,7 @@ export default function Footer() {
         <Link
           to="https://www.netlify.com"
           target="_blank"
-          className="text-white hover:text-green-700"
+          className="footer-link"
         >
           Netlify
         </Link>
@@ -37,7 +38,7 @@ export default function Footer() {
         <Link
           to="https://rsms.me/inter/"
           target="_blank"
-          className="text-white hover:text-green-700"
+          className="footer-link"
         >
           Inter typeface
         </Link>

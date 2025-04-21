@@ -16,8 +16,7 @@ export default function ChatInput() {
       !activeChatUser ||
       !globalUser ||
       !activeChatId ||
-      !inputRef ||
-      inputRef.current.value.trim() === ""
+      inputRef?.current.value.trim() === ""
     )
       return;
 
