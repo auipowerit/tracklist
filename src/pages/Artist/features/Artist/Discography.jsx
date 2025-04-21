@@ -4,31 +4,7 @@ import { formatDateMDYLong } from "src/utils/date";
 import SortMusic from "src/components/Sort/SortMusic";
 import MediaCard from "src/components/Cards/MediaCard";
 
-export default function Discography(props) {
-  return (
-    <div className="flex w-full flex-col items-center">
-      <MediaList {...props} />
-    </div>
-  );
-}
-
-function Header({ title, media, setMedia, category }) {
-  return (
-    <div className="mb-4 flex w-fit items-center justify-between gap-6 border-b-2 border-white pb-2">
-      <p className="text-4xl font-bold">{title}</p>
-
-      <SortMusic
-        results={media}
-        setResults={setMedia}
-        initialResults={media}
-        category={category}
-        search={false}
-      />
-    </div>
-  );
-}
-
-function MediaList({ media, setMedia, isMore, loadMedia }) {
+export default function Discography({ media, setMedia, isMore, loadMedia }) {
   const [page, setPage] = useState(0);
 
   return (
@@ -43,7 +19,7 @@ function MediaList({ media, setMedia, isMore, loadMedia }) {
 
       {media &&
         (media.length > 0 ? (
-          <div className="flex h-full w-full flex-wrap justify-center gap-8">
+          <div className="flex h-full w-full flex-wrap justify-start gap-8">
             <MediaItems media={media} />
 
             {isMore && (

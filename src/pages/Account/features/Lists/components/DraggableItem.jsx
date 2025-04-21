@@ -4,7 +4,13 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ListItemCard from "src/components/Cards/ListItemCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function DraggableItem({ item, index, handleDelete, list }) {
+export default function DraggableItem({
+  item,
+  index,
+  handleDelete,
+  list,
+  orientation,
+}) {
   const {
     setNodeRef,
     attributes,
@@ -37,6 +43,7 @@ export default function DraggableItem({ item, index, handleDelete, list }) {
             subtitle={item.subtitle}
             image={item.image}
             index={list.isRanking && index + 1}
+            orientation={orientation}
           />
         </div>
 

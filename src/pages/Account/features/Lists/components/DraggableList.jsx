@@ -8,7 +8,7 @@ import {
 } from "@dnd-kit/sortable";
 import DraggableItem from "./DraggableItem";
 
-export default function DraggableList({ items, setItems, list }) {
+export default function DraggableList({ items, setItems, list, orientation }) {
   const { globalUser } = useAuthContext();
   const { reorderListItems, deleteListItem } = useListContext();
 
@@ -60,6 +60,7 @@ export default function DraggableList({ items, setItems, list }) {
               index={index}
               handleDelete={handleDelete}
               list={list}
+              orientation={orientation}
             />
           </div>
         ))}

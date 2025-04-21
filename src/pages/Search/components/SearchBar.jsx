@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
-import FormInput from "src/components/Inputs/FormInput";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 
 export default function SearchBar(props) {
@@ -25,8 +26,9 @@ export default function SearchBar(props) {
     }
   }, [category]);
 
-  async function handleSearch(event) {
-    event?.preventDefault();
+  async function handleSearch(e) {
+    e.preventDefault();
+
     const searchString = searchInput.current?.value.trim();
     if (!searchString) return;
 
@@ -57,20 +59,18 @@ export default function SearchBar(props) {
 
   return (
     <form
-      className="flex items-center justify-center gap-4"
       onSubmit={handleSearch}
+      className="flex items-center justify-center gap-4 rounded-2xl border-2 border-white px-4 py-2 text-2xl"
     >
-      <FormInput
+      <input
+        type="text"
         ref={searchInput}
         placeholder={placeholderMap[category]}
-        classes="rounded-md border-white text-2xl border-2"
+        className="outline-none"
       />
 
-      <button
-        type="submit"
-        className="rounded-md bg-green-700 px-4 py-2 text-2xl transition-all duration-150 hover:text-gray-400"
-      >
-        Search
+      <button type="submit" className="hover:text-green-700">
+        <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </form>
   );

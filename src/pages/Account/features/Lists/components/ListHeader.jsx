@@ -2,12 +2,27 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import ListButton from "src/components/Buttons/ListButton";
 import SaveButton from "src/components/Buttons/SaveButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTableCellsLarge } from "@fortawesome/free-solid-svg-icons";
 
-export default function ListHeader({ list, canEdit, isEditing, setIsEditing }) {
+export default function ListHeader(props) {
+  const {
+    list,
+    canEdit,
+    isEditing,
+    setIsEditing,
+    orientation,
+    setOrientation,
+  } = props;
+
   const { user } = useOutletContext();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  function handleOrientation() {
+    setOrientation(orientation === 0 ? 1 : 0);
+  }
 
   function handleToggle() {
     setIsEditing(!isEditing);
@@ -20,6 +35,12 @@ export default function ListHeader({ list, canEdit, isEditing, setIsEditing }) {
           <p className="text-2xl text-white">{list.name}</p>
           <p className="text-gray-400">{list.description}</p>
         </div>
+
+        <button onClick={handleOrientation} className="text-xl">
+          <FontAwesomeIcon
+            icon={orientation === 0 ? faTableCellsLarge : faBars}
+          />
+        </button>
 
         {canEdit ? (
           <div className="flex flex-col items-end gap-2">

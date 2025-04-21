@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDateMDYLong } from "src/utils/date";
 import { ReviewStars } from "../Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
@@ -13,6 +13,7 @@ export default function MediaCard(props) {
   const { DEFAULT_IMG } = useSpotifyContext();
 
   const [fetchedMedia, setFetchedMedia] = useState({});
+  const titleRef = useRef(null);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -52,6 +53,17 @@ export default function MediaCard(props) {
     fetchMedia();
   }, []);
 
+  useEffect(() => {
+    const isOverflowing =
+      titleRef.current.scrollWidth > titleRef.current.parentNode.clientWidth;
+
+    if (isOverflowing) {
+      titleRef.current.classList.add("scrolling-text");
+    } else {
+      titleRef.current.classList.remove("scrolling-text");
+    }
+  }, [fetchedMedia]);
+
   return (
     <div
       className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
@@ -59,7 +71,12 @@ export default function MediaCard(props) {
     >
       <img src={fetchedMedia.data?.image || DEFAULT_IMG} className="h-72" />
       <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
-        <p className="text-xl font-bold">{fetchedMedia.data?.title || ""}</p>
+        <div className="max-w-68 min-w-68 overflow-hidden px-2 text-center">
+          <p ref={titleRef} className="text-xl font-bold text-nowrap">
+            {fetchedMedia.data?.title || ""}
+          </p>
+        </div>
+
         <p className="text-sm font-light">
           {fetchedMedia.data?.subtitle || ""}
         </p>

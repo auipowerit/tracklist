@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import Loading from "src/components/Loading";
-import ListItemCard from "src/components/Cards/ListItemCard";
 import ListHeader from "./components/ListHeader";
 import DraggableList from "./components/DraggableList";
 import ListDataFetcher from "./components/ListDataFetcher";
-import StaticList from "./components/StaticList";
+import ListItemCard from "src/components/Cards/ListItemCard";
 
 export default function AccountList() {
   const params = useParams();
@@ -15,6 +14,7 @@ export default function AccountList() {
 
   const { list, items, setItems } = ListDataFetcher({ listId, user, canEdit });
   const [isEditing, setIsEditing] = useState(false);
+  const [orientation, setOrientation] = useState(0);
 
   if (!list) {
     return <Loading />;
@@ -27,33 +27,59 @@ export default function AccountList() {
         canEdit={canEdit}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
+        orientation={orientation}
+        setOrientation={setOrientation}
       />
-      <RenderList
-        list={list}
-        items={items}
-        setItems={setItems}
-        isEditing={isEditing}
-      />
+      <div className="overflow-y-auto border-t-1 border-white py-10">
+        <RenderList
+          list={list}
+          items={items}
+          setItems={setItems}
+          isEditing={isEditing}
+          orientation={orientation}
+        />
+      </div>
     </div>
   );
 }
 
-function RenderList({ list, items, setItems, isEditing }) {
+function RenderList({ list, items, setItems, isEditing, orientation }) {
   return (
-    <div className="overflow-y-auto border-t-1 border-white py-10">
-      <div className="flex flex-wrap gap-6">
-        {items.length > 0 ? (
-          isEditing ? (
-            <DraggableList items={items} setItems={setItems} list={list} />
-          ) : (
-            <StaticList items={items} list={list} />
-          )
+    <div
+      className={`flex gap-6 ${orientation === 0 ? "flex-wrap" : "flex-col"}`}
+    >
+      {items.length > 0 ? (
+        isEditing ? (
+          <DraggableList
+            items={items}
+            setItems={setItems}
+            list={list}
+            orientation={orientation}
+          />
         ) : (
-          <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
-            {`This list is empty.`}
-          </p>
-        )}
-      </div>
+          <StaticList items={items} list={list} orientation={orientation} />
+        )
+      ) : (
+        <p className="m-auto my-20 text-center text-2xl text-gray-300 italic">
+          {`This list is empty.`}
+        </p>
+      )}
     </div>
   );
+}
+
+function StaticList({ items, list, orientation }) {
+  return items.map((item, index) => (
+    <div key={item.id}>
+      <Link to={item.titleLink}>
+        <ListItemCard
+          title={item.title}
+          subtitle={item.subtitle}
+          image={item.image}
+          index={list.isRanking && index + 1}
+          orientation={orientation}
+        />
+      </Link>
+    </div>
+  ));
 }

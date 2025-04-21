@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { ReviewStars } from "src/components/Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
@@ -35,7 +35,7 @@ function TrackList({ artistId, albumId, tracks }) {
     <div className="flex w-full flex-col items-center">
       <div className="flex min-h-80 w-full flex-2 items-start gap-8">
         {tracks && tracks.length > 0 && (
-          <ul className="grid w-full grid-cols-4 gap-4 p-4">
+          <ul className="m-auto flex h-screen flex-col gap-4 overflow-auto p-6">
             {tracks.map((track) => {
               return (
                 <li key={track.id}>
@@ -71,11 +71,13 @@ function TrackCard({ track, artistId, albumId }) {
   return (
     <Link
       to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
-      className="flex max-w-75 flex-col gap-2 border-1 border-white p-2 transition-all duration-150 hover:scale-110"
+      className="flex max-w-120 min-w-120 flex-col gap-2 overflow-hidden border-3 border-white p-2 text-2xl transition-all duration-150 hover:border-green-700"
     >
-      {track.track_number}. {track.name}
+      <p>
+        {track.track_number}. {track.name}
+      </p>
       <div className="m-auto">
-        <ReviewStars rating={rating?.avgRating || 0} />
+        <ReviewStars rating={rating?.avgRating || 0} size={30} />
       </div>
     </Link>
   );
