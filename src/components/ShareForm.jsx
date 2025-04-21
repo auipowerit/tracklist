@@ -6,12 +6,14 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 
-export default function SendMediaForm(props) {
+export default function ShareForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
 
   const { globalUser } = useAuthContext();
   const { chats, addChat, sendMessage } = useChatContext();
+  const { getReviewById } = useReviewContext();
   const { getMediaById } = useSpotifyContext();
 
   const [media, setMedia] = useState(null);
@@ -34,7 +36,11 @@ export default function SendMediaForm(props) {
   async function handleData() {
     if (!globalUser || !mediaId || !category) return;
 
-    const fetchedMedia = await getMediaById(mediaId, category);
+    const fetchedMedia =
+      category === "review"
+        ? await getReviewById(mediaId, category)
+        : await getMediaById(mediaId, category);
+
     setMedia(fetchedMedia);
 
     if (!fetchedMedia) {
@@ -135,7 +141,7 @@ function FormImage({ media }) {
 
   return (
     <img
-      src={media?.image || DEFAULT_IMG}
+      src={media?.media?.image || media?.image || DEFAULT_IMG}
       className="aspect-square h-50 object-cover shadow-lg"
     />
   );

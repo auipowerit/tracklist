@@ -4,9 +4,9 @@ import Modal from "src/components/Modal";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SendMediaForm from "./SendMediaForm";
+import ShareForm from "../ShareForm";
 
-export default function ShareMediaButton(props) {
+export default function ShareButton(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
 
   const { globalUser } = useAuthContext();
@@ -24,7 +24,7 @@ export default function ShareMediaButton(props) {
   return (
     <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <SendMediaForm
+        <ShareForm
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           mediaId={mediaId}

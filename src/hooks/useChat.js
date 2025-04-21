@@ -126,7 +126,7 @@ export function useChat() {
       });
 
       text = category
-        ? `Message contains ${category === "track" ? "a track" : `an ${category}`}`
+        ? `Message contains ${category === "track" || category === "review" ? "a" : "an"} ${category}`
         : text;
 
       await Promise.all(

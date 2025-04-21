@@ -29,7 +29,7 @@ export default function MediaDetails({ review }) {
 
 function MediaImage({ image, link }) {
   const navigate = useNavigate();
-  console.log(link);
+
   return (
     <img
       src={image}

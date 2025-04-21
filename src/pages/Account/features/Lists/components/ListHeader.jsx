@@ -20,10 +20,6 @@ export default function ListHeader(props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  function handleOrientation() {
-    setOrientation(orientation === 0 ? 1 : 0);
-  }
-
   function handleToggle() {
     setIsEditing(!isEditing);
   }
@@ -36,11 +32,21 @@ export default function ListHeader(props) {
           <p className="text-gray-400">{list.description}</p>
         </div>
 
-        <button onClick={handleOrientation} className="text-xl">
-          <FontAwesomeIcon
-            icon={orientation === 0 ? faTableCellsLarge : faBars}
-          />
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setOrientation(0)}
+            className={`text-xl ${orientation === 0 && "text-green-500"}`}
+          >
+            <FontAwesomeIcon icon={faTableCellsLarge} />
+          </button>
+
+          <button
+            onClick={() => setOrientation(1)}
+            className={`text-xl ${orientation === 1 && "text-green-500"}`}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+        </div>
 
         {canEdit ? (
           <div className="flex flex-col items-end gap-2">
@@ -58,12 +64,18 @@ export default function ListHeader(props) {
               />
             </div>
 
-            <button
-              className={`w-fit rounded-md bg-gray-500 px-4 py-2 ${isEditing && "bg-green-700"}`}
-              onClick={handleToggle}
-            >
-              {isEditing ? "On" : "Off"}
-            </button>
+            <div className="flex items-center gap-2">
+              <p className="text-gray-400">Edit mode</p>
+              <label className="relative inline-block h-[26px] w-[50px]">
+                <input
+                  type="checkbox"
+                  onClick={handleToggle}
+                  checked={isEditing}
+                  className="peer h-0 w-0 opacity-0"
+                />
+                <span className="slider bg-gray-700 peer-checked:bg-green-700"></span>
+              </label>
+            </div>
           </div>
         ) : (
           <SaveButton list={list} user={user} />

@@ -58,7 +58,7 @@ function Review({ review }) {
 
       <div className="flex h-full w-full flex-col justify-between overflow-auto">
         <ReviewDetails review={review} />
-        <ReviewButtons review={review} onPage={true} />
+        <ReviewButtons review={review} showComment={false} />
       </div>
     </div>
   );

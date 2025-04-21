@@ -6,13 +6,39 @@
 }
 
 body {
-  color: white;
   height: 100vh;
   background-color: #15141a;
+  color: white;
 }
 
 button {
   cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 20px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: white;
+  transition: 0.2s;
+}
+input:checked + .slider:before {
+  transform: translateX(22px);
 }
 
 .fa-beat {

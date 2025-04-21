@@ -6,6 +6,8 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReviewStars } from "src/components/Review/ReviewContent";
+import { useReviewContext } from "src/context/Review/ReviewContext";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import ChatInput from "./ChatInput";
@@ -13,6 +15,7 @@ import ChatInput from "./ChatInput";
 export default function ChatWindow() {
   const { globalUser } = useAuthContext();
   const { activeChatId, activeChatUser } = useChatContext();
+  const { getReviewById } = useReviewContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
   const [messages, setMessages] = useState([]);
@@ -42,7 +45,19 @@ export default function ChatWindow() {
             const user =
               message.senderId === globalUser.uid ? globalUser : activeChatUser;
 
-            if (message.category) {
+            if (message.category === "review") {
+              const review = await getReviewById(message.text);
+              const mediaData = await getMediaLinks(review.media);
+
+              return {
+                chatId: activeChatId,
+                ...message,
+                username: user.username,
+                profileUrl: user.profileUrl,
+                review,
+                mediaData,
+              };
+            } else if (message.category) {
               const media = await getMediaById(message.text, message.category);
               const mediaData = await getMediaLinks(media);
 
@@ -54,13 +69,14 @@ export default function ChatWindow() {
                 media,
                 mediaData,
               };
+            } else {
+              return {
+                chatId: activeChatId,
+                ...message,
+                username: user.username,
+                profileUrl: user.profileUrl,
+              };
             }
-            return {
-              chatId: activeChatId,
-              ...message,
-              username: user.username,
-              profileUrl: user.profileUrl,
-            };
           }),
         );
 
@@ -221,26 +237,44 @@ function MessageCard({ message, index, messages }) {
         <MessageImage message={message} />
         <div className="flex max-w-[200px] flex-col text-wrap">
           <MessageUsername message={message} />
-
-          {message.media ? (
-            <Link
-              to={message.mediaData.titleLink}
-              className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
-            >
-              <img
-                src={message.mediaData.image}
-                className="h-40 w-40 object-cover"
-              />
-              <p className="w-fit font-bold">{message.mediaData.title}</p>
-              <p className="text-sm">{message.mediaData.subtitle}</p>
-            </Link>
-          ) : (
-            <p className="text-lg break-words">{message.text}</p>
-          )}
+          <MessageContent message={message} category={message.category} />
         </div>
       </div>
     </div>
   );
+}
+
+function MessageContent({ message, category }) {
+  if (category === "review") {
+    return (
+      <Link
+        to={`/reviews/${message.review.id}`}
+        className="mt-2 flex flex-col items-center justify-center gap-1 bg-white p-2 text-center text-black"
+      >
+        <p>
+          Review by{" "}
+          <span className="font-bold">@{message.review.username}</span>
+        </p>
+        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
+        <ReviewStars rating={message.review.rating} />
+      </Link>
+    );
+  }
+
+  if (category !== "") {
+    return (
+      <Link
+        to={message.mediaData.titleLink}
+        className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
+      >
+        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
+        <p className="w-fit font-bold">{message.mediaData.title}</p>
+        <p className="text-sm">{message.mediaData.subtitle}</p>
+      </Link>
+    );
+  }
+
+  return <p className="text-lg break-words">{message.text}</p>;
 }
 
 function MessageDeleteButton({ message, isCurrentUser }) {

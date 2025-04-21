@@ -12,10 +12,12 @@ import {
   faCompactDisc,
   faMicrophoneLines,
   faMusic,
+  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import LikeButton from "../Buttons/LikeButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import DislikeButton from "../Buttons/DislikeButton";
+import ShareButton from "../Buttons/ShareButton";
 
 function ReviewUser({ review, showIcon = true }) {
   return (
@@ -139,6 +141,8 @@ function ReviewButtons({ review, showComment = true }) {
     deleteReview,
   } = useReviewContext();
 
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
   async function handleLike(reviewId, userId) {
     if (!globalUser) return;
 
@@ -199,21 +203,19 @@ function ReviewButtons({ review, showComment = true }) {
   }
 
   return (
-    <div className="ml-1 flex items-center gap-4 pl-2">
-      <div className="flex items-center">
-        <LikeButton
-          content={review}
-          handleContent={handleLike}
-          updateContent={updateReviewState}
-        />
-        <DislikeButton
-          content={review}
-          handleContent={handleDislike}
-          updateContent={updateReviewState}
-        />
-      </div>
+    <div className="ml-1 flex items-center gap-2 pl-2">
+      <LikeButton
+        content={review}
+        handleContent={handleLike}
+        updateContent={updateReviewState}
+      />
+      <DislikeButton
+        content={review}
+        handleContent={handleDislike}
+        updateContent={updateReviewState}
+      />
 
-      {showComment && (
+      {showComment ? (
         <Link
           to={`/reviews/${review.id}`}
           className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400"
@@ -221,6 +223,13 @@ function ReviewButtons({ review, showComment = true }) {
           <FontAwesomeIcon icon={faComment} />
           <p>{review?.comments.length || 0}</p>
         </Link>
+      ) : (
+        <ShareButton
+          isModalOpen={isShareModalOpen}
+          setIsModalOpen={setIsShareModalOpen}
+          mediaId={review.id}
+          category="review"
+        />
       )}
 
       {globalUser && globalUser.uid === review.userId && (

@@ -3,7 +3,7 @@ import ReviewButton from "src/components/Buttons/ReviewButton";
 import ListButton from "src/components/Buttons/ListButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import LikeMediaButton from "./LikeMediaButton";
-import ShareMediaButton from "./ShareMediaButton";
+import ShareButton from "src/components/Buttons/ShareButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
@@ -47,7 +47,7 @@ export default function BannerButtons({ mediaId, name, category }) {
         category={category}
       />
 
-      <ShareMediaButton
+      <ShareButton
         isModalOpen={isShareModalOpen}
         setIsModalOpen={setIsShareModalOpen}
         mediaId={mediaId}
