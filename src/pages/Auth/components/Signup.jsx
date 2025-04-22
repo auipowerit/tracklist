@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import AuthInput from "src/components/Inputs/AuthInput";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import AuthInput from "./AuthInput";
 
 export default function Signup({ setIsRegistration }) {
   const { signup, usernameAvailable } = useAuthContext();
@@ -50,7 +50,7 @@ export default function Signup({ setIsRegistration }) {
 
       <button
         onClick={() => setIsRegistration(false)}
-        className="flex items-center gap-2 rounded-md px-4 py-2 hover:bg-green-700"
+        className="signup-signin-btn"
       >
         <p>Sign in</p>
         <FontAwesomeIcon icon={faArrowRight} />

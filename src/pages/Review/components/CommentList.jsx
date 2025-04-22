@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Loading from "src/components/Loading";
-import CommentCard from "./CommentCard";
 import SortComments from "src/components/Sort/SortComments";
-import CommentInput from "src/components/Inputs/CommentInput";
 import { useCommentContext } from "src/context/Comment/CommentContext";
+import CommentCard from "./CommentCard";
+import CommentInput from "./CommentInput";
 
 export default function CommentList({ review }) {
   const { getReviewComments } = useCommentContext();

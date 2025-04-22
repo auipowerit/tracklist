@@ -1,0 +1,39 @@
+@import "src/styles/abstracts";
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25em;
+  height: 80vh;
+  font-size: calc(1.2rem + 0.5vw);
+  text-align: center;
+}
+
+.error-logo {
+  color: $basic-red;
+  font-size: calc(3rem + 0.5vw);
+}
+
+.error-header {
+  font-weight: bold;
+  font-size: calc(1.75rem + 0.5vw);
+}
+
+.error-message {
+  color: $basic-gray;
+  font-size: calc(1.25rem + 0.5vw);
+}
+
+.error-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-top: 1em;
+  border-radius: 20px;
+  background-color: $basic-green;
+  padding: 0.5em 0.75em;
+  width: fit-content;
+  font-size: calc(1rem + 0.5vw);
+}

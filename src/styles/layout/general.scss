@@ -27,8 +27,8 @@ main {
   transition: all 0.2s;
   aspect-ratio: 1/1;
   cursor: pointer;
-}
 
-.to-top-btn:hover {
-  transform: scale(1.2);
+  &:hover {
+    transform: scale(1.2);
+  }
 }

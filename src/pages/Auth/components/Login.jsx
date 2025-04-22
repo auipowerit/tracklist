@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "src/context/Auth/AuthContext";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AuthInput from "src/components/Inputs/AuthInput";
-import { useAuthContext } from "src/context/Auth/AuthContext";
+import AuthInput from "./AuthInput";
 
 export default function Login({ setIsRegistration }) {
   const { login } = useAuthContext();
@@ -34,19 +34,12 @@ export default function Login({ setIsRegistration }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-evenly gap-6 p-4 align-middle text-2xl">
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4"
-      >
+    <div className="login-container">
+      <form ref={formRef} onSubmit={handleSubmit} className="login-form">
         <AuthInput label="Email Address" name="email" type="text" />
         <AuthInput label="Password" name="password" type="password" />
 
-        <button
-          type="submit"
-          className="m-auto self-start rounded-md bg-green-700 px-5 py-2"
-        >
+        <button type="submit" className="login-submit-btn">
           Submit
         </button>
       </form>
@@ -54,7 +47,7 @@ export default function Login({ setIsRegistration }) {
       <button
         type="button"
         onClick={() => setIsRegistration(true)}
-        className="flex items-center gap-2 rounded-md px-4 py-2 transition-all hover:bg-green-700"
+        className="login-signup-btn"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
         <p>Sign up</p>

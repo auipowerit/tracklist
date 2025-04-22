@@ -33,17 +33,17 @@ export default function ChatInput() {
   return (
     <form
       onSubmit={handleNewMessage}
-      className="flex items-center justify-between gap-2 rounded-lg border-1 border-gray-500 bg-gray-800 p-4 pb-8"
+      className="chat-input-form"
     >
       <input
         ref={inputRef}
         text="text"
         placeholder={`Message ${activeChatUser.displayname || "user"}...`}
-        className="flex-grow outline-0"
+        className="chat-input"
       />
       <button
         type="submit"
-        className="cursor-pointer text-gray-400 hover:text-white"
+        className="chat-input-btn"
       >
         <FaPaperPlane />
       </button>

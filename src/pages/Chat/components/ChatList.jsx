@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function ChatList({ handleOpenChat }) {
   return (
-    <div className="flex flex-1 flex-col border-r-2 border-white bg-green-700/30">
+    <div className="chatlist-container">
       <Header />
       <Chats handleOpenChat={handleOpenChat} />
     </div>
@@ -25,13 +25,9 @@ function Header() {
   }
 
   return (
-    <div className="flex items-center justify-between p-4 text-xl font-bold">
+    <div className="chatlist-header">
       <p>All chats</p>
-      <button
-        type="button"
-        onClick={handleNewChat}
-        className="cursor-pointer hover:text-gray-400"
-      >
+      <button type="button" onClick={handleNewChat} className="header-btn">
         <FontAwesomeIcon icon={faPenToSquare} />
       </button>
     </div>
@@ -42,7 +38,7 @@ function Chats({ handleOpenChat }) {
   const { chats } = useChatContext();
 
   return (
-    <div className="flex flex-col overflow-y-auto">
+    <div className="chatlist">
       {chats &&
         chats.length > 0 &&
         chats.map((chat) => {
@@ -78,15 +74,12 @@ function ChatCard({ chat, handleOpenChat }) {
   return (
     <div
       onClick={() => handleOpenChat(chat)}
-      className={`flex cursor-pointer flex-col gap-1 px-4 py-2 hover:bg-green-700 ${isActive && "bg-green-700"}`}
+      className={`chatlist-card ${isActive && "chatlist-card-active"}`}
     >
-      <Link
-        to={`/users/${chat.username}`}
-        className="flex w-fit items-center gap-2 hover:text-gray-400"
-      >
+      <div className="chatlist-card-header">
         <img src={chat.profileUrl} className="h-7 w-7 rounded-full" />
         <p>{chat.username}</p>
-      </Link>
+      </div>
       <p className={color}>{lastMessage}</p>
     </div>
   );

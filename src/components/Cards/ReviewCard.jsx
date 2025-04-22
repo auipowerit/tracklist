@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
 import {
   ReviewButtons,
-  ReviewContent,
   ReviewMediaTitle,
   ReviewStars,
   ReviewUser,

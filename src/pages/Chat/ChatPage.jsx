@@ -4,6 +4,7 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 import ChatList from "./components/ChatList";
 import ChatWindow from "./components/ChatWindow";
+import "src/styles/pages/scss/chat.scss";
 
 export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();
@@ -46,7 +47,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="m-auto flex h-[750px] w-3/5 items-stretch">
+    <div className="chat-container">
       <ChatList handleOpenChat={handleOpenChat} />
       <ChatWindow key={chatWindowKey} />
     </div>

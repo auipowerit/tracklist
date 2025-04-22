@@ -8,7 +8,7 @@ import {
   faSearch,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
-import "src/styles/layout/navbar.css";
+import "src/styles/layout/navbar.scss";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function Navbar() {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `navlink nav-logo ${isActive ? "text-green-700" : "hover:text-gray-400"} `
+            `navlink nav-logo ${isActive && "navlink-active"}`
           }
         >
           <p>TrackList</p>
@@ -65,7 +65,7 @@ export default function Navbar() {
         <NavLink
           to="/search"
           className={({ isActive }) =>
-            `navlink ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+            `navlink ${isActive && "navlink-active"}`
           }
         >
           <FontAwesomeIcon icon={faSearch} />
@@ -74,7 +74,7 @@ export default function Navbar() {
           <NavLink
             to="/messaging"
             className={({ isActive }) =>
-              `navlink ${isActive ? "text-green-700" : "hover:text-gray-400"}`
+              `navlink ${isActive && "navlink-active"}`
             }
           >
             <FontAwesomeIcon icon={faEnvelope} />
@@ -89,9 +89,7 @@ export default function Navbar() {
           />
           <div
             className={`nav-profile-dropdown ${
-              showDropdown
-                ? "max-h-screen p-2 opacity-100"
-                : "max-h-0 opacity-0"
+              showDropdown && "nav-profile-active"
             }`}
           >
             <DropdownMenu

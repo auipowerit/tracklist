@@ -25,7 +25,6 @@ button {
   transition: 0.2s;
   cursor: pointer;
 }
-
 .slider:before {
   content: "";
   position: absolute;
@@ -37,6 +36,7 @@ button {
   background-color: white;
   transition: 0.2s;
 }
+
 input:checked + .slider:before {
   transform: translateX(22px);
 }
@@ -68,7 +68,6 @@ input:checked + .slider:before {
     transform: translateX(-105%);
   }
 }
-
 @keyframes pulse {
   0% {
     background-color: #333;

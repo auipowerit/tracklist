@@ -16,7 +16,8 @@ footer {
 
 .footer-link {
   color: white;
-}
-.footer-link:hover {
-  color: green;
+
+  &:hover {
+    color: green;
+  }
 }

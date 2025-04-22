@@ -4,27 +4,21 @@ import {
   faExclamationTriangle,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
+import "src/styles/pages/scss/error.scss";
 
 export default function ErrorPage({ is404 }) {
   const error = useRouteError();
 
   return (
-    <div className="flex h-[80vh] flex-col items-center justify-center gap-4 text-center text-5xl">
-      <FontAwesomeIcon
-        icon={faExclamationTriangle}
-        className="text-6xl text-red-500"
-      />
+    <div className="error-container">
+      <FontAwesomeIcon icon={faExclamationTriangle} className="error-logo" />
 
-      <h1 className="text-3xl font-bold">
+      <h1 className="error-header">
         {is404 ? "404 - Page Not Found" : "Oops! Something went wrong :("}
       </h1>
-      {error && <p className="text-2xl text-gray-400">"{error.message}"</p>}
+      {error && <p className="error-message">"{error.message}"</p>}
 
-      <Link
-        to="/"
-        className="mt-6 flex w-fit items-center gap-4 rounded-full bg-green-700 px-4 py-2 text-2xl no-underline"
-        style={{ textDecoration: "none" }}
-      >
+      <Link to="/" className="error-btn">
         <FontAwesomeIcon icon={faHome} />
         Go to home
       </Link>

@@ -91,7 +91,7 @@ export default function ChatWindow() {
   }
 
   return (
-    <div className="flex flex-2 flex-col gap-2 bg-gray-900 px-4 py-4">
+    <div className="chatwindow">
       {activeChatId === "-1" ? (
         <SearchUsers />
       ) : (
@@ -102,16 +102,6 @@ export default function ChatWindow() {
         </>
       )}
     </div>
-  );
-}
-
-function Header() {
-  const { activeChatUser } = useChatContext();
-
-  return (
-    <p className="border-b-1 border-gray-400 pb-4 text-2xl font-bold">
-      {activeChatUser.displayname || "Display Name"}
-    </p>
   );
 }
 
@@ -190,6 +180,19 @@ function SearchUsers() {
   );
 }
 
+function Header() {
+  const { activeChatUser } = useChatContext();
+
+  return (
+    <Link
+      to={`/users/${activeChatUser.username}`}
+      className="chatwindow-header"
+    >
+      {activeChatUser.displayname || "Display Name"}
+    </Link>
+  );
+}
+
 function Messages({ messages }) {
   const chatRef = useRef();
 
@@ -198,10 +201,7 @@ function Messages({ messages }) {
   }, [messages]);
 
   return (
-    <div
-      ref={chatRef}
-      className="flex grow-1 flex-col gap-4 overflow-y-auto mask-t-from-95% p-4"
-    >
+    <div ref={chatRef} className="messages">
       {messages.map((message, index) => {
         return (
           <MessageCard
@@ -221,11 +221,11 @@ function MessageCard({ message, index, messages }) {
   const isCurrentUser = message.senderId === globalUser.uid;
 
   return (
-    <div className={"flex flex-col gap-1"}>
+    <div className={"message-card"}>
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`parent group relative flex w-fit items-start gap-2 rounded-lg px-4 pt-2 pb-4 ${isCurrentUser ? "ml-auto bg-blue-700/50" : "bg-gray-700/50"}`}
+        className={`message-bubble ${isCurrentUser ? "message-user-btn" : "message-friend-btn"}`}
       >
         {isCurrentUser && (
           <MessageDeleteButton
@@ -237,7 +237,7 @@ function MessageCard({ message, index, messages }) {
         <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
 
         <MessageImage message={message} />
-        <div className="flex max-w-[200px] flex-col text-wrap">
+        <div className="message-body">
           <MessageUsername message={message} />
           <MessageContent message={message} category={message.category} />
         </div>
@@ -256,11 +256,7 @@ function MessageDate({ message, index, messages }) {
 
   if (!isDifferentDate) return;
 
-  return (
-    <p className="self-center py-4 text-sm text-gray-400">
-      {formatDateDMD(date)}
-    </p>
-  );
+  return <p className="message-date">{formatDateDMD(date)}</p>;
 }
 
 function MessageDeleteButton({ message, isCurrentUser }) {
@@ -279,11 +275,7 @@ function MessageDeleteButton({ message, isCurrentUser }) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleDelete}
-      className={`absolute top-1/2 -left-8 h-7 w-7 -translate-y-1/2 rounded-full bg-gray-700/50 text-gray-300 opacity-0 shadow-sm shadow-black group-hover:opacity-100`}
-    >
+    <button type="button" onClick={handleDelete} className="message-delete-btn">
       <FontAwesomeIcon icon={faTrash} />
     </button>
   );
@@ -301,11 +293,9 @@ function MessageLikeButton({ message, isCurrentUser }) {
     <button
       type="button"
       onClick={handleLike}
-      className={`invisible absolute -top-3 flex h-7 w-7 items-center justify-center rounded-full shadow-sm shadow-black ${
-        message.isLiked
-          ? "visible bg-blue-700 text-red-500"
-          : !isCurrentUser && "bg-gray-700/50 text-gray-300 group-hover:visible"
-      } ${isCurrentUser ? "-left-3" : "-right-3"}`}
+      className={`message-like-btn ${
+        message.isLiked ? "message-liked" : !isCurrentUser && "message-unliked"
+      } ${isCurrentUser ? "message-user-btn" : "message-friend-btn"}`}
     >
       <FontAwesomeIcon icon={faHeart} />
     </button>
@@ -313,23 +303,18 @@ function MessageLikeButton({ message, isCurrentUser }) {
 }
 
 function MessageImage({ message }) {
-  const { globalUser } = useAuthContext();
-
   return (
     <Link to={`/users/${message.username}`}>
-      <img
-        src={message.profileUrl}
-        className={`h-8 w-8 rounded-full ${message.senderId === globalUser.uid && "order-2"}`}
-      />
+      <img src={message.profileUrl} className="message-image" />
     </Link>
   );
 }
 
 function MessageUsername({ message }) {
   return (
-    <div className="flex items-center gap-2">
-      <p className="font-bold">{message.username}</p>
-      <p className="text-sm text-gray-400">
+    <div className="message-sender">
+      <p className="message-sender-name">{message.username}</p>
+      <p className="message-time">
         {message.createdAt.toDate().toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "2-digit",
@@ -344,13 +329,12 @@ function MessageContent({ message, category }) {
     return (
       <Link
         to={`/reviews/${message.review.id}`}
-        className="mt-2 flex flex-col items-center justify-center gap-1 bg-white p-2 text-center text-black"
+        className="message-content-media"
       >
         <p>
-          Review by{" "}
-          <span className="font-bold">@{message.review.username}</span>
+          Review by<span>@{message.review.username}</span>
         </p>
-        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
+        <img src={message.mediaData.image} />
         <ReviewStars rating={message.review.rating} />
       </Link>
     );
@@ -358,16 +342,13 @@ function MessageContent({ message, category }) {
 
   if (category !== "") {
     return (
-      <Link
-        to={message.mediaData.titleLink}
-        className="mt-2 flex flex-col items-center justify-center bg-white p-2 text-center text-black"
-      >
-        <img src={message.mediaData.image} className="h-40 w-40 object-cover" />
-        <p className="w-fit font-bold">{message.mediaData.title}</p>
-        <p className="text-sm">{message.mediaData.subtitle}</p>
+      <Link to={message.mediaData.titleLink} className="message-content-media">
+        <img src={message.mediaData.image} />
+        <p className="title">{message.mediaData.title}</p>
+        <p className="subtitle">{message.mediaData.subtitle}</p>
       </Link>
     );
   }
 
-  return <p className="text-lg break-words">{message.text}</p>;
+  return <p className="message-text">{message.text}</p>;
 }
