@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../Modal";
 import ReviewForm from "../Review/ReviewForm";
 import { Tooltip } from "react-tooltip";
+import "src/styles/components/buttons.scss";
 
 export default function ReviewButton(props) {
   const {
@@ -28,7 +29,7 @@ export default function ReviewButton(props) {
   }
 
   return (
-    <div>
+    <div className="review-btn">
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <ReviewForm
           isModalOpen={isModalOpen}
@@ -41,7 +42,6 @@ export default function ReviewButton(props) {
       {showIcon ? (
         <button
           onClick={handleClick}
-          className="cursor-pointer transition-all duration-300 hover:text-gray-400"
           data-tooltip-id="review-tooltip"
           data-tooltip-content="Review"
         >
@@ -50,7 +50,6 @@ export default function ReviewButton(props) {
         </button>
       ) : (
         <button
-          className="flex cursor-pointer items-center gap-1 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}

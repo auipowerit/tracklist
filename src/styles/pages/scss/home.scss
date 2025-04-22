@@ -1,0 +1,40 @@
+@import "../../abstracts";
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 1em;
+  width: 100%;
+  max-width: 1200px;
+  height: 100vh;
+}
+
+.home-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid $basic-white;
+  padding-bottom: 1em;
+
+  .review-btn {
+    margin-left: auto;
+  }
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  margin-top: 1em;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}

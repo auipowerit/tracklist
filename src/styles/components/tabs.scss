@@ -1,0 +1,24 @@
+@import "../abstracts";
+
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.tab {
+  border-bottom: 2px solid transparent;
+  padding: 0.5em 0.75em;
+  color: $basic-gray;
+  font-weight: bold;
+  font-size: calc(1rem + 0.5vw);
+
+  &:hover {
+    color: $basic-green;
+  }
+}
+
+.active-tab {
+  border-color: $basic-green;
+  color: $basic-green;
+}

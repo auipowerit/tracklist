@@ -1,3 +1,5 @@
+import "src/styles/components/tabs.scss";
+
 export default function Tabs(props) {
   const { tabs, activeTab, setActiveTab, setResults } = props;
 
@@ -7,14 +9,13 @@ export default function Tabs(props) {
   }
 
   return (
-    <div className="flex justify-center gap-4">
+    <div className="tabs-container">
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          className={`border-b-2 px-4 pb-2 text-2xl font-semibold ${
+          className={`tab ${
             activeTab === tab.id
-              ? "border-green-700 text-green-700"
-              : "border-transparent text-gray-300 hover:text-green-700"
+              && "active-tab"
           }`}
           onClick={() => handleClick(tab)}
         >

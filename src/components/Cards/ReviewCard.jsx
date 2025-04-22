@@ -7,6 +7,7 @@ import {
   ReviewStars,
   ReviewUser,
 } from "../Review/ReviewContent";
+import "src/styles/components/cards/review-card.scss";
 
 export default function ReviewCard({ review }) {
   const { getMediaLinks } = useSpotifyContext();
@@ -21,21 +22,18 @@ export default function ReviewCard({ review }) {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 p-2">
+    <div className="review-card-container">
       <div
         onClick={() => navigate(`/reviews/${review.id}`)}
-        className="flex cursor-pointer flex-col gap-2 p-2 hover:bg-gray-800"
+        className="review-card"
       >
-        <div className="flex items-center gap-4">
-          <img
-            src={review.media.image}
-            className="aspect-square h-36 w-36 border-1 border-transparent object-cover shadow-lg"
-          />
+        <div className="review-card-header">
+          <img src={review.media.image} className="review-card-img" />
 
-          <div className="flex h-36 max-h-36 flex-col justify-between">
+          <div className="review-card-info">
             <ReviewUser review={review} />
 
-            <div className="flex flex-col gap-2">
+            <div className="review-card-rating">
               <ReviewMediaTitle
                 title={media.title}
                 subtitle={media.subtitle}
@@ -46,7 +44,7 @@ export default function ReviewCard({ review }) {
           </div>
         </div>
 
-        <p className="pr-6 text-lg break-words">
+        <p className="review-card-text">
           {review.content.length > 150
             ? `${review.content.slice(0, 150)}...`
             : review.content}

@@ -5,6 +5,7 @@ import ReviewButton from "src/components/Buttons/ReviewButton";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import FeedResults from "./components/FeedResults";
+import "src/styles/pages/scss/home.scss";
 
 export default function HomePage() {
   const { globalUser } = useAuthContext();
@@ -38,7 +39,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="m-auto mt-6 flex h-screen w-3/5 flex-col">
+    <div className="home-container">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <FeedResults
         results={activeTab === "newest" ? reviews : popularReviews}
@@ -56,15 +57,9 @@ function Header({ activeTab, setActiveTab }) {
   ];
 
   return (
-    <div className="flex items-center justify-center border-b-1 border-white pb-4">
+    <div className="home-header">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      <div className="ml-auto">
-        <ReviewButton
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-        />
-      </div>
+      <ReviewButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 }

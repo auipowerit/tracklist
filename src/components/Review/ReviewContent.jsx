@@ -203,7 +203,7 @@ function ReviewButtons({ review, showComment = true }) {
   }
 
   return (
-    <div className="ml-1 flex items-center gap-2 pl-2">
+    <div className="review-card-btns">
       <LikeButton
         content={review}
         handleContent={handleLike}
@@ -218,7 +218,7 @@ function ReviewButtons({ review, showComment = true }) {
       {showComment ? (
         <Link
           to={`/reviews/${review.id}`}
-          className="flex items-center gap-1 transition-colors duration-150 hover:text-gray-400"
+          className="review-card-comment-btn"
         >
           <FontAwesomeIcon icon={faComment} />
           <p>{review?.comments.length || 0}</p>
