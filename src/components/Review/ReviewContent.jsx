@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { getTimeSince } from "src/utils/date";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -8,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
 import {
-  faComment,
   faCompactDisc,
   faMicrophoneLines,
   faMusic,
@@ -17,6 +15,7 @@ import LikeButton from "../Buttons/LikeButton";
 import ShareButton from "../Buttons/ShareButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import DislikeButton from "../Buttons/DislikeButton";
+import CommentButton from "../Buttons/CommentButton";
 import "src/styles/components/review.scss";
 
 function ReviewUser({ review, showIcon = true }) {
@@ -207,10 +206,7 @@ function ReviewButtons({ review, showComment = true }) {
       />
 
       {showComment ? (
-        <Link to={`/reviews/${review.id}`} className="review-comment-btn">
-          <FontAwesomeIcon icon={faComment} />
-          <p>{review?.comments.length || 0}</p>
-        </Link>
+        <CommentButton review={review} />
       ) : (
         <ShareButton
           isModalOpen={isShareModalOpen}

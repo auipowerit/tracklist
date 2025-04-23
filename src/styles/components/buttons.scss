@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   gap: 0.25em;
-  width: 50px;
+  width: 2.5em;
   font-weight: 400;
   font-size: calc(0.5rem + 0.5vw);
 }
@@ -67,6 +67,17 @@
   }
 }
 
+.comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
 .share-btn {
   cursor: pointer;
 
@@ -78,6 +89,7 @@
 .delete-btn {
   border-radius: 20px;
   padding: 0.25em 0.75em;
+  font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
     background-color: $dark-gray;
