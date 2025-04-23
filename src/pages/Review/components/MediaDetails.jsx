@@ -30,12 +30,7 @@ export default function MediaDetails({ review }) {
 function MediaImage({ image, link }) {
   const navigate = useNavigate();
 
-  return (
-    <img
-      src={image}
-      onClick={() => navigate(link)}
-    />
-  );
+  return <img src={image} onClick={() => navigate(link)} />;
 }
 
 function MediaInfo({ mediaData }) {
@@ -54,14 +49,8 @@ function MediaInfo({ mediaData }) {
 
   return (
     <div className="media-info-container">
-      <Link
-        to={mediaData.titleLink}
-        className="title-container"
-      >
-        <p
-          ref={titleRef}
-          className="title"
-        >
+      <Link to={mediaData.titleLink} className="title-container">
+        <p ref={titleRef} className="title">
           {mediaData.title}
         </p>
       </Link>

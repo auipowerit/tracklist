@@ -36,7 +36,7 @@ export default function CommentList({ review }) {
     <div className="comments-container">
       <Header comments={comments} setComments={setComments} />
 
-      <div className="ml-2">
+      <div>
         <CommentInput review={review} setComments={setComments} />
         <Comments
           comments={comments}
@@ -78,9 +78,7 @@ function Comments({ comments, setComments, review }) {
           })}
         </div>
       ) : (
-        <p className="m-20 text-center text-2xl text-gray-300 italic">
-          No comments yet!
-        </p>
+        <p className="comments-list-empty">No comments yet!</p>
       )}
     </div>
   );

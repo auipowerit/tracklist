@@ -44,7 +44,7 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="m-auto mt-6 flex h-full w-3/5 flex-col gap-6">
+    <div className="review-wrapper">
       <BackButton />
       <Review review={review} />
       <CommentList review={review} />

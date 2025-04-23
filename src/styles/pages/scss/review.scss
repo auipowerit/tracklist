@@ -1,36 +1,51 @@
 @import "../../abstracts";
 
+.review-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin: auto;
+  margin-top: 2em;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+}
+
 .review-container {
   display: flex;
   align-items: center;
+  align-items: stretch;
   gap: 0.25em;
   border-bottom: 1px solid $basic-white;
   padding-bottom: 1em;
-  width: 100%;
+  height: fit-content;
 }
 
 .review {
   display: flex;
+  flex-basis: 70%;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  height: 100%;
   overflow: auto;
 }
 
 .media-container {
   display: flex;
+  flex-basis: 30%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0.25em;
-  width: 300px;
+  min-width: 30%;
+  height: 100%;
 
   img {
     cursor: pointer;
-    width: 275px;
-    height: 275px;
-    object-fit: cover;
+    width: 100%;
+    min-width: 125px;
+    height: 100%;
+    max-height: 275px;
+    object-fit: contain;
   }
 }
 
@@ -38,26 +53,16 @@
   display: flex;
   flex-direction: column;
   padding: 0.25em 0.5em;
-  text-align: center;
-}
-
-.title-container {
-  mask-image: linear-gradient(
-    to left,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
-  padding: 0 0.5em;
-  width: 275px;
-  overflow: hidden;
+  width: 100%;
+  max-width: 275px;
 }
 
 .title {
   padding: 0 0.25em;
+  width: 100%;
   font-weight: bold;
   font-size: calc(0.5rem + 0.5vw);
+  text-align: center;
   white-space: nowrap;
 
   &:hover {
@@ -68,6 +73,7 @@
 .subtitle {
   color: $basic-gray;
   font-size: calc(0.5rem + 0.5vw);
+  text-align: center;
 }
 
 .details-container {
@@ -75,7 +81,6 @@
   flex-direction: column;
   gap: 1em;
   width: 100%;
-  height: 275px;
 }
 
 .header {
@@ -140,8 +145,8 @@
 .comments-container {
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  padding-bottom: 5em;
+  gap: 2em;
+  padding: 0 1em 5em 1em;
 }
 
 .comments-header-container {
@@ -159,4 +164,47 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
+}
+
+.comments-list-empty {
+  margin: 5em auto;
+  width: 100%;
+  color: $basic-gray;
+  font-style: italic;
+  font-size: calc(1rem + 0.5vw);
+  text-align: center;
+}
+
+.comment-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.comment-input {
+  border-bottom: 1px solid $basic-gray;
+  padding-bottom: 0.5em;
+  width: 100%;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:focus {
+    outline: none;
+    border-color: $basic-white;
+  }
+}
+
+.comment-input-btns {
+  display: flex;
+  justify-content: end;
+  gap: 0.5em;
+
+  button {
+    margin-top: 0.5em;
+    border-radius: 20px;
+    padding: 0.25em 0.75em;
+
+    &:hover {
+      background-color: $basic-gray;
+    }
+  }
 }

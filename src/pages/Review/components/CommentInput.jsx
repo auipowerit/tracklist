@@ -57,26 +57,17 @@ export default function CommentInput({ review, setComments }) {
   }
 
   return (
-    <form className="`flex gap-1" onSubmit={handleSubmit}>
+    <form className="comment-input-container" onSubmit={handleSubmit}>
       <input
         ref={inputComment}
         placeholder="Add a comment..."
-        className="w-full border-1 border-transparent border-b-gray-400 text-xl focus:border-b-1 focus:border-b-white focus:outline-none"
+        className="comment-input"
       />
 
-      <div className="flex justify-end gap-1">
-        <button
-          type="submit"
-          className="mt-1 rounded-full px-3 py-1 hover:bg-gray-700"
-        >
-          Post
-        </button>
+      <div className="comment-input-btns">
+        <button type="submit">Post</button>
 
-        <button
-          type="button"
-          onClick={closeComment}
-          className="mt-1 rounded-full px-3 py-1 hover:bg-gray-700"
-        >
+        <button type="button" onClick={closeComment}>
           Cancel
         </button>
       </div>
