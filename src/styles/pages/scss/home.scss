@@ -12,7 +12,7 @@
 
 .home-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid $basic-white;
   padding-bottom: 1em;
@@ -33,7 +33,7 @@
     black 95%,
     transparent 100%
   );
-  margin-top: 1em;
+  padding: 2em 0;
   width: 100%;
   height: 100%;
   overflow-y: auto;

@@ -12,26 +12,21 @@ import {
   faCompactDisc,
   faMicrophoneLines,
   faMusic,
-  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import LikeButton from "../Buttons/LikeButton";
+import ShareButton from "../Buttons/ShareButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import DislikeButton from "../Buttons/DislikeButton";
-import ShareButton from "../Buttons/ShareButton";
+import "src/styles/components/review.scss";
 
 function ReviewUser({ review, showIcon = true }) {
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center gap-2">
-        {showIcon && (
-          <img
-            src={review.profileUrl}
-            className="h-8 w-8 rounded-full object-cover"
-          />
-        )}
-        <p className="font-semibold">{review.username}</p>
+    <div className="review-user-container">
+      <div className="review-user">
+        {showIcon && <img src={review.profileUrl} />}
+        <p>{review.username}</p>
       </div>
-      <p className="text-sm font-light text-gray-400">
+      <p className="review-user-date">
         {getTimeSince(review.createdAt.toDate())}
       </p>
     </div>
@@ -51,13 +46,13 @@ function ReviewMediaTitle({ title, subtitle, category }) {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2">
+    <div className="review-media-container">
+      <div className="review-title-container">
         <div
           data-tooltip-content={capitalizeFirstLetter(category)}
           data-tooltip-id="category-tooltip"
         >
-          <FontAwesomeIcon icon={icon} className="text-gray-400" />
+          <FontAwesomeIcon icon={icon} className="review-icon" />
           <Tooltip
             id="category-tooltip"
             place="top"
@@ -65,12 +60,10 @@ function ReviewMediaTitle({ title, subtitle, category }) {
             effect="float"
           />
         </div>
-        <p className="max-w-150 truncate text-2xl font-bold whitespace-nowrap">
-          {title}
-        </p>
+        <p className="review-title">{title}</p>
       </div>
 
-      <p className="font-light">{subtitle}</p>
+      <p className="review-subtitle">{subtitle}</p>
     </div>
   );
 }
@@ -83,7 +76,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
   }
 
   return (
-    <div className="flex flex-row items-center gap-1">
+    <div className="review-stars">
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = rating === ratingValue - 0.5;
@@ -106,24 +99,22 @@ function ReviewContent({ review }) {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="flex h-full flex-col gap-2">
-      <div className="h-full w-full overflow-auto">
-        <p className="text-lg break-words">
-          {review.content.length > 150
-            ? showMore
-              ? review.content
-              : `${review.content.slice(0, 150)}...`
-            : review.content}
+    <div className="review-content-container">
+      <p className="review-content">
+        {review.content.length > 150
+          ? showMore
+            ? review.content
+            : `${review.content.slice(0, 150)}...`
+          : review.content}
+      </p>
+      {review.content.length > 150 && (
+        <p
+          className="review-content-toggle"
+          onClick={() => setShowMore(!showMore)}
+        >
+          {showMore ? "Show less" : "Show more"}
         </p>
-        {review.content.length > 150 && (
-          <p
-            className="cursor-pointer py-2 text-sm font-semibold text-blue-400 hover:text-gray-400"
-            onClick={() => setShowMore(!showMore)}
-          >
-            {showMore ? "Show less" : "Show more"}
-          </p>
-        )}
-      </div>
+      )}
     </div>
   );
 }
@@ -203,7 +194,7 @@ function ReviewButtons({ review, showComment = true }) {
   }
 
   return (
-    <div className="review-card-btns">
+    <div className="review-btns">
       <LikeButton
         content={review}
         handleContent={handleLike}
@@ -216,10 +207,7 @@ function ReviewButtons({ review, showComment = true }) {
       />
 
       {showComment ? (
-        <Link
-          to={`/reviews/${review.id}`}
-          className="review-card-comment-btn"
-        >
+        <Link to={`/reviews/${review.id}`} className="review-comment-btn">
           <FontAwesomeIcon icon={faComment} />
           <p>{review?.comments.length || 0}</p>
         </Link>

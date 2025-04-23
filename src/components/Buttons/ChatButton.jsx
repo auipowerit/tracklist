@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaPaperPlane } from "react-icons/fa";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useChatContext } from "src/context/Chat/ChatContext";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "src/styles/components/buttons.scss";
 
 export default function ChatButton({ username = "" }) {
   const { globalUser, getUserByUsername } = useAuthContext();
@@ -39,15 +40,8 @@ export default function ChatButton({ username = "" }) {
   }
 
   return (
-    <button onClick={handleClick}>
-      {username ? (
-        <FaPaperPlane className="cursor-pointer text-gray-400 hover:text-white" />
-      ) : (
-        <FontAwesomeIcon
-          icon={faEnvelope}
-          className="cursor-pointer text-gray-400 hover:text-white"
-        />
-      )}
+    <button onClick={handleClick} className="chat-btn">
+      {username ? <FaPaperPlane /> : <FontAwesomeIcon icon={faEnvelope} />}
     </button>
   );
 }

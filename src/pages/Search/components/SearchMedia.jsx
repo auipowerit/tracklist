@@ -13,7 +13,7 @@ export default function SearchMedia(props) {
 
   return (
     <div>
-      <div className="mb-8 flex w-full items-center justify-center gap-4">
+      <div className="search-header">
         <SearchBar
           category={category}
           setIsLoading={setIsLoading}

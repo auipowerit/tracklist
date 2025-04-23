@@ -3,6 +3,7 @@ import { useAuthContext } from "src/context/Auth/AuthContext";
 import { useListContext } from "src/context/List/ListContext";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "src/styles/components/buttons.scss";
 
 export default function SaveButton({ list, user }) {
   const { globalUser } = useAuthContext();
@@ -34,7 +35,7 @@ export default function SaveButton({ list, user }) {
   return (
     <button
       onClick={handleSave}
-      className={`flex w-8 items-center gap-2 hover:text-green-500 ${isSaved && "text-green-500"}`}
+      className={`save-btn ${isSaved && "active"}`}
     >
       <FontAwesomeIcon icon={faBookmark} className={isActive && "fa-beat"} />
       <p>{saves || 0}</p>

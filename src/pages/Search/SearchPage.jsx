@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Tabs from "src/components/Tabs";
 import SearchMedia from "./components/SearchMedia";
+import "src/styles/pages/scss/search.scss";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");
@@ -14,7 +15,7 @@ export default function SearchPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-8 p-6">
+    <div className="search-container">
       <Tabs
         tabs={tabs}
         activeTab={activeTab}

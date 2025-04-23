@@ -5,6 +5,7 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ShareForm from "../ShareForm";
+import "src/styles/components/buttons.scss";
 
 export default function ShareButton(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
@@ -33,10 +34,10 @@ export default function ShareButton(props) {
       </Modal>
 
       <button
-        onClick={handleClick}
-        className="cursor-pointer transition-all duration-300 hover:text-gray-400"
+        onClick={handleClick}        
         data-tooltip-id="share-tooltip"
         data-tooltip-content="Share"
+        className="share-btn"
       >
         <FontAwesomeIcon icon={faShare} />
         <Tooltip id="share-tooltip" place="top" type="dark" effect="float" />

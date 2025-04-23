@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "src/styles/components/buttons.scss";
 
 export default function LikeButton(props) {
   const { content, handleContent, updateContent } = props;
@@ -28,7 +29,7 @@ export default function LikeButton(props) {
   return (
     <button
       onClick={handleClick}
-      className={`text-md flex w-12 items-center gap-1 font-light transition-colors duration-150 ${userVoted ? "text-green-500" : "hover:text-green-500"}`}
+      className={`like-btn ${userVoted && "active"}`}
     >
       <FontAwesomeIcon icon={faThumbsUp} className={isActive && "fa-beat"} />
       <p>{content?.likes.length}</p>

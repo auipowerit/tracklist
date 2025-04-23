@@ -1,3 +1,5 @@
+import "src/styles/components/buttons.scss";
+
 export default function DeleteButton({ type, deleteContent }) {
   async function handleDelete() {
     if (!window.confirm("Are you sure you want to delete this " + type + "?")) {
@@ -9,7 +11,7 @@ export default function DeleteButton({ type, deleteContent }) {
 
   return (
     <button
-      className="rounded-full px-3 py-1 transition-colors duration-150 hover:bg-gray-600"
+      className="delete-btn"
       onClick={handleDelete}
     >
       Delete

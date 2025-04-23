@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "src/styles/components/buttons.scss";
 
 export default function BackButton() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function BackButton() {
   return (
     <button
       onClick={handleClick}
-      className="flex w-fit items-center gap-2 rounded-sm bg-green-700 px-2 py-1 hover:text-gray-400"
+      className="back-btn"
     >
       <FontAwesomeIcon icon={faArrowLeft} />
       <p>Back</p>

@@ -7,6 +7,7 @@ import { ReviewButtons } from "src/components/Review/ReviewContent";
 import CommentList from "./components/CommentList";
 import MediaDetails from "./components/MediaDetails";
 import ReviewDetails from "./components/ReviewDetails";
+import "src/styles/pages/scss/review.scss";
 
 export default function ReviewPage() {
   const params = useParams();
@@ -53,10 +54,10 @@ export default function ReviewPage() {
 
 function Review({ review }) {
   return (
-    <div className="flex w-full items-center gap-2 border-b-1 border-white pb-4">
+    <div className="review-container">
       <MediaDetails review={review} />
 
-      <div className="flex h-full w-full flex-col justify-between overflow-auto">
+      <div className="review">
         <ReviewDetails review={review} />
         <ReviewButtons review={review} showComment={false} />
       </div>

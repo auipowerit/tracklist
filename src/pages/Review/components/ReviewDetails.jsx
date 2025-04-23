@@ -3,7 +3,7 @@ import { ReviewStars } from "src/components/Review/ReviewContent";
 
 export default function ReviewDetails({ review }) {
   return (
-    <div className="flex h-72 w-full flex-col gap-4">
+    <div className="details-container">
       <ReviewHeader review={review} />
       <ReviewContent review={review} />
     </div>
@@ -12,35 +12,26 @@ export default function ReviewDetails({ review }) {
 
 function ReviewHeader({ review }) {
   return (
-    <div className="flex items-center gap-2">
-      <img src={review.profileUrl} className="h-16 w-16 rounded-full" />
+    <div className="header">
+      <img src={review.profileUrl} />
 
-      <div className="flex w-full items-start justify-between">
-        <div className="flex flex-col gap-1">
-          <p className="text-lg text-gray-400">
+      <div className="info-container">
+        <div className="user-container">
+          <p className="user-info">
             Review by{" "}
-            <Link
-              to={`/users/${review.username}`}
-              className="font-bold text-white hover:text-gray-400"
-            >
+            <Link to={`/users/${review.username}`} className="username">
               {review.username}
             </Link>
           </p>
           <ReviewStars rating={review.rating} />
         </div>
 
-        <p className="text-sm text-gray-400">
-          {review.createdAt.toDate().toDateString()}
-        </p>
+        <p className="date">{review.createdAt.toDate().toDateString()}</p>
       </div>
     </div>
   );
 }
 
 function ReviewContent({ review }) {
-  return (
-    <p className="overflow-auto mask-b-from-90% pb-2 pl-2 text-xl break-words">
-      {review.content}
-    </p>
-  );
+  return <p className="content">{review.content}</p>;
 }

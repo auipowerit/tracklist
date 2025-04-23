@@ -16,12 +16,7 @@ export default function Results({ results, category }) {
   }
 
   return (
-    <div
-      className={`m-auto w-fit ${
-        category !== "user" &&
-        "grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      }`}
-    >
+    <div className={`search-results ${category !== "user" && "media-results"}`}>
       {results.map((result) => (
         <ResultCard
           key={result.id || result.uid}

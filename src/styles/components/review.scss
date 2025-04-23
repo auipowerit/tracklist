@@ -1,0 +1,107 @@
+@import "../abstracts";
+
+.review-user-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  img {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+
+  p {
+    font-weight: bold;
+  }
+}
+
+.review-user-date {
+  color: $basic-gray;
+  font-weight: 400;
+  font-size: calc(0.25em + 0.5vw);
+}
+
+.review-media-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.review-icon {
+  color: $basic-gray;
+}
+
+.review-title {
+  max-width: 300px;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: calc(0.75em + 0.5vw);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.review-subtitle {
+  font-weight: 400;
+}
+
+.review-content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.review-content {
+  font-size: calc(0.5em + 0.5vw);
+  overflow-wrap: break-word;
+}
+
+.review-content-toggle {
+  cursor: pointer;
+  padding: 0.5em 0;
+  color: blue;
+  font-weight: 600;
+  font-size: calc(0.5em + 0.5vw);
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.review-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+}
+
+.review-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin-left: 0.25em;
+  padding-left: 0.5em;
+}
+
+.review-comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}

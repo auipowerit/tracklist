@@ -17,7 +17,7 @@ export default function MediaDetails({ review }) {
   }, []);
 
   return (
-    <div className="flex max-w-75 min-w-75 flex-col items-center justify-center p-2">
+    <div className="media-container">
       <MediaImage
         image={mediaData.image || DEFAULT_IMG}
         link={mediaData.titleLink}
@@ -34,7 +34,6 @@ function MediaImage({ image, link }) {
     <img
       src={image}
       onClick={() => navigate(link)}
-      className="h-64 w-64 cursor-pointer object-cover"
     />
   );
 }
@@ -54,19 +53,19 @@ function MediaInfo({ mediaData }) {
   }, [mediaData]);
 
   return (
-    <div className="flex flex-col p-1 px-2 text-center">
+    <div className="media-info-container">
       <Link
         to={mediaData.titleLink}
-        className="max-w-100 min-w-100 overflow-hidden mask-r-from-80% mask-l-from-95% px-2"
+        className="title-container"
       >
         <p
           ref={titleRef}
-          className="px-2 text-lg font-bold whitespace-nowrap hover:text-gray-400"
+          className="title"
         >
           {mediaData.title}
         </p>
       </Link>
-      <Link to={mediaData.subtitleLink} className="text-sm text-gray-400">
+      <Link to={mediaData.subtitleLink} className="subtitle">
         {mediaData.subtitle}
       </Link>
     </div>

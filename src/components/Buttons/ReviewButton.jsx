@@ -29,7 +29,7 @@ export default function ReviewButton(props) {
   }
 
   return (
-    <div className="review-btn">
+    <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <ReviewForm
           isModalOpen={isModalOpen}
@@ -44,6 +44,7 @@ export default function ReviewButton(props) {
           onClick={handleClick}
           data-tooltip-id="review-tooltip"
           data-tooltip-content="Review"
+          className="review-btn"
         >
           <FontAwesomeIcon icon={faPencil} />
           <Tooltip id="review-tooltip" place="top" type="dark" effect="float" />
@@ -53,6 +54,7 @@ export default function ReviewButton(props) {
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}
+          className="add-review-btn"
         >
           <FontAwesomeIcon icon={faPlus} />
           <p>Post review</p>

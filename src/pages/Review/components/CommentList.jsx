@@ -33,7 +33,7 @@ export default function CommentList({ review }) {
   }
 
   return (
-    <div className="flex flex-col gap-6 pb-12">
+    <div className="comments-container">
       <Header comments={comments} setComments={setComments} />
 
       <div className="ml-2">
@@ -50,8 +50,8 @@ export default function CommentList({ review }) {
 
 function Header({ comments, setComments }) {
   return (
-    <div className="flex items-center gap-4">
-      <h2 className="text-xl font-bold">
+    <div className="comments-header-container">
+      <h2 className="comments-header">
         {comments?.length || 0}{" "}
         {comments?.length === 1 ? "Comment" : "Comments"}
       </h2>
@@ -64,7 +64,7 @@ function Comments({ comments, setComments, review }) {
   return (
     <div>
       {comments?.length > 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="comments-list">
           {comments.map((comment) => {
             return (
               <CommentCard

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ReviewButton from "src/components/Buttons/ReviewButton";
 import ListButton from "src/components/Buttons/ListButton";
-import { useAuthContext } from "src/context/Auth/AuthContext";
-import LikeMediaButton from "./LikeMediaButton";
 import ShareButton from "src/components/Buttons/ShareButton";
+import { useAuthContext } from "src/context/Auth/AuthContext";
+import ReviewButton from "src/components/Buttons/ReviewButton";
+import HeartButton from "src/components/Buttons/HeartButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
@@ -24,7 +24,7 @@ export default function BannerButtons({ mediaId, name, category }) {
 
   return (
     <div className="flex h-full flex-col items-center justify-evenly px-4 text-2xl">
-      <LikeMediaButton
+      <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}
         id={mediaId}

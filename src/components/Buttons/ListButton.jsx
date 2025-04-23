@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
 import ListForm from "../List/ListForm";
+import "src/styles/components/buttons.scss";
 
 export default function ListButton(props) {
   const {
@@ -45,7 +46,7 @@ export default function ListButton(props) {
       {showIcon ? (
         <button
           onClick={handleClick}
-          className="cursor-pointer transition-all duration-300 hover:text-gray-400"
+          className="list-save-btn"
           data-tooltip-content="Save"
           data-tooltip-id="list-tooltip"
         >
@@ -54,7 +55,7 @@ export default function ListButton(props) {
         </button>
       ) : (
         <button
-          className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-white px-2 py-1 text-lg hover:text-gray-400"
+          className="list-btn"
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}

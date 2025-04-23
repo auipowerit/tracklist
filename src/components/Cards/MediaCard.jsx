@@ -3,6 +3,7 @@ import { formatDateMDYLong } from "src/utils/date";
 import { ReviewStars } from "../Review/ReviewContent";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useSpotifyContext } from "src/context/Spotify/SpotifyContext";
+import "src/styles/components/cards/media-card.scss";
 
 export default function MediaCard(props) {
   const { media, defaultSubtitle, onClick } = props;
@@ -65,24 +66,22 @@ export default function MediaCard(props) {
   }, [fetchedMedia]);
 
   return (
-    <div
-      className="flex h-fit w-72 cursor-pointer flex-col bg-white p-2 text-black transition-all duration-200 hover:scale-110"
-      onClick={onClick}
-    >
-      <img src={fetchedMedia.data?.image || DEFAULT_IMG} className="h-72" />
-      <div className="flex grow-1 flex-col justify-between gap-2 py-2 text-center">
-        <div className="max-w-68 min-w-68 overflow-hidden px-2 text-center">
-          <p ref={titleRef} className="text-xl font-bold text-nowrap">
+    <div className="media-card-container" onClick={onClick}>
+      <img src={fetchedMedia.data?.image || DEFAULT_IMG} />
+
+      <div className="media-card-info">
+        <div className="title-container">
+          <p ref={titleRef} className="title">
             {fetchedMedia.data?.title || ""}
           </p>
         </div>
 
-        <p className="text-sm font-light">
+        <p className="subtitle">
           {fetchedMedia.data?.subtitle || ""}
         </p>
       </div>
 
-      <div className="flex items-center justify-center gap-1">
+      <div className="rating">
         <p>{fetchedMedia.avgRating?.toFixed(1) || ""}</p>
         <ReviewStars rating={fetchedMedia.avgRating || 0} />
         <p>{(fetchedMedia.avgRating && `(${fetchedMedia.count})`) || ""}</p>

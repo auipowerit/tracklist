@@ -51,21 +51,3 @@
   font-size: calc(0.75rem + 0.5vw);
   text-wrap: break-word;
 }
-
-.review-card-btns {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-left: 0.25em;
-  padding-left: 0.5em;
-}
-
-.review-card-comment-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
-
-  &:hover {
-    color: $basic-gray;
-  }
-}

@@ -58,18 +58,14 @@ export default function SearchBar(props) {
   }
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="flex items-center justify-center gap-4 rounded-2xl border-2 border-white px-4 py-2 text-2xl"
-    >
+    <form onSubmit={handleSearch} className="searchbar">
       <input
         type="text"
         ref={searchInput}
         placeholder={placeholderMap[category]}
-        className="outline-none"
       />
 
-      <button type="submit" className="hover:text-green-700">
+      <button type="submit">
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </form>

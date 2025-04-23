@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "src/context/Auth/AuthContext";
+import "src/styles/components/buttons.scss";
 
 export default function FollowButton({ user, setUser }) {
   const { globalUser, followUser, unfollowUser } = useAuthContext();
@@ -24,12 +25,10 @@ export default function FollowButton({ user, setUser }) {
     });
   }
 
-  const color = isFollowing ? "bg-green-700" : "border-white";
-
   return (
     <button
       onClick={() => handleClick()}
-      className={`flex h-fit w-[110px] justify-center rounded-2xl border-2 border-transparent py-1 text-lg text-white ${color}`}
+      className={`follow-btn ${isFollowing && "active"}`}
     >
       {isFollowing ? "Following" : "Follow"}
     </button>

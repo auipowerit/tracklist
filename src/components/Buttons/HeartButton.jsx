@@ -3,8 +3,9 @@ import { Tooltip } from "react-tooltip";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/context/Auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "src/styles/components/buttons.scss";
 
-export default function LikeMediaButton(props) {
+export default function HeartButton(props) {
   const { isLiked, setIsLiked, id, category } = props;
 
   const { globalUser } = useAuthContext();
@@ -32,7 +33,7 @@ export default function LikeMediaButton(props) {
   return (
     <button
       onClick={handleLike}
-      className={`cursor-pointer transition-all duration-300 ${isLiked ? "text-green-500" : "hover:text-gray-400"}`}
+      className={`heart-btn ${isLiked && "active"}`}
       data-tooltip-id="like-tooltip"
       data-tooltip-content={isLiked ? "Unlike" : "Like"}
     >

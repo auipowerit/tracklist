@@ -6,13 +6,14 @@ import DeleteButton from "src/components/Buttons/DeleteButton";
 import DislikeButton from "src/components/Buttons/DislikeButton";
 import { useReviewContext } from "src/context/Review/ReviewContext";
 import { useCommentContext } from "src/context/Comment/CommentContext";
+import "src/styles/components/cards/comment-card.scss";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
 
   return (
-    <div className="flex flex-col gap-4">
-      <Header comment={comment} />
+    <div className="comment-card-container">
+      <Body comment={comment} />
 
       <Buttons
         comment={comment}
@@ -24,27 +25,24 @@ export default function CommentCard(props) {
   );
 }
 
-function Header({ comment }) {
+function Body({ comment }) {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
+    <div className="comment-card">
+      <div className="comment-user-container">
         <UserInfo comment={comment} />
-        <p className="text-sm text-gray-400">
+        <p className="comment-date">
           {getTimeSince(comment.createdAt.toDate())}
         </p>
       </div>
-      <p className="text-xl">{comment.content}</p>
+      <p className="comment-content">{comment.content}</p>
     </div>
   );
 }
 
 function UserInfo({ comment }) {
   return (
-    <Link
-      to={`/users/${comment.username}`}
-      className="flex cursor-pointer items-center gap-2 text-sm font-bold hover:text-gray-400"
-    >
-      <img src={comment.profileUrl} className="h-8 w-8 rounded-full" />
+    <Link to={`/users/${comment.username}`} className="comment-user-info">
+      <img src={comment.profileUrl} />
       <p>@{comment.username}</p>
     </Link>
   );
@@ -76,7 +74,7 @@ function Buttons({ comment, review, comments, setComments }) {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="comment-btns">
       <LikeButton
         content={comment}
         handleContent={likeComment}

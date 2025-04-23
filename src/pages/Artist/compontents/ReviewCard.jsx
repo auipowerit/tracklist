@@ -10,10 +10,7 @@ export default function ReviewCard({ review }) {
       {review && (
         <div className="flex flex-col gap-2">
           <Header review={review} />
-
-          <div className="w-120">
-            <ReviewContent review={review} />
-          </div>
+          <ReviewContent review={review} />
         </div>
       )}
     </div>
