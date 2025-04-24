@@ -1,0 +1,222 @@
+@use "src/styles/abstracts" as *;
+
+.review-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin: auto;
+  margin-top: 2em;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+}
+
+.review-section-container {
+  display: flex;
+  align-items: center;
+  align-items: stretch;
+  gap: 0.25em;
+  padding-bottom: 1em;
+  height: fit-content;
+}
+
+.review-section {
+  display: flex;
+  flex-basis: 70%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: auto;
+}
+
+.review-section-media-container {
+  display: flex;
+  flex-basis: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25em;
+  min-width: 30%;
+  height: 100%;
+
+  img {
+    cursor: pointer;
+    width: 100%;
+    min-width: 125px;
+    height: 100%;
+    max-height: 275px;
+    object-fit: contain;
+  }
+}
+
+.review-section-media-info-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25em 0.5em;
+  width: 100%;
+  max-width: 275px;
+}
+
+.review-section-title-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 0 0.25em;
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+}
+
+.review-section-title {
+  padding: 0 0.25em;
+  width: 100%;
+  font-weight: bold;
+  font-size: calc(0.5rem + 0.5vw);
+  text-align: center;
+  white-space: nowrap;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.review-section-subtitle {
+  color: $basic-gray;
+  font-size: calc(0.5rem + 0.5vw);
+  text-align: center;
+}
+
+.review-section-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 100%;
+}
+
+.review-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  img {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+}
+
+.review-section-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.review-section-user-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.review-section-user-info {
+  color: $basic-gray;
+  font-size: calc(0.5rem + 0.5vw);
+}
+
+.review-section-username {
+  color: $basic-white;
+  font-weight: bold;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.review-section-date {
+  color: $basic-gray;
+  font-size: calc(0.35rem + 0.5vw);
+}
+
+.review-section-content {
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  padding: 0.5em;
+  overflow: auto;
+  font-size: calc(0.65rem + 0.5vw);
+  text-wrap: break-word;
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 0 1em 5em 1em;
+}
+
+.comments-header-container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.comments-header {
+  font-weight: bold;
+  font-size: calc(0.75rem + 0.5vw);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.comments-list-empty {
+  margin: 5em auto;
+  width: 100%;
+  color: $basic-gray;
+  font-style: italic;
+  font-size: calc(1rem + 0.5vw);
+  text-align: center;
+}
+
+.comment-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.comment-input {
+  border-bottom: 1px solid $basic-gray;
+  padding-bottom: 0.5em;
+  width: 100%;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:focus {
+    outline: none;
+    border-color: $basic-white;
+  }
+}
+
+.comment-input-btns {
+  display: flex;
+  justify-content: end;
+  gap: 0.5em;
+
+  button {
+    margin-top: 0.5em;
+    border-radius: 20px;
+    padding: 0.25em 0.75em;
+
+    &:hover {
+      background-color: $basic-gray;
+    }
+  }
+}

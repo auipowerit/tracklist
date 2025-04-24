@@ -1,0 +1,39 @@
+@use "src/styles/abstracts" as *;
+
+.modal-container {
+  position: fixed;
+  visibility: hidden;
+  z-index: 50;
+  transition: all 0.2s;
+  inset: 0;
+
+  &.active {
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: all 0.2s;
+  border-radius: 12px;
+  background-color: $darker-gray;
+  padding: 3em;
+
+  &.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 100;
+  }
+}
+
+.modal-btn {
+  position: absolute;
+  top: 0;
+  right: 2%;
+  font-weight: bold;
+  font-size: calc(1.5rem + 0.5vw);
+}

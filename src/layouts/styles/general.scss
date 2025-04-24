@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.to-top-btn {
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin: 1em;
+  border-radius: 100%;
+  background-color: green;
+  padding: 0.4em;
+  aspect-ratio: 1/1;
+  color: white;
+  font-size: calc(1.2rem + 0.5vw);
+  text-align: center;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}

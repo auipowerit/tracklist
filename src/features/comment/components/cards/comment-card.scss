@@ -1,0 +1,54 @@
+@use "src/styles/abstracts" as *;
+
+.comment-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.comment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.comment-user-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.comment-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: calc(0.25em + 0.5vw);
+
+  &:hover {
+    color: $basic-gray;
+  }
+
+  img {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+
+.comment-date {
+  color: $basic-gray;
+  font-size: calc(0.25em + 0.5vw);
+}
+
+.comment-content {
+  font-size: calc(0.5em + 0.5vw);
+}
+
+.comment-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}

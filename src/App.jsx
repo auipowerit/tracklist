@@ -1,8 +1,8 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import * as Pages from "./pages";
-import Layout from "./components/Layout/Layout";
-import AppProviders from "./context/AppProviders";
+import Layout from "./layouts/Layout";
+import AppProviders from "./pages/AppProviders";
 
 export default function App() {
   const router = createBrowserRouter([

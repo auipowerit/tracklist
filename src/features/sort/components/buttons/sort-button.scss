@@ -1,0 +1,49 @@
+@use "src/styles/abstracts" as *;
+
+.sort-btn-container {
+  position: relative;
+  z-index: 20;
+  width: fit-content;
+}
+
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+  font-size: calc(0.75rem + 0.5vw);
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  transition: all 300ms ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  border-radius: 6px;
+  background-color: $basic-white;
+  width: fit-content;
+  overflow: hidden;
+  color: $basic-black;
+
+  &:not(.active) {
+    max-height: 0;
+  }
+
+  &.active {
+    padding: 0.5em;
+    max-height: 100vh;
+  }
+}
+
+.sort-dropdown-item {
+  border-radius: 6px;
+  padding: 0.25em 0.5em;
+  width: 100%;
+  text-align: start;
+
+  &:hover {
+    background-color: $basic-gray;
+    color: $basic-white;
+  }
+}
