@@ -3,7 +3,7 @@ import { Tooltip } from "react-tooltip";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./media-buttons.scss";
+import "./shared-buttons.scss";
 
 export default function HeartButton(props) {
   const { isLiked, setIsLiked, id, category } = props;
@@ -31,14 +31,8 @@ export default function HeartButton(props) {
   }
 
   return (
-    <button
-      onClick={handleLike}
-      className={`heart-btn ${isLiked && "active"}`}
-      data-tooltip-id="like-tooltip"
-      data-tooltip-content={isLiked ? "Unlike" : "Like"}
-    >
+    <button onClick={handleLike} className={`heart-btn ${isLiked && "active"}`}>
       <FontAwesomeIcon icon={faHeart} className={isActive && "fa-beat"} />
-      <Tooltip id="like-tooltip" place="top" type="dark" effect="float" />
     </button>
   );
 }

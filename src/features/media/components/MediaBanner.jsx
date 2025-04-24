@@ -6,6 +6,7 @@ import { ReviewStars } from "src/features/review/components/ReviewContent";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import BannerButtons from "./buttons/BannerButtons";
+import "./styles/media-banner.scss";
 
 function MediaBanner({ media, category }) {
   const { getAvgRating } = useReviewContext();
@@ -30,13 +31,13 @@ function MediaBanner({ media, category }) {
   if (!data) return;
 
   return (
-    <div className="mt-10 mb-20 flex h-64 items-center text-center shadow-md shadow-black/50">
+    <div className="media-banner-container">
       <SpotifyImage
         image={data.image}
         spotifyURL={media.external_urls.spotify}
       />
-      <div className="flex h-full w-fit items-center justify-between bg-black/40">
-        <div className="flex h-full flex-col items-center justify-between overflow-x-auto bg-black/50 p-4">
+      <div className="media-banner-info">
+        <div className="media-banner-content">
           <Title name={data.title} subtitle={data.subtitle} />
           <Rating mediaId={media.id} rating={rating} />
         </div>
@@ -57,9 +58,9 @@ function SpotifyImage({ image, spotifyURL }) {
       onClick={() => window.open(spotifyURL)}
       data-tooltip-id="media-tooltip"
       data-tooltip-content="Open in Spotify"
-      className="cursor-pointer shadow-black/50 transition-all duration-300 hover:shadow-xl hover:shadow-black/75"
+      className="media-banner-img"
     >
-      <img src={image || DEFAULT_MEDIA_IMG} className="h-64 w-64" />
+      <img src={image || DEFAULT_MEDIA_IMG} />
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
     </div>
   );
@@ -80,24 +81,22 @@ function Title({ name, subtitle }) {
   }, [name]);
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="max-w-100 min-w-100 overflow-hidden mask-r-from-80% mask-l-from-95% px-2">
-        <p ref={titleRef} className="text-4xl font-bold whitespace-nowrap">
-          {name}
-        </p>
+    <div className="media-banner-title-container">
+      <div className="media-banner-title">
+        <p ref={titleRef}>{name}</p>
       </div>
 
-      <p className="text-gray-300">{subtitle}</p>
+      <p className="media-banner-subtitle">{subtitle}</p>
     </div>
   );
 }
 
 function Rating({ mediaId, rating }) {
   return (
-    <div className="flex flex-col items-center gap-4 text-2xl">
+    <div className="media-banner-rating">
       <RatingBar mediaId={mediaId} />
 
-      <div className="flex items-center justify-center gap-2">
+      <div className="media-banner-stars">
         <p>{rating.avgRating?.toFixed(1) || ""}</p>
         <ReviewStars rating={rating.avgRating || 0} size={22} />
         <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>

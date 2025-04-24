@@ -8,7 +8,7 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
   const [page, setPage] = useState(0);
 
   return (
-    <div className="flex w-full flex-col justify-center gap-6">
+    <div className="discography-container">
       <SortMusic
         results={media}
         setResults={setMedia}
@@ -19,7 +19,7 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
 
       {media &&
         (media.length > 0 ? (
-          <div className="flex h-full w-full flex-wrap justify-start gap-8">
+          <div className="discography">
             <MediaItems media={media} />
 
             {isMore && (
@@ -31,7 +31,7 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
             )}
           </div>
         ) : (
-          <p className="p-20 text-center text-5xl italic">Nothing to show!</p>
+          <p className="discography-empty">Nothing to show!</p>
         ))}
     </div>
   );
@@ -65,11 +65,8 @@ function LoadMoreButton({ loadMedia, page, setPage }) {
   }
 
   return (
-    <div className="flex h-72 items-center justify-center">
-      <button
-        onClick={loadMore}
-        className="m-auto h-fit w-fit rounded-md bg-green-700 p-4 text-2xl"
-      >
+    <div className="load-more">
+      <button onClick={loadMore} className="load-more-btn">
         Load more
       </button>
     </div>

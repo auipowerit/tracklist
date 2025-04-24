@@ -56,10 +56,7 @@
   max-width: 275px;
 }
 
-.review-section-title-container {
-  width: 100%;
-  overflow: hidden;
-  padding: 0 0.25em;
+.review-section-title {
   mask-image: linear-gradient(
     to left,
     transparent 0%,
@@ -67,18 +64,20 @@
     black 95%,
     transparent 100%
   );
-}
-
-.review-section-title {
   padding: 0 0.25em;
+  overflow: hidden;
   width: 100%;
-  font-weight: bold;
-  font-size: calc(0.5rem + 0.5vw);
-  text-align: center;
-  white-space: nowrap;
 
-  &:hover {
-    color: $basic-gray;
+  p {
+    margin: auto;
+    width: fit-content;
+    font-weight: bold;
+    font-size: calc(0.5rem + 0.5vw);
+    white-space: nowrap;
+
+    &:hover {
+      color: $basic-gray;
+    }
   }
 }
 

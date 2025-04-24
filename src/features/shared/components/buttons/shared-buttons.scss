@@ -1,19 +1,5 @@
 @use "src/styles/abstracts" as *;
 
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
-  border-radius: 6px;
-  background-color: $basic-green;
-  padding: 0.35em 0.75em;
-  width: fit-content;
-
-  &:hover {
-    color: $basic-gray;
-  }
-}
-
 .delete-btn {
   border-radius: 20px;
   padding: 0.25em 0.75em;
@@ -24,26 +10,12 @@
   }
 }
 
-.dislike-btn {
+.heart-btn {
   display: flex;
   align-items: center;
   gap: 0.25em;
-  width: 2.5em;
   font-weight: 400;
   font-size: calc(0.75rem + 0.5vw);
-}
-
-.dislike-btn {
-  &:not(.active):hover {
-    color: $basic-red;
-  }
-
-  &.active {
-    color: $basic-red;
-  }
-}
-
-.heart-btn {
   cursor: pointer;
 
   &:hover {
@@ -52,25 +24,6 @@
 
   &.active {
     color: $basic-green;
-  }
-}
-
-.like-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
-  width: 2.5em;
-  font-weight: 400;
-  font-size: calc(0.75rem + 0.5vw);
-}
-
-.like-btn {
-  &:not(.active):hover {
-    color: $lighter-green;
-  }
-
-  &.active {
-    color: $lighter-green;
   }
 }
 

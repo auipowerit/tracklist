@@ -40,14 +40,8 @@ export default function AddReviewButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button
-          onClick={handleClick}
-          data-tooltip-id="review-tooltip"
-          data-tooltip-content="Review"
-          className="review-btn"
-        >
+        <button onClick={handleClick} className="review-btn">
           <FontAwesomeIcon icon={faPencil} />
-          <Tooltip id="review-tooltip" place="top" type="dark" effect="float" />
         </button>
       ) : (
         <button

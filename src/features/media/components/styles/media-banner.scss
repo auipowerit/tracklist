@@ -1,0 +1,125 @@
+@use "src/styles/abstracts" as *;
+
+.media-banner-container {
+  display: flex;
+  align-items: center;
+  margin: 3em 6em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  height: 300px;
+  text-align: center;
+}
+
+.media-banner-img {
+  transition: all 0.2s;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+  }
+
+  img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+  }
+}
+
+.media-banner-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: fit-content;
+  height: 100%;
+}
+
+.media-banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1em;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.media-banner-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.media-banner-title {
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  padding: 0 0.5em;
+  width: 400px;
+  overflow: hidden;
+
+  p {
+    margin: auto;
+    width: fit-content;
+    font-weight: bold;
+    font-size: calc(1.25em + 0.5vw);
+    white-space: nowrap;
+  }
+}
+
+.media-banner-subtitle {
+  color: $basic-gray;
+  font-size: calc(0.75em + 0.5vw);
+}
+
+.media-banner-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: bold;
+  font-size: calc(1rem + 0.5vw);
+}
+
+.media-banner-stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.media-rating-bar-container {
+  display: flex;
+  height: 50px;
+  align-items: end;
+  gap: 2px;
+}
+
+.media-rating-bar {
+  position: relative;
+  min-height: 4px;
+  width: 20px;
+  cursor: pointer;
+  border-radius: 1px 1px 0 0;
+  background-color: $basic-gray;
+  transition: all 0.2s;
+  margin: 5px 0;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:hover {
+    background-color: $basic-white;
+  }
+}
+
+.media-rating-bar-fill {
+  position: absolute;
+  top: -10px;
+  bottom: 0;
+  left: -2px;
+  right: -2px;
+}

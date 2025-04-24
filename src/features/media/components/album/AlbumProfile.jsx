@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import Tabs from "src/layouts/Tabs";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
-import Tabs from "src/layouts/Tabs";
 import MediaReviews from "../MediaReviews";
+import "./album-profile.scss";
 
 export default function AlbumProfile() {
   const context = useOutletContext();
@@ -18,7 +19,7 @@ export default function AlbumProfile() {
   ];
 
   return (
-    <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
+    <div className="album-profile">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
@@ -32,24 +33,22 @@ export default function AlbumProfile() {
 
 function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div className="flex w-full flex-col items-center">
-      <div className="flex min-h-80 w-full flex-2 items-start gap-8">
-        {tracks && tracks.length > 0 && (
-          <ul className="m-auto flex h-screen flex-col gap-4 overflow-auto p-6">
-            {tracks.map((track) => {
-              return (
-                <li key={track.id}>
-                  <TrackCard
-                    track={track}
-                    artistId={artistId}
-                    albumId={albumId}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
+    <div className="tracklist-container">
+      {tracks && tracks.length > 0 && (
+        <ul className="tracklist">
+          {tracks.map((track) => {
+            return (
+              <li key={track.id}>
+                <TrackCard
+                  track={track}
+                  artistId={artistId}
+                  albumId={albumId}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }
@@ -71,14 +70,12 @@ function TrackCard({ track, artistId, albumId }) {
   return (
     <Link
       to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
-      className="flex max-w-120 min-w-120 flex-col gap-2 overflow-hidden border-3 border-white p-2 text-2xl transition-all duration-150 hover:border-green-700"
+      className="trackcard"
     >
       <p>
         {track.track_number}. {track.name}
       </p>
-      <div className="m-auto">
-        <ReviewStars rating={rating?.avgRating || 0} size={30} />
-      </div>
+      <ReviewStars rating={rating?.avgRating || 0} size={30} />
     </Link>
   );
 }

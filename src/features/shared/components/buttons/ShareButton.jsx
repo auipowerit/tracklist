@@ -33,14 +33,8 @@ export default function ShareButton(props) {
         />
       </Modal>
 
-      <button
-        onClick={handleClick}
-        data-tooltip-id="share-tooltip"
-        data-tooltip-content="Share"
-        className="share-btn"
-      >
+      <button onClick={handleClick} className="share-btn">
         <FontAwesomeIcon icon={faShare} />
-        <Tooltip id="share-tooltip" place="top" type="dark" effect="float" />
       </button>
     </div>
   );

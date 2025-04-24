@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import Navigation from "../features/media/components/nav/Navigation";
+import MediaNav from "../features/media/components/nav/MediaNav";
 import MediaBanner from "../features/media/components/MediaBanner";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import "./styles/artist.scss";
 
 export default function ArtistPage() {
   const { getMediaById } = useSpotifyContext();
@@ -89,7 +90,7 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="flex h-full gap-8">
+    <div className="artist-page-container">
       <MediaGradient
         image={
           memoizedMedia.album?.images?.[0]?.url ||
@@ -98,14 +99,14 @@ export default function ArtistPage() {
         }
       />
 
-      <div className="flex flex-2 flex-col">
-        <Navigation
+      <div className="artist-page">
+        <MediaNav
           artist={memoizedMedia.artist}
           album={memoizedMedia.album}
           track={memoizedMedia.track}
           category={category}
         />
-        <div className="flex min-h-screen w-full flex-col items-center gap-8">
+        <div className="artist-page-content">
           <MediaBanner
             media={
               memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
@@ -113,7 +114,7 @@ export default function ArtistPage() {
             category={category}
           />
 
-          <div className="mt-6 flex h-full w-full justify-center bg-black/50">
+          <div className="artist-page-outlet">
             <Outlet
               context={{
                 artist: memoizedMedia.artist,

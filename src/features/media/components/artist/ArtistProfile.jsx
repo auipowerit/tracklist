@@ -4,6 +4,7 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import Discography from "./Discography";
 import Tabs from "src/layouts/Tabs";
 import MediaReviews from "../MediaReviews";
+import "./artist-profile.scss";
 
 export default function ArtistProfile() {
   const context = useOutletContext();
@@ -54,7 +55,7 @@ export default function ArtistProfile() {
   }
 
   return (
-    <div className="flex h-full w-4/6 flex-col items-center gap-6 py-6">
+    <div className="artist-profile">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (

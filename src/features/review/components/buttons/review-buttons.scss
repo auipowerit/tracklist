@@ -1,11 +1,10 @@
 @use "src/styles/abstracts" as *;
 
-.review-btn {
+.review-btns {
   cursor: pointer;
-
-  &:hover {
-    color: $basic-gray;
-  }
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
 }
 
 .add-review-btn {

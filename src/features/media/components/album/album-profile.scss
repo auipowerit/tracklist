@@ -1,0 +1,58 @@
+@use "src/styles/abstracts" as *;
+
+.album-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  padding: 0.5em 0;
+  width: 60%;
+  height: 100%;
+}
+
+.tracklist-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  width: 100%;
+  max-height: 100vh;
+}
+
+.tracklist {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  margin: auto;
+  padding: 2em 2em;
+  height: 100%;
+  overflow: auto;
+}
+
+.trackcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  border: 3px solid $basic-white;
+  padding: 0.5em;
+  width: 500px;
+  overflow: hidden;
+  font-size: calc(0.75rem + 0.5vw);
+
+  &:hover {
+    border: 3px solid $basic-green;
+  }
+
+  p {
+    margin-right: auto;
+  }
+}

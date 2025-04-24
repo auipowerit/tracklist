@@ -1,0 +1,24 @@
+@use "src/styles/abstracts" as *;
+
+.media-reviews-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 100%;
+}
+
+.media-reviews {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  margin-left: 1em;
+}
+
+.media-reviews-empty {
+  margin: auto;
+  width: fit-content;
+  padding: 4em 0;
+  color: $basic-gray;
+  font-size: calc(1rem + 0.5vw);
+  font-style: italic;
+}

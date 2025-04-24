@@ -5,7 +5,6 @@ export default function SortReviews({ reviews, setReviews }) {
     { label: "Newest", value: "newest" },
     { label: "Oldest", value: "oldest" },
     { label: "Best", value: "best" },
-    { label: "Controversial", value: "worst" },
     { label: "Commented", value: "comments" },
   ];
 
@@ -22,14 +21,6 @@ export default function SortReviews({ reviews, setReviews }) {
           return (
             b.likes.length - a.likes.length ||
             a.dislikes.length - b.dislikes.length ||
-            b.createdAt - a.createdAt ||
-            a.userId.localeCompare(b.userId)
-          );
-
-        case "worst":
-          return (
-            b.dislikes.length - a.dislikes.length ||
-            a.likes.length - b.likes.length ||
             b.createdAt - a.createdAt ||
             a.userId.localeCompare(b.userId)
           );

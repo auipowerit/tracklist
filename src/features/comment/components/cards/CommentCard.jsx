@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
-import LikeButton from "src/features/shared/components/buttons/LikeButton";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
-import DislikeButton from "src/features/shared/components/buttons/DislikeButton";
+import VoteButton from "src/features/comment/components/buttons/VoteButton";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
 import "./comment-card.scss";
 
@@ -75,15 +74,17 @@ function Buttons({ comment, review, comments, setComments }) {
 
   return (
     <div className="comment-btns">
-      <LikeButton
+      <VoteButton
         content={comment}
-        handleContent={likeComment}
+        handleVote={likeComment}
         updateContent={updateCommentState}
+        type="like"
       />
-      <DislikeButton
+      <VoteButton
         content={comment}
-        handleContent={dislikeComment}
+        handleVote={dislikeComment}
         updateContent={updateCommentState}
+        type="dislike"
       />
       {globalUser?.uid === comment.userId && (
         <DeleteButton type="comment" deleteContent={handleDelete} />

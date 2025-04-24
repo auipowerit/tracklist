@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Tooltip } from "react-tooltip";
 import { getTimeSince } from "src/utils/date";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -31,6 +32,19 @@ function ReviewMediaTitle({ title, subtitle, category }) {
         ? faCompactDisc
         : faMicrophoneLines;
 
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const isOverflowing =
+      titleRef.current.scrollWidth > titleRef.current.parentNode.clientWidth;
+
+    if (isOverflowing) {
+      titleRef.current.classList.add("scrolling-text");
+    } else {
+      titleRef.current.classList.remove("scrolling-text");
+    }
+  }, [title]);
+
   const capitalizeFirstLetter = (str) => {
     return str[0].toUpperCase() + str.slice(1);
   };
@@ -50,7 +64,9 @@ function ReviewMediaTitle({ title, subtitle, category }) {
             effect="float"
           />
         </div>
-        <p className="review-title">{title}</p>
+        <div className="review-title">
+          <p ref={titleRef}>{title}</p>
+        </div>
       </div>
 
       <p className="review-subtitle">{subtitle}</p>
@@ -87,7 +103,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
 
 function ReviewContent({ review }) {
   return (
-    <p className="review-card-text">
+    <p className="review-text">
       {review.content.length > 150
         ? `${review.content.slice(0, 150)}...`
         : review.content}

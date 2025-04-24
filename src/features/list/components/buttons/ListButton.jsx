@@ -44,14 +44,8 @@ export default function ListButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button
-          onClick={handleClick}
-          className="list-save-btn"
-          data-tooltip-content="Save"
-          data-tooltip-id="list-tooltip"
-        >
+        <button onClick={handleClick} className="list-save-btn">
           <FontAwesomeIcon icon={faList} />
-          <Tooltip id="list-tooltip" place="top" type="dark" effect="float" />
         </button>
       ) : (
         <button

@@ -6,18 +6,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  padding: 0 0.5em;
+  padding: 0 0.75em;
   font-size: calc(0.75rem + 0.5vw);
-}
-
-.heart-btn {
-  cursor: pointer;
-
-  &:hover {
-    color: $basic-green;
-  }
-
-  &.active {
-    color: $basic-green;
-  }
 }

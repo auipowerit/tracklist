@@ -45,11 +45,6 @@ input:checked + .slider:before {
   animation: fa-beat 500ms;
 }
 
-.moving-gradient {
-  background-size: 100% 100%;
-  animation: move-gradient 5s ease-in-out infinite alternate;
-}
-
 .scrolling-text {
   animation: scroll 15s linear infinite;
 }

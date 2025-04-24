@@ -213,7 +213,6 @@ function FormUserResults({ users, handleAddUser }) {
 
 function FormUsersList({ currentUsers, setCurrentUser }) {
   function handleRemoveUser(userId) {
-    // Remove the user from the currentUsers array
     setCurrentUser(currentUsers.filter((user) => user.uid !== userId));
   }
 

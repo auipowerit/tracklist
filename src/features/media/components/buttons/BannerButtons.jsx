@@ -3,7 +3,7 @@ import ListButton from "src/features/list/components/buttons/ListButton";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
-import HeartButton from "src/features/media/components/buttons/HeartButton";
+import HeartButton from "src/features/shared/components/buttons/HeartButton";
 import "./media-buttons.scss";
 
 export default function BannerButtons({ mediaId, name, category }) {
@@ -17,7 +17,7 @@ export default function BannerButtons({ mediaId, name, category }) {
   useEffect(() => {
     setIsLiked(
       globalUser?.likes
-        .filter((like) => like.category === "artist")
+        .filter((like) => like.category === category)
         .flatMap((like) => like.content)
         .includes(mediaId),
     );

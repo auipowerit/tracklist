@@ -1,57 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import LikeButton from "src/features/shared/components/buttons/LikeButton";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
+import HeartButton from "src/features/shared/components/buttons/HeartButton";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import DislikeButton from "src/features/shared/components/buttons/DislikeButton";
 import CommentButton from "src/features/comment/components/buttons/CommentButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import "./review-buttons.scss";
 
 export default function ReviewButtons({ review, showComment = true }) {
-  const { globalUser, updateGlobalUserLikes, likeContent, unlikeContent } =
-    useAuthContext();
+  const { globalUser } = useAuthContext();
   const { deleteComment } = useCommentContext();
-  const {
-    updateReviewState,
-    likeReview,
-    dislikeReview,
-    setReviews,
-    getNewReviews,
-    deleteReview,
-  } = useReviewContext();
+  const { setReviews, getNewReviews, deleteReview } = useReviewContext();
 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
-  async function handleLike(reviewId, userId) {
-    if (!globalUser) return;
-
-    if (
-      globalUser.likes
+  useEffect(() => {
+    setIsLiked(
+      globalUser?.likes
         .filter((like) => like.category === "review")
         .flatMap((like) => like.content)
-        .includes(reviewId)
-    ) {
-      await unlikeContent(reviewId, userId);
-    } else {
-      await likeContent(reviewId, "review", userId);
-    }
-
-    updateGlobalUserLikes(reviewId, "review");
-
-    return await likeReview(reviewId, userId);
-  }
-
-  async function handleDislike(reviewId, userId) {
-    if (!globalUser) return;
-
-    if (globalUser.likes.find((like) => like.contentId === reviewId)) {
-      await unlikeContent(reviewId, userId);
-    }
-
-    return await dislikeReview(reviewId, userId);
-  }
+        .includes(review.id),
+    );
+  }, []);
 
   async function handleDelete() {
     const comments = review.comments;
@@ -85,15 +57,11 @@ export default function ReviewButtons({ review, showComment = true }) {
 
   return (
     <div className="review-btns">
-      <LikeButton
-        content={review}
-        handleContent={handleLike}
-        updateContent={updateReviewState}
-      />
-      <DislikeButton
-        content={review}
-        handleContent={handleDislike}
-        updateContent={updateReviewState}
+      <HeartButton
+        isLiked={isLiked}
+        setIsLiked={setIsLiked}
+        id={review.id}
+        category={"review"}
       />
 
       {showComment ? (

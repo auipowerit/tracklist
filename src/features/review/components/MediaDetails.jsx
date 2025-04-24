@@ -50,10 +50,8 @@ function MediaInfo({ mediaData }) {
 
   return (
     <div className="review-section-media-info-container">
-      <Link to={mediaData.titleLink} className="review-section-title-container">
-        <p ref={titleRef} className="review-section-title">
-          {mediaData.title}
-        </p>
+      <Link to={mediaData.titleLink} className="review-section-title">
+        <p ref={titleRef}>{mediaData.title}</p>
       </Link>
       <Link to={mediaData.subtitleLink} className="review-section-subtitle">
         {mediaData.subtitle}

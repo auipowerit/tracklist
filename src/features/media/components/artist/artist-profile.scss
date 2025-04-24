@@ -1,0 +1,57 @@
+@use "src/styles/abstracts" as *;
+
+.artist-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 0;
+  width: 60%;
+  height: 100%;
+}
+
+.discography-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  width: 100%;
+}
+
+.discography {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: start;
+  gap: 2em;
+  margin: auto;
+  width: fit-content;
+  height: 100%;
+  padding-bottom: 2em;
+}
+
+.discography-empty {
+  margin: auto;
+  padding: 4em 0;
+  width: fit-content;
+  color: $basic-gray;
+  font-style: italic;
+  font-size: calc(1rem + 0.5vw);
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  height: 100px;
+}
+
+.load-more-btn {
+  margin: auto;
+  border-radius: 6px;
+  background-color: $basic-green;
+  padding: 0.5em 1em;
+  width: fit-content;
+  height: fit-content;
+  color: $basic-white;
+  font-weight: bold;
+  font-size: calc(0.75rem + 0.5vw);
+}

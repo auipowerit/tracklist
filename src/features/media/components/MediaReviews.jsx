@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SortReviews from "src/features/sort/components/SortReviews";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import MediaReviewCard from "src/features/media/components/cards/MediaReviewCard";
+import "./styles/media-reviews.scss";
 
 export default function MediaReviews({ mediaId }) {
   const { getReviewsByMediaId } = useReviewContext();
@@ -18,7 +19,7 @@ export default function MediaReviews({ mediaId }) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="media-reviews-container">
       {reviews?.length > 0 && (
         <SortReviews reviews={reviews} setReviews={setReviews} />
       )}
@@ -29,14 +30,14 @@ export default function MediaReviews({ mediaId }) {
 
 function Reviews({ reviews }) {
   return (
-    <div className="ml-6 flex flex-col gap-6">
+    <div className="media-reviews">
       {reviews &&
         (reviews.length > 0 ? (
           reviews.map((review) => {
             return <MediaReviewCard key={review.id} review={review} />;
           })
         ) : (
-          <p className="py-20 text-center text-4xl italic">No reviews found!</p>
+          <p className="media-reviews-empty">No reviews found!</p>
         ))}
     </div>
   );
