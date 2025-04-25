@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/Tabs";
 import FriendsList from "./FriendsList";
+import "./account-friends.scss";
 
 export default function AccountFriends() {
   const { user } = useOutletContext();
@@ -14,7 +15,7 @@ export default function AccountFriends() {
   ];
 
   return (
-    <div className="flex h-full w-full flex-col gap-4">
+    <div className="account-page-outlet-container">
       <Header />
 
       <div>
@@ -27,6 +28,8 @@ export default function AccountFriends() {
 
 function Header() {
   return (
-    <p className="border-b-1 border-white pb-4 text-2xl text-white">Friends</p>
+    <div className="account-page-header">
+      <p>Friends</p>
+    </div>
   );
 }

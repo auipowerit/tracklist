@@ -1,0 +1,33 @@
+@mixin flexbox(
+  $direction: row,
+  $justify: initial,
+  $align: initial,
+  $gap: initial,
+  $wrap: initial,
+  $basis: initial
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+  flex-wrap: $wrap;
+  flex-basis: $basis;
+}
+
+@mixin font($size: 1, $weight: normal, $color: white, $style: normal) {
+  font-size: calc(#{$size}rem + 0.5vw);
+  font-weight: $weight;
+  color: $color;
+  font-style: $style;
+}
+
+@mixin gradient($direction: top, $top: 5%, $bottom: 95%) {
+  mask-image: linear-gradient(
+    to $direction,
+    transparent 0%,
+    black $top,
+    black $bottom,
+    transparent 100%
+  );
+}

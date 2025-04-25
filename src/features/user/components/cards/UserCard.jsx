@@ -23,21 +23,19 @@ export default function UserCard({ user: propUser }) {
 
   return (
     <div className="user-card-container">
-      <Link to={`/users/${user.username}`}>
-        <div className="user-card">
-          <img src={user.profileUrl} />
+      <Link to={`/users/${user.username}`} className="user-card">
+        <img src={user.profileUrl} />
 
-          <div className="user-card-info">
-            <div className="user-card-header">
-              <p className="user-card-displayname">{user.displayname}</p>
-              <p className="user-card-username">@{user.username}</p>
-            </div>
-
-            <p className="user-card-bio">{user.bio}</p>
-            <p className="user-card-friends">
-              {`${user.followersCount || 0} followers, ${user.followingCount || 0} following`}
-            </p>
+        <div className="user-card-info">
+          <div className="user-card-header">
+            <p className="user-card-displayname">{user.displayname}</p>
+            <p className="user-card-username">@{user.username}</p>
           </div>
+
+          <p className="user-card-bio">{user.bio}</p>
+          <p className="user-card-friends">
+            {`${user.followersCount || 0} followers, ${user.followingCount || 0} following`}
+          </p>
         </div>
       </Link>
 

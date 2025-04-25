@@ -14,19 +14,16 @@
 }
 
 .draggable-item-delete-btn {
-  display: flex;
+  @include flexbox(row, center, center);
+  @include font(0.5, bold);
   position: absolute;
   top: 1%;
   right: 1%;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   border-radius: 100%;
   background-color: $basic-red;
   width: 30px;
   height: 30px;
-  font-weight: bold;
-  font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
     opacity: 0.75;

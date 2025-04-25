@@ -1,12 +1,10 @@
 @use "src/styles/abstracts" as *;
 
 .list-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
+  @include font(0.5);
   border: 2px solid $basic-white;
   padding: 0.25em 0.75em;
-  font-size: calc(0.5rem + 0.5vw);
   text-wrap: nowrap;
 
   &:hover {
@@ -23,9 +21,7 @@
 }
 
 .save-list-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
+  @include flexbox(row, initial, center, 0.25em);
   width: 30px;
 
   &:hover {

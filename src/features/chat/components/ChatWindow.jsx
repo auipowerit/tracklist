@@ -150,28 +150,32 @@ function SearchUsers() {
   }
 
   return (
-    <div className="relative w-full">
+    <div className="chatwindow-search">
       <input
         value={input}
         onChange={handleSearch}
         type="text"
         placeholder="Search for a friend..."
-        className="w-full rounded-sm border-1 border-white p-2 outline-none"
+        className="chatwindow-search-input"
       />
       <div
-        className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${users.length > 0 && "h-fit max-h-46 overflow-auto"}`}
+        className={`chatwindow-search-results ${users.length > 0 && "active"}`}
       >
         {users.map((user) => (
           <button
             key={user.uid}
             type="button"
             onClick={() => handleAddUser(user.uid)}
-            className="flex items-center gap-2 px-2 py-1 text-start hover:bg-gray-600"
+            className="chatwindow-search-item"
           >
-            <img src={user.profileUrl} className="h-10 w-10 rounded-full" />
-            <div className="flex flex-col">
-              <p className="font-bold">{user.displayname}</p>
-              <p className="text-gray-300">@{user.username}</p>
+            <img src={user.profileUrl} />
+            <div className="chatwindow-search-item-info">
+              <p className="chatwindow-search-item-displayname">
+                {user.displayname}
+              </p>
+              <p className="chatwindow-search-item-username">
+                @{user.username}
+              </p>
             </div>
           </button>
         ))}

@@ -79,7 +79,7 @@ export default function AccountProfile() {
 
       <Header user={user} setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
 
-      <div className="account-page-outlet-content">
+      <div className="account-profile-content">
         {user.spotifyUrl ? (
           <SpotifyImage user={user} />
         ) : (

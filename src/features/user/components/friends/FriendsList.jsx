@@ -45,16 +45,16 @@ export default function FriendsList({ activeTab, user }) {
   }
 
   return (
-    <div className="h-screen overflow-y-scroll">
+    <div className="account-friends-container">
       {users &&
         (users.length > 0 ? (
-          <ul className="flex w-full flex-col gap-4">
+          <ul className="account-friends-list">
             {users.map((user) => {
               return <UserCard key={user.uid} user={user} />;
             })}
           </ul>
         ) : (
-          <p className="m-20 text-center text-2xl text-gray-300 italic">
+          <p className="empty-message">
             {activeTab === "following"
               ? "No one followed yet!"
               : "No followers yet!"}

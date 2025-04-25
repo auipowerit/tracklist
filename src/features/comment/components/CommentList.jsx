@@ -78,7 +78,7 @@ function Comments({ comments, setComments, review }) {
           })}
         </div>
       ) : (
-        <p className="comments-list-empty">No comments yet!</p>
+        <p className="empty-message">No comments yet!</p>
       )}
     </div>
   );

@@ -14,20 +14,15 @@
 }
 
 .signup-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  @include flexbox(column, space-evenly, center, 1em);
+  @include font(1);
   align-items: center;
   vertical-align: middle;
-  gap: 1em;
   padding: 1em;
-  font-size: calc(1rem + 0.5vw);
 }
 
 .signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  @include flexbox(column, $gap: 1em);
 }
 
 .signup-submit-btn {
@@ -51,20 +46,14 @@
 }
 
 .login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  @include flexbox(column, space-evenly, center, 1em);
+  @include font(1);
   vertical-align: middle;
-  gap: 1em;
   padding: 1em;
-  font-size: calc(1rem + 0.5vw);
 }
 
 .login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75em;
+  @include flexbox(column, $gap: 0.75em);
 }
 
 .login-submit-btn {

@@ -24,9 +24,7 @@
 }
 
 .review-user-date {
-  color: $basic-gray;
-  font-weight: 400;
-  font-size: calc(0.25rem + 0.5vw);
+  @include font(0.25, 400, $basic-gray);
 }
 
 .review-media-container {
@@ -45,41 +43,31 @@
 }
 
 .review-title {
-  mask-image: linear-gradient(
-    to left,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
+  @include gradient(left);
   padding: 0 0.5em;
   overflow: hidden;
   width: 100%;
   max-width: 400px;
 
   p {
-    font-weight: bold;
-    font-size: calc(0.75rem + 0.5vw);
+    @include font(0.75, bold);
     white-space: nowrap;
   }
 }
 
 .review-subtitle {
-  font-weight: 400;
-  font-size: calc(0.75rem + 0.5vw);
+  @include font(0.75, 400);
 }
 
 .review-text {
-  font-size: calc(0.5rem + 0.5vw);
+  @include font(0.5);
   overflow-wrap: break-word;
 }
 
 .review-content-toggle {
   cursor: pointer;
   padding: 0.5em 0;
-  color: blue;
-  font-weight: 600;
-  font-size: calc(0.5rem + 0.5vw);
+  @include font(0.5, 600, blue);
 
   &:hover {
     color: $basic-gray;

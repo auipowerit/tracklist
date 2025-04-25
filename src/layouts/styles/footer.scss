@@ -1,3 +1,5 @@
+@use "src/styles/abstracts" as *;
+
 footer {
   display: flex;
   flex-direction: column;
@@ -8,9 +10,8 @@ footer {
 }
 
 .footer-text {
-  font-size: calc(0.5rem + 0.5vw);
+  @include font(0.5, normal, gray);
   text-align: center;
-  color: gray;
   line-height: 2em;
 }
 

@@ -1,0 +1,13 @@
+@use "src/styles/abstracts" as *;
+
+.account-friends-container {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.account-friends-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1em;
+}

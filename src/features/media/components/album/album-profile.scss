@@ -1,10 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .album-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2em;
+  @include flexbox(column, initial, center, 2em);
   padding: 0.5em 0;
   width: 100%;
   max-width: 1000px;
@@ -12,27 +9,15 @@
 }
 
 .tracklist-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
+  @include flexbox(column, initial, center, 1em);
   width: 100%;
   max-width: 600px;
   max-height: 100vh;
 }
 
 .tracklist {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25em;
-  mask-image: linear-gradient(
-    to top,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
+  @include flexbox(column, initial, center, 1.25em);
+  @include gradient(top);
   margin: auto;
   padding: 2em 2em;
   width: 100%;
@@ -41,15 +26,12 @@
 }
 
 .trackcard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(column, initial, center, 0.5em);
+  @include font(0.75);
   border: 3px solid $basic-white;
   padding: 0.5em;
   width: 100%;
   max-width: 500px;
-  font-size: calc(0.75rem + 0.5vw);
 
   &:hover {
     border: 3px solid $basic-green;

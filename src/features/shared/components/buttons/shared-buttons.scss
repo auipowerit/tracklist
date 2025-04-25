@@ -1,9 +1,9 @@
 @use "src/styles/abstracts" as *;
 
 .delete-btn {
+  @include font(0.75);
   border-radius: 20px;
   padding: 0.25em 0.75em;
-  font-size: calc(0.75rem + 0.5vw);
 
   &:hover {
     background-color: $dark-gray;
@@ -11,11 +11,8 @@
 }
 
 .heart-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
-  font-weight: 400;
-  font-size: calc(0.75rem + 0.5vw);
+  @include flexbox(row, initial, center, 0.25em);
+  @include font(0.75, 400);
   cursor: pointer;
 
   &:hover {
@@ -28,8 +25,8 @@
 }
 
 .share-btn {
+  @include font(0.75);
   cursor: pointer;
-  font-size: calc(0.75rem + 0.5vw);
 
   &:hover {
     color: $basic-gray;

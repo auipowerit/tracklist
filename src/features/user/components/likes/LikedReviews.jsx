@@ -25,16 +25,14 @@ export default function LikedReviews({ user }) {
   }, [user]);
 
   return (
-    <div>
+    <div className="account-likes-reviews">
       {reviews &&
         (reviews.length > 0 ? (
           reviews.map((review) => {
             return <ReviewCard key={review.id} review={review} />;
           })
         ) : (
-          <p className="m-20 text-center text-2xl text-gray-300 italic">
-            There are no liked reviews yet!
-          </p>
+          <p className="empty-message">There are no liked reviews yet!</p>
         ))}
     </div>
   );

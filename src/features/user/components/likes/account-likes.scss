@@ -1,6 +1,14 @@
 @use "src/styles/abstracts" as *;
 
-.account-reviews-list {
+.account-likes-media {
+  margin: auto;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1em;
+}
+
+.account-likes-reviews {
   display: flex;
   flex-direction: column;
   gap: 2em;

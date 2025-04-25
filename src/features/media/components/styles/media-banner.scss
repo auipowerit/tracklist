@@ -49,55 +49,39 @@
 }
 
 .media-banner-title {
-  mask-image: linear-gradient(
-    to left,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
+  @include gradient(left);
   padding: 0 1em;
   width: 100%;
   overflow: hidden;
 
   p {
+    @include font(1.25, bold);
     margin: auto;
     width: fit-content;
-    font-weight: bold;
-    font-size: calc(1.25rem + 0.5vw);
     white-space: nowrap;
   }
 }
 
 .media-banner-subtitle {
-  color: $basic-gray;
-  font-size: calc(0.75rem + 0.5vw);
+  @include font(0.75, normal, $basic-gray);
 }
 
 .media-banner-rating {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5em;
-  font-weight: bold;
-  font-size: calc(1rem + 0.5vw);
+  @include flexbox(column, initial, center, 0.5em);
+  @include font(1, bold);
 }
 
 .media-banner-stars {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, center, center, 0.5em);
 }
 
 .media-rating-bar-container {
-  display: flex;
-  align-items: end;
-  gap: 2px;
+  @include flexbox(row, initial, end, 2px);
   height: 50px;
 }
 
 .media-rating-bar {
+  @include font(0.5);
   position: relative;
   transition: all 0.2s;
   cursor: pointer;
@@ -106,7 +90,6 @@
   background-color: $basic-gray;
   width: 20px;
   min-height: 4px;
-  font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
     background-color: $basic-white;
@@ -122,12 +105,9 @@
 }
 
 .media-banner-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  @include flexbox(column, space-evenly, center);
+  @include font(0.75);
   background-color: rgba(0, 0, 0, 0.3);
   padding: 0 0.75em;
   height: 100%;
-  font-size: calc(0.75rem + 0.5vw);
 }

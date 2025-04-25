@@ -9,28 +9,27 @@
 .nav-items {
   display: flex;
   align-items: center;
-  gap: 1.2em;
+  gap: 1.5em;
   margin: 0 auto;
   width: 90%;
   max-width: 1200px;
 }
 
 .navlink {
-  font-size: calc(1.5rem + 0.5vw);
+  @include font(1.5, normal, $basic-gray);
 
   &:not(.navlink-active):hover {
-    color: $basic-gray;
+    color: $basic-green;
+  }
+
+  &.active {
+    color: $basic-green;
   }
 }
 
-.navlink-active {
-  color: $basic-green;
-}
-
 .nav-logo {
+  @include font(1.5, bold, $basic-gray);
   margin-right: auto;
-  font-weight: bold;
-  font-size: calc(1.5rem + 0.5vw);
 }
 
 .nav-profile {
@@ -48,7 +47,7 @@
   z-index: 30;
   transition: all 0.3s ease-in-out;
   border-radius: 10%;
-  background-color: $basic-green;
+  background-color: $dark-green;
   width: fit-content;
   overflow: hidden;
   color: white;
@@ -57,28 +56,25 @@
     opacity: 0;
     max-height: 0;
   }
-}
 
-.nav-profile-active {
-  opacity: 100;
-  padding: 0.5em;
-  max-height: 100vh;
+  &.active {
+    opacity: 100;
+    padding: 0.5em;
+    max-height: 100vh;
+  }
 }
 
 .nav-profile-dropdown-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  @include flexbox(column, $gap: 0.25em);
   padding: 0.5em 1em;
 }
 .nav-profile-dropdown-header {
-  font-weight: bold;
-  font-size: calc(0.8rem + 0.5vw);
+  @include font(0.75, bold);
   text-wrap: nowrap;
 }
 
 .nav-profile-dropdown-item {
-  font-size: calc(0.8rem + 0.5vw);
+  @include font(0.75);
 
   &:hover {
     color: $basic-gray;
@@ -86,24 +82,18 @@
 }
 
 .nav-profile-dropdown-logout {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   width: 100%;
 }
 
 .notification-badge {
-  display: flex;
+  @include flexbox(row, center, center);
+  @include font(0.25, bold, $basic-white);
   position: absolute;
   top: 0;
   right: -10px;
-  justify-content: center;
-  align-items: center;
   border-radius: 100%;
   background-color: $basic-red;
   width: 20px;
   height: 20px;
-  color: white;
-  font-weight: bolder;
-  font-size: calc(0.3rem + 0.5vw);
 }

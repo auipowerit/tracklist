@@ -31,12 +31,10 @@ export default function HomePage() {
 
   if (!globalUser) {
     return (
-      <div className="home-empty">
-        <p>
-          Login to your account to view the latest reviews from the friends you
-          follow!
-        </p>
-      </div>
+      <p className="empty-message">
+        Login to your account to view the latest reviews from the friends you
+        follow!
+      </p>
     );
   }
 
@@ -74,7 +72,7 @@ function FeedResults({ results }) {
           return <ReviewCard key={review.id} review={review} onPage={false} />;
         })
       ) : (
-        <p className="feed-empty">No reviews found!</p>
+        <p className="empty-message"></p>
       )}
     </div>
   );

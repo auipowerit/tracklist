@@ -8,15 +8,13 @@ export default function SearchResults({ results, category }) {
   }
 
   if (results.length === 0) {
-    return (
-      <div className="search-empty">
-        <p>No {category}s found!</p>
-      </div>
-    );
+    return <p className="empty-message">No {category}s found!</p>;
   }
 
   return (
-    <div className={`search-results ${category !== "user" && "media-results"}`}>
+    <div
+      className={`search-results ${category === "user" ? "user-results" : "media-results"}`}
+    >
       {results.map((result) => (
         <ResultCard
           key={result.id || result.uid}

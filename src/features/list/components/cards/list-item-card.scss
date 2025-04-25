@@ -1,9 +1,10 @@
 @use "src/styles/abstracts" as *;
 
 .list-item-card {
+  @include font(0.5);
   display: flex;
   border: 1px solid transparent;
-  font-size: calc(0.5rem + 0.5vw);
+  width: fit-content;
 
   &:hover {
     border-color: $basic-white;
@@ -22,16 +23,13 @@
 }
 
 .list-item-image {
-  display: flex;
+  @include flexbox(row, initial, initial, 0.5em);
   position: relative;
-  gap: 0.5em;
 
   p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
-    background-color: $basic-green;
+    @include flexbox(row, center, center);
+    box-shadow: 0 0 10px black;
+    background-color: $dark-green;
     width: 30px;
     height: 30px;
     font-weight: bold;
@@ -51,8 +49,7 @@
 }
 
 .list-item-info {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
 }
 
 .list-item-title {

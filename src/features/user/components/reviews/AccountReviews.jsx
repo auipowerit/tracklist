@@ -12,10 +12,7 @@ export default function AccountReviews() {
   return (
     <div className="account-page-outlet-container">
       <Header canEdit={canEdit} />
-
-      <div className="account-page-outlet-content">
-        <ReviewsList user={user} />
-      </div>
+      <ReviewsList user={user} />
     </div>
   );
 }

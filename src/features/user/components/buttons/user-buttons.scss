@@ -1,26 +1,27 @@
 @use "src/styles/abstracts" as *;
 
 .follow-btn {
-  display: flex;
-  justify-content: center;
+  @include flexbox(row, center);
+  @include font(0.75, normal, $basic-white);
   border: 2px solid $basic-white;
   border-radius: 0.5em;
-  padding: 0.5em 1em;
-  width: 110px;
+  padding: 0.5em 0;
+  width: 120px;
   height: fit-content;
-  color: $basic-white;
-  font-size: calc(0.75rem + 0.5vw);
 
   &.active {
     border-color: transparent;
     background-color: $basic-green;
   }
+
+  &:hover {
+    color: darkgray;
+  }
 }
 
 .logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
+  color: $basic-gray;
 
   &:hover {
     color: $basic-white;

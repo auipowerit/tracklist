@@ -4,16 +4,14 @@
   display: flex;
   justify-content: center;
   gap: 2em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .tab {
+  @include font(1, bold, $basic-gray);
   border-bottom: 2px solid transparent;
   padding: 0.25em 0;
-  color: $basic-gray;
-  font-weight: bold;
   letter-spacing: 0.05em;
-  font-size: calc(1rem + 0.5vw);
 
   &:hover {
     color: $basic-green;

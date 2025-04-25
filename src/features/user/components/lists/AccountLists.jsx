@@ -23,11 +23,8 @@ export default function AccountLists() {
   return (
     <div className="account-page-outlet-container">
       <Header canEdit={canEdit} />
-
-      <div>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-        <Lists user={user} activeTab={activeTab} />
-      </div>
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Lists user={user} activeTab={activeTab} />
     </div>
   );
 }

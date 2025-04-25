@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/Tabs";
 import LikedMedia from "./LikedMedia";
 import LikedReviews from "./LikedReviews";
+import "./account-likes.scss";
 
 export default function AccountLikes() {
   const { user } = useOutletContext();
@@ -16,26 +17,25 @@ export default function AccountLikes() {
   ];
 
   return (
-    <div className="flex h-full w-full flex-col gap-4">
+    <div className="account-page-outlet-container">
       <Header />
-
-      <div>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-        <LikedContent activeTab={activeTab} user={user} />
-      </div>
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <LikedContent activeTab={activeTab} user={user} />
     </div>
   );
 }
 
 function Header() {
   return (
-    <p className="border-b-1 border-white pb-4 text-2xl text-white">Likes</p>
+    <div className="account-page-header">
+      <p>Likes</p>
+    </div>
   );
 }
 
 function LikedContent({ activeTab, user }) {
   return (
-    <div className="p-4">
+    <div>
       {activeTab === "review" ? (
         <LikedReviews user={user} />
       ) : (

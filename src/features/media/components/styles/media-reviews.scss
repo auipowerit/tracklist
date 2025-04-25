@@ -14,15 +14,6 @@
   margin-left: 1em;
 }
 
-.media-reviews-empty {
-  margin: auto;
-  padding: 4em 0;
-  width: fit-content;
-  color: $basic-gray;
-  font-style: italic;
-  font-size: calc(1rem + 0.5vw);
-}
-
 .media-review-card {
   display: flex;
   flex-direction: column;
@@ -59,16 +50,13 @@
 }
 
 .media-review-date {
-  color: $basic-gray;
-  font-size: calc(0.25rem + 0.5vw);
+  @include font(0.25, normal, $basic-gray);
 }
 
 .media-review-username {
-  font-size: calc(0.5rem + 0.5vw);
-  color: $basic-gray;
+  @include font(0.5, normal, $basic-gray);
 
   span {
-    color: $basic-white;
-    font-weight: bold;
+    @include font(initial, bold, $basic-white);
   }
 }

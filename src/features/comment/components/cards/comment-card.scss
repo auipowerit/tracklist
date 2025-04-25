@@ -1,30 +1,20 @@
 @use "src/styles/abstracts" as *;
 
 .comment-card-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  @include flexbox(flex, column, initial, 1em);
 }
 
 .comment-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  @include flexbox(flex, column, initial, 0.5em);
 }
-
-.comment-user-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+v .comment-user-container {
+  @include flexbox(flex, row, center, 0.5em);
 }
 
 .comment-user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(flex, initial, center, 1em);
+  @include font(0.25, bold);
   cursor: pointer;
-  font-weight: bold;
-  font-size: calc(0.25rem + 0.5vw);
 
   &:hover {
     color: $basic-gray;
@@ -39,16 +29,13 @@
 }
 
 .comment-date {
-  color: $basic-gray;
-  font-size: calc(0.25rem + 0.5vw);
+  @include font(0.25, normal, $basic-gray);
 }
 
 .comment-content {
-  font-size: calc(0.5rem + 0.5vw);
+  @include font(0.5);
 }
 
 .comment-btns {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
+  @include flexbox(flex, initial, center, 0.25em);
 }

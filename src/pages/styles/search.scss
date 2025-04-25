@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   gap: 2em;
-  padding: 1em;
+  padding: 2em 0;
+  width: 100%;
 }
 
 .search-header {
@@ -17,14 +18,11 @@
 }
 
 .searchbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
+  @include font(1);
+  @include flexbox(row, center, center, 1em);
   border-radius: 8px;
   border: 2px solid $basic-white;
   padding: 0.25em 0.75em;
-  font-size: calc(1rem + 0.5vw);
 
   input {
     outline: none;
@@ -40,16 +38,11 @@
   width: fit-content;
 }
 
-.search-empty {
-  margin: auto;
-  width: fit-content;
-  padding: 5em 0;
-
-  p {
-    font-size: calc(1.5rem + 0.5vw);
-    font-style: italic;
-    color: $basic-gray;
-  }
+.user-results {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  max-width: 100%;
 }
 
 .media-results {

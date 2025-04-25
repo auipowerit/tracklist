@@ -56,7 +56,7 @@ export default function Navbar() {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `navlink nav-logo ${isActive && "navlink-active"}`
+            `navlink nav-logo ${isActive && "active"}`
           }
         >
           <p>TrackList</p>
@@ -64,18 +64,14 @@ export default function Navbar() {
 
         <NavLink
           to="/search"
-          className={({ isActive }) =>
-            `navlink ${isActive && "navlink-active"}`
-          }
+          className={({ isActive }) => `navlink ${isActive && "active"}`}
         >
           <FontAwesomeIcon icon={faSearch} />
         </NavLink>
         <div className="relative">
           <NavLink
             to="/messaging"
-            className={({ isActive }) =>
-              `navlink ${isActive && "navlink-active"}`
-            }
+            className={({ isActive }) => `navlink ${isActive && "active"}`}
           >
             <FontAwesomeIcon icon={faEnvelope} />
           </NavLink>
@@ -89,7 +85,7 @@ export default function Navbar() {
           />
           <div
             className={`nav-profile-dropdown ${
-              showDropdown && "nav-profile-active"
+              showDropdown && "active"
             }`}
           >
             <DropdownMenu

@@ -1,0 +1,11 @@
+@use "src/styles/abstracts" as *;
+
+.comment-btn {
+  @include flexbox(row, initial, center, 0.25em);
+  @include font(0.75);
+  gap: 0.25em;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}

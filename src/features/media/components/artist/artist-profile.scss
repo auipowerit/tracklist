@@ -31,15 +31,6 @@
   height: 100%;
 }
 
-.discography-empty {
-  margin: auto;
-  padding: 4em 0;
-  width: fit-content;
-  color: $basic-gray;
-  font-style: italic;
-  font-size: calc(1rem + 0.5vw);
-}
-
 .load-more {
   display: flex;
   justify-content: center;
@@ -47,13 +38,11 @@
 }
 
 .load-more-btn {
+  @include font(0.75, bold, $basic-white);
   margin: auto;
   border-radius: 6px;
   background-color: $basic-green;
   padding: 0.5em 1em;
   width: fit-content;
   height: fit-content;
-  color: $basic-white;
-  font-weight: bold;
-  font-size: calc(0.75rem + 0.5vw);
 }

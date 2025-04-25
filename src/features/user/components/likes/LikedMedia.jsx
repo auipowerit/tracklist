@@ -36,10 +36,10 @@ export default function LikedMedia({ user, activeTab }) {
     <div>
       {media &&
         (media.length > 0 ? (
-          <div className="m-auto grid w-fit grid-cols-4 gap-6">
+          <div className="account-likes-media">
             {media.map((entry) => {
               return (
-                <Link key={entry.id} to={entry.titleLink} className="w-fit">
+                <Link key={entry.id} to={entry.titleLink}>
                   <ListItemCard
                     title={entry.title}
                     subtitle={entry.subtitle}
@@ -50,7 +50,7 @@ export default function LikedMedia({ user, activeTab }) {
             })}
           </div>
         ) : (
-          <p className="m-20 text-center text-2xl text-gray-300 italic">
+          <p className="empty-message">
             {`There are no liked ${activeTab}s yet!`}
           </p>
         ))}

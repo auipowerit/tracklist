@@ -9,21 +9,20 @@
 }
 
 .account-profile-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  font-size: calc(0.5rem + 0.5vw);
+  @include flexbox(column, $gap: 0.5em);
+  @include font(0.5);
+}
+
+.account-profile-content {
+  @include flexbox(row, initial, center, 1em);
 }
 
 .account-profile-user {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
 }
 
 .account-profile-displayname {
-  font-weight: bold;
-  font-size: calc(0.75rem + 0.5vw);
+  @include font(0.75, bold);
 }
 
 .account-profile-username {
@@ -31,16 +30,12 @@
 }
 
 .account-profile-date {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
+  @include flexbox(row, initial, center, 0.25em);
   color: $basic-gray;
 }
 
 .account-profile-friends {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
 
   a {
     color: $basic-gray;
@@ -50,8 +45,7 @@
     }
 
     span {
-      color: $basic-white;
-      font-weight: bold;
+      @include font(initial, bold, $basic-white);
     }
   }
 }

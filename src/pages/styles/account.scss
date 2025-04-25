@@ -1,30 +1,23 @@
 @use "src/styles/abstracts" as *;
 
 .account-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2em;
+  @include flexbox(column, initial, center, 2em);
   margin: 0 auto 5em auto;
   width: 100%;
   max-width: 1200px;
 }
 
 .account-page-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
+  @include font(0.5, normal);
   background-color: $darker-green;
   padding: 0.5em 2em;
   width: 100%;
-  color: $basic-gray;
-  font-size: calc(0.5rem + 0.5vw);
 }
 
 .account-nav-profile-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
+  color: $basic-gray;
 
   &:hover,
   &.active {
@@ -40,12 +33,12 @@
 }
 
 .account-page-nav-links-container {
-  display: flex;
-  align-items: center;
-  gap: 1em;
+  @include flexbox(row, initial, center, 1em);
 }
 
 .account-page-nav-link {
+  color: $basic-gray;
+
   &:hover,
   &.active {
     color: $basic-white;
@@ -59,40 +52,27 @@
 }
 
 .account-page-outlet-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  @include flexbox(column, initial, initial, 2em);
   height: 100%;
 }
 
 .account-page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
+  @include flexbox(row, space-between, end);
   border-bottom: 1px solid $basic-white;
   padding-bottom: 0.5em;
 
   & > p {
-    color: $basic-white;
-    font-size: calc(1rem + 0.5vw);
+    @include font(1, normal, $basic-white);
   }
 }
 
 .account-page-edit-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
+  @include font(0.5);
   border: 2px solid $basic-white;
   padding: 0.25em 0.75em;
-  font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
     color: $basic-gray;
   }
-}
-
-.account-page-outlet-content {
-  display: flex;
-  align-items: center;
-  gap: 1em;
 }

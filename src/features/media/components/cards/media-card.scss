@@ -36,18 +36,11 @@
   overflow: hidden;
   padding: 0 0.5em;
   text-align: center;
-  mask-image: linear-gradient(
-    to left,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
+  @include gradient(left);
 }
 
 .media-card-title {
-  font-weight: bold;
-  font-size: calc(0.5rem + 0.5vw);
+  @include font(0.5, bold);
   text-wrap: nowrap;
 }
 

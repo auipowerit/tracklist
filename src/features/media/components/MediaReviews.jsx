@@ -37,7 +37,7 @@ function Reviews({ reviews }) {
             return <MediaReviewCard key={review.id} review={review} />;
           })
         ) : (
-          <p className="media-reviews-empty">No reviews found!</p>
+          <p className="empty-message">No reviews found!</p>
         ))}
     </div>
   );
