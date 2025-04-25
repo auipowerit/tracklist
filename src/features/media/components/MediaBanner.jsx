@@ -36,18 +36,11 @@ function MediaBanner({ media, category }) {
         image={data.image}
         spotifyURL={media.external_urls.spotify}
       />
-      <div className="media-banner-info">
-        <div className="media-banner-content">
-          <Title name={data.title} subtitle={data.subtitle} />
-          <Rating mediaId={media.id} rating={rating} />
-        </div>
-
-        <BannerButtons
-          mediaId={media.id}
-          name={data.title}
-          category={category}
-        />
+      <div className="media-banner-content">
+        <Title name={data.title} subtitle={data.subtitle} />
+        <Rating mediaId={media.id} rating={rating} />
       </div>
+      <BannerButtons mediaId={media.id} name={data.title} category={category} />
     </div>
   );
 }

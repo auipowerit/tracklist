@@ -35,19 +35,18 @@ function TrackList({ artistId, albumId, tracks }) {
   return (
     <div className="tracklist-container">
       {tracks && tracks.length > 0 && (
-        <ul className="tracklist">
+        <div className="tracklist">
           {tracks.map((track) => {
             return (
-              <li key={track.id}>
-                <TrackCard
-                  track={track}
-                  artistId={artistId}
-                  albumId={albumId}
-                />
-              </li>
+              <TrackCard
+                key={track.id}
+                track={track}
+                artistId={artistId}
+                albumId={albumId}
+              />
             );
           })}
-        </ul>
+        </div>
       )}
     </div>
   );

@@ -5,7 +5,9 @@
   align-items: center;
   margin: 3em 6em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  height: 300px;
+  width: 100%;
+  max-width: 800px;
+  height: fit-content;
   text-align: center;
 }
 
@@ -13,42 +15,37 @@
   transition: all 0.2s;
   cursor: pointer;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  width: 40%;
+  max-width: 300px;
 
   &:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
   }
 
   img {
-    width: 300px;
-    height: 300px;
     object-fit: cover;
   }
 }
 
-.media-banner-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: fit-content;
-  height: 100%;
-}
-
 .media-banner-content {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1em 0;
   height: 100%;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .media-banner-title-container {
   display: flex;
   flex-direction: column;
   gap: 0.25em;
+  padding: 0 0.5em;
+  width: 100%;
+  max-width: 400px;
 }
 
 .media-banner-title {
@@ -59,8 +56,8 @@
     black 95%,
     transparent 100%
   );
-  padding: 0 0.5em;
-  width: 400px;
+  padding: 0 1em;
+  width: 100%;
   overflow: hidden;
 
   p {
@@ -95,20 +92,20 @@
 
 .media-rating-bar-container {
   display: flex;
-  height: 50px;
   align-items: end;
   gap: 2px;
+  height: 50px;
 }
 
 .media-rating-bar {
   position: relative;
-  min-height: 4px;
-  width: 20px;
+  transition: all 0.2s;
   cursor: pointer;
+  margin: 5px 0;
   border-radius: 1px 1px 0 0;
   background-color: $basic-gray;
-  transition: all 0.2s;
-  margin: 5px 0;
+  width: 20px;
+  min-height: 4px;
   font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
@@ -119,7 +116,18 @@
 .media-rating-bar-fill {
   position: absolute;
   top: -10px;
+  right: -2px;
   bottom: 0;
   left: -2px;
-  right: -2px;
+}
+
+.media-banner-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0 0.75em;
+  height: 100%;
+  font-size: calc(0.75rem + 0.5vw);
 }

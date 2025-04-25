@@ -4,7 +4,6 @@ import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
-import "./media-buttons.scss";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
@@ -24,7 +23,7 @@ export default function BannerButtons({ mediaId, name, category }) {
   }, []);
 
   return (
-    <div className="banner-buttons">
+    <div className="media-banner-buttons">
       <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}
