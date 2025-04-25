@@ -1,0 +1,71 @@
+@use "src/styles/abstracts" as *;
+
+.list-item-card {
+  display: flex;
+  border: 1px solid transparent;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:hover {
+    border-color: $basic-white;
+  }
+
+  &.horizontal {
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  &.vertical {
+    flex-direction: row;
+    align-items: start;
+    gap: 1em;
+  }
+}
+
+.list-item-image {
+  display: flex;
+  position: relative;
+  gap: 0.5em;
+
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+    background-color: $basic-green;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+
+    &.horizontal {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+.list-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item-title {
+  font-weight: bold;
+  text-wrap: wrap;
+
+  &.horizontal {
+    text-align: center;
+  }
+}
+
+.list-item-subtitle {
+  color: $basic-gray;
+  text-align: center;
+  text-wrap: wrap;
+}

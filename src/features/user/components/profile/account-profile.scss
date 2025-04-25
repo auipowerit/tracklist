@@ -1,0 +1,57 @@
+@use "src/styles/abstracts" as *;
+
+.account-profile-img {
+  border-radius: 100%;
+  width: 100%;
+  max-width: 125px;
+  max-height: 125px;
+  object-fit: cover;
+}
+
+.account-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: calc(0.5rem + 0.5vw);
+}
+
+.account-profile-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.account-profile-displayname {
+  font-weight: bold;
+  font-size: calc(0.75rem + 0.5vw);
+}
+
+.account-profile-username {
+  color: $basic-gray;
+}
+
+.account-profile-date {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  color: $basic-gray;
+}
+
+.account-profile-friends {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  a {
+    color: $basic-gray;
+
+    &:hover {
+      color: $basic-white;
+    }
+
+    span {
+      color: $basic-white;
+      font-weight: bold;
+    }
+  }
+}

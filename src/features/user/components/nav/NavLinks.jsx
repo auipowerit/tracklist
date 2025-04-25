@@ -15,12 +15,12 @@ export default function NavLinks({ username }) {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="account-page-nav-links-container">
       {children.map((child) => (
         <Link
           key={child.id}
           to={`/users/${username}/${child.id}`}
-          className={`flex items-center gap-2 hover:text-white ${isActive(child.id) && "text-white"}`}
+          className={`account-page-nav-link ${isActive(child.id) && "active"}`}
         >
           {child.title}
         </Link>

@@ -1,0 +1,27 @@
+@use "src/styles/abstracts" as *;
+
+.account-lists-container {
+  overflow-y: auto;
+}
+
+.account-lists {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.account-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  &:hover {
+    background-color: $darker-green;
+  }
+
+  & > p {
+    font-size: calc(0.5rem + 0.5vw);
+    color: $basic-gray;
+  }
+}

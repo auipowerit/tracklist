@@ -4,7 +4,6 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../../../shared/components/Modal";
 import ReviewForm from "../forms/ReviewForm";
-import { Tooltip } from "react-tooltip";
 import "./review-buttons.scss";
 
 export default function AddReviewButton(props) {

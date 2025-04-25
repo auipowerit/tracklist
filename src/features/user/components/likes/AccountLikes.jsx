@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/Tabs";
-import LikedMedia from "./lists/LikedMedia";
-import LikedReviews from "./lists/LikedReviews";
+import LikedMedia from "./LikedMedia";
+import LikedReviews from "./LikedReviews";
 
 export default function AccountLikes() {
   const { user } = useOutletContext();

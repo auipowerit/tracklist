@@ -10,11 +10,9 @@
 .add-review-btn {
   display: flex;
   align-items: center;
-  gap: 0.25em;
-  cursor: pointer;
+  gap: 0.5em;
   border: 2px solid $basic-white;
-  border-radius: 6px;
-  padding: 0.5em 0.75em;
+  padding: 0.25em 0.75em;
   font-size: calc(0.5rem + 0.5vw);
 
   &:hover {

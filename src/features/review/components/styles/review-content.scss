@@ -26,7 +26,7 @@
 .review-user-date {
   color: $basic-gray;
   font-weight: 400;
-  font-size: calc(0.25em + 0.5vw);
+  font-size: calc(0.25rem + 0.5vw);
 }
 
 .review-media-container {
@@ -59,18 +59,18 @@
 
   p {
     font-weight: bold;
-    font-size: calc(0.75em + 0.5vw);
+    font-size: calc(0.75rem + 0.5vw);
     white-space: nowrap;
   }
 }
 
 .review-subtitle {
   font-weight: 400;
-  font-size: calc(0.75em + 0.5vw);
+  font-size: calc(0.75rem + 0.5vw);
 }
 
 .review-text {
-  font-size: calc(0.5em + 0.5vw);
+  font-size: calc(0.5rem + 0.5vw);
   overflow-wrap: break-word;
 }
 
@@ -79,7 +79,7 @@
   padding: 0.5em 0;
   color: blue;
   font-weight: 600;
-  font-size: calc(0.5em + 0.5vw);
+  font-size: calc(0.5rem + 0.5vw);
 
   &:hover {
     color: $basic-gray;

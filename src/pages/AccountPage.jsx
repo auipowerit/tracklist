@@ -11,6 +11,7 @@ import ChatButton from "src/features/chat/components/ChatButton";
 import NavLinks from "src/features/user/components/nav/NavLinks";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import LogoutButton from "src/features/user/components/buttons/LogoutButton";
+import "./styles/account.scss";
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -51,14 +52,14 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="mx-auto my-4 flex w-full flex-col items-center gap-4">
-      <div className="flex w-3/5 items-center justify-between bg-green-700/30 px-6 py-2 text-lg text-gray-400">
+    <div className="account-page-container">
+      <div className="account-page-nav">
         <Profile user={user} />
         <NavLinks username={user.username} />
         {canEdit ? <LogoutButton /> : <ChatButton username={user.username} />}
       </div>
 
-      <div className="m-auto my-6 w-3/5">
+      <div className="account-page-outlet">
         <Outlet context={{ user, canEdit }} />
       </div>
     </div>
@@ -76,12 +77,9 @@ function Profile({ user }) {
   return (
     <Link
       to={`/users/${user.username}`}
-      className={`flex items-center gap-2 hover:text-white ${isHomePage && "text-white"}`}
+      className={`account-nav-profile-link ${isHomePage && "active"}`}
     >
-      <img
-        src={user.profileUrl}
-        className="h-8 w-8 rounded-full object-cover"
-      />
+      <img src={user.profileUrl} />
       <p>{user.username}</p>
     </Link>
   );

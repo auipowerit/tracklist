@@ -64,14 +64,14 @@
     margin: auto;
     width: fit-content;
     font-weight: bold;
-    font-size: calc(1.25em + 0.5vw);
+    font-size: calc(1.25rem + 0.5vw);
     white-space: nowrap;
   }
 }
 
 .media-banner-subtitle {
   color: $basic-gray;
-  font-size: calc(0.75em + 0.5vw);
+  font-size: calc(0.75rem + 0.5vw);
 }
 
 .media-banner-rating {

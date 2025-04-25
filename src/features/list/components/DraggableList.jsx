@@ -6,7 +6,7 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import DraggableItem from "../cards/DraggableItem";
+import DraggableItem from "src/features/list/components/cards/DraggableItem";
 
 export default function DraggableList({ items, setItems, list, orientation }) {
   const { globalUser } = useAuthContext();

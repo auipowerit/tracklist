@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/Tabs";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import ListCard from "src/features/list/components/cards/ListCard";
-import ListButton from "src/features/list/components/buttons/ListButton";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import ListButton from "src/features/list/components/buttons/ListButton";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import "./account-lists.scss";
 
 export default function AccountLists() {
   const { user, canEdit } = useOutletContext();
@@ -20,7 +21,7 @@ export default function AccountLists() {
   ];
 
   return (
-    <div className="flex h-full w-full flex-col gap-4">
+    <div className="account-page-outlet-container">
       <Header canEdit={canEdit} />
 
       <div>
@@ -35,8 +36,8 @@ function Header({ canEdit }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between border-b-1 border-white pb-4 align-middle">
-      <p className="text-2xl text-white">Lists</p>
+    <div className="account-page-header">
+      <p>Lists</p>
       {canEdit && (
         <ListButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       )}
@@ -108,9 +109,9 @@ function Lists({ user, activeTab }) {
   }
 
   return (
-    <div className="overflow-y-scroll pt-6">
+    <div className="account-lists-container">
       {lists && lists.length > 0 ? (
-        <ul className="flex w-full flex-col gap-4">
+        <ul className="account-lists">
           {lists.map((list, index) => {
             return (
               <li key={list.id}>
@@ -123,9 +124,7 @@ function Lists({ user, activeTab }) {
           })}
         </ul>
       ) : (
-        <p className="m-20 text-center text-2xl text-gray-300 italic">
-          There are no lists yet!
-        </p>
+        <p className="empty-message">There are no lists yet!</p>
       )}
     </div>
   );
@@ -151,8 +150,8 @@ function ListItem({ item, image }) {
   }, [item]);
 
   return (
-    <Link to={link} className="flex flex-col gap-2">
-      {listUser && <p className="text-gray-400">{`Created by ${listUser}`}</p>}
+    <Link to={link} className="account-list-item">
+      {listUser && <p>{`Created by ${listUser}`}</p>}
       <ListCard
         id={item.id}
         image={image}

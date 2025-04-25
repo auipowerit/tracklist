@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/Tabs";
-import FriendsList from "./lists/FriendsList";
+import FriendsList from "./FriendsList";
 
 export default function AccountFriends() {
   const { user } = useOutletContext();

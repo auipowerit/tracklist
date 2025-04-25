@@ -1,29 +1,27 @@
+import "./list-item-card.scss";
+
 export default function ListItemCard(props) {
   const { title, subtitle, image, index, orientation = 0 } = props;
 
   return (
     <div
-      className={`flex border-1 border-transparent hover:border-white ${orientation === 0 ? "flex-col gap-1" : "items-start gap-4 text-2xl"}`}
+      className={`list-item-card ${orientation === 0 ? "horizontal" : "vertical"}`}
     >
-      <div className="relative flex items-start gap-2">
+      <div className="list-item-image">
         {index && (
-          <p
-            className={`flex h-9 w-9 items-center justify-center bg-green-900 p-2 text-xl font-bold shadow-md shadow-black/75 ${orientation === 0 && "absolute bottom-0 left-0"}`}
-          >
-            {index}
-          </p>
+          <p className={` ${orientation === 0 && "horizontal"}`}>{index}</p>
         )}
-        <img src={image} className="h-48 w-48 object-cover" />
+        <img src={image} />
       </div>
 
-      <div className="flex flex-col">
+      <div className="list-item-info">
         <p
-          className={`font-bold text-wrap ${orientation === 0 && "text-center"}`}
+          className={`list-item-title ${orientation === 0 && "horizontal"}`}
         >
           {title}
         </p>
         {subtitle && (
-          <p className="text-center text-wrap text-gray-400">{subtitle}</p>
+          <p className="list-item-subtitle">{subtitle}</p>
         )}
       </div>
     </div>

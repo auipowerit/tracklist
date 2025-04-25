@@ -1,0 +1,34 @@
+@use "src/styles/abstracts" as *;
+
+.draggable-item {
+  position: relative;
+}
+
+.draggable-item-listener {
+  opacity: 0.5;
+  cursor: grab;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.draggable-item-delete-btn {
+  display: flex;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: $basic-red;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:hover {
+    opacity: 0.75;
+  }
+}

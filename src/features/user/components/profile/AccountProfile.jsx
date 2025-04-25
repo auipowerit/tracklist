@@ -8,7 +8,8 @@ import { faCalendar, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import FollowButton from "src/features/user/components/buttons/FollowButton";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import AccountForm from "./forms/AccountForm";
+import AccountForm from "../forms/AccountForm";
+import "./account-profile.scss";
 
 export default function AccountProfile() {
   const { user, canEdit } = useOutletContext();
@@ -68,7 +69,7 @@ export default function AccountProfile() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-4">
+    <div className="account-page-outlet-container">
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <AccountForm
           isModalOpen={isModalOpen}
@@ -78,16 +79,14 @@ export default function AccountProfile() {
 
       <Header user={user} setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
 
-      <div className="flex w-full items-start justify-between">
-        <div className="flex items-center gap-4">
-          {user.spotifyUrl ? (
-            <SpotifyImage user={user} />
-          ) : (
-            <ProfileImage user={user} />
-          )}
+      <div className="account-page-outlet-content">
+        {user.spotifyUrl ? (
+          <SpotifyImage user={user} />
+        ) : (
+          <ProfileImage user={user} />
+        )}
 
-          <ProfileDetails user={user} />
-        </div>
+        <ProfileDetails user={user} />
       </div>
     </div>
   );
@@ -95,8 +94,8 @@ export default function AccountProfile() {
 
 function Header({ user, setIsModalOpen, canEdit }) {
   return (
-    <div className="flex items-center justify-between border-b-1 border-white pb-4 align-middle">
-      <p className="text-2xl text-white">Profile</p>
+    <div className="account-page-header">
+      <p>Profile</p>
       {canEdit ? (
         <EditProfileButton setIsModalOpen={setIsModalOpen} />
       ) : (
@@ -114,54 +113,38 @@ function SpotifyImage({ user }) {
       data-tooltip-id="profile-tooltip"
       data-tooltip-content="Open Spotify Profile"
     >
-      <img
-        src={user.profileUrl}
-        className="h-36 w-36 rounded-full object-cover"
-      />
+      <img src={user.profileUrl} className="account-profile-img" />
       <Tooltip id="profile-tooltip" place="top" type="dark" effect="float" />
     </Link>
   );
 }
 
 function ProfileImage({ user }) {
-  return (
-    <img
-      src={user.profileUrl}
-      className="h-36 w-36 rounded-full object-cover"
-    />
-  );
+  return <img src={user.profileUrl} className="account-profile-img" />;
 }
 
 function ProfileDetails({ user }) {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
-        <p className="text-xl font-bold">{user.displayname}</p>
-        <p className="text-gray-400">@{user.username}</p>
+    <div className="account-profile-details">
+      <div className="account-profile-user">
+        <p className="account-profile-displayname">{user.displayname}</p>
+        <p className="account-profile-username">@{user.username}</p>
       </div>
 
-      <p>{user.bio}</p>
+      <p className="account-profile-bio">{user.bio}</p>
 
-      <div className="flex items-center gap-1 text-gray-400">
-        <FontAwesomeIcon icon={faCalendar} className="text-sm" />
+      <div className="account-profile-date">
+        <FontAwesomeIcon icon={faCalendar} />
         <p>Joined on {formatDateMDYLong(user.createdAt.toDate())}</p>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <p className="text-gray-400">
-            <span className="font-bold text-white">
-              {user.followers.length}
-            </span>{" "}
-            followers
-          </p>
-          <p className="text-gray-400">
-            <span className="font-bold text-white">
-              {user.followers.length}
-            </span>{" "}
-            following
-          </p>
-        </div>
+      <div className="account-profile-friends">
+        <Link to={`/users/${user.username}/friends`}>
+          <span>{user.followers.length}</span> followers
+        </Link>
+        <Link to={`/users/${user.username}/friends`}>
+          <span>{user.followers.length}</span> following
+        </Link>
       </div>
     </div>
   );
@@ -171,7 +154,7 @@ function EditProfileButton({ setIsModalOpen }) {
   return (
     <button
       onClick={() => setIsModalOpen(true)}
-      className="flex items-center gap-2 border-2 border-white px-3 py-1 text-lg hover:text-gray-400"
+      className="account-page-edit-btn"
     >
       <FontAwesomeIcon icon={faPen} />
       <p>Edit</p>

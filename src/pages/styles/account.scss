@@ -1,0 +1,98 @@
+@use "src/styles/abstracts" as *;
+
+.account-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  margin: 0 auto 5em auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.account-page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $darker-green;
+  padding: 0.5em 2em;
+  width: 100%;
+  color: $basic-gray;
+  font-size: calc(0.5rem + 0.5vw);
+}
+
+.account-nav-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  &:hover,
+  &.active {
+    color: $basic-white;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+
+.account-page-nav-links-container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.account-page-nav-link {
+  &:hover,
+  &.active {
+    color: $basic-white;
+  }
+}
+
+.account-page-outlet {
+  margin: auto;
+  width: 100%;
+  padding: 0 1em;
+}
+
+.account-page-outlet-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  height: 100%;
+}
+
+.account-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  border-bottom: 1px solid $basic-white;
+  padding-bottom: 0.5em;
+
+  & > p {
+    color: $basic-white;
+    font-size: calc(1rem + 0.5vw);
+  }
+}
+
+.account-page-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  border: 2px solid $basic-white;
+  padding: 0.25em 0.75em;
+  font-size: calc(0.5rem + 0.5vw);
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.account-page-outlet-content {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}

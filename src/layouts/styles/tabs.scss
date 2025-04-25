@@ -3,14 +3,16 @@
 .tabs-container {
   display: flex;
   justify-content: center;
-  gap: 1em;
+  gap: 2em;
+  margin-bottom: 2em;
 }
 
 .tab {
   border-bottom: 2px solid transparent;
-  padding: 0.5em 0.75em;
+  padding: 0.25em 0;
   color: $basic-gray;
   font-weight: bold;
+  letter-spacing: 0.05em;
   font-size: calc(1rem + 0.5vw);
 
   &:hover {

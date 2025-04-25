@@ -1,11 +1,42 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
+import "./account-reviews.scss";
 
-export default function ReviewsList({ user }) {
-  const { globalUser } = useAuthContext();
+export default function AccountReviews() {
+  const { user, canEdit } = useOutletContext();
+
+  return (
+    <div className="account-page-outlet-container">
+      <Header canEdit={canEdit} />
+
+      <div className="account-page-outlet-content">
+        <ReviewsList user={user} />
+      </div>
+    </div>
+  );
+}
+
+function Header({ canEdit }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <div className="account-page-header">
+      <p>Reviews</p>
+      {canEdit && (
+        <ReviewButton
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
+    </div>
+  );
+}
+
+function ReviewsList({ user }) {
   const { getReviewsByUserId } = useReviewContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,15 +66,13 @@ export default function ReviewsList({ user }) {
   return (
     reviews &&
     (reviews.length > 0 ? (
-      <ul className="flex w-full flex-col gap-4">
+      <ul className="account-reviews-list">
         {reviews.map((review) => {
           return <ReviewCard key={review.id} review={review} />;
         })}
       </ul>
     ) : (
-      <p className="m-20 text-center text-2xl text-gray-300 italic">
-        There are no reviews yet!
-      </p>
+      <p className="empty-message">There are no reviews yet!</p>
     ))
   );
 }
