@@ -33,6 +33,7 @@ export default function ChatPage() {
         setMounted(true);
         return;
       }
+      
       setActiveChatId("-1");
       setActiveChatUser({});
     };

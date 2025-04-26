@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { db } from "src/config/firebase";
 import { formatDateDMD } from "src/utils/date";
 import { doc, onSnapshot } from "firebase/firestore";
-import { useChatContext } from "src/features/chat/context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useChatContext } from "src/features/chat/context/ChatContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -14,23 +14,19 @@ import ChatInput from "./ChatInput";
 
 export default function ChatWindow() {
   const { globalUser } = useAuthContext();
-  const { activeChatId, activeChatUser } = useChatContext();
+  const { activeChatId, activeChatUser, readMessage } = useChatContext();
   const { getReviewById } = useReviewContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetchMessages();
-  }, [activeChatId, activeChatUser]);
-
-  async function fetchMessages() {
     if (!activeChatId || activeChatId === "-1") {
       setMessages([]);
       return;
     }
 
-    onSnapshot(
+    const unsubscribe = onSnapshot(
       doc(db, "chats", activeChatId),
       async (doc) => {
         const messages = doc
@@ -47,7 +43,7 @@ export default function ChatWindow() {
 
             if (message.category === "review") {
               const review = await getReviewById(message.text);
-              const mediaData = getMediaLinks(review.media);
+              const mediaData = getMediaLinks(review?.media);
 
               return {
                 chatId: activeChatId,
@@ -83,12 +79,15 @@ export default function ChatWindow() {
         );
 
         setMessages(messageData);
+        await readMessage(activeChatId, globalUser.uid);
       },
       (error) => {
         console.log(error);
       },
     );
-  }
+
+    return () => unsubscribe();
+  }, [activeChatId, activeChatUser]);
 
   return (
     <div className="chatwindow">
@@ -199,14 +198,20 @@ function Header() {
 
 function Messages({ messages }) {
   const chatRef = useRef();
+  const prevMessagLength = useRef(messages.length);
 
   useLayoutEffect(() => {
+    // Scroll to bottom if new message comes in
+    if (prevMessagLength.current >= messages.length) return;
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
+
+    prevMessagLength.current = messages.length;
   }, [messages]);
 
   return (
     <div ref={chatRef} className="messages">
       {messages.map((message, index) => {
+        if (!message) return null;
         return (
           <MessageCard
             key={message.id}
@@ -330,6 +335,10 @@ function MessageUsername({ message }) {
 
 function MessageContent({ message, category }) {
   if (category === "review") {
+    if (!message.review) {
+      return <p className="message-text message-error">Review not available</p>;
+    }
+
     return (
       <Link
         to={`/reviews/${message.review.id}`}
@@ -345,6 +354,10 @@ function MessageContent({ message, category }) {
   }
 
   if (category !== "") {
+    if (!message.media) {
+      return <p className="message-text message-error">Media not available</p>;
+    }
+
     return (
       <Link to={message.mediaData.titleLink} className="message-content-media">
         <img src={message.mediaData.image} />
@@ -352,6 +365,10 @@ function MessageContent({ message, category }) {
         <p className="subtitle">{message.mediaData.subtitle}</p>
       </Link>
     );
+  }
+
+  if (message.isDeleted) {
+    return <p className="message-text message-error">{message.text}</p>;
   }
 
   return <p className="message-text">{message.text}</p>;

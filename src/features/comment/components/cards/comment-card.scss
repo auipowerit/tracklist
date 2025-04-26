@@ -1,19 +1,18 @@
 @use "src/styles/abstracts" as *;
 
 .comment-card-container {
-  @include flexbox(flex, column, initial, 1em);
+  @include flexbox(column, $gap: 0.5em);
 }
-
 .comment-card {
-  @include flexbox(flex, column, initial, 0.5em);
+  @include flexbox(column, initial, initial, 0.5em);
 }
-v .comment-user-container {
-  @include flexbox(flex, row, center, 0.5em);
+.comment-user-container {
+  @include flexbox(row, initial, center, 0.5em);
 }
 
 .comment-user-info {
-  @include flexbox(flex, initial, center, 1em);
-  @include font(0.25, bold);
+  @include flexbox(row, initial, center, 0.5em);
+  @include font(0.5, bold);
   cursor: pointer;
 
   &:hover {
@@ -29,13 +28,13 @@ v .comment-user-container {
 }
 
 .comment-date {
-  @include font(0.25, normal, $basic-gray);
+  @include font(0.5, normal, $basic-gray);
 }
 
 .comment-content {
-  @include font(0.5);
+  @include font(0.75);
 }
 
 .comment-btns {
-  @include flexbox(flex, initial, center, 0.25em);
+  @include flexbox(row, initial, center, 0.25em);
 }

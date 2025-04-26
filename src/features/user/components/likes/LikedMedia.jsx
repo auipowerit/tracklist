@@ -26,7 +26,11 @@ export default function LikedMedia({ user, activeTab }) {
           }),
       ).then((values) => values.filter(Boolean));
 
-      setMedia(fetchedMedia);
+      const sortedMedia = fetchedMedia
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      setMedia(sortedMedia);
     };
 
     fetchMedia();

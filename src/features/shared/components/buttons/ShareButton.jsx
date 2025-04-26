@@ -1,4 +1,3 @@
-import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import Modal from "src/features/shared/components/Modal";
 import { faShare } from "@fortawesome/free-solid-svg-icons";

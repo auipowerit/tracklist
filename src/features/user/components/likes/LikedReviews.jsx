@@ -18,7 +18,11 @@ export default function LikedReviews({ user }) {
           }),
       ).then((values) => values.filter(Boolean));
 
-      setReviews(fetchedReviews);
+      const sortedReviews = fetchedReviews
+        .slice()
+        .sort((a, b) => b.createdAt - a.createdAt);
+
+      setReviews(sortedReviews);
     };
 
     fetchReviews();

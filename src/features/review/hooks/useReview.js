@@ -56,7 +56,6 @@ export function useReview() {
         reviewsRef,
         where("createdAt", ">", earliestDate),
         orderBy("likes", "desc"),
-        orderBy("dislikes", "asc"),
         orderBy("createdAt", "desc"),
         limit(20),
       );
@@ -241,7 +240,6 @@ export function useReview() {
 
       if (reviewDoc.exists()) {
         const likes = reviewDoc.data().likes;
-        const dislikes = reviewDoc.data().dislikes;
 
         // User already liked review, remove like
         if (likes.includes(userId)) {
@@ -249,51 +247,9 @@ export function useReview() {
             likes: arrayRemove(userId),
           });
         } else {
-          // User disliked review, remove dislike
-          if (dislikes.includes(userId)) {
-            await updateDoc(reviewRef, {
-              dislikes: arrayRemove(userId),
-            });
-          }
-
           // Add user ID to likes array
           await updateDoc(reviewRef, {
             likes: arrayUnion(userId),
-          });
-        }
-
-        return (await getDoc(reviewRef)).data();
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  async function dislikeReview(reviewId, userId) {
-    try {
-      const reviewRef = doc(db, "reviews", reviewId);
-      const reviewDoc = await getDoc(reviewRef);
-
-      if (reviewDoc.exists()) {
-        const dislikes = reviewDoc.data().dislikes;
-        const likes = reviewDoc.data().likes;
-
-        // User already disliked review, remove dislike
-        if (dislikes.includes(userId)) {
-          await updateDoc(reviewRef, {
-            dislikes: arrayRemove(userId),
-          });
-        } else {
-          // User liked review, remove like
-          if (likes.includes(userId)) {
-            await updateDoc(reviewRef, {
-              likes: arrayRemove(userId),
-            });
-          }
-
-          // Add user ID to dislikes array
-          await updateDoc(reviewRef, {
-            dislikes: arrayUnion(userId),
           });
         }
 
@@ -340,7 +296,6 @@ export function useReview() {
     addReview,
     deleteReview,
     likeReview,
-    dislikeReview,
     deleteReviewComment,
   };
 }

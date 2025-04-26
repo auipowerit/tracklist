@@ -5,17 +5,12 @@
 }
 
 .account-lists {
-  display: flex;
+  @include flexbox(column, $gap: 2em);
   width: 100%;
-  flex-direction: column;
-  gap: 1em;
 }
 
 .account-list-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  padding-bottom: 1em;
+  @include flexbox(column);
   border-bottom: 1px solid $basic-gray;
 
   &:hover {

@@ -19,6 +19,8 @@ button {
   margin: auto;
   padding: 4em 0;
   width: fit-content;
+  max-width: 500px;
+  text-align: center;
   color: gray;
   font-style: italic;
   font-size: calc(1rem + 0.5vw);

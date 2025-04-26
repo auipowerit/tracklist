@@ -151,10 +151,8 @@ function ListItem({ item, image }) {
       {listUser && <p>{`Created by ${listUser}`}</p>}
       <ListCard
         id={item.id}
+        list={item}
         image={image}
-        name={item.name}
-        length={item.media.length}
-        description={item.description}
       />
     </Link>
   );

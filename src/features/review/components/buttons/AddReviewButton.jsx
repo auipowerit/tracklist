@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../../../shared/components/Modal";
@@ -40,7 +40,7 @@ export default function AddReviewButton(props) {
 
       {showIcon ? (
         <button onClick={handleClick} className="review-btn">
-          <FontAwesomeIcon icon={faPencil} />
+          <FontAwesomeIcon icon={faPenToSquare} />
         </button>
       ) : (
         <button

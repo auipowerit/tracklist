@@ -121,6 +121,7 @@ export function useChat() {
           text,
           category,
           isLiked: false,
+          isDeleted: false,
           createdAt: new Date(),
         }),
       });
@@ -214,7 +215,15 @@ export function useChat() {
       if (index === -1) return;
 
       await updateDoc(chatRef, {
-        messages: messages.filter((message) => message.id !== messageId),
+        messages: messages.map((message, i) =>
+          i === index
+            ? {
+                ...message,
+                text: "This message was deleted",
+                isDeleted: true,
+              }
+            : message,
+        ),
       });
 
       // Stop if deleted message was not last message sent
@@ -235,7 +244,7 @@ export function useChat() {
           if (chatIndex === -1) return;
 
           userChatsData.chats[chatIndex].lastMessage =
-            "This message was deleted.";
+            "This message was deleted";
 
           if (userChatsData.chats[chatIndex].unread !== 0) {
             userChatsData.chats[chatIndex].unread--;

@@ -1,10 +1,17 @@
 @use "src/styles/abstracts" as *;
 
 .review-btns {
+  @include flexbox(row, initial, center, 1.5em);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 1.5em;
+}
+
+.review-btn {
+  @include font(0.75);
+  cursor: pointer;
+
+  &:hover {
+    color: $basic-gray;
+  }
 }
 
 .add-review-btn {

@@ -22,6 +22,7 @@
 
 .save-list-btn {
   @include flexbox(row, initial, center, 0.25em);
+  @include font(0.75);
   width: 30px;
 
   &:hover {

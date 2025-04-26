@@ -8,7 +8,7 @@ import ReviewButton from "src/features/review/components/buttons/AddReviewButton
 import "./styles/home.scss";
 
 export default function HomePage() {
-  const { isLoadingUser, globalUser } = useAuthContext();
+  const { loadingUser, globalUser } = useAuthContext();
   const { reviews, getPopularReviews } = useReviewContext();
 
   const [popularReviews, setPopularReviews] = useState([]);
@@ -16,33 +16,39 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchReviews = async () => {
-      if (isLoadingUser) return;
+      if (loadingUser) return;
+
+      !globalUser && setActiveTab("popular");
 
       const fetchedReviews = await getPopularReviews();
       setPopularReviews(fetchedReviews);
     };
 
     fetchReviews();
-  }, [activeTab]);
+  }, [activeTab, loadingUser]);
 
-  if (isLoadingUser || !reviews) {
+  if (loadingUser || (globalUser && !reviews)) {
     return <Loading />;
   }
 
+  /*
   if (!globalUser) {
     return (
       <p className="empty-message">
-        Login to your account to view the latest reviews from the friends you
-        follow!
+        Login to your TrackList account to view the latest reviews from the
+        friends you follow!
       </p>
     );
   }
+  */
 
   return (
     <div className="home-container">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      {globalUser && (
+        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      )}
       <FeedResults
-        results={activeTab === "newest" ? reviews : popularReviews}
+        results={activeTab === "newest" ? reviews || [] : popularReviews}
       />
     </div>
   );
@@ -65,6 +71,10 @@ function Header({ activeTab, setActiveTab }) {
 }
 
 function FeedResults({ results }) {
+  if (results.length === 0) {
+    return <p className="empty-message">No reviews found!</p>;
+  }
+
   return (
     <div className="feed-container">
       {results.length > 0 ? (

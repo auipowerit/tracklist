@@ -11,7 +11,8 @@ import "./review-buttons.scss";
 export default function ReviewButtons({ review, showComment = true }) {
   const { globalUser } = useAuthContext();
   const { deleteComment } = useCommentContext();
-  const { setReviews, getNewReviews, deleteReview } = useReviewContext();
+  const { setReviews, getNewReviews, likeReview, deleteReview } =
+    useReviewContext();
 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -60,6 +61,8 @@ export default function ReviewButtons({ review, showComment = true }) {
       <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}
+        handleLike={likeReview}
+        likes={review?.likes.length || 0}
         id={review.id}
         category={"review"}
       />

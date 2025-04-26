@@ -276,6 +276,10 @@
   font-size: (calc(0.5rem + 0.5vw));
 }
 
+.message-error {
+  @include font(initial, normal, $basic-gray, italic);
+}
+
 .chat-input-form {
   @include flexbox(row, space-between, center, 0.25em);
   @include font(0.5);
