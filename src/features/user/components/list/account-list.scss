@@ -22,6 +22,14 @@
   gap: 0.25em;
 }
 
+.account-list-name-container {
+  @include flexbox(row, initial, center, 0.5em);
+}
+
+.account-list-lock {
+  color: $basic-gray;
+}
+
 .account-list-name {
   @include font(1, bold);
 }

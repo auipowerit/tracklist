@@ -1,15 +1,11 @@
 @use "src/styles/abstracts" as *;
 
 .review-user-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
 }
 
 .review-user {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
 
   img {
     border-radius: 100%;
@@ -28,14 +24,11 @@
 }
 
 .review-media-container {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
 }
 
 .review-title-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center);
 }
 
 .review-icon {
@@ -75,15 +68,11 @@
 }
 
 .review-stars {
-  display: flex;
-  align-items: center;
-  gap: 0.15em;
+  @include flexbox(row, initial, center, 0.15em);
 }
 
 .review-btns {
-  display: flex;
-  align-items: center;
-  gap: 0.75em;
+  @include flexbox(row, initial, center, 0.75em);
   margin-left: 0.25em;
   padding-left: 0.5em;
 }

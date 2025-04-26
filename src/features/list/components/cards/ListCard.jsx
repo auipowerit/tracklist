@@ -1,3 +1,4 @@
+import { Tooltip } from "react-tooltip";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,7 +10,18 @@ export default function ListCard({ image, list }) {
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             {list.isPrivate && (
-              <FontAwesomeIcon icon={faLock} className="text-gray-400" />
+              <div
+                data-tooltip-content="Private"
+                data-tooltip-id="category-tooltip"
+              >
+                <FontAwesomeIcon icon={faLock} className="text-gray-400" />
+                <Tooltip
+                  id="category-tooltip"
+                  place="top"
+                  type="dark"
+                  effect="float"
+                />
+              </div>
             )}
             <p className="text-2xl font-bold">{list.name}</p>
           </div>

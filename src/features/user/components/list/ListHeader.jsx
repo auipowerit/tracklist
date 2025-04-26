@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Tooltip } from "react-tooltip";
 import { useOutletContext } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ListButton from "src/features/list/components/buttons/ListButton";
@@ -6,6 +7,7 @@ import SaveButton from "src/features/list/components/buttons/SaveButton";
 import {
   faBars,
   faCaretSquareDown,
+  faLock,
   faTableCellsLarge,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -52,7 +54,23 @@ export default function ListHeader(props) {
   return (
     <div className="account-page-header">
       <div className="account-list-title">
-        <p className="account-list-name">{list.name}</p>
+        <div className="account-list-name-container">
+          {list.isPrivate && (
+            <div
+              data-tooltip-content="Private"
+              data-tooltip-id="category-tooltip"
+            >
+              <FontAwesomeIcon icon={faLock} className="account-list-lock" />
+              <Tooltip
+                id="category-tooltip"
+                place="top"
+                type="dark"
+                effect="float"
+              />
+            </div>
+          )}
+          <p className="account-list-name">{list.name}</p>
+        </div>
         <p className="account-list-description">{list.description}</p>
       </div>
 
@@ -86,7 +104,7 @@ export default function ListHeader(props) {
                 <label className="toggle-container">
                   <input
                     type="checkbox"
-                    onClick={handleToggle}
+                    onChange={handleToggle}
                     checked={isEditing}
                     className="toggle-input"
                   />

@@ -19,7 +19,6 @@ export default function CreateList(props) {
 
   const [name, setName] = useState(list?.name || "");
 
-  const [tags, setTags] = useState(list?.tags || []);
   const [isRanking, setIsRanking] = useState(list?.isRanking || false);
   const [isPrivate, setIsPrivate] = useState(list?.isPrivate || false);
   const [description, setDescription] = useState(list?.description || "");
@@ -36,7 +35,6 @@ export default function CreateList(props) {
   function handleListValues() {
     if (list) {
       setName(list.name);
-      setTags(list.tags);
       setIsRanking(list.isRanking);
       setIsPrivate(list.isPrivate);
       setDescription(list.description);
@@ -76,7 +74,6 @@ export default function CreateList(props) {
 
     const listData = {
       name,
-      tags: [...new Set(tags)], // Remove duplicates
       isRanking,
       isPrivate,
       description,
@@ -88,12 +85,10 @@ export default function CreateList(props) {
 
   function resetValues() {
     setName("");
-    setTags([]);
     setIsRanking(false);
     setIsPrivate(false);
     setDescription("");
     if (setNewList) setNewList(false);
-    setTags([]);
   }
 
   return (
@@ -106,7 +101,6 @@ export default function CreateList(props) {
       <div className="flex h-full justify-center gap-6">
         <div className="flex h-full flex-col gap-8">
           <FormName name={name} setName={setName} />
-          <FormTags tags={tags} setTags={setTags} />
           <div className="flex flex-col gap-2">
             <FormCheckbox
               name="Ranking"
@@ -173,61 +167,6 @@ function FormName({ name, setName }) {
         onChange={handleChange}
         className="border-1 border-white px-2 py-1 outline-hidden"
       />
-    </div>
-  );
-}
-
-function FormTags({ tags, setTags }) {
-  const tagRef = useRef(null);
-
-  function addTag(e) {
-    if (e.key !== "," || tagRef.current.value === "") return;
-
-    const newTag = tagRef.current.value.slice(0, -1).replace(/\s+/g, "");
-
-    if (!/^[a-zA-Z]+$/.test(newTag)) {
-      return;
-    }
-
-    if (!tags.includes(newTag)) {
-      setTags([...tags, newTag]);
-    }
-
-    tagRef.current.value = "";
-  }
-
-  function removeTag(tag) {
-    setTags(tags.filter((item) => item !== tag));
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-1">
-        <label htmlFor="tags">Tags (comma separated)</label>
-        <input
-          name="tags"
-          type="text"
-          ref={tagRef}
-          onKeyUp={addTag}
-          className="border-1 border-white px-2 py-1 outline-hidden"
-        />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {tags &&
-          tags.map((tag, index) => {
-            return (
-              <div
-                key={index}
-                className="flex items-center gap-1 rounded-sm bg-gray-700 px-2 py-1"
-              >
-                <p>{tag}</p>
-                <button type="button" onClick={() => removeTag(tag)}>
-                  <FontAwesomeIcon icon={faXmark} />
-                </button>
-              </div>
-            );
-          })}
-      </div>
     </div>
   );
 }
