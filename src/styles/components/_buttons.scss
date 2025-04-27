@@ -9,3 +9,15 @@
     color: $basic-gray;
   }
 }
+
+.basic-button {
+  @include flexbox(row, initial, center, 0.5em);
+  @include font(0.75);
+  border: 2px solid $basic-white;
+  padding: 0.25em 0.5em;
+  text-wrap: nowrap;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}

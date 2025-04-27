@@ -11,8 +11,27 @@ body {
   color: white;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
 button {
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+  color: white;
+  font-size: calc(1rem + 0.5vw);
+}
+
+input {
+  background-color: transparent;
+  color: white;
 }
 
 .empty-message {

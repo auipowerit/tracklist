@@ -1,9 +1,10 @@
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./styles/loading.scss";
 
 export default function Loading() {
   return (
-    <div className="flex h-[80vh] flex-col justify-center gap-4 text-center text-5xl">
+    <div className="loading-container">
       <FontAwesomeIcon icon={faSpinner} spin />
       <p>Loading...</p>
     </div>

@@ -18,10 +18,8 @@ export default function AccountFriends() {
     <div className="account-page-outlet-container">
       <Header />
 
-      <div>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-        <FriendsList activeTab={activeTab} user={user} />
-      </div>
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <FriendsList activeTab={activeTab} user={user} />
     </div>
   );
 }

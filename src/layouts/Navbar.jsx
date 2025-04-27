@@ -5,8 +5,13 @@ import { useChatContext } from "src/features/chat/context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
+  faList,
   faSearch,
   faSignOut,
+  faUser,
+  faUserCircle,
+  faUserGroup,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/navbar.scss";
 
@@ -68,7 +73,7 @@ export default function Navbar() {
         >
           <FontAwesomeIcon icon={faSearch} />
         </NavLink>
-        <div className="relative">
+        <div className="nav-messaging">
           <NavLink
             to="/messaging"
             className={({ isActive }) => `navlink ${isActive && "active"}`}
@@ -77,33 +82,30 @@ export default function Navbar() {
           </NavLink>
           {unreadCount > 0 && <NotificationBadge unreadCount={unreadCount} />}
         </div>
-        <div ref={dropdownRef} className="relative">
+        <div ref={dropdownRef} className="nav-profile-dropdown-container">
           <img
             src={globalUser?.profileUrl || "/images/default-profile-img.jpg"}
             onClick={handleUserClick}
             className="nav-profile"
           />
-          <div
-            className={`nav-profile-dropdown ${
-              showDropdown && "active"
-            }`}
-          >
-            <DropdownMenu
-              items={[
-                { label: "Profile", path: "/profile" },
-                {
-                  label: "Lists",
-                  path: `/users/${globalUser?.username}/lists`,
-                },
-                {
-                  label: "Friends",
-                  path: `/users/${globalUser?.username}/friends`,
-                },
-              ]}
-              onClose={() => setShowDropdown(false)}
-              globalUser={globalUser}
-            />
-          </div>
+          <DropdownMenu
+            showDropdown={showDropdown}
+            items={[
+              { label: "Profile", path: "/profile", icon: faUserCircle },
+              {
+                label: "Lists",
+                path: `/users/${globalUser?.username}/lists`,
+                icon: faList,
+              },
+              {
+                label: "Friends",
+                path: `/users/${globalUser?.username}/friends`,
+                icon: faUserGroup,
+              },
+            ]}
+            onClose={() => setShowDropdown(false)}
+            globalUser={globalUser}
+          />
         </div>
       </div>
     </div>
@@ -118,7 +120,7 @@ function NotificationBadge({ unreadCount }) {
   );
 }
 
-function DropdownMenu({ items, onClose, globalUser }) {
+function DropdownMenu({ showDropdown, items, onClose, globalUser }) {
   const navigate = useNavigate();
   const { logout } = useAuthContext();
 
@@ -129,26 +131,28 @@ function DropdownMenu({ items, onClose, globalUser }) {
   }
 
   return (
-    <ul className="nav-profile-dropdown-list">
+    <ul className={`nav-profile-dropdown ${showDropdown && "active"}`}>
       <li>
         <p className="nav-profile-dropdown-header">
           Hi, {globalUser?.username}
         </p>
       </li>
-      {items.map(({ label, path }) => (
-        <li key={label} className="nav-profile-dropdown-item">
-          <Link to={path} onClick={onClose}>
-            {label}
+      {items.map(({ label, path, icon }) => (
+        <li key={label}>
+          <Link
+            to={path}
+            onClick={onClose}
+            className="nav-profile-dropdown-item"
+          >
+            <FontAwesomeIcon icon={icon} />
+            <p>{label}</p>
           </Link>
         </li>
       ))}
       <li>
-        <button
-          onClick={handleLogout}
-          className="nav-profile-dropdown-logout nav-profile-dropdown-item"
-        >
-          <p>Logout</p>
+        <button onClick={handleLogout} className="nav-profile-dropdown-item">
           <FontAwesomeIcon icon={faSignOut} />
+          <p>Logout</p>
         </button>
       </li>
     </ul>

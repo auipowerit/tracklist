@@ -1,4 +1,5 @@
 @use "src/styles/abstracts" as *;
+@use "src/styles/components" as *;
 
 .account-page-container {
   @include flexbox(column, initial, center, 2em);
@@ -9,14 +10,14 @@
 
 .account-page-nav {
   @include flexbox(row, space-between, center);
-  @include font(0.5, normal);
   background-color: $darker-green;
-  padding: 0.5em 2em;
+  padding: 1em 2em;
   width: 100%;
 }
 
 .account-nav-profile-link {
   @include flexbox(row, initial, center, 0.5em);
+  @include font(1, normal);
   color: $basic-gray;
 
   &:hover,
@@ -37,6 +38,7 @@
 }
 
 .account-page-nav-link {
+  @include font(1, normal);
   color: $basic-gray;
 
   &:hover,
@@ -68,9 +70,9 @@
 
 .account-page-edit-btn {
   @include flexbox(row, initial, center, 0.5em);
-  @include font(0.5);
+  @include font(0.75);
   border: 2px solid $basic-white;
-  padding: 0.25em 0.75em;
+  padding: 0.25em 0.5em;
 
   &:hover {
     color: $basic-gray;

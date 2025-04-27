@@ -26,7 +26,7 @@ function Header() {
   return (
     <div className="chatlist-header">
       <p>All chats</p>
-      <button type="button" onClick={handleNewChat} className="header-btn">
+      <button type="button" onClick={handleNewChat}>
         <FontAwesomeIcon icon={faPenToSquare} />
       </button>
     </div>
@@ -76,7 +76,7 @@ function ChatCard({ chat, handleOpenChat }) {
       className={`chatlist-card ${isActive && "chatlist-card-active"}`}
     >
       <div className="chatlist-card-header">
-        <img src={chat.profileUrl} className="h-7 w-7 rounded-full" />
+        <img src={chat.profileUrl} />
         <p>{chat.username}</p>
       </div>
       <p className={color}>{lastMessage}</p>

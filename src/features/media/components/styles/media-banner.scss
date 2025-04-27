@@ -1,8 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .media-banner-container {
-  display: flex;
-  align-items: center;
+  @include flexbox(row);
   margin: 3em 6em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   width: 100%;
@@ -24,6 +23,8 @@
 
   img {
     object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -36,6 +37,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   padding: 1em 0;
   height: 100%;
+  box-sizing: border-box;
   overflow: hidden;
 }
 

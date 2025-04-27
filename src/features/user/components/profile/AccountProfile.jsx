@@ -152,10 +152,7 @@ function ProfileDetails({ user }) {
 
 function EditProfileButton({ setIsModalOpen }) {
   return (
-    <button
-      onClick={() => setIsModalOpen(true)}
-      className="account-page-edit-btn"
-    >
+    <button onClick={() => setIsModalOpen(true)} className="basic-button">
       <FontAwesomeIcon icon={faPen} />
       <p>Edit</p>
     </button>

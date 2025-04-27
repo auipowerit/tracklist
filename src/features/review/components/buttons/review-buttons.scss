@@ -16,9 +16,9 @@
 
 .add-review-btn {
   @include flexbox(row, initial, center, 0.5em);
-  @include font(0.5);
+  @include font(0.75);
   border: 2px solid $basic-white;
-  padding: 0.25em 0.75em;
+  padding: 0.25em 0.5em;
 
   &:hover {
     color: $basic-gray;

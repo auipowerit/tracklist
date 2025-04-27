@@ -266,7 +266,7 @@ function FormListInput(props) {
       className="option:bg-gray-700 w-full border-1 px-2 py-1 outline-none"
     >
       <option value="" disabled hidden>
-        -- Select an option --
+        -- Select a list --
       </option>
       {lists.map((item) => {
         return (

@@ -193,7 +193,7 @@ function FormInput(props) {
         ref={inputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
         onKeyUp={handleSearch}
-        className="border-1 px-2 py-1 outline-hidden"
+        className="border-1 border-white px-2 py-1 outline-hidden"
       />
 
       <select value={type} onChange={handleChange}>

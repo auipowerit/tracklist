@@ -69,10 +69,8 @@ export default function MediaCard(props) {
       <img src={fetchedMedia.data?.image || DEFAULT_MEDIA_IMG} />
 
       <div className="media-card-info">
-        <div className="media-card-title-container">
-          <p ref={titleRef} className="title">
-            {fetchedMedia.data?.title || ""}
-          </p>
+        <div className="media-card-title">
+          <p ref={titleRef}>{fetchedMedia.data?.title || ""}</p>
         </div>
 
         <p className="media-card-subtitle">

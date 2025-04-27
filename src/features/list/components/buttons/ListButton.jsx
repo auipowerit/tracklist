@@ -48,7 +48,7 @@ export default function ListButton(props) {
         </button>
       ) : (
         <button
-          className="list-btn"
+          className="basic-button"
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}

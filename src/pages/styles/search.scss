@@ -25,6 +25,7 @@
   padding: 0.25em 0.75em;
 
   input {
+    @include font(1);
     outline: none;
   }
 

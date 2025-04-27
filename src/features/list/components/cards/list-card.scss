@@ -1,0 +1,39 @@
+@use "src/styles/abstracts" as *;
+
+.list-card {
+  @include flexbox(row, $gap: 1em);
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+.list-card-info-container {
+  @include flexbox(column, $gap: 0.25em);
+}
+
+.list-card-header {
+  @include flexbox(column);
+}
+
+.list-card-title-container {
+  @include flexbox(row, initial, center, 0.5em);
+}
+
+.list-card-lock {
+  color: $basic-gray;
+}
+
+.list-card-title {
+  @include font(1, bold);
+}
+
+.list-card-count {
+  color: $basic-gray;
+}
+
+.list-card-description {
+  @include font(0.75);
+}

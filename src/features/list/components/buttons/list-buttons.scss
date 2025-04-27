@@ -1,16 +1,5 @@
 @use "src/styles/abstracts" as *;
-
-.list-btn {
-  @include flexbox(row, initial, center, 0.5em);
-  @include font(0.5);
-  border: 2px solid $basic-white;
-  padding: 0.25em 0.75em;
-  text-wrap: nowrap;
-
-  &:hover {
-    color: $basic-gray;
-  }
-}
+@use "src/styles/components" as *;
 
 .list-save-btn {
   cursor: pointer;

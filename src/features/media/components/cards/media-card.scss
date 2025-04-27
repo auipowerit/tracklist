@@ -2,14 +2,14 @@
 
 .media-card-container {
   display: flex;
-  height: fit-content;
-  width: 300px;
-  cursor: pointer;
   flex-direction: column;
-  background-color: $basic-white;
-  color: $basic-black;
   transition: all 0.2s;
+  cursor: pointer;
+  background-color: $basic-white;
   padding: 0.5em;
+  width: 300px;
+  height: fit-content;
+  color: $basic-black;
 
   &:hover {
     transform: scale(110%);
@@ -31,17 +31,20 @@
   text-align: center;
 }
 
-.media-card-title-container {
+.media-card-title {
+  padding: 0 0.5em;
   width: 100%;
   overflow: hidden;
-  padding: 0 0.5em;
   text-align: center;
   @include gradient(left);
-}
 
-.media-card-title {
-  @include font(0.5, bold);
-  text-wrap: nowrap;
+  p {
+    @include font(0.5, bold);
+    margin: auto;
+    width: fit-content;
+    color: $basic-black;
+    white-space: nowrap;
+  }
 }
 
 .media-card-subtitle {

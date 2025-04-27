@@ -20,7 +20,8 @@
   @include font(0.75, bold);
   padding: 0.5em;
 
-  .header-btn {
+  button {
+    color: $basic-white;
     cursor: pointer;
 
     &:hover {
@@ -41,6 +42,13 @@
 
   &:hover {
     background-color: $dark-green;
+  }
+
+  img {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
   }
 }
 
