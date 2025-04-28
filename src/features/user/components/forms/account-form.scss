@@ -1,0 +1,28 @@
+@use "src/styles/abstracts" as *;
+@use "src/styles/components" as *;
+
+.user-form-content {
+  gap: 2em;
+}
+
+.user-form-profile-container {
+  @include flexbox(column, center, center, 1em);
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+.user-form-info {
+  @include flexbox(column, $gap: 1em);
+}
+
+.user-form-input-container {
+  @include flexbox(column, $gap: 0.25em);
+}
+
+.user-form-label {
+  @include flexbox(row, space-between, center);
+}

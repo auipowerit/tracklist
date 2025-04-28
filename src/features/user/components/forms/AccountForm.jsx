@@ -4,6 +4,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import "./account-form.scss";
 
 export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   const { globalUser, updateUserDetails } = useAuthContext();
@@ -45,15 +46,12 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="m-auto flex flex-col items-center justify-center gap-8 py-6 text-xl"
-    >
+    <form onSubmit={handleSubmit} className="form-container">
       <FormHeader />
-      <div className="flex gap-6">
+      <div className="form-content user-form-content">
         <FormImage globalUser={globalUser} />
 
-        <div className="flex flex-col gap-4">
+        <div className="user-form-info">
           <FormName name={name} setName={setName} />
           <FormBio bio={bio} setBio={setBio} />
         </div>
@@ -64,24 +62,20 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
 }
 
 function FormHeader() {
-  return (
-    <p className="w-full border-b-1 border-white pb-2 text-2xl font-bold">
-      Edit Account
-    </p>
-  );
+  return <p className="form-header">Edit Account</p>;
 }
 
 function FormImage({ globalUser }) {
   const { redirectToSpotifyAuth } = useSpotifyContext();
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <img src={globalUser?.profileUrl} className="h-48 w-48 rounded-full" />
+    <div className="user-form-profile-container">
+      <img src={globalUser?.profileUrl} />
 
       <button
         type="button"
         onClick={() => redirectToSpotifyAuth(false)}
-        className="flex items-center justify-center gap-2 rounded-md border-2 border-white px-3 py-2 hover:text-gray-400"
+        className="basic-button"
       >
         <FaSpotify />
         <p>{globalUser?.spotifyUrl ? "Resync" : "Sync"}</p>
@@ -93,7 +87,7 @@ function FormImage({ globalUser }) {
 function FormName({ name, setName }) {
   const NAME_LIMIT = 25;
 
-  const color = name.length >= NAME_LIMIT ? "text-red-600" : "text-gray-400";
+  const color = name.length >= NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     if (e.target.value.length > NAME_LIMIT) {
@@ -104,10 +98,10 @@ function FormName({ name, setName }) {
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between">
+    <div className="user-form-input-container">
+      <div className="user-form-label">
         <label htmlFor="name">Display name</label>
-        <p className={`text-sm ${color}`}>
+        <p style={{ color: color }}>
           {name.length || 0}/{NAME_LIMIT}
         </p>
       </div>
@@ -116,7 +110,7 @@ function FormName({ name, setName }) {
         type="text"
         value={name}
         onChange={handleChange}
-        className="border-1 border-white px-2 py-1"
+        className="form-input"
       />
     </div>
   );
@@ -125,7 +119,7 @@ function FormName({ name, setName }) {
 function FormBio({ bio, setBio }) {
   const BIO_LIMIT = 100;
 
-  const color = bio.length >= BIO_LIMIT ? "text-red-600" : "text-gray-400";
+  const color = bio.length >= BIO_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     if (e.target.value.length > BIO_LIMIT) {
@@ -136,10 +130,10 @@ function FormBio({ bio, setBio }) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-1">
-      <div className="flex items-center justify-between">
+    <div className="form-textarea-container">
+      <div className="user-form-label">
         <label htmlFor="bio">Bio</label>
-        <p className={`text-sm ${color}`}>
+        <p style={{ color: color }}>
           {bio.length || 0}/{BIO_LIMIT}
         </p>
       </div>
@@ -156,14 +150,9 @@ function FormBio({ bio, setBio }) {
 
 function FormButton() {
   return (
-    <div className="flex items-center gap-4">
-      <button
-        type="submit"
-        className="flex items-center justify-center gap-2 rounded-md bg-green-700 px-4 py-2 hover:text-gray-400"
-      >
-        <FontAwesomeIcon icon={faCheck} />
-        <p>Save</p>
-      </button>
-    </div>
+    <button type="submit" className="form-submit-btn">
+      <FontAwesomeIcon icon={faCheck} />
+      <p>Save</p>
+    </button>
   );
 }

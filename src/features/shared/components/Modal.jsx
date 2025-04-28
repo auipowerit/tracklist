@@ -18,7 +18,7 @@ export default function Modal({ children, isModalOpen, setIsModalOpen }) {
           &times;
         </button>
 
-        <div>{children}</div>
+        {children}
       </div>
     </div>
   );
