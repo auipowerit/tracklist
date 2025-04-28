@@ -12,7 +12,7 @@ main {
   flex-direction: column;
 }
 
-.to-top-btn {
+.to-top-button {
   @include flexbox(row, center, center);
   @include font(1.25, $basic-white);
   position: fixed;

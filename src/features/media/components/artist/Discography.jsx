@@ -66,7 +66,7 @@ function LoadMoreButton({ loadMedia, page, setPage }) {
 
   return (
     <div className="load-more">
-      <button onClick={loadMore} className="load-more-btn">
+      <button onClick={loadMore} className="load-more-button">
         Load more
       </button>
     </div>

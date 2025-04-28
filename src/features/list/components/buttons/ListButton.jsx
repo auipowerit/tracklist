@@ -43,7 +43,7 @@ export default function ListButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button onClick={handleClick} className="list-save-btn">
+        <button onClick={handleClick} className="list-save-button">
           <FontAwesomeIcon icon={faList} />
         </button>
       ) : (

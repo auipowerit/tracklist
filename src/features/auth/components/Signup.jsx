@@ -42,10 +42,13 @@ export default function Signup({ setIsRegistration }) {
       <AuthInput label="Email Address" name="email" type="text" />
       <AuthInput label="Password" name="password" type="password" />
 
-      <button type="submit" className="form-submit-btn">
+      <button type="submit" className="form-submit-button">
         Submit
       </button>
-      <button onClick={() => setIsRegistration(false)} className="basic-button">
+      <button
+        onClick={() => setIsRegistration(false)}
+        className="basic-button auth-button"
+      >
         <p>Sign in</p>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>

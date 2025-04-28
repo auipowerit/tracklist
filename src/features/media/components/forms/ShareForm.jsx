@@ -132,7 +132,7 @@ function FormImage({ media }) {
   return (
     <img
       src={media?.media?.image || media?.image || DEFAULT_MEDIA_IMG}
-      className="form-media-img"
+      className="form-media-image"
     />
   );
 }
@@ -239,7 +239,7 @@ function FormMessage({ message, setMessage }) {
 
 function FormButton({ currentUsers }) {
   return (
-    <button type="submit" className="form-submit-btn">
+    <button type="submit" className="form-submit-button">
       <FaPaperPlane />
       <p>{`Send ${currentUsers.length > 1 ? "seperately" : ""} `}</p>
     </button>

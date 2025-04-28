@@ -231,13 +231,13 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         <button
           type="button"
           onClick={() => setNewList(false)}
-          className="list-form-back-btn"
+          className="list-form-back-button"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back</p>
         </button>
       )}
-      <button type="submit" className="form-submit-btn">
+      <button type="submit" className="form-submit-button">
         <FontAwesomeIcon icon={list ? faCheck : faPlus} />
         <p>{list ? "Save" : "Create"}</p>
       </button>
@@ -246,7 +246,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         <button
           type="button"
           onClick={handleDelete}
-          className="flex items-center gap-2 rounded-md bg-red-700 px-4 py-2"
+          className="list-form-delete-button"
         >
           <FontAwesomeIcon icon={faTrash} />
           <p>Delete</p>

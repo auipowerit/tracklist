@@ -1,5 +1,5 @@
-const DEFAULT_PROFILE_IMG = "/images/default-profile-img.jpg";
-const DEFAULT_MEDIA_IMG = "/images/default-img.jpg";
+const DEFAULT_PROFILE_IMG = "/images/default-profile-image.jpg";
+const DEFAULT_MEDIA_IMG = "/images/default-image.jpg";
 const REDIRECT_URI = "http://localhost:5173/profile/callback";
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;

@@ -28,7 +28,7 @@ export default function FollowButton({ user, setUser }) {
   return (
     <button
       onClick={() => handleClick()}
-      className={`follow-btn ${isFollowing && "active"}`}
+      className={`follow-button ${isFollowing && "active"}`}
     >
       {isFollowing ? "Following" : "Follow"}
     </button>

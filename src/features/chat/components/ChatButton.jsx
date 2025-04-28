@@ -40,7 +40,7 @@ export default function ChatButton({ username = "" }) {
   }
 
   return (
-    <button onClick={handleClick} className="chat-btn">
+    <button onClick={handleClick} className="chat-button">
       {username ? <FaPaperPlane /> : <FontAwesomeIcon icon={faEnvelope} />}
     </button>
   );

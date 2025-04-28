@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.comment-btn {
+.comment-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75);
 
@@ -9,7 +9,7 @@
   }
 }
 
-.dislike-btn {
+.dislike-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75, 400);
   width: 2.5em;
@@ -23,7 +23,7 @@
   }
 }
 
-.like-btn {
+.like-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75, 400);
   width: 2.5em;

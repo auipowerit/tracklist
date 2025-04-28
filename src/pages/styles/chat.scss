@@ -164,23 +164,23 @@
   width: fit-content;
 
   &:hover {
-    .message-delete-btn,
+    .message-delete-button,
     .message-unliked {
       opacity: 1;
     }
   }
 }
 
-.message-user-btn {
+.message-user-button {
   margin-left: auto;
   background-color: rgba(20, 71, 230, 0.7);
 }
 
-.message-friend-btn {
+.message-friend-button {
   background-color: rgb(35, 44, 61);
 }
 
-.message-delete-btn {
+.message-delete-button {
   position: absolute;
   top: 50%;
   left: -20px;
@@ -198,7 +198,7 @@
   }
 }
 
-.message-like-btn {
+.message-like-button {
   @include flexbox(row, center, center);
   @include font(0.5);
 
@@ -228,10 +228,10 @@
   color: $basic-gray;
 }
 
-.message-user-btn {
+.message-user-button {
   left: -12px;
 }
-.message-friend-btn {
+.message-friend-button {
   right: -12px;
 }
 
@@ -310,7 +310,7 @@
   outline: none;
 }
 
-.chat-input-btn {
+.chat-input-button {
   cursor: pointer;
   color: $basic-gray;
 

@@ -18,7 +18,7 @@ export default function ErrorPage({ is404 }) {
       </h1>
       {error && <p className="error-message">"{error.message}"</p>}
 
-      <Link to="/" className="error-btn">
+      <Link to="/" className="error-button">
         <FontAwesomeIcon icon={faHome} />
         Go to home
       </Link>

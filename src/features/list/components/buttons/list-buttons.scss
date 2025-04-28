@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 @use "src/styles/components" as *;
 
-.list-save-btn {
+.list-save-button {
   cursor: pointer;
 
   &:hover {
@@ -9,7 +9,7 @@
   }
 }
 
-.save-list-btn {
+.save-list-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75);
   width: 30px;

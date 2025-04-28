@@ -14,7 +14,7 @@ export default function Modal({ children, isModalOpen, setIsModalOpen }) {
         className={`modal-container ${isModalOpen && "active"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-btn" onClick={onClose}>
+        <button className="modal-button" onClick={onClose}>
           &times;
         </button>
 

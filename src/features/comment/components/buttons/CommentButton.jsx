@@ -5,7 +5,7 @@ import "./comment-button.scss";
 
 export default function CommentButton({ review }) {
   return (
-    <Link to={`/reviews/${review.id}`} className="comment-btn">
+    <Link to={`/reviews/${review.id}`} className="comment-button">
       <FontAwesomeIcon icon={faComment} />
       <p>{review?.comments.length || 0}</p>
     </Link>

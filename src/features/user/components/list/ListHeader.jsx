@@ -112,7 +112,7 @@ export default function ListHeader(props) {
                 </label>
               </div>
 
-              <div className="list-edit-btns">
+              <div className="list-edit-buttons">
                 <ListButton
                   isModalOpen={isAddModalOpen}
                   setIsModalOpen={setIsAddModalOpen}

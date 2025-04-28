@@ -234,7 +234,7 @@ function MessageCard({ message, index, messages }) {
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`message-bubble ${isCurrentUser ? "message-user-btn" : "message-friend-btn"}`}
+        className={`message-bubble ${isCurrentUser ? "message-user-button" : "message-friend-button"}`}
       >
         {isCurrentUser && (
           <MessageDeleteButton
@@ -284,7 +284,11 @@ function MessageDeleteButton({ message, isCurrentUser }) {
   }
 
   return (
-    <button type="button" onClick={handleDelete} className="message-delete-btn">
+    <button
+      type="button"
+      onClick={handleDelete}
+      className="message-delete-button"
+    >
       <FontAwesomeIcon icon={faTrash} />
     </button>
   );
@@ -302,9 +306,9 @@ function MessageLikeButton({ message, isCurrentUser }) {
     <button
       type="button"
       onClick={handleLike}
-      className={`message-like-btn ${
+      className={`message-like-button ${
         message.isLiked ? "message-liked" : !isCurrentUser && "message-unliked"
-      } ${isCurrentUser ? "message-user-btn" : "message-friend-btn"}`}
+      } ${isCurrentUser ? "message-user-button" : "message-friend-button"}`}
     >
       <FontAwesomeIcon icon={faHeart} />
     </button>

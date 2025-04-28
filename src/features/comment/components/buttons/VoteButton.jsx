@@ -31,7 +31,7 @@ export default function VoteButton(props) {
   return (
     <button
       onClick={handleClick}
-      className={`${type}-btn ${userVoted && "active"}`}
+      className={`${type}-button ${userVoted && "active"}`}
     >
       <FontAwesomeIcon
         icon={type === "like" ? faThumbsUp : faThumbsDown}

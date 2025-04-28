@@ -73,7 +73,7 @@ function Buttons({ comment, review, comments, setComments }) {
   }
 
   return (
-    <div className="comment-btns">
+    <div className="comment-buttons">
       <VoteButton
         content={comment}
         handleVote={likeComment}

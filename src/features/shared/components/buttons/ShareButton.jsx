@@ -32,7 +32,7 @@ export default function ShareButton(props) {
         />
       </Modal>
 
-      <button onClick={handleClick} className="share-btn">
+      <button onClick={handleClick} className="share-button">
         <FontAwesomeIcon icon={faShare} />
       </button>
     </div>

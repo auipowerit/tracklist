@@ -82,7 +82,7 @@ export default function Navbar() {
         </div>
         <div ref={dropdownRef} className="nav-profile-dropdown-container">
           <img
-            src={globalUser?.profileUrl || "/images/default-profile-img.jpg"}
+            src={globalUser?.profileUrl || "/images/default-profile-image.jpg"}
             onClick={handleUserClick}
             className="nav-profile"
           />

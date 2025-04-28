@@ -30,10 +30,10 @@ export default function SortButton(props) {
   }, []);
 
   return (
-    <div ref={sorterRef} className="sort-btn-container">
+    <div ref={sorterRef} className="sort-button-container">
       <button
         onClick={() => results?.length > 0 && setShowSort(!showSort)}
-        className="sort-btn"
+        className="sort-button"
       >
         <FontAwesomeIcon icon={faSort} />
         <p>Sort by</p>

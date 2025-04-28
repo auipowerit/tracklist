@@ -113,14 +113,14 @@ function SpotifyImage({ user }) {
       data-tooltip-id="profile-tooltip"
       data-tooltip-content="Open Spotify Profile"
     >
-      <img src={user.profileUrl} className="account-profile-img" />
+      <img src={user.profileUrl} className="account-profile-image" />
       <Tooltip id="profile-tooltip" place="top" type="dark" effect="float" />
     </Link>
   );
 }
 
 function ProfileImage({ user }) {
-  return <img src={user.profileUrl} className="account-profile-img" />;
+  return <img src={user.profileUrl} className="account-profile-image" />;
 }
 
 function ProfileDetails({ user }) {

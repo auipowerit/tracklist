@@ -39,7 +39,7 @@ export default function AddReviewButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button onClick={handleClick} className="review-btn">
+        <button onClick={handleClick} className="review-button">
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
       ) : (
@@ -47,7 +47,7 @@ export default function AddReviewButton(props) {
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}
-          className="add-review-btn"
+          className="add-review-button"
         >
           <FontAwesomeIcon icon={faPlus} />
           <p>Post review</p>

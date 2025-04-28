@@ -35,7 +35,7 @@ export default function SaveButton({ list, user }) {
   return (
     <button
       onClick={handleSave}
-      className={`save-list-btn ${isSaved && "active"}`}
+      className={`save-list-button ${isSaved && "active"}`}
     >
       <FontAwesomeIcon icon={faBookmark} className={isActive && "fa-beat"} />
       <p>{saves || 0}</p>

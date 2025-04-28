@@ -135,6 +135,6 @@ input:checked + .toggle:before {
   transform: translateX(22px);
 }
 
-.list-edit-btns {
+.list-edit-buttons {
   @include flexbox(column, center, flex-start, 1em);
 }

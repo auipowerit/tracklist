@@ -57,7 +57,7 @@ export default function ReviewButtons({ review, showComment = true }) {
   }
 
   return (
-    <div className="review-btns">
+    <div className="review-buttons">
       <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}

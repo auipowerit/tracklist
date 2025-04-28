@@ -19,7 +19,7 @@
   @include font(1.25, normal, $basic-gray);
 }
 
-.error-btn {
+.error-button {
   @include flexbox(row, initial, center, 1em);
   @include font(1);
   margin-top: 1em;

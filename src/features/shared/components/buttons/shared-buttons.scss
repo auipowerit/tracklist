@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.delete-btn {
+.delete-button {
   @include font(0.75);
   border-radius: 20px;
   padding: 0.25em 0.75em;
@@ -10,7 +10,7 @@
   }
 }
 
-.heart-btn {
+.heart-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75, 400);
   cursor: pointer;
@@ -24,7 +24,7 @@
   }
 }
 
-.share-btn {
+.share-button {
   @include font(0.75);
   cursor: pointer;
 

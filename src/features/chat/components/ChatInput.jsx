@@ -38,7 +38,7 @@ export default function ChatInput() {
         placeholder={`Message ${activeChatUser.displayname || "user"}...`}
         className="chat-input"
       />
-      <button type="submit" className="chat-input-btn">
+      <button type="submit" className="chat-input-button">
         <FaPaperPlane />
       </button>
     </form>

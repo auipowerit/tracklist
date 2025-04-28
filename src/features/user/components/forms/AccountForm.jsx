@@ -150,7 +150,7 @@ function FormBio({ bio, setBio }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form-submit-btn">
+    <button type="submit" className="form-submit-button">
       <FontAwesomeIcon icon={faCheck} />
       <p>Save</p>
     </button>

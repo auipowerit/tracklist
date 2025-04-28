@@ -167,7 +167,7 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form-media-img" />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form-media-image" />
   );
 }
 
@@ -247,7 +247,7 @@ function FormReview({ content, setContent }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form-submit-btn">
+    <button type="submit" className="form-submit-button">
       <FontAwesomeIcon icon={faPlus} />
       <p>Post</p>
     </button>

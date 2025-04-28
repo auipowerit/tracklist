@@ -60,7 +60,7 @@
   @include flexbox(row, center, center, 1em);
 }
 
-.list-form-back-btn {
+.list-form-back-button {
   @include flexbox(row, center, center, 0.25em);
   @include font(1);
   border-radius: 6px;
@@ -69,5 +69,17 @@
 
   &:hover {
     background-color: $dark-gray;
+  }
+}
+
+.list-form-delete-button {
+  @include flexbox(row, center, center, 0.25em);
+  @include font(1);
+  border-radius: 6px;
+  background-color: $basic-red;
+  padding: 0.5em 0.75em;
+
+  &:hover {
+    background-color: $darker-red;
   }
 }

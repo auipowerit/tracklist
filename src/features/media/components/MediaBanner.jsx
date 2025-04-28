@@ -51,7 +51,7 @@ function SpotifyImage({ image, spotifyURL }) {
       onClick={() => window.open(spotifyURL)}
       data-tooltip-id="media-tooltip"
       data-tooltip-content="Open in Spotify"
-      className="media-banner-img"
+      className="media-banner-image"
     >
       <img src={image || DEFAULT_MEDIA_IMG} />
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />

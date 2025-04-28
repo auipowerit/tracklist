@@ -71,7 +71,7 @@
   @include flexbox(row, initial, center, 0.15em);
 }
 
-.review-btns {
+.review-buttons {
   @include flexbox(row, initial, center, 0.75em);
   margin-left: 0.25em;
   padding-left: 0.5em;

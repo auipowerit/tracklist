@@ -1,11 +1,11 @@
 @use "src/styles/abstracts" as *;
 
-.review-btns {
+.review-buttons {
   @include flexbox(row, initial, center, 1.5em);
   cursor: pointer;
 }
 
-.review-btn {
+.review-button {
   @include font(0.75);
   cursor: pointer;
 
@@ -14,7 +14,7 @@
   }
 }
 
-.add-review-btn {
+.add-review-button {
   @include flexbox(row, initial, center, 0.5em);
   @include font(0.75);
   border: 2px solid $basic-white;

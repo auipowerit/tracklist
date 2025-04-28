@@ -23,7 +23,7 @@ export default function ToTop() {
   return (
     <button
       href="#"
-      className={`to-top-btn ${isVisible && "active"}`}
+      className={`to-top-button ${isVisible && "active"}`}
       onClick={handleClick}
     >
       <FontAwesomeIcon icon={faArrowUp} />

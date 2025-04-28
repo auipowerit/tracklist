@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.comment-btn {
+.comment-button {
   @include flexbox(row, initial, center, 0.25em);
   @include font(0.75);
   gap: 0.25em;
@@ -17,7 +17,6 @@
   padding: 0.25em 0.5em;
   text-wrap: nowrap;
   width: fit-content;
-  margin: auto;
 
   &:hover {
     color: $basic-gray;

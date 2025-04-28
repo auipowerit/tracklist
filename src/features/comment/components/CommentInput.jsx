@@ -64,7 +64,7 @@ export default function CommentInput({ review, setComments }) {
         className="comment-input"
       />
 
-      <div className="comment-input-btns">
+      <div className="comment-input-buttons">
         <button type="submit">Post</button>
 
         <button type="button" onClick={closeComment}>

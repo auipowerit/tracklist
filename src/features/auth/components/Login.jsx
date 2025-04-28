@@ -38,14 +38,14 @@ export default function Login({ setIsRegistration }) {
       <AuthInput label="Email" name="email" type="text" />
       <AuthInput label="Password" name="password" type="password" />
 
-      <button type="submit" className="form-submit-btn">
+      <button type="submit" className="form-submit-button">
         Submit
       </button>
-      
+
       <button
         type="button"
         onClick={() => setIsRegistration(true)}
-        className="basic-button"
+        className="basic-button auth-button"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
         <p>Sign up</p>

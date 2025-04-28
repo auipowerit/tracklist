@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-.form-media-img {
+.form-media-image {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   aspect-ratio: 1/1;
   width: 50%;
@@ -94,7 +94,7 @@
   }
 }
 
-.form-submit-btn {
+.form-submit-button {
   @include flexbox(row, center, center, 0.25em);
   @include font(1);
   border-radius: 6px;

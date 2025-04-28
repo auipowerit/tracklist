@@ -1,6 +1,19 @@
 @use "src/styles/abstracts" as *;
 @use "src/styles/components" as *;
 
+.auth-container {
+  @include flexbox(column, center, center, 2em);
+  padding: 2em 0;
+}
+
+.auth-header {
+  @include font(1.5, bold, $basic-gray);
+
+  span {
+    color: $basic-green;
+  }
+}
+
 .auth-form {
   @include flexbox(column, $gap: 1em);
   width: fit-content;
@@ -21,4 +34,8 @@
   outline: none;
   border: 2px solid $basic-white;
   padding: 0.15em 0.25em;
+}
+
+.auth-button {
+  margin: auto;
 }

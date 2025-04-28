@@ -28,9 +28,17 @@ export default function AuthPage() {
     return <Loading />;
   }
 
-  return isRegistration ? (
-    <Signup setIsRegistration={setIsRegistration} />
-  ) : (
-    <Login setIsRegistration={setIsRegistration} />
+  return (
+    <div className="auth-container">
+      <h1 className="auth-header">
+        {isRegistration ? "Sign up for " : "Login to "}
+        <span>TrackList</span>
+      </h1>
+      {isRegistration ? (
+        <Signup setIsRegistration={setIsRegistration} />
+      ) : (
+        <Login setIsRegistration={setIsRegistration} />
+      )}
+    </div>
   );
 }

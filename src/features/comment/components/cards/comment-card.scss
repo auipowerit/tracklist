@@ -35,6 +35,6 @@
   @include font(0.75);
 }
 
-.comment-btns {
+.comment-buttons {
   @include flexbox(row, initial, center, 0.25em);
 }

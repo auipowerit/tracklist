@@ -42,7 +42,7 @@ export default function DraggableItem(props) {
         <button
           type="button"
           onClick={() => handleDelete(item.id)}
-          className="draggable-item-delete-btn"
+          className="draggable-item-delete-button"
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
