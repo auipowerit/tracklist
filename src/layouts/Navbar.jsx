@@ -8,10 +8,8 @@ import {
   faList,
   faSearch,
   faSignOut,
-  faUser,
   faUserCircle,
   faUserGroup,
-  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/navbar.scss";
 
@@ -113,11 +111,7 @@ export default function Navbar() {
 }
 
 function NotificationBadge({ unreadCount }) {
-  return (
-    <div className="notification-badge">
-      <p>{unreadCount}</p>
-    </div>
-  );
+  return <p className="notification-badge">{unreadCount}</p>;
 }
 
 function DropdownMenu({ showDropdown, items, onClose, globalUser }) {

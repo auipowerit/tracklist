@@ -84,14 +84,14 @@ export default function ListHeader(props) {
             <p className="account-list-label">Layout</p>
             <button
               onClick={() => setOrientation(0)}
-              className={`text-xl ${orientation === 0 && "text-green-500"}`}
+              className={orientation === 0 && "active"}
             >
               <FontAwesomeIcon icon={faTableCellsLarge} />
             </button>
 
             <button
               onClick={() => setOrientation(1)}
-              className={`text-xl ${orientation === 1 && "text-green-500"}`}
+              className={orientation === 1 && "active"}
             >
               <FontAwesomeIcon icon={faBars} />
             </button>
@@ -112,17 +112,19 @@ export default function ListHeader(props) {
                 </label>
               </div>
 
-              <ListButton
-                isModalOpen={isAddModalOpen}
-                setIsModalOpen={setIsAddModalOpen}
-                list={list}
-                isAdding={true}
-              />
-              <ListButton
-                isModalOpen={isEditModalOpen}
-                setIsModalOpen={setIsEditModalOpen}
-                list={list}
-              />
+              <div className="list-edit-btns">
+                <ListButton
+                  isModalOpen={isAddModalOpen}
+                  setIsModalOpen={setIsAddModalOpen}
+                  list={list}
+                  isAdding={true}
+                />
+                <ListButton
+                  isModalOpen={isEditModalOpen}
+                  setIsModalOpen={setIsEditModalOpen}
+                  list={list}
+                />
+              </div>
             </>
           ) : (
             <SaveButton list={list} user={user} />

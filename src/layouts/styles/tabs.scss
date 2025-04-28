@@ -16,9 +16,9 @@
   &:hover {
     color: $basic-green;
   }
-}
 
-.active-tab {
-  border-color: $basic-green;
-  color: $basic-green;
+  &.active {
+    border-color: $basic-green;
+    color: $basic-green;
+  }
 }

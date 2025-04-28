@@ -16,6 +16,8 @@
   border: 2px solid $basic-white;
   padding: 0.25em 0.5em;
   text-wrap: nowrap;
+  width: fit-content;
+  margin: auto;
 
   &:hover {
     color: $basic-gray;

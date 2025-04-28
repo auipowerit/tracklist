@@ -100,6 +100,8 @@
   border-radius: 6px;
   background-color: $basic-green;
   padding: 0.5em 0.75em;
+  width: fit-content;
+  margin: auto;
 
   &:hover {
     background-color: $dark-green;

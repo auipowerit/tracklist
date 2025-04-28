@@ -34,24 +34,22 @@ export default function Login({ setIsRegistration }) {
   }
 
   return (
-    <div className="login-container">
-      <form ref={formRef} onSubmit={handleSubmit} className="login-form">
-        <AuthInput label="Email Address" name="email" type="text" />
-        <AuthInput label="Password" name="password" type="password" />
+    <form ref={formRef} onSubmit={handleSubmit} className="auth-form">
+      <AuthInput label="Email" name="email" type="text" />
+      <AuthInput label="Password" name="password" type="password" />
 
-        <button type="submit" className="login-submit-btn">
-          Submit
-        </button>
-      </form>
-
+      <button type="submit" className="form-submit-btn">
+        Submit
+      </button>
+      
       <button
         type="button"
         onClick={() => setIsRegistration(true)}
-        className="login-signup-btn"
+        className="basic-button"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
         <p>Sign up</p>
       </button>
-    </div>
+    </form>
   );
 }

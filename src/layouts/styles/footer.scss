@@ -1,12 +1,9 @@
 @use "src/styles/abstracts" as *;
 
 footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flexbox(column, center, center, 1em);
   padding: 2em 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  gap: 1em;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .footer-text {

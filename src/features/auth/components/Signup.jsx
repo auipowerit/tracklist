@@ -36,25 +36,19 @@ export default function Signup({ setIsRegistration }) {
   }
 
   return (
-    <div className="signup-container">
-      <form ref={formRef} onSubmit={handleSubmit} className="signup-form">
-        <AuthInput label="Display Name" name="displayname" type="text" />
-        <AuthInput label="Username" name="username" type="text" />
-        <AuthInput label="Email Address" name="email" type="text" />
-        <AuthInput label="Password" name="password" type="password" />
+    <form ref={formRef} onSubmit={handleSubmit} className="auth-form">
+      <AuthInput label="Display Name" name="displayname" type="text" />
+      <AuthInput label="Username" name="username" type="text" />
+      <AuthInput label="Email Address" name="email" type="text" />
+      <AuthInput label="Password" name="password" type="password" />
 
-        <button type="submit" className="signup-submit-btn">
-          Submit
-        </button>
-      </form>
-
-      <button
-        onClick={() => setIsRegistration(false)}
-        className="signup-signin-btn"
-      >
+      <button type="submit" className="form-submit-btn">
+        Submit
+      </button>
+      <button onClick={() => setIsRegistration(false)} className="basic-button">
         <p>Sign in</p>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
-    </div>
+    </form>
   );
 }

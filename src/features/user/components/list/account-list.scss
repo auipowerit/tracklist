@@ -50,11 +50,11 @@
 .account-list-dropdown {
   @include flexbox(column, center, center, 1em);
   position: absolute;
-  top: 50px;
+  top: 100%;
   right: 0;
   visibility: hidden;
   z-index: 30;
-  border: 2px solid $basic-white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   border-radius: 6px;
   background-color: $darker-gray;
   padding: 1em 1.5em;
@@ -78,6 +78,10 @@
   align-items: center;
   gap: 0.75em;
   width: 100%;
+
+  button.active {
+    color: $basic-green;
+  }
 }
 
 .account-list-edit {
@@ -129,4 +133,8 @@
 
 input:checked + .toggle:before {
   transform: translateX(22px);
+}
+
+.list-edit-btns {
+  @include flexbox(column, center, flex-start, 1em);
 }

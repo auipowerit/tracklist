@@ -58,12 +58,7 @@ function ChatCard({ chat, handleOpenChat }) {
 
   const isActive = activeChatUser.uid === chat.uid;
 
-  const color =
-    activeChatId === chat.chatId
-      ? "text-gray-300"
-      : chat.unread > 0
-        ? "font-bold"
-        : "text-gray-300";
+  const color = chat.unread > 0 && "chatlist-unread";
 
   const lastMessage =
     chat.lastMessage.length > 40

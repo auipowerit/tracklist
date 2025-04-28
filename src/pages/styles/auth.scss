@@ -1,77 +1,24 @@
 @use "src/styles/abstracts" as *;
+@use "src/styles/components" as *;
+
+.auth-form {
+  @include flexbox(column, $gap: 1em);
+  width: fit-content;
+  margin: auto;
+}
 
 .auth-input-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5em;
+  @include flexbox(row, space-between, center, 1em);
+
+  label {
+    @include font(1.25);
+  }
 }
 
 .auth-input {
+  @include font(1);
   margin-left: auto;
   outline: none;
   border: 2px solid $basic-white;
   padding: 0.15em 0.25em;
-}
-
-.signup-container {
-  @include flexbox(column, space-evenly, center, 1em);
-  @include font(1);
-  align-items: center;
-  vertical-align: middle;
-  padding: 1em;
-}
-
-.signup-form {
-  @include flexbox(column, $gap: 1em);
-}
-
-.signup-submit-btn {
-  align-self: flex-start;
-  margin: auto;
-  border-radius: 12px;
-  background-color: green;
-  padding: 0.25em 0.75em;
-}
-
-.signup-signin-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  border-radius: 12px;
-  padding: 0.25em 0.5em;
-
-  &:hover {
-    background-color: $basic-green;
-  }
-}
-
-.login-container {
-  @include flexbox(column, space-evenly, center, 1em);
-  @include font(1);
-  vertical-align: middle;
-  padding: 1em;
-}
-
-.login-form {
-  @include flexbox(column, $gap: 0.75em);
-}
-
-.login-submit-btn {
-  margin: auto;
-  border-radius: 12px;
-  background-color: $basic-green;
-  padding: 0.25em 0.75em;
-  align-self: flex-start;
-}
-
-.login-signup-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.15em;
-  border-radius: 12px;
-  padding: 0.25em 0.5em;
-
-  &:hover {
-    background-color: $basic-green;
-  }
 }
