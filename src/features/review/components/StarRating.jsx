@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import "./styles/star-rating.scss";
 
 export default function StarRating({ rating, setRating }) {
   const [hover, setHover] = useState(null);
@@ -25,7 +26,7 @@ export default function StarRating({ rating, setRating }) {
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 p-4">
+    <div className="star-rating">
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = (hover || rating) === ratingValue - 0.5;
@@ -33,7 +34,7 @@ export default function StarRating({ rating, setRating }) {
         return (
           <span
             key={i}
-            className="cursor-pointer transition-all duration-75"
+            className="star-rating-star"
             onMouseMove={(event) => handleMouseMove(event, ratingValue)}
             onMouseLeave={handleMouseLeave}
           >

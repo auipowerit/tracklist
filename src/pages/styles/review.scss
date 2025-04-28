@@ -112,7 +112,7 @@
 
 .review-section-content {
   @include font(0.75);
-  @include gradient(top);  
+  @include gradient(top);
   padding: 0.5em;
   overflow: auto;
   text-wrap: break-word;
@@ -141,7 +141,8 @@
 }
 
 .comment-input {
-  @include font(0.5);
+  @include font(0.75);
+  outline: none;
   border-bottom: 1px solid $basic-gray;
   padding-bottom: 0.5em;
   width: 100%;

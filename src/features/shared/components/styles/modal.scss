@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.modal-container {
+.modal-overlay {
   @include flexbox(row, center, center);
   @include font(1);
   position: fixed;
@@ -18,12 +18,14 @@
   }
 }
 
-.modal-overlay {
+.modal-container {
   transform: scale(0);
   transition: all 0.2s;
   border-radius: 12px;
   background-color: $darker-gray;
   padding: 2em;
+  width: fit-content;
+  min-width: 600px;
 
   &:not(.active) {
     transform: scale(125%);

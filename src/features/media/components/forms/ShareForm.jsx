@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import "./share-form.scss";
 
 export default function ShareForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
@@ -96,52 +97,42 @@ export default function ShareForm(props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
-    >
+    <form onSubmit={handleSubmit} className="form-container">
       <FormHeader category={category} />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex w-full items-center justify-center gap-6">
-          <FormImage media={media} />
+      <div className="form-content">
+        <FormImage media={media} />
 
-          <div className="relative flex w-full flex-col items-center gap-2">
-            <FormInput
-              input={input}
-              setInput={setInput}
-              setUsers={setUsers}
-              currentUsers={currentUsers}
-            />
-            <FormUserResults users={users} handleAddUser={handleAddUser} />
+        <div className="share-form-info">
+          <FormInput
+            input={input}
+            setInput={setInput}
+            setUsers={setUsers}
+            currentUsers={currentUsers}
+          />
+          <FormUserResults users={users} handleAddUser={handleAddUser} />
 
-            <FormUsersList
-              currentUsers={currentUsers}
-              setCurrentUser={setCurrentUser}
-            />
-
-            <FormMessage message={message} setMessage={setMessage} />
-          </div>
+          <FormUsersList
+            currentUsers={currentUsers}
+            setCurrentUser={setCurrentUser}
+          />
         </div>
       </div>
+      <FormMessage message={message} setMessage={setMessage} />
       <FormButton currentUsers={currentUsers} />
     </form>
   );
 }
 
 function FormHeader({ category }) {
-  return (
-    <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
-      {`Share this ${category} with friends`}
-    </p>
-  );
+  return <p className="form-header">{`Share this ${category} with friends`}</p>;
 }
 
 function FormImage({ media }) {
   return (
     <img
       src={media?.media?.image || media?.image || DEFAULT_MEDIA_IMG}
-      className="aspect-square h-50 object-cover shadow-lg"
+      className="form-media-img"
     />
   );
 }
@@ -183,27 +174,25 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
       onChange={handleSearch}
       type="text"
       placeholder="Search for a friend..."
-      className="w-full rounded-sm border-1 border-white p-2 outline-none"
+      className="form-input"
     />
   );
 }
 
 function FormUserResults({ users, handleAddUser }) {
   return (
-    <div
-      className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${users.length > 0 && "h-fit max-h-46 overflow-auto"}`}
-    >
+    <div className={`share-form-user-results ${users.length > 0 && "active"}`}>
       {users.map((user) => (
         <button
           key={user.uid}
           type="button"
           onClick={() => handleAddUser(user)}
-          className="flex items-center gap-2 px-2 py-1 text-start hover:bg-gray-600"
+          className="share-form-user-result"
         >
-          <img src={user.profileUrl} className="h-10 w-10 rounded-full" />
-          <div className="flex flex-col">
-            <p className="font-bold">{user.displayname}</p>
-            <p className="text-gray-300">@{user.username}</p>
+          <img src={user.profileUrl} />
+          <div className="share-form-user-result-info">
+            <p>{user.displayname}</p>
+            <span>@{user.username}</span>
           </div>
         </button>
       ))}
@@ -217,14 +206,11 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
   }
 
   return (
-    <div className="flex h-24 flex-col items-start gap-2 overflow-auto p-2">
+    <div className="share-form-current-users">
       {currentUsers?.map((user) => {
         return (
-          <div
-            key={user.uid}
-            className="flex items-center gap-2 rounded-sm bg-gray-700 px-2 py-1"
-          >
-            <p className="font-bold">@{user.username}</p>
+          <div key={user.uid} className="share-form-current-user">
+            <p>@{user.username}</p>
             <button type="button" onClick={() => handleRemoveUser(user.uid)}>
               <FontAwesomeIcon icon={faXmark} />
             </button>
@@ -246,17 +232,14 @@ function FormMessage({ message, setMessage }) {
       value={message}
       onChange={handleChange}
       placeholder="Include a message..."
-      className="w-full border-2 border-white px-2 py-1 outline-none"
+      className="form-input"
     />
   );
 }
 
 function FormButton({ currentUsers }) {
   return (
-    <button
-      type="submit"
-      className="m-auto flex w-fit items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
-    >
+    <button type="submit" className="form-submit-btn">
       <FaPaperPlane />
       <p>{`Send ${currentUsers.length > 1 ? "seperately" : ""} `}</p>
     </button>

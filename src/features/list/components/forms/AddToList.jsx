@@ -96,37 +96,32 @@ export default function AddToList(props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="m-auto flex w-full flex-col items-center justify-center gap-6 py-6"
-    >
+    <form onSubmit={handleSubmit} className="form-container">
       <FormHeader />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex w-full items-center justify-center gap-6">
-          <FormImage media={media} />
+      <div className="form-content">
+        <FormImage media={media} />
 
-          <div className="flex flex-col items-stretch gap-2">
-            <FormMediaInput
-              type={type}
-              setType={setType}
-              mediaInputRef={mediaInputRef}
-              setMedia={setMedia}
-              mediaResults={mediaResults}
-              setMediaResults={setMediaResults}
-            />
+        <div className="list-form-inputs">
+          <FormMediaInput
+            type={type}
+            setType={setType}
+            mediaInputRef={mediaInputRef}
+            setMedia={setMedia}
+            mediaResults={mediaResults}
+            setMediaResults={setMediaResults}
+          />
 
-            <FormListInput
-              selectRef={selectRef}
-              addToCurrentLists={addToCurrentLists}
-              lists={lists}
-            />
+          <FormListInput
+            selectRef={selectRef}
+            addToCurrentLists={addToCurrentLists}
+            lists={lists}
+          />
 
-            <FormLists
-              currentLists={currentLists}
-              removeFromCurrentLists={removeFromCurrentLists}
-            />
-          </div>
+          <FormLists
+            currentLists={currentLists}
+            removeFromCurrentLists={removeFromCurrentLists}
+          />
         </div>
       </div>
       <FormButton />
@@ -135,19 +130,12 @@ export default function AddToList(props) {
 }
 
 function FormHeader() {
-  return (
-    <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
-      Add to list
-    </p>
-  );
+  return <p className="form-header">Add to list</p>;
 }
 
 function FormImage({ media }) {
   return (
-    <img
-      src={media?.image || DEFAULT_MEDIA_IMG}
-      className="aspect-square h-48 object-cover shadow-lg"
-    />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form-media-img" />
   );
 }
 
@@ -190,16 +178,16 @@ function FormMediaInput(props) {
   }
 
   return (
-    <div className="relative flex gap-2">
+    <div className="list-form-media-input">
       <input
         type="search"
         ref={mediaInputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
         onKeyUp={handleSearch}
-        className="border-1 px-2 py-1 outline-none"
+        className="form-input"
       />
 
-      <select value={type} onChange={handleChange}>
+      <select value={type} onChange={handleChange} className="form-select">
         <option value="artist">artist</option>
         <option value="album">album</option>
         <option value="track">song</option>
@@ -233,17 +221,17 @@ function FormMediaResults(props) {
 
   return (
     <div
-      className={`absolute top-10 right-0 left-0 z-10 flex flex-col bg-green-700 ${mediaResults.length > 0 && "h-46 overflow-auto"}`}
+      className={`form-media-results ${mediaResults.length > 0 && "active"}`}
     >
       {mediaResults.map(({ id, name, subtitle }) => (
         <button
           key={id}
           type="button"
           onClick={() => handleClick(id, name)}
-          className="px-2 py-1 text-start hover:bg-gray-600"
+          className="form-media-result"
         >
           <p>{name}</p>
-          {type !== "artist" && <p className="text-sm">{subtitle}</p>}
+          {type !== "artist" && <span>{subtitle}</span>}
         </button>
       ))}
     </div>
@@ -263,34 +251,29 @@ function FormListInput(props) {
       ref={selectRef}
       defaultValue=""
       onChange={handleSelect}
-      className="option:bg-gray-700 w-full border-1 px-2 py-1 outline-none"
+      className="form-select list-form-select"
     >
       <option value="" disabled hidden>
         -- Select a list --
       </option>
       {lists.map((item) => {
         return (
-          <option key={item.id} value={item.id} className="bg-gray-700">
+          <option key={item.id} value={item.id}>
             {item.name}
           </option>
         );
       })}
-      <option value="_new" className="bg-gray-700">
-        Create new list
-      </option>
+      <option value="_new">Create new list</option>
     </select>
   );
 }
 
 function FormLists({ currentLists, removeFromCurrentLists }) {
   return (
-    <div className="flex h-20 flex-col items-start gap-2 overflow-auto p-2">
+    <div className="list-form-current-lists">
       {currentLists?.map((list) => {
         return (
-          <div
-            key={list.id}
-            className="flex items-center gap-2 rounded-sm bg-gray-700 px-2 py-1"
-          >
+          <div key={list.id} className="list-form-current-list">
             <p>{list.name}</p>
             <button type="button" onClick={() => removeFromCurrentLists(list)}>
               <FontAwesomeIcon icon={faXmark} />
@@ -304,10 +287,7 @@ function FormLists({ currentLists, removeFromCurrentLists }) {
 
 function FormButton() {
   return (
-    <button
-      type="submit"
-      className="m-auto flex w-fit items-center gap-2 rounded-sm bg-green-700 px-3 py-1"
-    >
+    <button type="submit" className="form-submit-btn">
       <FontAwesomeIcon icon={faPlus} />
       <p>Add</p>
     </button>

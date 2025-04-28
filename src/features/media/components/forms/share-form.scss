@@ -1,0 +1,74 @@
+@use "src/styles/abstracts" as *;
+@use "src/styles/components" as *;
+
+.share-form-info {
+  position: relative;
+  @include flexbox(column, center, center, 0.25em);
+  width: 100%;
+}
+
+.share-form-user-results {
+  position: absolute;
+  top: 20%;
+  right: 0;
+  left: 0;
+  @include flexbox(column);
+  background-color: $basic-green;
+
+  &.active {
+    height: 200px;
+    overflow: auto;
+  }
+}
+
+.share-form-user-result {
+  @include flexbox(row, initial, center, 0.25em);
+  padding: 0.25em;
+  text-align: left;
+
+  &:hover {
+    background-color: $darker-green;
+  }
+
+  img {
+    aspect-ratio: 1/1;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+}
+
+.share-form-user-result-info {
+  @include flexbox(column);
+
+  p {
+    @include font(0.75, bold);
+  }
+
+  span {
+    @include font(0.75);
+  }
+}
+
+.share-form-current-users {
+  @include flexbox(column, initial, start, 0.25em);
+  height: 125px;
+  overflow: auto;
+  padding: 0.25em;
+}
+
+.share-form-current-user {
+  @include flexbox(row, initial, center, 0.25em);
+  background-color: $dark-gray;
+  padding: 0.25em 0.5em;
+  border-radius: 6px;
+
+  p {
+    @include font(0.75, bold);
+  }
+
+  button:hover {
+    color: $basic-gray;
+  }
+}

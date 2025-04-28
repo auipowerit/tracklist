@@ -4,7 +4,7 @@
   @include flexbox(column, $gap: 0.5em);
 }
 .comment-card {
-  @include flexbox(column, initial, initial, 0.5em);
+  @include flexbox(column, initial, initial, 0.75em);
 }
 .comment-user-container {
   @include flexbox(row, initial, center, 0.5em);

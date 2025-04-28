@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CreateList from "./CreateList";
 import AddToList from "./AddToList";
+import "./list-form.scss";
 
 export default function ListForm(props) {
   const { isModalOpen, setIsModalOpen, media, category, list, isAdding } =

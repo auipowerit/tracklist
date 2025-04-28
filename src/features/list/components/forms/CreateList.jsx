@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faCheck,
   faPlus,
   faTrash,
-  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateList(props) {
@@ -92,33 +91,28 @@ export default function CreateList(props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="m-auto flex flex-col items-center justify-center gap-8 py-6 text-xl"
-    >
+    <form onSubmit={handleSubmit} className="form-container">
       <FormHeader />
 
-      <div className="flex h-full justify-center gap-6">
-        <div className="flex h-full flex-col gap-8">
-          <FormName name={name} setName={setName} />
-          <div className="flex flex-col gap-2">
-            <FormCheckbox
-              name="Ranking"
-              isChecked={isRanking}
-              setIsChecked={setIsRanking}
-            />
-            <FormCheckbox
-              name="Private"
-              isChecked={isPrivate}
-              setIsChecked={setIsPrivate}
-            />
-          </div>
+      <div className="list-form-info-container">
+        <FormName name={name} setName={setName} />
+        <div className="list-form-checkbox-container">
+          <FormCheckbox
+            name="Ranking"
+            isChecked={isRanking}
+            setIsChecked={setIsRanking}
+          />
+          <FormCheckbox
+            name="Private"
+            isChecked={isPrivate}
+            setIsChecked={setIsPrivate}
+          />
         </div>
-        <FormDescription
-          description={description}
-          setDescription={setDescription}
-        />
       </div>
+      <FormDescription
+        description={description}
+        setDescription={setDescription}
+      />
 
       <FormButtons
         list={list}
@@ -132,17 +126,13 @@ export default function CreateList(props) {
 function FormHeader({ list }) {
   const title = list ? "Edit List" : "Create New List";
 
-  return (
-    <p className="w-full border-b-1 border-white pb-2 text-left text-2xl font-bold">
-      {title}
-    </p>
-  );
+  return <p className="form-header">{title}</p>;
 }
 
 function FormName({ name, setName }) {
   const NAME_LIMIT = 50;
 
-  const color = name.length >= NAME_LIMIT ? "text-red-600" : "text-gray-400";
+  const color = name.length >= NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     if (e.target.value.length > NAME_LIMIT) {
@@ -153,19 +143,20 @@ function FormName({ name, setName }) {
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between">
+    <div className="list-form-name-container">
+      <div className="list-form-input-header">
         <label htmlFor="name">Name</label>
-        <p className={`text-sm ${color}`}>
+        <p style={{ color: color }}>
           {name.length || 0}/{NAME_LIMIT}
         </p>
       </div>
+
       <input
         name="name"
         type="text"
         value={name}
         onChange={handleChange}
-        className="border-1 border-white px-2 py-1 outline-hidden"
+        className="form-input"
       />
     </div>
   );
@@ -173,7 +164,7 @@ function FormName({ name, setName }) {
 
 function FormCheckbox({ name, isChecked, setIsChecked }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="list-form-input-container">
       <input
         name={name}
         type="checkbox"
@@ -189,8 +180,7 @@ function FormCheckbox({ name, isChecked, setIsChecked }) {
 function FormDescription({ description, setDescription }) {
   const DESC_LIMIT = 150;
 
-  const color =
-    description.length >= DESC_LIMIT ? "text-red-600" : "text-gray-400";
+  const color = description.length >= DESC_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     if (e.target.value.length > DESC_LIMIT) {
@@ -201,10 +191,10 @@ function FormDescription({ description, setDescription }) {
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between">
+    <div className="form-textarea-container">
+      <div className="list-form-input-header">
         <label htmlFor="description">Description</label>
-        <p className={`text-sm ${color}`}>
+        <p style={{ color: color }}>
           {description.length || 0}/{DESC_LIMIT}
         </p>
       </div>
@@ -214,7 +204,6 @@ function FormDescription({ description, setDescription }) {
         name="description"
         value={description}
         onChange={handleChange}
-        className="h-full border-1 border-white px-2 py-1 outline-none"
       />
     </div>
   );
@@ -237,21 +226,18 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
   }
 
   return (
-    <div className="flex justify-center gap-4">
+    <div className="list-form-buttons-container">
       {setNewList && (
         <button
           type="button"
           onClick={() => setNewList(false)}
-          className="flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2"
+          className="list-form-back-btn"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back</p>
         </button>
       )}
-      <button
-        type="submit"
-        className="flex items-center justify-center gap-2 rounded-md bg-green-700 px-4 py-2"
-      >
+      <button type="submit" className="form-submit-btn">
         <FontAwesomeIcon icon={list ? faCheck : faPlus} />
         <p>{list ? "Save" : "Create"}</p>
       </button>

@@ -7,11 +7,11 @@ export default function Modal({ children, isModalOpen, setIsModalOpen }) {
 
   return (
     <div
-      className={`modal-container ${isModalOpen && "active"}`}
+      className={`modal-overlay ${isModalOpen && "active"}`}
       onClick={onClose}
     >
       <div
-        className={`modal-overlay ${isModalOpen && "active"}`}
+        className={`modal-container ${isModalOpen && "active"}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button className="modal-btn" onClick={onClose}>
