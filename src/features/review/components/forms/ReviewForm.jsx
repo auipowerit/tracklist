@@ -9,7 +9,7 @@ import StarRating from "../StarRating";
 import "./review-form.scss";
 
 export default function ReviewForm(props) {
-  const { isModalOpen, setIsModalOpen, mediaId, category } = props;
+  const { isModalOpen, setIsModalOpen, mediaId, category, setSuccess } = props;
 
   const { globalUser, getUserById } = useAuthContext();
   const { searchByName, getMediaById } = useSpotifyContext();
@@ -119,8 +119,7 @@ export default function ReviewForm(props) {
     );
 
     resetValues();
-    setIsModalOpen(false);
-    window.location.reload();
+    setSuccess(true);
   }
 
   function resetValues() {

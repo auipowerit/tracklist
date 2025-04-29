@@ -1,0 +1,19 @@
+@use "src/styles/abstracts" as *;
+
+.alert-container {
+  @include flexbox(row, center, center, 0.5em);
+  @include font(0.75, normal, $basic-white, italic);
+  opacity: 0;
+  margin: 0 auto;
+  width: fit-content;
+  height: 20px;
+  transition: all 0.2s;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.alert-icon {
+  color: $basic-red;
+}

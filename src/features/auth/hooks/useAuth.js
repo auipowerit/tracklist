@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
@@ -20,7 +21,7 @@ import { auth, db } from "src/config/firebase";
 import { DEFAULT_PROFILE_IMG } from "src/data/const";
 
 export function useAuth() {
-  async function signup(email, password, displayname, username, profileUrl) {
+  async function signup(email, password, displayname, username, setError) {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -35,7 +36,7 @@ export function useAuth() {
         displayname,
         username,
         bio: "",
-        profileUrl: profileUrl || DEFAULT_PROFILE_IMG,
+        profileUrl: DEFAULT_PROFILE_IMG,
         spotifyUrl: "",
         following: [],
         followers: [],
@@ -50,7 +51,12 @@ export function useAuth() {
 
       return true;
     } catch (error) {
-      console.log(error);
+      if (error.code === "auth/email-already-in-use") {
+        setError("The email address is already in use.");
+      } else {
+        setError("Something went wrong! Please review fields.");
+      }
+
       return false;
     }
   }
@@ -68,18 +74,32 @@ export function useAuth() {
     }
   }
 
-  async function login(email, password) {
+  async function login(email, password, setError) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return true;
     } catch (error) {
-      console.log(error);
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        setError("The email or password is incorrect.");
+      } else {
+        setError("Something went wrong! Please try again.");
+      }
+
       return false;
     }
   }
 
   function logout() {
     return signOut(auth);
+  }
+
+  async function checkIfEmailExists(email) {
+    const emailAccounts = await fetchSignInMethodsForEmail(auth, email);
+    return emailAccounts.length > 0;
   }
 
   function resetPassword(email) {
@@ -305,6 +325,7 @@ export function useAuth() {
     usernameAvailable,
     login,
     logout,
+    checkIfEmailExists,
     resetPassword,
 
     getUserById,

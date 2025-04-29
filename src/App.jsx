@@ -16,6 +16,11 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
+          path: "/reviews",
+          element: <Pages.HomePage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
           path: "/authenticate",
           element: <Pages.AuthPage />,
           errorElement: <Pages.ErrorPage is404={false} />,

@@ -57,7 +57,7 @@ export default function Navbar() {
     <div className="navbar">
       <div className="nav-items">
         <NavLink
-          to="/"
+          to="/reviews"
           className={({ isActive }) =>
             `navlink nav-logo ${isActive && "active"}`
           }

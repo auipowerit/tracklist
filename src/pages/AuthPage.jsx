@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import Login from "src/features/auth/components/Login";
-import Signup from "src/features/auth/components/Signup";
+import Login from "src/features/auth/components/forms/Login";
+import Signup from "src/features/auth/components/forms/Signup";
 import "./styles/auth.scss";
 
 export default function AuthPage() {

@@ -23,8 +23,8 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   aspect-ratio: 1/1;
   width: 50%;
-  height: 50%;
   max-width: 200px;
+  height: 50%;
   max-height: 200px;
   object-fit: cover;
 }
@@ -97,13 +97,52 @@
 .form-submit-button {
   @include flexbox(row, center, center, 0.25em);
   @include font(1);
+  margin: auto;
   border-radius: 6px;
   background-color: $basic-green;
   padding: 0.5em 0.75em;
   width: fit-content;
-  margin: auto;
 
   &:hover {
     background-color: $dark-green;
+  }
+}
+
+.invalid-field {
+  background-color: $basic-red;
+}
+
+.reset-password-container {
+  @include flexbox(row, center, center, 0.5em);
+  @include font(0.75);
+}
+
+.reset-password-link {
+  cursor: pointer;
+  @include font(initial, bold, $lighter-green);
+
+  &:hover {
+    color: $basic-green;
+  }
+}
+
+.success-container {
+  @include flexbox(column, center, center, 1em);
+  padding: 1em 0;
+}
+
+.success-message {
+  @include flexbox(row, center, center, 0.5em);
+  @include font(1.25, normal, $lighter-green, italic);
+}
+
+.success-button {
+  @include flexbox(row, center, center, 0.5em);
+  @include font(1);
+  border: 1px solid $basic-white;
+  padding: 0.5em 0.75em;
+
+  &:hover {
+    color: $basic-gray;
   }
 }
