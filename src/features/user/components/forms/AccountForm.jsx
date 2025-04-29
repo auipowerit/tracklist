@@ -28,8 +28,8 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
     }
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
     if (!globalUser || name === "" || bio === "") return;
 

@@ -7,4 +7,5 @@
 .review-form-input-container {
   position: relative;
   @include flexbox(row, $gap: 0.25em);
+  width: 100%;
 }

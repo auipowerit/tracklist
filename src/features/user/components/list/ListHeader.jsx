@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useOutletContext } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ListButton from "src/features/list/components/buttons/ListButton";
 import SaveButton from "src/features/list/components/buttons/SaveButton";
 import {
   faBars,
@@ -10,6 +9,8 @@ import {
   faLock,
   faTableCellsLarge,
 } from "@fortawesome/free-solid-svg-icons";
+import EditListButton from "src/features/list/components/buttons/EditListButton";
+import AddToListButton from "src/features/list/components/buttons/AddToListButton";
 
 export default function ListHeader(props) {
   const {
@@ -84,14 +85,14 @@ export default function ListHeader(props) {
             <p className="account-list-label">Layout</p>
             <button
               onClick={() => setOrientation(0)}
-              className={orientation === 0 && "active"}
+              className={orientation === 1 ? "active" : ""}
             >
               <FontAwesomeIcon icon={faTableCellsLarge} />
             </button>
 
             <button
               onClick={() => setOrientation(1)}
-              className={orientation === 1 && "active"}
+              className={orientation === 1 ? "active" : ""}
             >
               <FontAwesomeIcon icon={faBars} />
             </button>
@@ -113,13 +114,12 @@ export default function ListHeader(props) {
               </div>
 
               <div className="list-edit-buttons">
-                <ListButton
+                <AddToListButton
                   isModalOpen={isAddModalOpen}
                   setIsModalOpen={setIsAddModalOpen}
                   list={list}
-                  isAdding={true}
                 />
-                <ListButton
+                <EditListButton
                   isModalOpen={isEditModalOpen}
                   setIsModalOpen={setIsEditModalOpen}
                   list={list}

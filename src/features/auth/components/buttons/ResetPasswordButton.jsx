@@ -67,8 +67,8 @@ function ResetPasswordForm({ isModalOpen, setSuccess }) {
     formRef.current.elements["email"].classList.remove("invalid-field");
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
     const email = formRef.current.elements["email"];
 

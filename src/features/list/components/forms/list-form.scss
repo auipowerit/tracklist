@@ -1,5 +1,9 @@
 @use "src/styles/abstracts" as *;
 
+.list-form {
+  width: 700px;
+}
+
 .list-form-inputs {
   @include flexbox(column, center, stretch, 0.5em);
 }

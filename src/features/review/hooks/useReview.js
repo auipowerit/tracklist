@@ -49,9 +49,9 @@ export function useReview() {
       const reviewsRef = collection(db, "reviews");
 
       const earliestDate = new Date();
-      earliestDate.setDate(earliestDate.getDate() - 2);
+      earliestDate.setDate(earliestDate.getDate() - 10);
 
-      // Get the 20 most liked reviews from the last 2 days
+      // Get the 20 most liked reviews from the last 10 days
       const q = query(
         reviewsRef,
         where("createdAt", ">", earliestDate),

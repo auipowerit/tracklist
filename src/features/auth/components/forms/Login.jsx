@@ -15,8 +15,8 @@ export default function Login({ setIsRegistration }) {
   const [error, setError] = useState("");
   const formRef = useRef(null);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
     const email = formRef.current.elements["email"];
     const password = formRef.current.elements["password"];

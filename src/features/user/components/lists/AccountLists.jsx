@@ -6,8 +6,8 @@ import Loading from "src/features/shared/components/Loading";
 import ListCard from "src/features/list/components/cards/ListCard";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import ListButton from "src/features/list/components/buttons/ListButton";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import AddListButton from "src/features/list/components/buttons/AddListButton";
 import "./account-lists.scss";
 
 export default function AccountLists() {
@@ -36,7 +36,10 @@ function Header({ canEdit }) {
     <div className="account-page-header">
       <p>Lists</p>
       {canEdit && (
-        <ListButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <AddListButton
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </div>
   );
@@ -149,11 +152,7 @@ function ListItem({ item, image }) {
   return (
     <Link to={link} className="account-list-item">
       {listUser && <p>{`Created by ${listUser}`}</p>}
-      <ListCard
-        id={item.id}
-        list={item}
-        image={image}
-      />
+      <ListCard id={item.id} list={item} image={image} />
     </Link>
   );
 }

@@ -14,8 +14,8 @@ export default function CommentInput({ review, setComments }) {
     inputComment.current.value = "";
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
     const content = inputComment.current?.value.trim();
     if (!content || !globalUser || !review) return;

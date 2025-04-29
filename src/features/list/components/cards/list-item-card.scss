@@ -4,7 +4,7 @@
   @include font(0.5);
   display: flex;
   border: 1px solid transparent;
-  width: fit-content;
+  width: 200px;
 
   &:hover {
     border-color: $basic-white;
@@ -25,6 +25,7 @@
 .list-item-image {
   @include flexbox(row, initial, initial, 0.5em);
   position: relative;
+  width: 100%;
 
   p {
     @include flexbox(row, center, center);
@@ -42,7 +43,7 @@
   }
 
   img {
-    width: 200px;
+    width: 100%;
     height: 200px;
     object-fit: cover;
   }
@@ -53,8 +54,19 @@
 }
 
 .list-item-title {
-  font-weight: bold;
-  text-wrap: wrap;
+  padding: 0 0.5em;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  @include gradient(left);
+
+  p {
+    @include font(0.5, bold);
+    margin: auto;
+    width: fit-content;
+    color: $basic-white;
+    white-space: nowrap;
+  }
 
   &.horizontal {
     text-align: center;

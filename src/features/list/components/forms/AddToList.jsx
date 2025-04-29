@@ -1,19 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import Alert from "src/features/shared/components/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
 
 export default function AddToList(props) {
-  const { isModalOpen, setIsModalOpen, mediaId, listId, category, setNewList } =
+  const { isModalOpen, mediaId, listId, category, setNewList, setSuccess } =
     props;
 
   const { globalUser } = useAuthContext();
   const { getListsByUserId, addToList, getListById } = useListContext();
   const { getMediaById } = useSpotifyContext();
 
+  const [error, setError] = useState("");
   const [media, setMedia] = useState(null);
   const [mediaResults, setMediaResults] = useState([]);
   const [lists, setLists] = useState([]);
@@ -71,18 +73,30 @@ export default function AddToList(props) {
     setLists([...lists, list]);
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-    if (!globalUser || !media || currentLists.length === 0) return;
+    if (!globalUser) {
+      setError("Please sign in to continue.");
+      return;
+    }
+
+    if (!media) {
+      setError("Please select media to add.");
+      return;
+    }
+
+    if (currentLists.length <= 0) {
+      setError("Please select a list.");
+      return;
+    }
 
     await Promise.all(
       currentLists.map((list) => addToList(media.id, type, list.id)),
     );
 
-    setIsModalOpen(false);
+    setSuccess(true);
     resetValues();
-    window.location.reload();
   }
 
   function resetValues() {
@@ -96,7 +110,7 @@ export default function AddToList(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form onSubmit={handleSubmit} className="form-container list-form">
       <FormHeader />
 
       <div className="form-content">
@@ -124,6 +138,8 @@ export default function AddToList(props) {
           />
         </div>
       </div>
+
+      <Alert message={error} />
       <FormButton />
     </form>
   );

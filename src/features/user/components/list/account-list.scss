@@ -12,14 +12,12 @@
 
   &.horizontal {
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 }
 
 .account-list-title {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
+  @include flexbox(column, $gap: 0.25em);
 }
 
 .account-list-name-container {
@@ -59,8 +57,8 @@
   background-color: $darker-gray;
   padding: 1em 1.5em;
   width: fit-content;
-  overflow: hidden;
   width: 250px;
+  overflow: hidden;
 
   &.active {
     visibility: visible;
@@ -74,9 +72,7 @@
 }
 
 .account-list-orientation {
-  display: flex;
-  align-items: center;
-  gap: 0.75em;
+  @include flexbox(row, initial, center, 0.75em);
   width: 100%;
 
   button.active {
@@ -85,9 +81,7 @@
 }
 
 .account-list-edit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   width: 100%;
 }
 

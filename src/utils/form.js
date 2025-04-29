@@ -2,7 +2,10 @@ export function checkEmptyForm(formRef) {
   let isEmpty = false;
 
   Array.from(formRef.current.elements).forEach((element) => {
-    if (element.nodeName === "INPUT" && element.value.trim() === "") {
+    if (
+      (element.nodeName === "INPUT" || element.nodeName === "TEXTAREA") &&
+      element.value.trim() === ""
+    ) {
       element.classList.add("invalid-field");
       isEmpty = true;
     }

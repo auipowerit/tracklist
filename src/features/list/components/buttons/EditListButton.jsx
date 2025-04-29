@@ -1,25 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "src/features/shared/components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { faArrowRight, faPen } from "@fortawesome/free-solid-svg-icons";
 import SuccessMessage from "src/features/shared/components/SuccessMessage";
-import {
-  faArrowRight,
-  faPenToSquare,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import ReviewForm from "../forms/ReviewForm";
-import Modal from "src/features/shared/components/Modal";
-import "./review-buttons.scss";
+import ListForm from "../forms/ListForm";
+import "./list-buttons.scss";
 
-export default function AddReviewButton(props) {
-  const {
-    isModalOpen,
-    setIsModalOpen,
-    showIcon = false,
-    mediaId,
-    category,
-  } = props;
+export default function EditListButton(props) {
+  const { isModalOpen, setIsModalOpen, list } = props;
 
   const { globalUser } = useAuthContext();
   const navigate = useNavigate();
@@ -41,7 +31,7 @@ export default function AddReviewButton(props) {
   }
 
   function handleSuccessClick() {
-    navigate("/reviews");
+    navigate(`/users/${globalUser.username}/lists`);
     setIsModalOpen(false);
   }
 
@@ -50,36 +40,24 @@ export default function AddReviewButton(props) {
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         {success ? (
           <SuccessMessage
-            message={"Review submitted!"}
-            link={"Go to reviews"}
+            message={"Changes saved!"}
+            link={"Go to lists"}
             icon={faArrowRight}
             onClick={handleSuccessClick}
           />
         ) : (
-          <ReviewForm
+          <ListForm
             isModalOpen={isModalOpen}
-            mediaId={mediaId}
-            category={category}
+            list={list}
             setSuccess={setSuccess}
           />
         )}
       </Modal>
 
-      {showIcon ? (
-        <button onClick={handleClick} className="review-button">
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </button>
-      ) : (
-        <button
-          data-modal-target="default-modal"
-          data-modal-toggle="default-modal"
-          onClick={handleClick}
-          className="add-review-button"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-          <p>Post review</p>
-        </button>
-      )}
+      <button className="basic-button" onClick={handleClick}>
+        <FontAwesomeIcon icon={faPen} />
+        <p>List details</p>
+      </button>
     </div>
   );
 }

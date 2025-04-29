@@ -24,8 +24,8 @@
   border-radius: 12px;
   background-color: $darker-gray;
   padding: 2em;
-  width: 100%;
-  max-width: 600px;
+  width: fit-content;
+  max-width: 800px;
 
   &:not(.active) {
     transform: scale(125%);

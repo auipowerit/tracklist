@@ -9,13 +9,18 @@ import {
   faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "src/features/shared/components/Alert";
+
+const NAME_LIMIT = 50;
+const DESC_LIMIT = 150;
 
 export default function CreateList(props) {
-  const { isModalOpen, setIsModalOpen, setNewList, list } = props;
+  const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
 
   const { globalUser } = useAuthContext();
   const { createNewList, updateListDetails } = useListContext();
 
+  const [error, setError] = useState("");
   const [name, setName] = useState(list?.name || "");
 
   const [isRanking, setIsRanking] = useState(list?.isRanking || false);
@@ -40,34 +45,26 @@ export default function CreateList(props) {
     }
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-    const listData = getValues();
-    if (!listData) return;
-
-    if (list) {
-      await updateListDetails(list.id, listData);
-      setIsModalOpen(false);
-      window.location.reload();
-      resetValues();
+    if (!globalUser) {
+      setError("Please sign in to continue.");
       return;
     }
 
-    await createNewList(listData, globalUser.uid);
-
-    if (!setNewList) {
-      setIsModalOpen(false);
-      window.location.reload();
+    if (name === "" && description === "") {
+      setError("Please fill out all fields.");
       return;
     }
 
-    setNewList(false);
-    resetValues();
-  }
+    if (name === "" || name.length > NAME_LIMIT) {
+      setError("Please provide a name.");
+      return;
+    }
 
-  function getValues() {
-    if (name === "" || description === "" || !globalUser) {
+    if (description === "" || description.length > DESC_LIMIT) {
+      setError("Please provide a description.");
       return;
     }
 
@@ -79,7 +76,22 @@ export default function CreateList(props) {
       media: [],
     };
 
-    return listData;
+    if (list) {
+      await updateListDetails(list.id, listData);
+      setSuccess(true);
+      resetValues();
+      return;
+    }
+
+    await createNewList(listData, globalUser.uid);
+
+    if (!setNewList) {
+      setSuccess(true);
+      return;
+    }
+
+    setNewList(false);
+    resetValues();
   }
 
   function resetValues() {
@@ -91,8 +103,8 @@ export default function CreateList(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
-      <FormHeader />
+    <form onSubmit={handleSubmit} className="form-container list-form">
+      <FormHeader list={list} />
 
       <div className="list-form-info-container">
         <FormName name={name} setName={setName} />
@@ -114,6 +126,8 @@ export default function CreateList(props) {
         setDescription={setDescription}
       />
 
+      <Alert message={error} />
+
       <FormButtons
         list={list}
         setNewList={setNewList}
@@ -130,8 +144,6 @@ function FormHeader({ list }) {
 }
 
 function FormName({ name, setName }) {
-  const NAME_LIMIT = 50;
-
   const color = name.length >= NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
@@ -178,8 +190,6 @@ function FormCheckbox({ name, isChecked, setIsChecked }) {
 }
 
 function FormDescription({ description, setDescription }) {
-  const DESC_LIMIT = 150;
-
   const color = description.length >= DESC_LIMIT ? "red" : "gray";
 
   function handleChange(e) {

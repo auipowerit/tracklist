@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ListButton from "src/features/list/components/buttons/ListButton";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
+import AddToListButton from "src/features/list/components/buttons/AddToListButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
@@ -39,7 +39,7 @@ export default function BannerButtons({ mediaId, name, category }) {
         category={category}
       />
 
-      <ListButton
+      <AddToListButton
         isModalOpen={isListModalOpen}
         setIsModalOpen={setIsListModalOpen}
         showIcon={true}
