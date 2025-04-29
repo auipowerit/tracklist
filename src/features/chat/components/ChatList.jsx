@@ -54,11 +54,11 @@ function Chats({ handleOpenChat }) {
 }
 
 function ChatCard({ chat, handleOpenChat }) {
-  const { activeChatId, activeChatUser } = useChatContext();
+  const { activeChatUser } = useChatContext();
 
   const isActive = activeChatUser.uid === chat.uid;
 
-  const color = chat.unread > 0 && "chatlist-unread";
+  const color = chat.unread > 0 ? "chatlist-unread" : "";
 
   const lastMessage =
     chat.lastMessage.length > 40

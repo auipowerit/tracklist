@@ -21,8 +21,8 @@
   padding: 0.5em;
 
   button {
-    color: $basic-white;
     cursor: pointer;
+    color: $basic-white;
 
     &:hover {
       color: $basic-gray;
@@ -88,11 +88,11 @@
 
 .chatwindow-search-input {
   @include font(0.75);
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid $basic-white;
   outline: none;
+  border: 1px solid $basic-white;
+  border-radius: 10px;
   padding: 0.5em 0.75em;
+  width: 100%;
 }
 
 .chatwindow-search-results {
@@ -122,11 +122,11 @@
   }
 
   img {
+    border-radius: 100%;
     aspect-ratio: 1/1;
     width: 40px;
     height: 40px;
     object-fit: cover;
-    border-radius: 100%;
   }
 }
 
@@ -181,17 +181,20 @@
 }
 
 .message-delete-button {
+  @include flexbox(row, center, center);
+  @include font(0.5, normal, $basic-gray);
+
   position: absolute;
   top: 50%;
-  left: -20px;
+  left: -10%;
   transform: translate(-50%, -50%);
   opacity: 0;
+  cursor: pointer;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   border-radius: 100%;
   background-color: rgb(35, 44, 61);
   width: 30px;
   height: 30px;
-  color: $basic-gray;
 
   &:hover {
     opacity: 1;

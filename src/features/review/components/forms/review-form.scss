@@ -1,5 +1,4 @@
 @use "src/styles/abstracts" as *;
-@use "src/styles/components" as *;
 
 .review-form-info-container {
   @include flexbox(column, center, center, 1em);
