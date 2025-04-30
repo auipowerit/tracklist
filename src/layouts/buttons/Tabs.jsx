@@ -1,4 +1,4 @@
-import "./styles/tabs.scss";
+import "./tabs.scss";
 
 export default function Tabs(props) {
   const { tabs, activeTab, setActiveTab, setResults } = props;

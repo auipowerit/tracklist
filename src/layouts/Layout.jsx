@@ -1,8 +1,7 @@
-import Navbar from "./Navbar";
-import ToTop from "./ToTop.jsx";
+import Navbar from "./navbar/Navbar.jsx";
+import ToTop from "./buttons/ToTop.jsx";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
-import "./styles/layout.scss";
 
 export default function Layout() {
   return (

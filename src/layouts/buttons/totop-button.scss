@@ -1,17 +1,5 @@
 @use "src/styles/abstracts" as *;
 
-body {
-  background-color: #15141a;
-  min-height: 100vh;
-  color: white;
-}
-
-main {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
 .to-top-button {
   @include flexbox(row, center, center);
   @include font(1.25, $basic-white);

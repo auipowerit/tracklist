@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import Discography from "./Discography";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import MediaReviews from "../MediaReviews";
 import "./artist-profile.scss";
 

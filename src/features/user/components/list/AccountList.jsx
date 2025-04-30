@@ -15,7 +15,7 @@ export default function AccountList() {
 
   const { list, items, setItems } = ListDataFetcher({ listId, user, canEdit });
   const [isEditing, setIsEditing] = useState(false);
-  const [orientation, setOrientation] = useState(0);
+  const [orientation, setOrientation] = useState("horizontal");
 
   if (!list) {
     return <Loading />;
@@ -32,7 +32,7 @@ export default function AccountList() {
         setOrientation={setOrientation}
       />
 
-      <RenderList
+      <List
         list={list}
         items={items}
         setItems={setItems}
@@ -43,24 +43,26 @@ export default function AccountList() {
   );
 }
 
-function RenderList({ list, items, setItems, isEditing, orientation }) {
-  return (
-    <div
-      className={`account-list ${orientation === 0 ? "horizontal" : "vertical"}`}
-    >
-      {items.length > 0 ? (
-        isEditing ? (
-          <DraggableList
-            items={items}
-            setItems={setItems}
-            list={list}
-            orientation={orientation}
-          />
-        ) : (
-          <StaticList items={items} list={list} orientation={orientation} />
-        )
-      ) : (
+function List({ list, items, setItems, isEditing, orientation }) {
+  if (items?.length === 0) {
+    return (
+      <div className="account-list">
         <p className="empty-message">This list is empty.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`account-list ${orientation}`}>
+      {isEditing ? (
+        <DraggableList
+          items={items}
+          setItems={setItems}
+          list={list}
+          orientation={orientation}
+        />
+      ) : (
+        <StaticList items={items} list={list} orientation={orientation} />
       )}
     </div>
   );

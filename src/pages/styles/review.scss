@@ -64,6 +64,9 @@
 .review-section-subtitle {
   @include font(0.5, normal, $basic-gray);
   text-align: center;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .review-section-details-container {
@@ -116,53 +119,4 @@
   padding: 0.5em;
   overflow: auto;
   text-wrap: break-word;
-}
-
-.comments-container {
-  @include flexbox(column, $gap: 2em);
-  padding: 0 1em 5em 1em;
-}
-
-.comments-header-container {
-  @include flexbox(row, initial, center, 1em);
-}
-
-.comments-header {
-  @include font(0.75, bold);
-}
-
-.comments-list {
-  @include flexbox(column, initial, initial, 1em);
-}
-
-.comment-input-container {
-  @include flexbox(column);
-  margin-bottom: 1em;
-}
-
-.comment-input {
-  @include font(0.75);
-  outline: none;
-  border-bottom: 1px solid $basic-gray;
-  padding-bottom: 0.5em;
-  width: 100%;
-
-  &:focus {
-    outline: none;
-    border-color: $basic-white;
-  }
-}
-
-.comment-input-buttons {
-  @include flexbox(row, end, initial, 0.5em);
-
-  button {
-    margin-top: 0.5em;
-    border-radius: 20px;
-    padding: 0.25em 0.75em;
-
-    &:hover {
-      background-color: $basic-gray;
-    }
-  }
 }

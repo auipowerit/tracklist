@@ -17,8 +17,8 @@ export default function SortButton(props) {
   }
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (sorterRef.current && !sorterRef.current.contains(event.target)) {
+    function handleClickOutside(e) {
+      if (sorterRef.current && !sorterRef.current.contains(e.target)) {
         setShowSort(false);
       }
     }

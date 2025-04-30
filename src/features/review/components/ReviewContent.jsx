@@ -111,4 +111,9 @@ function ReviewContent({ review }) {
   );
 }
 
-export { ReviewUser, ReviewMediaTitle, ReviewStars, ReviewContent };
+export {
+  ReviewUser,
+  ReviewMediaTitle,
+  ReviewStars,
+  ReviewContent,
+};

@@ -22,6 +22,7 @@ export default function AddToList(props) {
   const [currentLists, setCurrentLists] = useState([]);
   const [type, setType] = useState("artist");
 
+  const formRef = useRef(null);
   const selectRef = useRef(null);
   const mediaInputRef = useRef(null);
 
@@ -76,18 +77,23 @@ export default function AddToList(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const mediaInput = formRef.current.elements["media"];
+    const listInput = formRef.current.elements["list"];
+
     if (!globalUser) {
       setError("Please sign in to continue.");
       return;
     }
 
-    if (!media) {
-      setError("Please select media to add.");
+    if (currentLists.length <= 0) {
+      listInput.classList.add("invalid-field");
+      setError("Please select a list.");
       return;
     }
 
-    if (currentLists.length <= 0) {
-      setError("Please select a list.");
+    if (!media) {
+      mediaInput.classList.add("invalid-field");
+      setError("Please select media to add.");
       return;
     }
 
@@ -100,6 +106,7 @@ export default function AddToList(props) {
   }
 
   function resetValues() {
+    setError("");
     setMedia(null);
     setMediaResults([]);
     setLists([]);
@@ -110,7 +117,11 @@ export default function AddToList(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container list-form">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="form-container list-form"
+    >
       <FormHeader />
 
       <div className="form-content">
@@ -169,7 +180,6 @@ function FormMediaInput(props) {
 
   function handleChange(e) {
     setType(e.target.value);
-
     setMediaResults([]);
     setMedia(null);
   }
@@ -196,10 +206,12 @@ function FormMediaInput(props) {
   return (
     <div className="list-form-media-input">
       <input
+        name="media"
         type="search"
         ref={mediaInputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
         onKeyUp={handleSearch}
+        onChange={(e) => e.target.classList.remove("invalid-field")}
         className="form-input"
       />
 
@@ -259,11 +271,14 @@ function FormListInput(props) {
 
   function handleSelect(e) {
     e.stopPropagation();
+    e.target.classList.remove("invalid-field");
+
     addToCurrentLists(e.target.value);
   }
 
   return (
     <select
+      name="list"
       ref={selectRef}
       defaultValue=""
       onChange={handleSelect}

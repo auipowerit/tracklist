@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import "./comment-input.scss";
 
 export default function CommentInput({ review, setComments }) {
   const { globalUser } = useAuthContext();

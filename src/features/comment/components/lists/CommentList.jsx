@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Loading from "src/features/shared/components/Loading";
 import SortComments from "src/features/sort/components/SortComments";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import CommentCard from "./cards/CommentCard";
-import CommentInput from "./CommentInput";
+import CommentInput from "../inputs/CommentInput";
+import CommentCard from "../cards/CommentCard";
+import "./comment-list.scss";
 
 export default function CommentList({ review }) {
   const { getReviewComments } = useCommentContext();
@@ -61,25 +62,23 @@ function Header({ comments, setComments }) {
 }
 
 function Comments({ comments, setComments, review }) {
+  if (!comments || comments?.length === 0) {
+    return <p className="empty-message">No comments yet!</p>;
+  }
+
   return (
-    <div>
-      {comments?.length > 0 ? (
-        <div className="comments-list">
-          {comments.map((comment) => {
-            return (
-              <CommentCard
-                key={comment.id}
-                comment={comment}
-                review={review}
-                comments={comments}
-                setComments={setComments}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <p className="empty-message">No comments yet!</p>
-      )}
+    <div className="comments-list">
+      {comments.map((comment) => {
+        return (
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            review={review}
+            comments={comments}
+            setComments={setComments}
+          />
+        );
+      })}
     </div>
   );
 }

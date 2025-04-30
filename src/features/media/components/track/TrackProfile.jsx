@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import MediaReviews from "../MediaReviews";
 import "./track-profile.scss";
 

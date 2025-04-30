@@ -4,7 +4,6 @@
   @include font(0.5);
   display: flex;
   border: 1px solid transparent;
-  width: 200px;
 
   &:hover {
     border-color: $basic-white;
@@ -13,19 +12,41 @@
   &.horizontal {
     flex-direction: column;
     gap: 0.25em;
+    width: 200px;
   }
 
   &.vertical {
     flex-direction: row;
-    align-items: start;
     gap: 1em;
+    height: 200px;
   }
 }
 
 .list-item-image {
-  @include flexbox(row, initial, initial, 0.5em);
+  @include flexbox(row, $gap: 0.5em);
   position: relative;
-  width: 100%;
+
+  &.horizontal {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    p {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  &.vertical img {
+    width: 200px;
+    height: 100%;
+    object-fit: cover;
+  }
 
   p {
     @include flexbox(row, center, center);
@@ -34,23 +55,20 @@
     width: 30px;
     height: 30px;
     font-weight: bold;
-
-    &.horizontal {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-  }
-
-  img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
   }
 }
 
 .list-item-info {
   @include flexbox(column);
+
+  &.horizontal .list-item-title {
+    text-align: center;
+  }
+
+  &.vertical {
+    height: 100%;
+    @include flexbox(column, center, center);
+  }
 }
 
 .list-item-title {
@@ -67,14 +85,12 @@
     color: $basic-white;
     white-space: nowrap;
   }
-
-  &.horizontal {
-    text-align: center;
-  }
 }
 
 .list-item-subtitle {
+  overflow: hidden;
   color: $basic-gray;
   text-align: center;
-  text-wrap: wrap;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }

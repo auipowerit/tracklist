@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -22,10 +22,11 @@ export default function CreateList(props) {
 
   const [error, setError] = useState("");
   const [name, setName] = useState(list?.name || "");
-
   const [isRanking, setIsRanking] = useState(list?.isRanking || false);
   const [isPrivate, setIsPrivate] = useState(list?.isPrivate || false);
   const [description, setDescription] = useState(list?.description || "");
+
+  const formRef = useRef(null);
 
   useEffect(() => {
     handleModal();
@@ -48,23 +49,42 @@ export default function CreateList(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const nameInput = formRef.current.elements["listname"];
+    const descriptionInput = formRef.current.elements["description"];
+
     if (!globalUser) {
       setError("Please sign in to continue.");
       return;
     }
 
     if (name === "" && description === "") {
+      nameInput.classList.add("invalid-field");
+      descriptionInput.classList.add("invalid-field");
       setError("Please fill out all fields.");
       return;
     }
 
-    if (name === "" || name.length > NAME_LIMIT) {
+    if (name === "") {
+      nameInput.classList.add("invalid-field");
       setError("Please provide a name.");
       return;
     }
 
-    if (description === "" || description.length > DESC_LIMIT) {
+    if (name.length > NAME_LIMIT) {
+      nameInput.classList.add("invalid-field");
+      setError(`Please keep the name under ${NAME_LIMIT} characters.`);
+      return;
+    }
+
+    if (description === "") {
+      descriptionInput.classList.add("invalid-field");
       setError("Please provide a description.");
+      return;
+    }
+
+    if (description.length > DESC_LIMIT) {
+      descriptionInput.classList.add("invalid-field");
+      setError(`Please keep the description under ${DESC_LIMIT} characters.`);
       return;
     }
 
@@ -103,7 +123,11 @@ export default function CreateList(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container list-form">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="form-container list-form"
+    >
       <FormHeader list={list} />
 
       <div className="list-form-info-container">
@@ -139,7 +163,6 @@ export default function CreateList(props) {
 
 function FormHeader({ list }) {
   const title = list ? "Edit List" : "Create New List";
-
   return <p className="form-header">{title}</p>;
 }
 
@@ -147,6 +170,8 @@ function FormName({ name, setName }) {
   const color = name.length >= NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
+    e.target.classList.remove("invalid-field");
+
     if (e.target.value.length > NAME_LIMIT) {
       setName(e.target.value.slice(0, NAME_LIMIT));
       return;
@@ -157,14 +182,14 @@ function FormName({ name, setName }) {
   return (
     <div className="list-form-name-container">
       <div className="list-form-input-header">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="listname">Name</label>
         <p style={{ color: color }}>
           {name.length || 0}/{NAME_LIMIT}
         </p>
       </div>
 
       <input
-        name="name"
+        name="listname"
         type="text"
         value={name}
         onChange={handleChange}
@@ -193,6 +218,8 @@ function FormDescription({ description, setDescription }) {
   const color = description.length >= DESC_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
+    e.target.classList.remove("invalid-field");
+
     if (e.target.value.length > DESC_LIMIT) {
       setDescription(e.target.value.slice(0, DESC_LIMIT));
       return;

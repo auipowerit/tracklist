@@ -53,15 +53,15 @@ export default function ReviewForm(props) {
   }
 
   async function handleSearch() {
-    const data = await searchByName(inputRef.current.value, type, 20);
-    const items = getMediaData(data);
+    const data = (await searchByName(inputRef.current.value, type, 20)) || [];
+    const items = getMediaData(data) || [];
     setResults(items);
   }
 
   function getMediaData(data) {
     const items = data?.[`${type}s`]?.items;
 
-    return items.map((item) => {
+    return items?.map((item) => {
       const name = item.name || item.title;
       const subtitle = item.artists?.[0]?.name || item.album?.name || "";
 

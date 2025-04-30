@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import MediaReviews from "../MediaReviews";

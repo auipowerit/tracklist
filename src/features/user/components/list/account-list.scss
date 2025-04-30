@@ -50,17 +50,19 @@
   position: absolute;
   top: 100%;
   right: 0;
+  opacity: 0;
   visibility: hidden;
   z-index: 30;
+  transition: opacity 0.2s ease-in-out;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   border-radius: 6px;
   background-color: $darker-gray;
   padding: 1em 1.5em;
-  width: fit-content;
   width: 250px;
   overflow: hidden;
 
   &.active {
+    opacity: 1;
     visibility: visible;
   }
 }

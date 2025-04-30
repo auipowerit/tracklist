@@ -12,6 +12,18 @@
   text-decoration: none;
 }
 
+body {
+  background-color: $background-primary;
+  min-height: 100vh;
+  color: white;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 a {
   color: inherit;
   text-decoration: none;

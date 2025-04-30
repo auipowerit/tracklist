@@ -9,9 +9,9 @@ export default function StarRating({ rating, setRating }) {
     return ratingValue <= (hover || rating) ? "#ffc107" : "#94969c";
   }
 
-  function handleMouseMove(event, ratingValue) {
-    const starElement = event.target.getBoundingClientRect();
-    const clickPosition = event.clientX;
+  function handleMouseMove(e, ratingValue) {
+    const starElement = e.target.getBoundingClientRect();
+    const clickPosition = e.clientX;
     const starMidpoint = starElement.left + starElement.width / 2;
 
     setHover(clickPosition < starMidpoint ? ratingValue - 0.5 : ratingValue);

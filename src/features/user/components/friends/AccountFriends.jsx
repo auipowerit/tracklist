@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import FriendsList from "./FriendsList";
 import "./account-friends.scss";
 

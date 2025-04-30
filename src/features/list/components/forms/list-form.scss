@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .list-form {
-  width: 700px;
+  width: 100%;
 }
 
 .list-form-inputs {
@@ -84,5 +84,11 @@
 
   &:hover {
     background-color: $darker-red;
+  }
+}
+
+@media (min-width: 700px) {
+  .list-form {
+    width: 700px;
   }
 }

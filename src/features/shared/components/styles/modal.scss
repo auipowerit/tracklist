@@ -24,7 +24,7 @@
   border-radius: 12px;
   background-color: $darker-gray;
   padding: 2em;
-  width: fit-content;
+  width: 100%;
   max-width: 800px;
 
   &:not(.active) {
@@ -43,4 +43,10 @@
   position: absolute;
   top: 0;
   right: 2%;
+}
+
+@media (min-width: 700px) {
+  .modal-container {
+    width: fit-content;
+  }
 }

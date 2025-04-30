@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import ListCard from "src/features/list/components/cards/ListCard";

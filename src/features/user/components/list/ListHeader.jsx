@@ -3,16 +3,43 @@ import { Tooltip } from "react-tooltip";
 import { useOutletContext } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SaveButton from "src/features/list/components/buttons/SaveButton";
+import EditListButton from "src/features/list/components/buttons/EditListButton";
+import AddToListButton from "src/features/list/components/buttons/AddToListButton";
 import {
   faBars,
   faCaretSquareDown,
   faLock,
   faTableCellsLarge,
 } from "@fortawesome/free-solid-svg-icons";
-import EditListButton from "src/features/list/components/buttons/EditListButton";
-import AddToListButton from "src/features/list/components/buttons/AddToListButton";
 
 export default function ListHeader(props) {
+  const { list } = props;
+
+  return (
+    <div className="account-page-header">
+      <div className="account-list-title">
+        <div className="account-list-name-container">
+          {list.isPrivate && <LockIcon />}
+          <p className="account-list-name">{list.name}</p>
+        </div>
+        <p className="account-list-description">{list.description}</p>
+      </div>
+
+      <ListDropdown {...props} />
+    </div>
+  );
+}
+
+function LockIcon() {
+  return (
+    <div data-tooltip-content="Private" data-tooltip-id="category-tooltip">
+      <FontAwesomeIcon icon={faLock} className="account-list-lock" />
+      <Tooltip id="category-tooltip" place="top" type="dark" effect="float" />
+    </div>
+  );
+}
+
+function ListDropdown(props) {
   const {
     list,
     canEdit,
@@ -31,8 +58,8 @@ export default function ListHeader(props) {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
     }
@@ -44,93 +71,95 @@ export default function ListHeader(props) {
     };
   }, []);
 
+  return (
+    <div ref={dropdownRef} className="account-list-dropdown-container">
+      <DropdownButton
+        showDropdown={showDropdown}
+        setShowDropdown={setShowDropdown}
+      />
+
+      <div className={`account-list-dropdown ${showDropdown && "active"}`}>
+        <OrientationButtons
+          orientation={orientation}
+          setOrientation={setOrientation}
+        />
+
+        {canEdit ? (
+          <>
+            <EditToggle isEditing={isEditing} setIsEditing={setIsEditing} />
+
+            <div className="list-edit-buttons">
+              <AddToListButton
+                isModalOpen={isAddModalOpen}
+                setIsModalOpen={setIsAddModalOpen}
+                list={list}
+              />
+              <EditListButton
+                isModalOpen={isEditModalOpen}
+                setIsModalOpen={setIsEditModalOpen}
+                list={list}
+              />
+            </div>
+          </>
+        ) : (
+          <SaveButton list={list} user={user} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DropdownButton({ showDropdown, setShowDropdown }) {
   function handleUserClick() {
     setShowDropdown(!showDropdown);
   }
 
+  return (
+    <button onClick={handleUserClick}>
+      <FontAwesomeIcon icon={faCaretSquareDown} />
+    </button>
+  );
+}
+
+function OrientationButtons({ orientation, setOrientation }) {
+  return (
+    <div className="account-list-orientation">
+      <p className="account-list-label">Layout</p>
+
+      <button
+        onClick={() => setOrientation("horizontal")}
+        className={orientation === "horizontal" ? "active" : ""}
+      >
+        <FontAwesomeIcon icon={faTableCellsLarge} />
+      </button>
+
+      <button
+        onClick={() => setOrientation("vertical")}
+        className={orientation === "vertical" ? "active" : ""}
+      >
+        <FontAwesomeIcon icon={faBars} />
+      </button>
+    </div>
+  );
+}
+
+function EditToggle({ isEditing, setIsEditing }) {
   function handleToggle() {
     setIsEditing(!isEditing);
   }
 
   return (
-    <div className="account-page-header">
-      <div className="account-list-title">
-        <div className="account-list-name-container">
-          {list.isPrivate && (
-            <div
-              data-tooltip-content="Private"
-              data-tooltip-id="category-tooltip"
-            >
-              <FontAwesomeIcon icon={faLock} className="account-list-lock" />
-              <Tooltip
-                id="category-tooltip"
-                place="top"
-                type="dark"
-                effect="float"
-              />
-            </div>
-          )}
-          <p className="account-list-name">{list.name}</p>
-        </div>
-        <p className="account-list-description">{list.description}</p>
-      </div>
-
-      <div ref={dropdownRef} className="account-list-dropdown-container">
-        <button onClick={handleUserClick}>
-          <FontAwesomeIcon icon={faCaretSquareDown} />
-        </button>
-
-        <div className={`account-list-dropdown ${showDropdown && "active"}`}>
-          <div className="account-list-orientation">
-            <p className="account-list-label">Layout</p>
-            <button
-              onClick={() => setOrientation(0)}
-              className={orientation === 1 ? "active" : ""}
-            >
-              <FontAwesomeIcon icon={faTableCellsLarge} />
-            </button>
-
-            <button
-              onClick={() => setOrientation(1)}
-              className={orientation === 1 ? "active" : ""}
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </button>
-          </div>
-
-          {canEdit ? (
-            <>
-              <div className="account-list-edit">
-                <p className="account-list-label">Edit mode</p>
-                <label className="toggle-container">
-                  <input
-                    type="checkbox"
-                    onChange={handleToggle}
-                    checked={isEditing}
-                    className="toggle-input"
-                  />
-                  <span className="toggle"></span>
-                </label>
-              </div>
-
-              <div className="list-edit-buttons">
-                <AddToListButton
-                  isModalOpen={isAddModalOpen}
-                  setIsModalOpen={setIsAddModalOpen}
-                  list={list}
-                />
-                <EditListButton
-                  isModalOpen={isEditModalOpen}
-                  setIsModalOpen={setIsEditModalOpen}
-                  list={list}
-                />
-              </div>
-            </>
-          ) : (
-            <SaveButton list={list} user={user} />
-          )}
-        </div>
-      </div>
+    <div className="account-list-edit">
+      <p className="account-list-label">Edit mode</p>
+      <label className="toggle-container">
+        <input
+          type="checkbox"
+          onChange={handleToggle}
+          checked={isEditing}
+          className="toggle-input"
+        />
+        <span className="toggle"></span>
+      </label>
     </div>
   );
 }

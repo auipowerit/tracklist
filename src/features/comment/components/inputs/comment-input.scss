@@ -1,0 +1,33 @@
+@use "src/styles/abstracts" as *;
+
+.comment-input-container {
+  @include flexbox(column);
+  margin-bottom: 1em;
+}
+
+.comment-input {
+  @include font(0.75);
+  outline: none;
+  border-bottom: 1px solid $basic-gray;
+  padding-bottom: 0.5em;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: $basic-white;
+  }
+}
+
+.comment-input-buttons {
+  @include flexbox(row, end, initial, 0.5em);
+
+  button {
+    margin-top: 0.5em;
+    border-radius: 20px;
+    padding: 0.25em 0.75em;
+
+    &:hover {
+      background-color: $basic-gray;
+    }
+  }
+}

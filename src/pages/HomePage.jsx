@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import Loading from "src/features/shared/components/Loading";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";

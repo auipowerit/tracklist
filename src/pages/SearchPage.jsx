@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Tabs from "src/layouts/Tabs";
+import Tabs from "src/layouts/buttons/Tabs";
 import SearchMedia from "src/features/search/components/SearchMedia";
 import "./styles/search.scss";
 

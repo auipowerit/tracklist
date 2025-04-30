@@ -1,0 +1,18 @@
+@use "src/styles/abstracts" as *;
+
+.comments-container {
+  @include flexbox(column, $gap: 2em);
+  padding: 0 1em 5em 1em;
+}
+
+.comments-header-container {
+  @include flexbox(row, initial, center, 1em);
+}
+
+.comments-header {
+  @include font(0.75, bold);
+}
+
+.comments-list {
+  @include flexbox(column, initial, initial, 1em);
+}
