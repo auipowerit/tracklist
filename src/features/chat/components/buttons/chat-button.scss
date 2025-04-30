@@ -1,6 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .chat-button {
+  @include font(1);
   cursor: pointer;
   color: $basic-gray;
 

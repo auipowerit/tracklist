@@ -1,14 +1,27 @@
+const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+
 const DEFAULT_PROFILE_IMG = "/images/default-profile-image.jpg";
 const DEFAULT_MEDIA_IMG = "/images/default-image.jpg";
 const REDIRECT_URI = "http://localhost:5173/profile/callback";
 
-const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+const ACCOUNT_NAME_LIMIT = 25;
+const ACCOUNT_BIO_LIMIT = 100;
+
+const REVIEW_LIMIT = 1000;
+
+const LIST_NAME_LIMIT = 50;
+const LIST_DESCRIPTION_LIMIT = 150;
 
 export {
+  CLIENT_ID,
+  CLIENT_SECRET,
   DEFAULT_PROFILE_IMG,
   DEFAULT_MEDIA_IMG,
   REDIRECT_URI,
-  CLIENT_ID,
-  CLIENT_SECRET,
+  ACCOUNT_NAME_LIMIT,
+  ACCOUNT_BIO_LIMIT,
+  REVIEW_LIMIT,
+  LIST_NAME_LIMIT,
+  LIST_DESCRIPTION_LIMIT,
 };

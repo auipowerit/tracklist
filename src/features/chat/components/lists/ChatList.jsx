@@ -2,6 +2,7 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import "./chat-list.scss";
 
 export default function ChatList({ handleOpenChat }) {
   return (
@@ -26,7 +27,11 @@ function Header() {
   return (
     <div className="chatlist-header">
       <p>All chats</p>
-      <button type="button" onClick={handleNewChat}>
+      <button
+        type="button"
+        onClick={handleNewChat}
+        className="chatlist-new-button"
+      >
         <FontAwesomeIcon icon={faPenToSquare} />
       </button>
     </div>

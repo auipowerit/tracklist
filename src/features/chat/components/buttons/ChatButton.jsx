@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { useChatContext } from "../context/ChatContext";
-import { faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { useChatContext } from "../../context/ChatContext";
 import "./chat-button.scss";
 
 export default function ChatButton({ username = "" }) {

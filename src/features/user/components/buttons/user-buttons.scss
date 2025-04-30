@@ -2,11 +2,11 @@
 
 .follow-button {
   @include flexbox(row, center);
-  @include font(0.75, normal, $basic-white);
+  @include font(0.75);
   border: 2px solid $basic-white;
-  border-radius: 0.5em;
   padding: 0.5em 0;
-  width: 120px;
+  width: 20%;
+  max-width: 125px;
   height: fit-content;
 
   &.active {
@@ -21,6 +21,7 @@
 
 .logout-button {
   @include flexbox(row, initial, center, 0.5em);
+  @include font(1);
   color: $basic-gray;
 
   &:hover {

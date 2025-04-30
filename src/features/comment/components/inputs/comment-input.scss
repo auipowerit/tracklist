@@ -22,12 +22,12 @@
   @include flexbox(row, end, initial, 0.5em);
 
   button {
+    @include font(0.5, bold);
     margin-top: 0.5em;
-    border-radius: 20px;
     padding: 0.25em 0.75em;
 
     &:hover {
-      background-color: $basic-gray;
+      color: $lighter-green;
     }
   }
 }

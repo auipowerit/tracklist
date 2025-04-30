@@ -1,0 +1,58 @@
+@use "src/styles/abstracts" as *;
+
+.chatlist-container {
+  @include flexbox(column);
+  flex: 1;
+  border-right: 2px solid $basic-white;
+  background-color: $dark-green;
+}
+
+.chatlist-header {
+  @include flexbox(row, space-between, center, 0.5em);
+  @include font(0.75, bold);
+  padding: 0.5em;
+}
+
+.chatlist-new-button {
+  @include font(0.75);
+  cursor: pointer;
+  color: $basic-white;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.chatlist {
+  @include flexbox(column);
+  overflow-y: auto;
+}
+
+.chatlist-card {
+  @include flexbox(column, $gap: 0.25em);
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+
+  &:hover {
+    background-color: $darker-green;
+  }
+
+  img {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+
+.chatlist-unread {
+  font-weight: bold;
+}
+
+.chatlist-card-active {
+  background-color: $darker-green;
+}
+
+.chatlist-card-header {
+  @include flexbox(row, initial, center, 0.5em);
+}

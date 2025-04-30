@@ -14,18 +14,21 @@
 
 .searchbar {
   @include flexbox(row, center, center, 1em);
-  @include font(1);  
-  border-radius: 8px;
-  border: 2px solid $basic-white;
-  padding: 0.25em 0.75em;
+  @include font(1.25);
+  border: 1px solid $basic-white;
+  padding: 0.25em 0.5em;
 
   input {
-    @include font(1);
+    @include font(1.25, normal);
     outline: none;
   }
 
-  button:hover {
-    color: $basic-green;
+  button {
+    @include font(1, normal, $basic-white);
+
+    &:hover {
+      color: $basic-green;
+    }
   }
 }
 

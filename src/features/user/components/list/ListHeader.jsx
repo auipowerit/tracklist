@@ -88,12 +88,12 @@ function ListDropdown(props) {
           <>
             <EditToggle isEditing={isEditing} setIsEditing={setIsEditing} />
 
-            <div className="list-edit-buttons">
-              <AddToListButton
-                isModalOpen={isAddModalOpen}
-                setIsModalOpen={setIsAddModalOpen}
-                list={list}
-              />
+            <div className="list-edit-buttons">              
+                <AddToListButton
+                  isModalOpen={isAddModalOpen}
+                  setIsModalOpen={setIsAddModalOpen}
+                  list={list}
+                />
               <EditListButton
                 isModalOpen={isEditModalOpen}
                 setIsModalOpen={setIsEditModalOpen}

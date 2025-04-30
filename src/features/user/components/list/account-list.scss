@@ -45,25 +45,10 @@
 }
 
 .account-list-dropdown {
+  @include dropdown(right, 1em, 1.5em);
   @include flexbox(column, center, center, 1em);
-  position: absolute;
-  top: 100%;
-  right: 0;
-  visibility: hidden;
-  opacity: 0;
   z-index: 30;
-  transition: opacity 0.2s ease-in-out;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  border-radius: 6px;
   background-color: $darker-gray;
-  padding: 1em 1.5em;
-  width: 250px;
-  overflow: hidden;
-
-  &.active {
-    visibility: visible;
-    opacity: 1;
-  }
 }
 
 .account-list-label {
@@ -73,11 +58,15 @@
 }
 
 .account-list-orientation {
-  @include flexbox(row, initial, center, 0.75em);
+  @include flexbox(row, initial, center, 1em);
   width: 100%;
 
-  button.active {
-    color: $basic-green;
+  button {
+    @include font(0.75);
+
+    &.active {
+      color: $basic-green;
+    }
   }
 }
 

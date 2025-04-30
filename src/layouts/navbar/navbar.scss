@@ -43,39 +43,10 @@
 }
 
 .nav-profile-dropdown {
+  @include dropdown(right, 1em, 1.5em);
   @include flexbox(column, $gap: 1em);
-  position: absolute;
-  top: 100%;
-  right: 0;
-  visibility: hidden;
-  opacity: 0;
   z-index: 30;
-  transition: opacity 0.2s ease-in-out;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  border-radius: 12px;
   background-color: $darker-green;
-  padding: 1em 1.5em;
-  width: fit-content;
-  width: fit-content;
-  min-width: 150px;
-  overflow: hidden;
-
-  &.active {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
-@keyframes overshoot {
-  0% {
-    transform: translateY(-20px);
-  }
-  80% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
 }
 
 .nav-profile-dropdown-header {

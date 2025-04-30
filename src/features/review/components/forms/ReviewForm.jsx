@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import { DEFAULT_MEDIA_IMG, REVIEW_LIMIT } from "src/data/const";
 import Alert from "src/features/shared/components/Alert";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -248,25 +248,23 @@ function FormSearchResults({ results, handleClick, type }) {
 }
 
 function FormReview({ content, setContent }) {
-  const CHARACTER_LIMIT = 1000;
-
   function handleChange(e) {
     e.target.classList.remove("invalid-field");
 
-    if (e.target.value.length > CHARACTER_LIMIT) {
-      setContent(e.target.value.slice(0, CHARACTER_LIMIT));
+    if (e.target.value.length > REVIEW_LIMIT) {
+      setContent(e.target.value.slice(0, REVIEW_LIMIT));
       return;
     }
 
     setContent(e.target.value);
   }
 
-  const color = content.length >= CHARACTER_LIMIT ? "red" : "gray";
+  const color = content.length >= REVIEW_LIMIT ? "red" : "gray";
 
   return (
     <div className="form-textarea-container">
       <p style={{ color: color }}>
-        {content.length || 0}/{CHARACTER_LIMIT}
+        {content.length || 0}/{REVIEW_LIMIT}
       </p>
       <textarea
         placeholder="Write your review..."

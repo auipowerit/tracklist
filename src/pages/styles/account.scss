@@ -63,7 +63,7 @@
   padding-bottom: 0.5em;
 
   & > p {
-    @include font(1, normal, $basic-white);
+    @include font(1);
   }
 }
 

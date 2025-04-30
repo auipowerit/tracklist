@@ -1,0 +1,162 @@
+@use "src/styles/abstracts" as *;
+
+.messages {
+  @include flexbox(column, $gap: 1em);
+  @include gradient(bottom, $bottom: 99%);
+  flex-grow: 1;
+  padding: 0.5em 0;
+  overflow-y: auto;
+}
+
+.message-card {
+  @include flexbox(column, $gap: 0.25em);
+}
+
+.message-date {
+  align-self: center;
+  padding: 1.5em 0;
+  @include font(0.25, normal, $basic-gray);
+}
+
+.message-bubble {
+  @include flexbox(row, initial, start, 0.5em);
+  position: relative;
+  border-radius: 12px;
+  padding: 0.75em 1em;
+  width: fit-content;
+
+  &:hover {
+    .message-delete-button,
+    .message-unliked {
+      opacity: 1;
+    }
+  }
+}
+
+.message-user-button {
+  margin-left: auto;
+  background-color: rgba(20, 71, 230, 0.7);
+}
+
+.message-friend-button {
+  background-color: rgb(35, 44, 61);
+}
+
+.message-delete-button {
+  @include flexbox(row, center, center);
+  @include font(0.5, normal, $basic-gray);
+
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  border-radius: 100%;
+  background-color: rgb(35, 44, 61);
+  width: 30px;
+  height: 30px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.message-like-button {
+  @include flexbox(row, center, center);
+  @include font(0.5);
+
+  position: absolute;
+  top: -12px;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+
+  &:not(.message-liked) {
+    opacity: 0;
+    background-color: rgb(35, 44, 61);
+    color: $basic-gray;
+  }
+}
+
+.message-liked {
+  display: block;
+  background-color: blue;
+  color: red;
+}
+
+.message-unliked {
+  background-color: rgb(35, 44, 61);
+  color: $basic-gray;
+}
+
+.message-user-button {
+  left: -12px;
+}
+.message-friend-button {
+  right: -12px;
+}
+
+.message-image {
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+}
+
+.message-body {
+  @include flexbox(column);
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.message-sender {
+  @include flexbox(row, initial, center, 0.25em);
+}
+
+.message-sender-name {
+  font-weight: bold;
+}
+
+.message-time {
+  @include font(0.25, normal, $basic-gray);
+}
+
+.message-content-media {
+  @include flexbox(column, center, center, 0.25em);
+  margin-top: 0.5em;
+  background-color: $basic-white;
+  padding: 0.5em;
+  color: $basic-black;
+  text-align: center;
+
+  img {
+    width: 100%;
+    max-width: 150px;
+    object-fit: cover;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  }
+
+  span {
+    font-weight: bold;
+  }
+
+  .title {
+    width: fit-content;
+    @include font(0.5, bold);
+  }
+  .subtitle {
+    @include font(0.25);
+  }
+}
+
+.message-text {
+  @include font(0.5);
+  word-wrap: break-word;
+}
+
+.message-error {
+  @include font(initial, normal, $basic-gray, italic);
+}

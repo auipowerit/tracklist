@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { ACCOUNT_BIO_LIMIT, ACCOUNT_NAME_LIMIT } from "src/data/const";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./account-form.scss";
-import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   const { globalUser, updateUserDetails } = useAuthContext();
@@ -85,13 +86,11 @@ function FormImage({ globalUser }) {
 }
 
 function FormName({ name, setName }) {
-  const NAME_LIMIT = 25;
-
-  const color = name.length >= NAME_LIMIT ? "red" : "gray";
+  const color = name.length >= ACCOUNT_NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
-    if (e.target.value.length > NAME_LIMIT) {
-      setName(e.target.value.slice(0, NAME_LIMIT));
+    if (e.target.value.length > ACCOUNT_NAME_LIMIT) {
+      setName(e.target.value.slice(0, ACCOUNT_NAME_LIMIT));
       return;
     }
     setName(e.target.value);
@@ -102,7 +101,7 @@ function FormName({ name, setName }) {
       <div className="user-form-label">
         <label htmlFor="name">Display name</label>
         <p style={{ color: color }}>
-          {name.length || 0}/{NAME_LIMIT}
+          {name.length || 0}/{ACCOUNT_NAME_LIMIT}
         </p>
       </div>
       <input
@@ -117,13 +116,11 @@ function FormName({ name, setName }) {
 }
 
 function FormBio({ bio, setBio }) {
-  const BIO_LIMIT = 100;
-
-  const color = bio.length >= BIO_LIMIT ? "red" : "gray";
+  const color = bio.length >= ACCOUNT_BIO_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
-    if (e.target.value.length > BIO_LIMIT) {
-      setBio(e.target.value.slice(0, BIO_LIMIT));
+    if (e.target.value.length > ACCOUNT_BIO_LIMIT) {
+      setBio(e.target.value.slice(0, ACCOUNT_BIO_LIMIT));
       return;
     }
     setBio(e.target.value);
@@ -134,7 +131,7 @@ function FormBio({ bio, setBio }) {
       <div className="user-form-label">
         <label htmlFor="bio">Bio</label>
         <p style={{ color: color }}>
-          {bio.length || 0}/{BIO_LIMIT}
+          {bio.length || 0}/{ACCOUNT_BIO_LIMIT}
         </p>
       </div>
       <textarea

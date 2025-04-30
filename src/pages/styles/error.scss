@@ -23,7 +23,7 @@
   @include flexbox(row, initial, center, 1em);
   @include font(1);
   margin-top: 1em;
-  border-radius: 20px;
+  border-radius: 12px;
   background-color: $basic-green;
   padding: 0.5em 0.75em;
   width: fit-content;

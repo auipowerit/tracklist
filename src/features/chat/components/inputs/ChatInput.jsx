@@ -3,6 +3,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
+import "./chat-input.scss";
 
 export default function ChatInput() {
   const { globalUser } = useAuthContext();

@@ -19,16 +19,14 @@
 }
 
 .modal-container {
-  transform: scale(0);
   transition: all 0.2s;
-  border-radius: 12px;
   background-color: $darker-gray;
   padding: 2em;
   width: 100%;
   max-width: 800px;
 
   &:not(.active) {
-    transform: scale(125%);
+    transform: scale(50%);
     opacity: 0;
   }
 

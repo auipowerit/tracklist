@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import ChatList from "../features/chat/components/ChatList";
-import ChatWindow from "../features/chat/components/ChatWindow";
+import ChatList from "src/features/chat/components/lists/ChatList";
+import ChatWindow from "src/features/chat/components/sections/ChatWindow";
 import "./styles/chat.scss";
 
 export default function ChatPage() {
@@ -33,7 +33,7 @@ export default function ChatPage() {
         setMounted(true);
         return;
       }
-      
+
       setActiveChatId("-1");
       setActiveChatUser({});
     };

@@ -1,6 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .list-save-button {
+  @include font(0.75);
   cursor: pointer;
 
   &:hover {

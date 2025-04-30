@@ -1,0 +1,74 @@
+@use "src/styles/abstracts" as *;
+
+.chatwindow {
+  @include flexbox(column, $gap: 0.25em);
+  flex: 2;
+  background-color: $darker-gray;
+  padding: 1em 2em;
+  overflow-y: auto;
+}
+
+.chatwindow-header {
+  @include font(1, bold);
+  border-bottom: 1px solid $basic-gray;
+  padding-bottom: 0.25em;
+
+  &:hover {
+    color: $basic-gray;
+  }
+}
+
+.chatwindow-search {
+  position: relative;
+}
+
+.chatwindow-search-input {
+  @include font(0.75);
+  outline: none;
+  border: 1px solid $basic-white;
+  padding: 0.5em 0.75em;
+  width: 100%;
+}
+
+.chatwindow-search-results {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  @include flexbox(column);
+  background-color: $dark-green;
+
+  &.active {
+    height: fit-content;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
+
+.chatwindow-search-item {
+  @include flexbox(row, initial, center, 0.25em);
+  @include font(0.75);
+  padding: 0.25em 0.5em;
+  text-align: left;
+
+  &:hover {
+    background-color: $darker-green;
+  }
+
+  img {
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+}
+
+.chatwidow-search-item-info {
+  @include flexbox(column, start, flex-start, 0.25em);
+}
+
+.chatwindow-search-item-displayname {
+  @include font(0.75, bold);
+}

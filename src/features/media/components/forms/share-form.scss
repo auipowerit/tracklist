@@ -15,7 +15,8 @@
   background-color: $basic-green;
 
   &.active {
-    height: 200px;
+    height: fit-content;
+    max-height: 200px;
     overflow: auto;
   }
 }
@@ -58,16 +59,19 @@
 }
 
 .share-form-current-user {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexbox(row, initial, center, 0.5em);
   background-color: $dark-gray;
   padding: 0.25em 0.5em;
-  border-radius: 6px;
 
   p {
     @include font(0.75, bold);
   }
 
-  button:hover {
-    color: $basic-gray;
+  button {
+    @include font(0.75);
+
+    &:hover {
+      color: $basic-gray;
+    }
   }
 }

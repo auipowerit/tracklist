@@ -7,19 +7,19 @@
   $basis: initial
 ) {
   display: flex;
+  flex-basis: $basis;
   flex-direction: $direction;
+  flex-wrap: $wrap;
   justify-content: $justify;
   align-items: $align;
   gap: $gap;
-  flex-wrap: $wrap;
-  flex-basis: $basis;
 }
 
 @mixin font($size: 1, $weight: normal, $color: white, $style: normal) {
-  font-size: calc(#{$size}rem + 0.5vw);
-  font-weight: $weight;
   color: $color;
   font-style: $style;
+  font-weight: $weight;
+  font-size: calc(#{$size}rem + 0.5vw);
 }
 
 @mixin gradient($direction: top, $top: 5%, $bottom: 95%) {
@@ -30,4 +30,23 @@
     black $bottom,
     transparent 100%
   );
+}
+
+@mixin dropdown($direction: right, $padding-y: 1em, $padding-x: 1.5em) {
+  position: absolute;
+  top: 100%;
+  #{$direction}: 0;
+  transition: all 300ms ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  width: fit-content;
+  overflow: hidden;
+
+  &:not(.active) {
+    max-height: 0;
+  }
+
+  &.active {
+    padding: $padding-y $padding-x;
+    max-height: 100vh;
+  }
 }

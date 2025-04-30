@@ -31,11 +31,14 @@
 }
 
 .load-more-button {
-  @include font(0.75, bold, $basic-white);
+  @include font(0.75);
   margin: auto;
-  border-radius: 6px;
   background-color: $basic-green;
   padding: 0.5em 1em;
   width: fit-content;
   height: fit-content;
+
+  &:hover {
+    background-color: $darker-green;
+  }
 }

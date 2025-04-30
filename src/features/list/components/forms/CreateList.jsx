@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "src/features/shared/components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
+import { LIST_DESCRIPTION_LIMIT, LIST_NAME_LIMIT } from "src/data/const";
 import {
   faArrowLeft,
   faCheck,
   faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import Alert from "src/features/shared/components/Alert";
-
-const NAME_LIMIT = 50;
-const DESC_LIMIT = 150;
 
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
@@ -70,9 +68,9 @@ export default function CreateList(props) {
       return;
     }
 
-    if (name.length > NAME_LIMIT) {
+    if (name.length > LIST_NAME_LIMIT) {
       nameInput.classList.add("invalid-field");
-      setError(`Please keep the name under ${NAME_LIMIT} characters.`);
+      setError(`Please keep the name under ${LIST_NAME_LIMIT} characters.`);
       return;
     }
 
@@ -82,9 +80,11 @@ export default function CreateList(props) {
       return;
     }
 
-    if (description.length > DESC_LIMIT) {
+    if (description.length > LIST_DESCRIPTION_LIMIT) {
       descriptionInput.classList.add("invalid-field");
-      setError(`Please keep the description under ${DESC_LIMIT} characters.`);
+      setError(
+        `Please keep the description under ${LIST_DESCRIPTION_LIMIT} characters.`,
+      );
       return;
     }
 
@@ -167,13 +167,13 @@ function FormHeader({ list }) {
 }
 
 function FormName({ name, setName }) {
-  const color = name.length >= NAME_LIMIT ? "red" : "gray";
+  const color = name.length >= LIST_NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     e.target.classList.remove("invalid-field");
 
-    if (e.target.value.length > NAME_LIMIT) {
-      setName(e.target.value.slice(0, NAME_LIMIT));
+    if (e.target.value.length > LIST_NAME_LIMIT) {
+      setName(e.target.value.slice(0, LIST_NAME_LIMIT));
       return;
     }
     setName(e.target.value);
@@ -184,7 +184,7 @@ function FormName({ name, setName }) {
       <div className="list-form-input-header">
         <label htmlFor="listname">Name</label>
         <p style={{ color: color }}>
-          {name.length || 0}/{NAME_LIMIT}
+          {name.length || 0}/{LIST_NAME_LIMIT}
         </p>
       </div>
 
@@ -215,13 +215,13 @@ function FormCheckbox({ name, isChecked, setIsChecked }) {
 }
 
 function FormDescription({ description, setDescription }) {
-  const color = description.length >= DESC_LIMIT ? "red" : "gray";
+  const color = description.length >= LIST_DESCRIPTION_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
     e.target.classList.remove("invalid-field");
 
-    if (e.target.value.length > DESC_LIMIT) {
-      setDescription(e.target.value.slice(0, DESC_LIMIT));
+    if (e.target.value.length > LIST_DESCRIPTION_LIMIT) {
+      setDescription(e.target.value.slice(0, LIST_DESCRIPTION_LIMIT));
       return;
     }
     setDescription(e.target.value);
@@ -232,7 +232,7 @@ function FormDescription({ description, setDescription }) {
       <div className="list-form-input-header">
         <label htmlFor="description">Description</label>
         <p style={{ color: color }}>
-          {description.length || 0}/{DESC_LIMIT}
+          {description.length || 0}/{LIST_DESCRIPTION_LIMIT}
         </p>
       </div>
 

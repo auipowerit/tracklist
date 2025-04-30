@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
-import ChatButton from "src/features/chat/components/ChatButton";
+import ChatButton from "src/features/chat/components/buttons/ChatButton";
 import NavLinks from "src/features/user/components/nav/NavLinks";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import LogoutButton from "src/features/user/components/buttons/LogoutButton";

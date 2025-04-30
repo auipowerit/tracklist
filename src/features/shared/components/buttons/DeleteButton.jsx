@@ -11,7 +11,7 @@ export default function DeleteButton({ type, deleteContent }) {
 
   return (
     <button className="delete-button" onClick={handleDelete}>
-      Delete
+      <p>Delete</p>
     </button>
   );
 }

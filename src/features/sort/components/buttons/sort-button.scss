@@ -13,30 +13,13 @@
 }
 
 .sort-dropdown {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  transition: all 300ms ease-in-out;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  border-radius: 6px;
+  @include dropdown(left, 0.5em, 0.5em);
   background-color: $basic-white;
-  width: fit-content;
-  overflow: hidden;
   color: $basic-black;
-
-  &:not(.active) {
-    max-height: 0;
-  }
-
-  &.active {
-    padding: 0.5em;
-    max-height: 100vh;
-  }
 }
 
 .sort-dropdown-item {
-  color: $basic-black;
-  border-radius: 6px;
+  @include font(0.75, normal, $basic-black);
   padding: 0.25em 0.5em;
   width: 100%;
   text-align: start;

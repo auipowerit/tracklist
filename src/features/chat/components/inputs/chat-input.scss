@@ -1,0 +1,25 @@
+@use "src/styles/abstracts" as *;
+
+.chat-input-form {
+  @include flexbox(row, space-between, center, 0.25em);
+  @include font(0.5);
+  border: 1px solid $basic-gray;
+  background-color: $darker-gray;
+  padding: 0.75em;
+}
+
+.chat-input {
+  @include font(0.75);
+  flex-grow: 1;
+  outline: none;
+}
+
+.chat-input-button {
+  @include font(0.75);
+  cursor: pointer;
+  color: $basic-gray;
+
+  &:hover {
+    color: $basic-green;
+  }
+}
