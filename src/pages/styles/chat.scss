@@ -285,13 +285,13 @@
     @include font(0.5, bold);
   }
   .subtitle {
-    font-size: (calc(0.25rem + 0.5vw));
+    @include font(0.25);
   }
 }
 
 .message-text {
+  @include font(0.5);
   word-wrap: break-word;
-  font-size: (calc(0.5rem + 0.5vw));
 }
 
 .message-error {

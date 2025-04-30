@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
 import { Tooltip } from "react-tooltip";
 import { getTimeSince } from "src/utils/date";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCompactDisc,
   faMicrophoneLines,
   faMusic,
+  faStar,
+  faStarHalfAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/review-content.scss";
 
@@ -90,9 +91,17 @@ function ReviewStars({ rating = 0, size = 20 }) {
         return (
           <span key={i}>
             {isHalf ? (
-              <FaStarHalfAlt size={size} color="#ffc107" />
+              <FontAwesomeIcon
+                icon={faStarHalfAlt}
+                size={size}
+                color="#ffc107"
+              />
             ) : (
-              <FaStar size={size} color={getStarColor(ratingValue)} />
+              <FontAwesomeIcon
+                icon={faStar}
+                size={size}
+                color={getStarColor(ratingValue)}
+              />
             )}
           </span>
         );
@@ -111,9 +120,4 @@ function ReviewContent({ review }) {
   );
 }
 
-export {
-  ReviewUser,
-  ReviewMediaTitle,
-  ReviewStars,
-  ReviewContent,
-};
+export { ReviewUser, ReviewMediaTitle, ReviewStars, ReviewContent };

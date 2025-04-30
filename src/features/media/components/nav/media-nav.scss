@@ -1,15 +1,15 @@
+@use "src/styles/abstracts" as *;
+
 .media-navbar {
-  display: flex;
-  align-self: center;
-  width: fit-content;
-  gap: 0.5em;
-  padding: 0.5em 1em;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.05em;
+  @include flexbox(row, initial, center, 0.5em);
   margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5em 1em;
+  width: fit-content;
   width: fit-content;
   max-width: 100%;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
 .media-navbar-link {

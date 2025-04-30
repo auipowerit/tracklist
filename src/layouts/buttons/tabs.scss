@@ -1,9 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .tabs-container {
-  display: flex;
-  justify-content: center;
-  gap: 2em;
+  @include flexbox(row, center, initial, 2em);
   margin-bottom: 1em;
 }
 

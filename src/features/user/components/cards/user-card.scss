@@ -1,9 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .user-card-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   border: 1px solid $basic-gray;
   padding: 1em;
 }
@@ -24,15 +22,11 @@
 }
 
 .user-card-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  @include flexbox(column, $gap: 0.5em);
 }
 
 .user-card-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(row, initial, center, 0.5em);
 }
 
 .user-card-displayname {
@@ -40,12 +34,11 @@
 }
 
 .user-card-username {
-  color: $basic-gray;
-  font-weight: normal;
+  @include font(0.75, normal, $basic-gray);
 }
 
 .user-card-bio {
-  @include font(0.5);
+  @include font(0.75);
 }
 
 .user-card-friends {

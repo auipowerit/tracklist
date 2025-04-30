@@ -1,9 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .account-reviews-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
+  @include flexbox(column, $gap: 2em);
 
   & > div {
     padding-bottom: 0.25em;

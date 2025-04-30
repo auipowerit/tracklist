@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaPaperPlane } from "react-icons/fa";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -240,7 +239,7 @@ function FormMessage({ message, setMessage }) {
 function FormButton({ currentUsers }) {
   return (
     <button type="submit" className="form-submit-button">
-      <FaPaperPlane />
+      <FontAwesomeIcon icon={faPaperPlane} />
       <p>{`Send ${currentUsers.length > 1 ? "seperately" : ""} `}</p>
     </button>
   );

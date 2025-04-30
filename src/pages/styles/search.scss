@@ -1,25 +1,20 @@
 @use "src/styles/abstracts" as *;
 
 .search-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
+  @include flexbox(column, $gap: 2em);
   padding: 2em 0;
   width: 100%;
 }
 
 .search-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
+  @include flexbox(row, center, center, 1em);
   width: 100%;
   margin-bottom: 3em;
 }
 
 .searchbar {
-  @include font(1);
   @include flexbox(row, center, center, 1em);
+  @include font(1);  
   border-radius: 8px;
   border: 2px solid $basic-white;
   padding: 0.25em 0.75em;
@@ -40,8 +35,7 @@
 }
 
 .user-results {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
   width: 800px;
   max-width: 100%;
 }

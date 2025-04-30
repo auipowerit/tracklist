@@ -1,8 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .media-card-container {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
   transition: all 0.2s;
   cursor: pointer;
   background-color: $basic-white;
@@ -22,11 +21,8 @@
 }
 
 .media-card-info {
-  display: flex;
+  @include flexbox(column, space-between, initial, 0.25em);
   flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.25em;
   padding: 0.5em 0;
   text-align: center;
 }
@@ -48,13 +44,9 @@
 }
 
 .media-card-subtitle {
-  font-weight: 400;
-  font-size: (calc(0.35rem + 0.5vw));
+  @include font(0.35, bold);
 }
 
 .media-card-rating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25em;
+  @include flexbox(row, center, center, 0.25em);
 }

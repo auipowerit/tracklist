@@ -1,20 +1,18 @@
 @use "src/styles/abstracts" as *;
 
 .account-likes-media {
-  margin: auto;
   display: grid;
-  width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1em;
+  margin: auto;
+  width: 100%;
 }
 
 .account-likes-reviews {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
+  @include flexbox(column, $gap: 2em);
 
   & > div {
-    padding-bottom: 0.25em;
     border-bottom: 1px solid $basic-gray;
+    padding-bottom: 0.25em;
   }
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { FaSpotify } from "react-icons/fa";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./account-form.scss";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   const { globalUser, updateUserDetails } = useAuthContext();
@@ -77,7 +77,7 @@ function FormImage({ globalUser }) {
         onClick={() => redirectToSpotifyAuth(false)}
         className="basic-button"
       >
-        <FaSpotify />
+        <FontAwesomeIcon icon={faSpotify} />
         <p>{globalUser?.spotifyUrl ? "Resync" : "Sync"}</p>
       </button>
     </div>
@@ -142,7 +142,7 @@ function FormBio({ bio, setBio }) {
         type="text"
         value={bio}
         onChange={handleChange}
-        className="h-full border-1 border-white px-2 py-1"
+        className="border-1 h-full border-white px-2 py-1"
       />
     </div>
   );

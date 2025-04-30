@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import "./styles/star-rating.scss";
 
 export default function StarRating({ rating, setRating }) {
@@ -39,13 +40,15 @@ export default function StarRating({ rating, setRating }) {
             onMouseLeave={handleMouseLeave}
           >
             {isHalf ? (
-              <FaStarHalfAlt
+              <FontAwesomeIcon
+                icon={faStarHalfAlt}
                 size={40}
                 color="#ffc107"
                 onClick={() => handleClick(ratingValue - 0.5)}
               />
             ) : (
-              <FaStar
+              <FontAwesomeIcon
+                icon={faStar}
                 size={40}
                 color={getStarColor(ratingValue)}
                 onClick={() => handleClick(ratingValue)}

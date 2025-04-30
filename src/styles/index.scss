@@ -2,13 +2,12 @@
 @use "src/styles/components" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-/*@import "tailwindcss";*/
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: $font-primary;
   text-decoration: none;
 }
 
@@ -19,9 +18,8 @@ body {
 }
 
 main {
-  display: flex;
+  @include flexbox(column);
   flex: 1;
-  flex-direction: column;
 }
 
 a {
@@ -34,11 +32,10 @@ ul {
 }
 
 button {
+  @include flexbox(1, normal, $basic-white);
   cursor: pointer;
   border: none;
   background-color: transparent;
-  color: white;
-  font-size: calc(1rem + 0.5vw);
 }
 
 input {
@@ -52,19 +49,16 @@ select {
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
   height: 100vh;
 }
 
 .empty-message {
+  @include font(1, normal, $basic-gray, italic);
   margin: auto;
   padding: 4em 0;
   width: fit-content;
   max-width: 500px;
-  color: gray;
-  font-style: italic;
-  font-size: calc(1rem + 0.5vw);
   text-align: center;
 }
 

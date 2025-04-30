@@ -8,9 +8,7 @@ import SuccessMessage from "src/features/shared/components/SuccessMessage";
 import ListForm from "../forms/ListForm";
 import "./list-buttons.scss";
 
-export default function AddListButton(props) {
-  const { isModalOpen, setIsModalOpen } = props;
-
+export default function AddListButton({ isModalOpen, setIsModalOpen }) {
   const { globalUser } = useAuthContext();
   const navigate = useNavigate();
 
@@ -48,7 +46,6 @@ export default function AddListButton(props) {
         ) : (
           <ListForm
             isModalOpen={isModalOpen}
-            isAdding={true}
             setSuccess={setSuccess}
           />
         )}

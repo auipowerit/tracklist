@@ -1,22 +1,21 @@
 @use "src/styles/abstracts" as *;
 
-.comment-button {
-  @include flexbox(row, initial, center, 0.25em);
+.basic-button {
+  @include flexbox(row, initial, center, 0.5em);
   @include font(0.75);
-  gap: 0.25em;
+  border: 2px solid $basic-white;
+  padding: 0.25em 0.5em;
+  width: fit-content;
+  text-wrap: nowrap;
 
   &:hover {
     color: $basic-gray;
   }
 }
 
-.basic-button {
-  @include flexbox(row, initial, center, 0.5em);
+.comment-button {
+  @include flexbox(row, initial, center, 0.25em);
   @include font(0.75);
-  border: 2px solid $basic-white;
-  padding: 0.25em 0.5em;
-  text-wrap: nowrap;
-  width: fit-content;
 
   &:hover {
     color: $basic-gray;

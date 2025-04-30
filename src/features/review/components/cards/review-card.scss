@@ -1,14 +1,11 @@
 @use "src/styles/abstracts" as *;
 
 .review-card-container {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
 }
 
 .review-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  @include flexbox(column, $gap: 0.5em);
   cursor: pointer;
   padding: 0.5em;
 
@@ -18,9 +15,7 @@
 }
 
 .review-card-header {
-  display: flex;
-  align-items: stretch;
-  gap: 1em;
+  @include flexbox(row, initial, stretch, 1em);
 }
 
 .review-card-image {
@@ -33,15 +28,11 @@
 }
 
 .review-card-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flexbox(column, space-between);
 }
 
 .review-card-rating {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  @include flexbox(column, $gap: 0.5em);
 }
 
 .review-card-text {

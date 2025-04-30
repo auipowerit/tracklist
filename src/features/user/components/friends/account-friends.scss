@@ -7,8 +7,6 @@
 }
 
 .account-friends-list {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column, $gap: 1em);
   width: 100%;
-  gap: 1em;
 }

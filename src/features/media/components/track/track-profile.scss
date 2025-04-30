@@ -1,9 +1,8 @@
+@use "src/styles/abstracts" as *;
+
 .track-profile {
-  display: flex;
-  height: 100%;
-  width: 60%;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5em;
+  @include flexbox(column, initial, center, 0.5em);
   padding: 0.5em 0;
+  width: 60%;
+  height: 100%;
 }

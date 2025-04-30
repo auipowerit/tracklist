@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { FaPaperPlane } from "react-icons/fa";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 
@@ -39,7 +40,7 @@ export default function ChatInput() {
         className="chat-input"
       />
       <button type="submit" className="chat-input-button">
-        <FaPaperPlane />
+        <FontAwesomeIcon icon={faPaperPlane} />
       </button>
     </form>
   );

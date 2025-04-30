@@ -39,6 +39,10 @@
 
 .form-select {
   @include font(1, normal, $basic-white);
+
+  option {
+    color: $basic-black;
+  }
 }
 
 .form-media-results {

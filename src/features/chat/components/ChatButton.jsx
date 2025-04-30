@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { FaPaperPlane } from "react-icons/fa";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../context/ChatContext";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./chat-button.scss";
 
@@ -41,7 +40,11 @@ export default function ChatButton({ username = "" }) {
 
   return (
     <button onClick={handleClick} className="chat-button">
-      {username ? <FaPaperPlane /> : <FontAwesomeIcon icon={faEnvelope} />}
+      {username ? (
+        <FontAwesomeIcon icon={faPaperPlane} />
+      ) : (
+        <FontAwesomeIcon icon={faEnvelope} />
+      )}
     </button>
   );
 }

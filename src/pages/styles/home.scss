@@ -1,8 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .home-container {
-  display: flex;
-  flex-direction: column;
+  @include flexbox(column);
   margin: auto;
   margin-top: 1em;
   width: 100%;
@@ -11,9 +10,7 @@
 }
 
 .home-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   border-bottom: 1px solid $basic-white;
 
   .review-button {
@@ -22,9 +19,7 @@
 }
 
 .feed-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  @include flexbox(column, $gap: 1em);
   @include gradient(top);
   padding: 2em 0;
   width: 100%;
