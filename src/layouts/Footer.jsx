@@ -6,44 +6,32 @@ export default function Footer() {
     <footer>
       <p className="footer-text">
         Coded in&nbsp;
-        <Link
-          to="https://code.visualstudio.com"
-          target="_blank"
-          className="footer-link"
-        >
-          Visual Studio Code&nbsp;
-        </Link>
-        by&nbsp;
-        <Link
-          to="https://www.linkedin.com/in/zachary-betters-916a74116/"
-          target="_blank"
-          className="footer-link"
-        >
-          Zachary Betters
-        </Link>
+        <FooterLink
+          link="https://code.visualstudio.com"
+          label="Visual Studio Code"
+        />
+        &nbsp;by&nbsp;
+        <FooterLink
+          link="https://www.linkedin.com/in/zachary-betters-916a74116/"
+          label="Zachary Betters"
+        />
         .&nbsp;
         <br />
-        Built with React.JS, HTML, Tailwind CSS, Spotify API, and Firebase.
+        Built with React.js, HTML, SCSS, Spotify API, and Google Firebase.
         Hosted and deployed with&nbsp;
-        <Link
-          to="https://www.netlify.com"
-          target="_blank"
-          className="footer-link"
-        >
-          Netlify
-        </Link>
-        .
+        <FooterLink link="https://www.netlify.com" label="Netlify" />.
         <br />
         All text is set in the&nbsp;
-        <Link
-          to="https://rsms.me/inter/"
-          target="_blank"
-          className="footer-link"
-        >
-          Inter typeface
-        </Link>
-        .
+        <FooterLink link="https://rsms.me/inter/" label="Inter typeface" />.
       </p>
     </footer>
+  );
+}
+
+function FooterLink({ link, label }) {
+  return (
+    <Link to={link} target="_blank" className="link-special footer-link">
+      {label}
+    </Link>
   );
 }

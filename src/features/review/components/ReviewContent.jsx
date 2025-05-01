@@ -9,7 +9,7 @@ import {
   faStar,
   faStarHalfAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import "./styles/review-content.scss";
+import "./review-content.scss";
 
 function ReviewUser({ review }) {
   return (

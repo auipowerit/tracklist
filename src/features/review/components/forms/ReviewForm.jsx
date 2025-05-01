@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { DEFAULT_MEDIA_IMG, REVIEW_LIMIT } from "src/data/const";
 import Alert from "src/features/shared/components/Alert";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import StarRating from "../StarRating";
+import StarRating from "./StarRating";
 import "./review-form.scss";
 
 export default function ReviewForm(props) {
@@ -23,6 +21,7 @@ export default function ReviewForm(props) {
   const [rating, setRating] = useState(null);
   const [content, setContent] = useState("");
 
+  const formRef = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -85,32 +84,43 @@ export default function ReviewForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    if (!validateData()) return;
+
+    submitReview();
+  }
+
+  function validateData() {
+    const mediaInput = formRef.current.elements["media"];
+    const reviewText = formRef.current.elements["review"];
+
     if (!globalUser) {
       setError("Please sign in to submit a review.");
-      return;
-    }
-
-    if (content === "") {
-      setError("Please provide a review.");
-      return;
-    }
-
-    if (content.length > 1000) {
-      setError("Please keep your review under 1000 characters.");
-      return;
+      return false;
     }
 
     if (!media || !media.id) {
+      mediaInput.classList.add("invalid-field");
       setError("Please select media to review.");
-      return;
+      return false;
     }
 
     if (rating <= 0) {
       setError("Please provide a star rating.");
-      return;
+      return false;
     }
 
-    submitReview();
+    if (content === "") {
+      setError("Please provide a review.");
+      reviewText.classList.add("invalid-field");
+      return false;
+    }
+
+    if (content.length > 1000) {
+      setError("Please keep your review under 1000 characters.");
+      return false;
+    }
+
+    return true;
   }
 
   async function submitReview() {
@@ -154,10 +164,12 @@ export default function ReviewForm(props) {
     inputRef.current.value = "";
     setContent("");
     setError("");
+    formRef.current.elements["media"].classList.remove("invalid-field");
+    formRef.current.elements["review"].classList.remove("invalid-field");
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form ref={formRef} onSubmit={handleSubmit} className="form-container">
       <FormHeader />
 
       <div className="form-content">
@@ -199,13 +211,14 @@ function FormInput(props) {
   const { inputRef, type, handleSearch, handleChange, results, handleClick } =
     props;
 
-  function handleInputChange(element) {
-    element.target.classList.remove("invalid-field");
+  function handleInputChange(e) {
+    e.target.classList.remove("invalid-field");
   }
 
   return (
     <div className="review-form-input-container">
       <input
+        name="media"
         type="search"
         ref={inputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
@@ -267,6 +280,7 @@ function FormReview({ content, setContent }) {
         {content.length || 0}/{REVIEW_LIMIT}
       </p>
       <textarea
+        name="review"
         placeholder="Write your review..."
         value={content}
         onChange={handleChange}
@@ -279,8 +293,7 @@ function FormReview({ content, setContent }) {
 function FormButton() {
   return (
     <button type="submit" className="form-submit-button">
-      <FontAwesomeIcon icon={faPlus} />
-      <p>Post</p>
+      Post
     </button>
   );
 }

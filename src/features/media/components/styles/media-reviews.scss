@@ -10,6 +10,10 @@
   margin-left: 1em;
 }
 
+.media-reviews-header {
+  @include flexbox(row, initial, center, 1em);
+}
+
 .media-review-card {
   @include flexbox(column, $gap: 1em);
   padding: 1em;

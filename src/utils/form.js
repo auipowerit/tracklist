@@ -1,12 +1,12 @@
 export function checkEmptyForm(formRef) {
   let isEmpty = false;
 
-  Array.from(formRef.current.elements).forEach((element) => {
+  Array.from(formRef.current.elements).forEach((e) => {
     if (
-      (element.nodeName === "INPUT" || element.nodeName === "TEXTAREA") &&
-      element.value.trim() === ""
+      (e.nodeName === "INPUT" || e.nodeName === "TEXTAREA") &&
+      e.value.trim() === ""
     ) {
-      element.classList.add("invalid-field");
+      e.classList.add("invalid-field");
       isEmpty = true;
     }
   });

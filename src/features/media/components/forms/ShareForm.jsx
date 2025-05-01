@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import Alert from "src/features/shared/components/Alert";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./share-form.scss";
 
 export default function ShareForm(props) {
@@ -17,13 +18,16 @@ export default function ShareForm(props) {
   const { getReviewById } = useReviewContext();
   const { getMediaById } = useSpotifyContext();
 
+  const navigate = useNavigate();
+
+  const [error, setError] = useState("");
   const [media, setMedia] = useState(null);
   const [input, setInput] = useState("");
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
   const [currentUsers, setCurrentUser] = useState([]);
 
-  const navigate = useNavigate();
+  const formRef = useRef(null);
 
   useEffect(() => {
     handleModal();
@@ -60,7 +64,7 @@ export default function ShareForm(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!globalUser || !media || !category || currentUsers.length === 0) return;
+    if (!validateData()) return;
 
     // For each added user
     currentUsers.forEach(async (user) => {
@@ -87,16 +91,40 @@ export default function ShareForm(props) {
     navigate("/messaging");
   }
 
+  function validateData() {
+    const friendInput = formRef.current.elements["friend"];
+
+    if (!globalUser) {
+      setError("Please sign in to submit a review.");
+      return false;
+    }
+
+    if (!media || !media.id) {
+      setError("Please select media to share.");
+      return false;
+    }
+
+    if (currentUsers.length === 0) {
+      friendInput.classList.add("invalid-field");
+      setError("Please select at least one friend.");
+      return false;
+    }
+
+    return true;
+  }
+
   function resetValues() {
     setMedia(null);
     setInput("");
     setUsers([]);
     setCurrentUser([]);
     setMessage("");
+    setError("");
+    formRef.current.elements["friend"].classList.remove("invalid-field");
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form ref={formRef} onSubmit={handleSubmit} className="form-container">
       <FormHeader category={category} />
 
       <div className="form-content">
@@ -118,6 +146,8 @@ export default function ShareForm(props) {
         </div>
       </div>
       <FormMessage message={message} setMessage={setMessage} />
+
+      <Alert message={error} />
       <FormButton currentUsers={currentUsers} />
     </form>
   );
@@ -174,6 +204,7 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
       type="text"
       placeholder="Search for a friend..."
       className="form-input"
+      name="friend"
     />
   );
 }
@@ -239,8 +270,7 @@ function FormMessage({ message, setMessage }) {
 function FormButton({ currentUsers }) {
   return (
     <button type="submit" className="form-submit-button">
-      <FontAwesomeIcon icon={faPaperPlane} />
-      <p>{`Send ${currentUsers.length > 1 ? "seperately" : ""} `}</p>
+      {`Send ${currentUsers.length > 1 ? "seperately" : ""} `}
     </button>
   );
 }

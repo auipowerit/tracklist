@@ -8,7 +8,7 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import BannerButtons from "./buttons/BannerButtons";
 import "./styles/media-banner.scss";
 
-function MediaBanner({ media, category }) {
+function MediaBanner({ media, category, setActiveTab, setFilter }) {
   const { getAvgRating } = useReviewContext();
   const { getMediaLinks } = useSpotifyContext();
 
@@ -28,7 +28,7 @@ function MediaBanner({ media, category }) {
     setData(fetchedData);
   }
 
-  if (!data) return;
+  if (!data || !media) return;
 
   return (
     <div className="media-banner-container">
@@ -38,7 +38,12 @@ function MediaBanner({ media, category }) {
       />
       <div className="media-banner-content">
         <Title name={data.title} subtitle={data.subtitle} />
-        <Rating mediaId={media.id} rating={rating} />
+        <Rating
+          mediaId={media.id}
+          rating={rating}
+          setActiveTab={setActiveTab}
+          setFilter={setFilter}
+        />
       </div>
       <BannerButtons mediaId={media.id} name={data.title} category={category} />
     </div>
@@ -84,10 +89,14 @@ function Title({ name, subtitle }) {
   );
 }
 
-function Rating({ mediaId, rating }) {
+function Rating({ mediaId, rating, setActiveTab, setFilter }) {
   return (
     <div className="media-banner-rating">
-      <RatingBar mediaId={mediaId} />
+      <RatingBar
+        mediaId={mediaId}
+        setActiveTab={setActiveTab}
+        setFilter={setFilter}
+      />
 
       <div className="media-banner-stars">
         <p>{rating.avgRating?.toFixed(1) || ""}</p>

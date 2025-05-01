@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
+import Alert from "src/features/shared/components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import AuthInput from "../inputs/AuthInput";
-import Alert from "src/features/shared/components/Alert";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { checkEmptyForm, isEmailValid, isPasswordValid } from "src/utils/form";
+import AuthInput from "../inputs/AuthInput";
 
 export default function Signup({ setIsRegistration }) {
   const { signup, usernameAvailable } = useAuthContext();
@@ -15,45 +15,47 @@ export default function Signup({ setIsRegistration }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!(await validateData())) return;
+
+    const email = formRef.current.elements["email"].value;
+    const password = formRef.current.elements["password"].value;
+    const displayname = formRef.current.elements["displayname"].value;
+    const username = formRef.current.elements["username"].value;
+
+    if (await signup(email, password, displayname, username, setError)) {
+      resetForm();
+    }
+  }
+
+  async function validateData() {
     const email = formRef.current.elements["email"];
     const password = formRef.current.elements["password"];
-    const displayname = formRef.current.elements["displayname"];
     const username = formRef.current.elements["username"];
 
     if (checkEmptyForm(formRef)) {
       setError("Please fill out all fields.");
-      return;
+      return false;
     }
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");
       email.classList.add("invalid-field");
-      return;
+      return false;
     }
 
     if (!isPasswordValid(password.value)) {
       setError("Password must be at least 8 characters long.");
       password.classList.add("invalid-field");
-      return;
+      return false;
     }
 
     if (!(await usernameAvailable(username.value))) {
       setError("This username is unavailable.");
       username.classList.add("invalid-field");
-      return;
+      return false;
     }
 
-    if (
-      await signup(
-        email.value,
-        password.value,
-        displayname.value,
-        username.value,
-        setError,
-      )
-    ) {
-      resetForm();
-    }
+    return true;
   }
 
   function resetForm() {
@@ -62,23 +64,32 @@ export default function Signup({ setIsRegistration }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="auth-form">
-      <AuthInput label="Display Name" name="displayname" type="text" />
-      <AuthInput label="Username" name="username" type="text" />
-      <AuthInput label="Email" name="email" type="text" />
-      <AuthInput label="Password" name="password" type="password" />
+    <div className="auth-container">
+      <h1 className="auth-header">
+        Sign up for <span>TrackList</span>
+      </h1>
 
-      <Alert message={error} />
-      <button type="submit" className="form-submit-button">
-        Submit
-      </button>
-      <button
-        onClick={() => setIsRegistration(false)}
-        className="basic-button auth-button"
-      >
-        <p>Sign in</p>
-        <FontAwesomeIcon icon={faArrowRight} />
-      </button>
-    </form>
+      <form ref={formRef} onSubmit={handleSubmit} className="auth-form">
+        <AuthInput label="Display Name" name="displayname" type="text" />
+        <AuthInput label="Username" name="username" type="text" />
+        <AuthInput label="Email" name="email" type="text" />
+        <AuthInput label="Password" name="password" type="password" />
+
+        <Alert message={error} />
+        <button type="submit" className="form-submit-button">
+          Submit
+        </button>
+      </form>
+      <div className="auth-button-container">
+        <p>Already have an account with us?</p>
+        <button
+          onClick={() => setIsRegistration(false)}
+          className="forward-button auth-button auth-after"
+        >
+          <p>Sign in</p>
+          <FontAwesomeIcon icon={faArrowRight} className="button-after" />
+        </button>
+      </div>
+    </div>
   );
 }

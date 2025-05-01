@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import SortReviews from "src/features/sort/components/SortReviews";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import FilterReviews from "src/features/review/components/buttons/FilterButton";
 import MediaReviewCard from "src/features/media/components/cards/MediaReviewCard";
 import "./styles/media-reviews.scss";
 
-export default function MediaReviews({ mediaId }) {
+export default function MediaReviews({ mediaId, filter, setFilter }) {
   const { getReviewsByMediaId } = useReviewContext();
   const [reviews, setReviews] = useState(null);
+  const [filteredReviews, setFilteredReviews] = useState(null);
 
   useEffect(() => {
     if (!mediaId) return;
@@ -15,15 +17,30 @@ export default function MediaReviews({ mediaId }) {
 
   async function fetchReviews() {
     const fetchedReviews = await getReviewsByMediaId(mediaId);
-    setReviews([...fetchedReviews].sort((a, b) => b.createdAt - a.createdAt));
+    const sortedReviews = fetchedReviews.sort(
+      (a, b) => b.createdAt - a.createdAt,
+    );
+
+    setReviews([...sortedReviews]);
+    setFilteredReviews([...sortedReviews]);
   }
 
   return (
     <div className="media-reviews-container">
-      {reviews?.length > 0 && (
-        <SortReviews reviews={reviews} setReviews={setReviews} />
-      )}
-      {reviews && <Reviews reviews={reviews} />}
+      <div className="media-reviews-header">
+        <SortReviews
+          reviews={filteredReviews}
+          setReviews={setFilteredReviews}
+        />
+        <FilterReviews
+          filter={filter}
+          setFilter={setFilter}
+          review={reviews}
+          setFilteredReviews={setFilteredReviews}
+        />
+      </div>
+
+      {reviews && <Reviews reviews={filteredReviews} />}
     </div>
   );
 }

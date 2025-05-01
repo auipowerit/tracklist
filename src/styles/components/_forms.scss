@@ -38,7 +38,7 @@
 }
 
 .form-select {
-  @include font(1, normal, $basic-white);
+  @include font(0.75, normal, $basic-white);
 
   option {
     color: $basic-black;
@@ -98,16 +98,15 @@
 }
 
 .form-submit-button {
-  @include flexbox(row, center, center, 0.25em);
   @include font(1);
   margin: auto;
-  border-radius: 6px;
-  background-color: $basic-green;
-  padding: 0.5em 0.75em;
+  background-color: $dark-green;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  padding: 0.5em 1em;
   width: fit-content;
 
   &:hover {
-    background-color: $dark-green;
+    background-color: $darker-green;
   }
 }
 
@@ -123,10 +122,6 @@
 .reset-password-link {
   cursor: pointer;
   @include font(initial, bold, $lighter-green);
-
-  &:hover {
-    color: $basic-green;
-  }
 }
 
 .success-container {

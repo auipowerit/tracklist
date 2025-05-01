@@ -29,11 +29,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="auth-container">
-      <h1 className="auth-header">
-        {isRegistration ? "Sign up for " : "Login to "}
-        <span>TrackList</span>
-      </h1>
+    <div className="auth-wrapper">
       {isRegistration ? (
         <Signup setIsRegistration={setIsRegistration} />
       ) : (

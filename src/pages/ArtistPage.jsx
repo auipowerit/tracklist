@@ -4,7 +4,7 @@ import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import MediaNav from "../features/media/components/nav/MediaNav";
+import MediaNavBar from "../features/media/components/nav/MediaNavBar";
 import MediaBanner from "../features/media/components/MediaBanner";
 import "./styles/artist.scss";
 
@@ -18,6 +18,9 @@ export default function ArtistPage() {
     album: null,
     track: null,
   });
+
+  const [filter, setFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState("");
 
   const mediaId = useMemo(() => {
     return params.trackId || params.albumId || params.artistId;
@@ -100,7 +103,7 @@ export default function ArtistPage() {
       />
 
       <div className="artist-page">
-        <MediaNav
+        <MediaNavBar
           artist={memoizedMedia.artist}
           album={memoizedMedia.album}
           track={memoizedMedia.track}
@@ -112,6 +115,8 @@ export default function ArtistPage() {
               memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
             }
             category={category}
+            setActiveTab={setActiveTab}
+            setFilter={setFilter}
           />
 
           <div className="artist-page-outlet">
@@ -120,6 +125,10 @@ export default function ArtistPage() {
                 artist: memoizedMedia.artist,
                 album: memoizedMedia.album,
                 track: memoizedMedia.track,
+                activeTab: activeTab,
+                setActiveTab: setActiveTab,
+                filter: filter,
+                setFilter: setFilter,
               }}
             />
           </div>

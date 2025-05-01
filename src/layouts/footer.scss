@@ -13,9 +13,9 @@ footer {
 }
 
 .footer-link {
-  color: white;
+  color: $basic-white;
 
   &:hover {
-    color: green;
+    color: $lighter-green;
   }
 }

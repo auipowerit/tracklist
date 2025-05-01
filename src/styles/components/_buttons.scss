@@ -21,3 +21,53 @@
     color: $basic-gray;
   }
 }
+
+.forward-button {
+  position: relative;
+  vertical-align: middle;
+  transition: all 200ms;
+  margin: 0 auto;
+  text-align: center;
+
+  .button-after {
+    @include flexbox(row, center, center);
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-wrap: initial;
+    gap: initial;
+    transform: translateY(50%);
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  &:hover .button-after {
+    right: 10px;
+    opacity: 1;
+  }
+}
+
+.back-button {
+  position: relative;
+  vertical-align: middle;
+  transition: all 200ms;
+  margin: 0 auto;
+  text-align: center;
+
+  .button-before {
+    @include flexbox(row, center, center);
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-wrap: initial;
+    gap: initial;
+    transform: translateY(50%);
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  &:hover .button-before {
+    left: 10px;
+    opacity: 1;
+  }
+}

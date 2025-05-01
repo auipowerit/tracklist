@@ -5,12 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { LIST_DESCRIPTION_LIMIT, LIST_NAME_LIMIT } from "src/data/const";
-import {
-  faArrowLeft,
-  faCheck,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
@@ -47,46 +42,7 @@ export default function CreateList(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const nameInput = formRef.current.elements["listname"];
-    const descriptionInput = formRef.current.elements["description"];
-
-    if (!globalUser) {
-      setError("Please sign in to continue.");
-      return;
-    }
-
-    if (name === "" && description === "") {
-      nameInput.classList.add("invalid-field");
-      descriptionInput.classList.add("invalid-field");
-      setError("Please fill out all fields.");
-      return;
-    }
-
-    if (name === "") {
-      nameInput.classList.add("invalid-field");
-      setError("Please provide a name.");
-      return;
-    }
-
-    if (name.length > LIST_NAME_LIMIT) {
-      nameInput.classList.add("invalid-field");
-      setError(`Please keep the name under ${LIST_NAME_LIMIT} characters.`);
-      return;
-    }
-
-    if (description === "") {
-      descriptionInput.classList.add("invalid-field");
-      setError("Please provide a description.");
-      return;
-    }
-
-    if (description.length > LIST_DESCRIPTION_LIMIT) {
-      descriptionInput.classList.add("invalid-field");
-      setError(
-        `Please keep the description under ${LIST_DESCRIPTION_LIMIT} characters.`,
-      );
-      return;
-    }
+    if (!validateData()) return;
 
     const listData = {
       name,
@@ -114,12 +70,61 @@ export default function CreateList(props) {
     resetValues();
   }
 
+  function validateData() {
+    const nameInput = formRef.current.elements["listname"];
+    const descriptionInput = formRef.current.elements["description"];
+
+    if (!globalUser) {
+      setError("Please sign in to continue.");
+      return false;
+    }
+
+    if (name === "" && description === "") {
+      nameInput.classList.add("invalid-field");
+      descriptionInput.classList.add("invalid-field");
+      setError("Please fill out all fields.");
+      return false;
+    }
+
+    if (name === "") {
+      nameInput.classList.add("invalid-field");
+      setError("Please provide a name.");
+      return false;
+    }
+
+    if (name.length > LIST_NAME_LIMIT) {
+      nameInput.classList.add("invalid-field");
+      setError(`Please keep the name under ${LIST_NAME_LIMIT} characters.`);
+      return false;
+    }
+
+    if (description === "") {
+      descriptionInput.classList.add("invalid-field");
+      setError("Please provide a description.");
+      return false;
+    }
+
+    if (description.length > LIST_DESCRIPTION_LIMIT) {
+      descriptionInput.classList.add("invalid-field");
+      setError(
+        `Please keep the description under ${LIST_DESCRIPTION_LIMIT} characters.`,
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   function resetValues() {
     setName("");
     setIsRanking(false);
     setIsPrivate(false);
     setDescription("");
+    setError("");
     if (setNewList) setNewList(false);
+
+    formRef.current.elements["listname"].classList.remove("invalid-field");
+    formRef.current.elements["description"].classList.remove("invalid-field");
   }
 
   return (
@@ -189,8 +194,9 @@ function FormName({ name, setName }) {
       </div>
 
       <input
-        name="listname"
         type="text"
+        name="listname"
+        placeholder="Provide a name..."
         value={name}
         onChange={handleChange}
         className="form-input"
@@ -203,13 +209,14 @@ function FormCheckbox({ name, isChecked, setIsChecked }) {
   return (
     <div className="list-form-input-container">
       <input
+        id={name}
         name={name}
-        type="checkbox"
         checked={isChecked && "checked"}
-        value={isChecked}
         onChange={() => setIsChecked(!isChecked)}
+        type="checkbox"
+        value={isChecked}
       />
-      <label htmlFor="box">{name}</label>
+      <label htmlFor={name}>{name}</label>
     </div>
   );
 }
@@ -237,8 +244,9 @@ function FormDescription({ description, setDescription }) {
       </div>
 
       <textarea
-        id="description"
         name="description"
+        id="description"
+        placeholder="Write a description..."
         value={description}
         onChange={handleChange}
       />
@@ -275,8 +283,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         </button>
       )}
       <button type="submit" className="form-submit-button">
-        <FontAwesomeIcon icon={list ? faCheck : faPlus} />
-        <p>{list ? "Save" : "Create"}</p>
+        {list ? "Save" : "Create"}
       </button>
 
       {list && (

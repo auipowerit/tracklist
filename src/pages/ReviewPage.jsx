@@ -76,7 +76,7 @@ function ReviewHeader({ review }) {
       <div className="review-section-info-container">
         <div className="review-section-user-container">
           <p className="review-section-user-info">
-            Review by{" "}
+            Review by&nbsp;
             <Link
               to={`/users/${review.username}`}
               className="review-section-username"

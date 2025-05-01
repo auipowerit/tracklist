@@ -1,40 +1,78 @@
 @use "src/styles/abstracts" as *;
 
-.auth-container {
-  @include flexbox(column, center, center, 2em);
+.auth-wrapper {
+  margin: auto;
   padding: 2em 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.auth-container {
+  @include flexbox(column, center, center, 1em);
+  margin: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  background-color: $darker-gray;
+  padding: 1em;
+  width: 100%;
 }
 
 .auth-header {
-  @include font(1.5, bold, $basic-gray);
+  @include font(1);
+  padding-bottom: 1em;
 
   span {
-    color: $basic-green;
+    @include font(1, bold, $basic-green);
   }
 }
 
 .auth-form {
-  @include flexbox(column, $gap: 1em);
-  width: fit-content;
+  @include flexbox(column, initial, center, 0.5em);
   margin: auto;
+  width: fit-content;
 }
 
 .auth-input-container {
-  @include flexbox(row, space-between, center, 1em);
+  @include flexbox(column, initial, flex-start, 0.5em);
 
   label {
-    @include font(1.25);
+    @include font(1);
   }
 }
 
 .auth-input {
   @include font(1);
-  margin-left: auto;
   outline: none;
   border: 2px solid $basic-white;
   padding: 0.15em 0.25em;
 }
 
+.auth-button-container {
+  width: 100%;
+  @include flexbox(column, initial, center, 1em);
+  margin-top: 1em;
+  border-top: 1px solid white;
+  padding: 1em;
+
+  p {
+    @include font(0.75);
+  }
+}
+
 .auth-button {
-  margin: auto;
+  @include flexbox(row, center, center, 0.5em);
+  @include font(1);
+  border: 1px solid $basic-white;
+  margin: 0 auto;
+  padding: 0.5em 1.5em;
+
+  &:hover.auth-before {
+    padding-right: 1em;
+    padding-left: 2em;
+  }
+
+  &:hover.auth-after {
+    padding-left: 1em;
+    padding-right: 2em;
+  }
 }

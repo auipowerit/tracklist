@@ -49,7 +49,7 @@
 }
 
 .review-subtitle {
-  @include font(0.75, 400);
+  @include font(0.75, normal, $basic-gray);
 }
 
 .review-text {

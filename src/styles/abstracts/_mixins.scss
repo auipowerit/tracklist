@@ -1,3 +1,5 @@
+@use "./colors" as *;
+
 @mixin flexbox(
   $direction: row,
   $justify: initial,
@@ -15,7 +17,7 @@
   gap: $gap;
 }
 
-@mixin font($size: 1, $weight: normal, $color: white, $style: normal) {
+@mixin font($size: 1, $weight: normal, $color: $basic-white, $style: normal) {
   color: $color;
   font-style: $style;
   font-weight: $weight;

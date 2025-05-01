@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import "./media-nav.scss";
+import "./media-navbar.scss";
 
-export default function MediaNav({ artist, album, track, category }) {
+export default function MediaNavbar({ artist, album, track, category }) {
   return (
     <div className="media-navbar">
       <NavLink

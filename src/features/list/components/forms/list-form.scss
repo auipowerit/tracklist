@@ -27,13 +27,17 @@
 }
 
 .list-form-current-list {
-  @include font(0.5);
+  @include font(0.75);
   @include flexbox(row, initial, center, 0.5em);
   padding: 0.25em 0.5em;
   background-color: $dark-gray;
 
-  button:hover {
-    color: $basic-gray;
+  button {
+    @include font(0.75);
+
+    &:hover {
+      color: $basic-gray;
+    }
   }
 }
 
@@ -51,7 +55,7 @@
 }
 
 .list-form-checkbox-container {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexbox(row, initial, center, 1em);
 }
 
 .list-form-name-container {

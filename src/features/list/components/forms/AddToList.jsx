@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Alert from "src/features/shared/components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
@@ -77,25 +77,7 @@ export default function AddToList(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const mediaInput = formRef.current.elements["media"];
-    const listInput = formRef.current.elements["list"];
-
-    if (!globalUser) {
-      setError("Please sign in to continue.");
-      return;
-    }
-
-    if (currentLists.length <= 0) {
-      listInput.classList.add("invalid-field");
-      setError("Please select a list.");
-      return;
-    }
-
-    if (!media) {
-      mediaInput.classList.add("invalid-field");
-      setError("Please select media to add.");
-      return;
-    }
+    if (!validateData()) return;
 
     await Promise.all(
       currentLists.map((list) => addToList(media.id, type, list.id)),
@@ -103,6 +85,30 @@ export default function AddToList(props) {
 
     setSuccess(true);
     resetValues();
+  }
+
+  function validateData() {
+    const mediaInput = formRef.current.elements["media"];
+    const listInput = formRef.current.elements["list"];
+
+    if (!globalUser) {
+      setError("Please sign in to continue.");
+      return false;
+    }
+
+    if (currentLists.length <= 0) {
+      listInput.classList.add("invalid-field");
+      setError("Please select a list.");
+      return false;
+    }
+
+    if (!media) {
+      mediaInput.classList.add("invalid-field");
+      setError("Please select media to add.");
+      return false;
+    }
+
+    return true;
   }
 
   function resetValues() {
@@ -114,6 +120,8 @@ export default function AddToList(props) {
     setType("artist");
     selectRef.current.value = "";
     mediaInputRef.current.value = "";
+    formRef.current.elements["media"].classList.remove("invalid-field");
+    formRef.current.elements["list"].classList.remove("invalid-field");
   }
 
   return (
@@ -287,6 +295,7 @@ function FormListInput(props) {
       <option value="" disabled hidden>
         -- Select a list --
       </option>
+      <option value="_new">--Create new list--</option>
       {lists.map((item) => {
         return (
           <option key={item.id} value={item.id}>
@@ -294,7 +303,6 @@ function FormListInput(props) {
           </option>
         );
       })}
-      <option value="_new">Create new list</option>
     </select>
   );
 }
@@ -319,8 +327,7 @@ function FormLists({ currentLists, removeFromCurrentLists }) {
 function FormButton() {
   return (
     <button type="submit" className="form-submit-button">
-      <FontAwesomeIcon icon={faPlus} />
-      <p>Add</p>
+      Add to List
     </button>
   );
 }

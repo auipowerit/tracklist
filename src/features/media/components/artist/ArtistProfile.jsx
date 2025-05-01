@@ -8,7 +8,7 @@ import "./artist-profile.scss";
 
 export default function ArtistProfile() {
   const context = useOutletContext();
-  const { artist } = context;
+  const { artist, activeTab, setActiveTab, filter, setFilter } = context;
 
   const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
@@ -16,7 +16,6 @@ export default function ArtistProfile() {
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState(null);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
-  const [activeTab, setActiveTab] = useState("albums");
 
   const tabs = [
     { id: "albums", label: "Albums" },
@@ -25,6 +24,8 @@ export default function ArtistProfile() {
   ];
 
   useEffect(() => {
+    setActiveTab("albums");
+
     const getArtistData = async () => {
       try {
         await loadAlbums(0);
@@ -59,7 +60,11 @@ export default function ArtistProfile() {
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
-        <MediaReviews mediaId={artist?.id} />
+        <MediaReviews
+          mediaId={artist?.id}
+          filter={filter}
+          setFilter={setFilter}
+        />
       ) : activeTab === "albums" ? (
         <Discography
           media={albums}

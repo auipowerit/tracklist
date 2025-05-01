@@ -1,0 +1,42 @@
+@use "src/styles/abstracts" as *;
+
+.link {
+  display: inline-block;
+  transition: background-size 0.3s;
+  background: linear-gradient(currentColor 0 0) bottom
+    left/var(--underline-width, 0%) 0.12em no-repeat;
+  padding-bottom: 0.2em;
+  text-decoration: none;
+
+  &:hover {
+    --underline-width: 100%;
+  }
+}
+
+.link-special {
+  position: relative;
+  padding-bottom: 0.15em;
+
+  &.active.active {
+    border-bottom: 2px solid $basic-white;
+  }
+
+  &:not(.active) {
+    &:hover::before {
+      transform: scaleX(1);
+    }
+
+    &::before {
+      display: block;
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      background-color: $lighter-green;
+      width: 100%;
+      height: 2px;
+      content: "";
+    }
+  }
+}

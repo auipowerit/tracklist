@@ -28,7 +28,7 @@ export default function ListCard({ image, list }) {
           </div>
 
           <p className="list-card-count">
-            {list.media.length === 0 ? "No" : list.media.length}{" "}
+            {list.media.length === 0 ? "No" : list.media.length}&nbsp;
             {list.media.length === 1 ? "entry" : "entries"}
           </p>
         </div>

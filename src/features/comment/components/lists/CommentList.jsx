@@ -53,7 +53,7 @@ function Header({ comments, setComments }) {
   return (
     <div className="comments-header-container">
       <h2 className="comments-header">
-        {comments?.length || 0}{" "}
+        {comments?.length || 0}&nbsp;
         {comments?.length === 1 ? "Comment" : "Comments"}
       </h2>
       <SortComments comments={comments} setComments={setComments} />

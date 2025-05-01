@@ -8,9 +8,8 @@ import "./album-profile.scss";
 
 export default function AlbumProfile() {
   const context = useOutletContext();
-  const { artist, album } = context;
+  const { artist, album, activeTab, setActiveTab, filter, setFilter } = context;
 
-  const [activeTab, setActiveTab] = useState("tracks");
   const tracks = useMemo(() => album?.tracks.items, [album]);
 
   const tabs = [
@@ -18,12 +17,20 @@ export default function AlbumProfile() {
     { id: "reviews", label: "Reviews" },
   ];
 
+  useEffect(() => {
+    setActiveTab("tracks");
+  }, []);
+
   return (
     <div className="album-profile">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
-        <MediaReviews mediaId={album?.id} />
+        <MediaReviews
+          mediaId={album?.id}
+          filter={filter}
+          setFilter={setFilter}
+        />
       ) : (
         <TrackList artistId={artist?.id} albumId={album?.id} tracks={tracks} />
       )}

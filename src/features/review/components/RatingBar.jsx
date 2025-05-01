@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 
-export default function RatingBar({ mediaId }) {
+export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
   const { getRatings } = useReviewContext();
 
   const [ratings, setRatings] = useState(null);
@@ -43,6 +43,11 @@ export default function RatingBar({ mediaId }) {
     fetchRatings();
   }, [mediaId]);
 
+  function handleClick(key) {
+    setActiveTab("reviews");
+    setFilter(key);
+  }
+
   return (
     <div className="media-rating-bar-container">
       {ratings &&
@@ -58,6 +63,7 @@ export default function RatingBar({ mediaId }) {
                 data-tooltip-id="media-tooltip"
                 data-tooltip-content={content}
                 style={{ height: `${percentage}%` }}
+                onClick={() => handleClick(key)}
                 className="media-rating-bar"
               >
                 <div className="media-rating-bar-fill" />

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
-import "./styles/star-rating.scss";
 
 export default function StarRating({ rating, setRating }) {
   const [hover, setHover] = useState(null);
@@ -42,14 +41,12 @@ export default function StarRating({ rating, setRating }) {
             {isHalf ? (
               <FontAwesomeIcon
                 icon={faStarHalfAlt}
-                size={40}
                 color="#ffc107"
                 onClick={() => handleClick(ratingValue - 0.5)}
               />
             ) : (
               <FontAwesomeIcon
                 icon={faStar}
-                size={40}
                 color={getStarColor(ratingValue)}
                 onClick={() => handleClick(ratingValue)}
               />
