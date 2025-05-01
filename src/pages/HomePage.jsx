@@ -35,7 +35,7 @@ export default function HomePage() {
   if (!globalUser) {
     return (
       <p className="empty-message">
-        Login to your TrackList account to view the latest reviews from the
+        Log into your TrackList account to view the latest reviews from the
         friends you follow!
       </p>
     );

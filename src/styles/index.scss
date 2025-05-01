@@ -17,6 +17,11 @@ body {
   color: $basic-white;
 }
 
+.lock-scroll {
+  position: fixed;
+  width: 100%;
+}
+
 main {
   @include flexbox(column);
   flex: 1;

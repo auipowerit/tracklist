@@ -68,7 +68,7 @@ export default function Login({ setIsRegistration }) {
   return (
     <div className="auth-container">
       <h1 className="auth-header">
-        Login to <span>TrackList</span>
+        Log into <span>TrackList</span>
       </h1>
 
       <form ref={formRef} onSubmit={handleSubmit} className="auth-form">

@@ -1,0 +1,112 @@
+@use "src/styles/abstracts" as *;
+
+.hamburger {
+  display: none;
+  position: relative;
+  float: right;
+  z-index: 99;
+  cursor: pointer;
+  margin-top: 1em;
+  margin-right: 1.5em;
+  border: none;
+  background: none;
+  width: 35px;
+
+  .mobile-bar,
+  &:after,
+  &:before {
+    display: block;
+    transition: all 0.4s;
+    margin: 8px 0;
+    background-color: $basic-white;
+    width: 100%;
+    height: 5px;
+    content: "";
+  }
+
+  &.is-active {
+    &:before {
+      transform: rotate(-45deg) translate(-12px, 8px);
+    }
+
+    &:after {
+      transform: rotate(45deg) translate(-10px, -6px);
+    }
+
+    .mobile-bar {
+      opacity: 0;
+    }
+  }
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateY(-200px);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 98;
+  transition: all 300ms ease-out;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  background-color: $darker-gray;
+  width: 100%;
+  min-height: 40vh;
+  @include flexbox(column, center, center, 1em);
+
+  &.is-active {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.mobile-nav-link {
+  display: block;
+  margin: 0 auto;
+  padding-top: 0.3em;
+  width: 100%;
+  color: $basic-gray;
+  font-weight: bold;
+  font-size: 1.7rem;
+  text-align: center;
+  text-decoration: none;
+
+  &.active {
+    color: $lighter-green;
+  }
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 97;
+  transition: all 150ms;
+  background-color: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+
+  &.is-active {
+    opacity: 1;
+    pointer-events: unset;
+  }
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    display: unset;
+  }
+}
+
+@media (min-width: 900px) {
+  .hamburger {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+}

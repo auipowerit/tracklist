@@ -33,12 +33,13 @@ export default function ForgotPasswordButton() {
 
       <div className="reset-password-container">
         <p>Forgot password?</p>
-        <p
+        <button
+          type="button"
           onClick={() => setIsModalOpen(true)}
           className="link reset-password-link"
         >
           Click here
-        </p>
+        </button>
       </div>
     </div>
   );

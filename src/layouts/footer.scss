@@ -19,3 +19,13 @@ footer {
     color: $lighter-green;
   }
 }
+
+@media (max-width: 900px) {
+  footer {
+    padding: 2em;
+  }
+
+  .footer-text {
+    font-size: 1rem;
+  }
+}

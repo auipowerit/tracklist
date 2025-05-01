@@ -86,7 +86,7 @@ export default function Signup({ setIsRegistration }) {
           onClick={() => setIsRegistration(false)}
           className="forward-button auth-button auth-after"
         >
-          <p>Sign in</p>
+          <p>Log in</p>
           <FontAwesomeIcon icon={faArrowRight} className="button-after" />
         </button>
       </div>

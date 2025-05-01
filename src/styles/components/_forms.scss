@@ -114,16 +114,6 @@
   background-color: $error-highlight !important;
 }
 
-.reset-password-container {
-  @include flexbox(row, center, center, 0.5em);
-  @include font(0.75);
-}
-
-.reset-password-link {
-  cursor: pointer;
-  @include font(initial, bold, $lighter-green);
-}
-
 .success-container {
   @include flexbox(column, center, center, 1em);
   padding: 1em 0;

@@ -82,3 +82,9 @@
   width: 18px;
   height: 18px;
 }
+
+@media (max-width: 900px) {
+  .nav-items {
+    display: none;
+  }
+}

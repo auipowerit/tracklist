@@ -62,8 +62,8 @@
 .auth-button {
   @include flexbox(row, center, center, 0.5em);
   @include font(1);
-  border: 1px solid $basic-white;
   margin: 0 auto;
+  border: 1px solid $basic-white;
   padding: 0.5em 1.5em;
 
   &:hover.auth-before {
@@ -72,7 +72,83 @@
   }
 
   &:hover.auth-after {
-    padding-left: 1em;
     padding-right: 2em;
+    padding-left: 1em;
+  }
+}
+
+.reset-password-container {
+  @include flexbox(row, center, center, 0.5em);
+  @include font(0.75);
+}
+
+.reset-password-link {
+  cursor: pointer;
+  @include font(0.75, bold, $lighter-green);
+}
+
+@media (max-width: 900px) {
+  .auth-wrapper {
+    background-color: $darker-gray;
+    padding: 1em 0;
+    max-width: unset;
+    height: 100%;
+    @include flexbox(column, center, center);
+  }
+
+  .auth-container {
+    margin: auto;
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: initial;
+    padding: 0;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .auth-form {
+    width: 90%;
+  }
+
+  .auth-header {
+    font-size: 1.25rem;
+
+    span {
+      font-size: 1.25rem;
+    }
+  }
+
+  .auth-input-container {
+    align-items: stretch;
+    width: 100%;
+    max-width: 500px;
+
+    label {
+      font-size: 1.25rem;
+    }
+  }
+
+  .auth-input {
+    font-size: 1.25rem;
+  }
+
+  .reset-password-container {
+    font-size: 1rem;
+  }
+
+  .reset-password-link {
+    font-size: 1rem;
+  }
+
+  .auth-button-container {
+    border: none;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .auth-button {
+    font-size: 1rem;
   }
 }

@@ -6,6 +6,7 @@ import { useChatContext } from "src/features/chat/context/ChatContext";
 import { faEnvelope, faSearch } from "@fortawesome/free-solid-svg-icons";
 import NavProfile from "./NavProfile";
 import "./navbar.scss";
+import MobileNavbar from "./MobileNavbar";
 
 export default function Navbar() {
   const { globalUser } = useAuthContext();
@@ -35,6 +36,8 @@ export default function Navbar() {
         </div>
         <NavProfile globalUser={globalUser} />
       </div>
+
+      <MobileNavbar />
     </div>
   );
 }
