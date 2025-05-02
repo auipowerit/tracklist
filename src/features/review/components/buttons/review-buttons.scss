@@ -37,7 +37,8 @@
     border-radius: 100%;
     background-color: $darker-green;
     padding: 0.5em;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    z-index: 1;
 
     p {
       display: none;

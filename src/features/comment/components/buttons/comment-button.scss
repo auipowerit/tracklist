@@ -36,3 +36,9 @@
     color: $lighter-green;
   }
 }
+
+@media (max-width: 900px) {
+  .comment-button {
+    font-size: 1.25rem;
+  }
+}

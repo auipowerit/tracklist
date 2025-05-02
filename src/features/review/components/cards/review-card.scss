@@ -37,11 +37,14 @@
 
 @media (max-width: 900px) {
   .review-card-container {
+    gap: 0.25em;
     border-bottom: 1px solid $dark-gray;
     padding-bottom: 0.5em;
   }
 
   .review-card {
+    gap: 1em;
+
     &:hover {
       background-color: transparent;
     }

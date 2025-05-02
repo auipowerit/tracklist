@@ -11,7 +11,7 @@
 
 .heart-button {
   @include flexbox(row, initial, center, 0.25em);
-  @include font(0.75, 400);
+  @include font(0.75);
   cursor: pointer;
 
   &:hover {
@@ -29,5 +29,19 @@
 
   &:hover {
     color: $basic-gray;
+  }
+}
+
+@media (max-width: 900px) {
+  .delete-button {
+    font-size: 1.25rem;
+  }
+
+  .heart-button {
+    font-size: 1.25rem;
+  }
+
+  .share-button {
+    font-size: 1.25rem;
   }
 }
