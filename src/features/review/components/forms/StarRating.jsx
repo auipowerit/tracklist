@@ -27,33 +27,36 @@ export default function StarRating({ rating, setRating }) {
 
   return (
     <div className="review-form-rating">
-      {[...Array(5)].map((_, i) => {
-        const ratingValue = i + 1;
-        const isHalf = (hover || rating) === ratingValue - 0.5;
+      <p className="review-form-rating-title">Your rating</p>
 
-        return (
-          <span
-            key={i}
-            className="review-form-rating-stars"
-            onMouseMove={(event) => handleMouseMove(event, ratingValue)}
-            onMouseLeave={handleMouseLeave}
-          >
-            {isHalf ? (
-              <FontAwesomeIcon
-                icon={faStarHalfAlt}
-                color="#ffc107"
-                onClick={() => handleClick(ratingValue - 0.5)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faStar}
-                color={getStarColor(ratingValue)}
-                onClick={() => handleClick(ratingValue)}
-              />
-            )}
-          </span>
-        );
-      })}
+      <div className="review-form-rating-stars">
+        {[...Array(5)].map((_, i) => {
+          const ratingValue = i + 1;
+          const isHalf = (hover || rating) === ratingValue - 0.5;
+
+          return (
+            <span
+              key={i}
+              onMouseMove={(event) => handleMouseMove(event, ratingValue)}
+              onMouseLeave={handleMouseLeave}
+            >
+              {isHalf ? (
+                <FontAwesomeIcon
+                  icon={faStarHalfAlt}
+                  color="#ffc107"
+                  onClick={() => handleClick(ratingValue - 0.5)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faStar}
+                  color={getStarColor(ratingValue)}
+                  onClick={() => handleClick(ratingValue)}
+                />
+              )}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 }

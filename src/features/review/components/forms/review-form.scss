@@ -11,19 +11,36 @@
 }
 
 .review-form-rating {
-  @include flexbox(row, center, center, 0.15em);
-  padding: 0.5em;
+  @include flexbox(column, initial, flex-start, 0.15em);
+  padding: 0.25em 0;
+  width: 100%;
+}
+
+.review-form-rating-title {
+  @include font(1.25, normal, $basic-gray);
+  padding-right: 0.5em;
 }
 
 .review-form-rating-stars {
   @include font(2);
   cursor: pointer;
+  @include flexbox(row, center, center, 0.05em);
 }
 
 @media (max-width: 900px) {
   .review-form-info-container {
     order: 0;
-    gap: 0.5em;
+    gap: 1em;
     width: 100%;
+    align-items: flex-start;
+  }
+
+  .review-form-rating-title {
+    font-size: 1.25rem;
+    padding-right: 0.25em;
+  }
+
+  .review-form-rating-stars {
+    font-size: 2rem;
   }
 }

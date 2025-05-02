@@ -286,9 +286,12 @@ function FormReview({ content, setContent }) {
 
   return (
     <div className="form-textarea-container">
-      <p style={{ color: color }}>
-        {content.length || 0}/{REVIEW_LIMIT}
-      </p>
+      <div className="form-textarea-label">
+        <p>Your review</p>
+        <p style={{ color: color }}>
+          {content.length || 0}/{REVIEW_LIMIT}
+        </p>
+      </div>
       <textarea
         name="review"
         placeholder="Write your review..."

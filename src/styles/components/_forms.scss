@@ -91,11 +91,6 @@
   @include flexbox(column, $gap: 0.25em);
   width: 100%;
 
-  p {
-    align-self: flex-end;
-    color: $basic-gray;
-  }
-
   textarea {
     outline: none;
     border: 1px solid $basic-white;
@@ -105,6 +100,11 @@
     min-height: 150px;
     @include font(0.75);
   }
+}
+
+.form-textarea-label {
+  @include flexbox(row, space-between, center, 0.5em);
+  @include font(1.25, normal, $basic-gray);
 }
 
 .form-submit-button {
@@ -147,7 +147,7 @@
 
 @media (max-width: 900px) {
   .form-container {
-    gap: 0.25em;
+    gap: 1em;
     width: 100vw;
     min-height: 100vh;
     min-height: -webkit-fill-available;
@@ -197,11 +197,13 @@
   }
 
   .form-textarea-container {
-    font-size: 1.25rem;
-
     textarea {
       font-size: 1.25rem;
     }
+  }
+
+  .form-textarea-label {
+    font-size: 1.25rem;
   }
 
   .form-submit-button {
