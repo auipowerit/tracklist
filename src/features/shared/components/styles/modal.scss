@@ -47,6 +47,8 @@
     width: fit-content;
     height: fit-content;
     max-width: none;
+    max-height: --webkit-fill-available;
+    max-height: 100%;
   }
 
   .modal-button {
