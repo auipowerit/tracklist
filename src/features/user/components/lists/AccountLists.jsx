@@ -32,6 +32,12 @@ export default function AccountLists() {
 function Header({ canEdit }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+  }, [isModalOpen]);
+
   return (
     <div className="account-page-header">
       <p>Lists</p>

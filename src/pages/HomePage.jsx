@@ -62,6 +62,12 @@ function Header({ activeTab, setActiveTab }) {
     { id: "popular", label: "For You", category: "popular" },
   ];
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+  }, [isModalOpen]);
+
   return (
     <div className="home-header">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />

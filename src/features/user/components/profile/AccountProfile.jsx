@@ -36,6 +36,12 @@ export default function AccountProfile() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+  }, [isModalOpen]);
+
   function handleNavigate() {
     if (localStorage.getItem("profile")) {
       localStorage.removeItem("profile");

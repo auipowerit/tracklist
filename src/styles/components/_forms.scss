@@ -3,7 +3,7 @@
 .form-container {
   @include flexbox(column, center, center, 1em);
   margin: auto;
-  padding: 0.5em 0;
+  padding: 1em;
   width: fit-content;
 }
 
@@ -102,7 +102,7 @@
     background-color: transparent;
     padding: 0.5em;
     width: 100%;
-    min-height: 175px;
+    min-height: 150px;
     @include font(0.75);
   }
 }
@@ -148,7 +148,9 @@
 @media (max-width: 900px) {
   .form-container {
     gap: 0.25em;
-    width: 90vw;
+    width: 100vw;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   .form-header {
@@ -166,8 +168,6 @@
 
   .form-media-image {
     box-shadow: none;
-    width: 75%;
-    height: 75%;
   }
 
   .form-input {
@@ -207,7 +207,6 @@
   .form-submit-button {
     box-shadow: none;
     border-radius: 26px;
-    padding: 0.5em 1.25em;
     font-size: 1.5rem;
   }
 }

@@ -21,7 +21,6 @@
 .modal-container {
   transition: all 0.2s;
   background-color: $darker-gray;
-  padding: 2em;
   width: 100%;
   max-width: 800px;
 
@@ -37,16 +36,16 @@
 }
 
 .modal-button {
-  @include font(1.5, bold);
+  @include font(2, bold);
   position: absolute;
-  top: 0;
-  right: 2%;
+  top: 1%;
+  right: 3%;
 }
 
 @media (max-width: 900px) {
   .modal-container {
-    padding: 0.5em 1em;
     width: fit-content;
+    height: fit-content;
     max-width: none;
   }
 
