@@ -35,6 +35,11 @@
     align-items: flex-start;
   }
 
+  .review-form-rating {
+    @include flexbox(row, space-between, center, 0);
+    border-bottom: 1px solid $basic-gray;
+  }
+
   .review-form-rating-title {
     font-size: 1.25rem;
     padding-right: 0.25em;
