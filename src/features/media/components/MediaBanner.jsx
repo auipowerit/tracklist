@@ -34,7 +34,7 @@ function MediaBanner({ media, category, setActiveTab, setFilter }) {
     <div className="media-banner-container">
       <SpotifyImage
         image={data.image}
-        spotifyURL={media.external_urls.spotify}
+        spotifyUrl={media.external_urls.spotify}
       />
       <div className="media-banner-content">
         <Title name={data.title} subtitle={data.subtitle} />
@@ -50,10 +50,10 @@ function MediaBanner({ media, category, setActiveTab, setFilter }) {
   );
 }
 
-function SpotifyImage({ image, spotifyURL }) {
+function SpotifyImage({ image, spotifyUrl }) {
   return (
     <div
-      onClick={() => window.open(spotifyURL)}
+      onClick={() => window.open(spotifyUrl)}
       data-tooltip-id="media-tooltip"
       data-tooltip-content="Open in Spotify"
       className="media-banner-image"

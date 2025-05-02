@@ -151,7 +151,7 @@ export default function ReviewForm(props) {
           id: newReview.id,
           ...newReview.data(),
           username,
-          profileUrl: globalUser.profileURL,
+          profileUrl: globalUser.profileUrl,
           media,
         },
         ...(prevReviews || []),
