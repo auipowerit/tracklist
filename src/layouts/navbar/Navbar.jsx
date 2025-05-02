@@ -65,6 +65,6 @@ function NavItem({ link, icon }) {
 }
 
 function NotificationBadge({ unreadCount }) {
-  if (unreadCount === 0) return;
+  if (!unreadCount || unreadCount === 0) return;
   return <p className="notification-badge">{unreadCount}</p>;
 }

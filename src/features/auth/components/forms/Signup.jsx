@@ -22,7 +22,15 @@ export default function Signup({ setIsRegistration }) {
     const displayname = formRef.current.elements["displayname"].value;
     const username = formRef.current.elements["username"].value;
 
-    if (await signup(email, password, displayname, username, setError)) {
+    if (
+      await signup(
+        email,
+        password,
+        displayname,
+        username.toLowerCase(),
+        setError,
+      )
+    ) {
       resetForm();
     }
   }
