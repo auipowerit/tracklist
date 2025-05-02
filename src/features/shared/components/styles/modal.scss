@@ -4,7 +4,7 @@
   @include flexbox(row, center, center);
   @include font(1);
   position: fixed;
-  z-index: 999;
+  z-index: 98;
   transition: all 0.2s;
   inset: 0;
 
@@ -19,10 +19,12 @@
 }
 
 .modal-container {
+  position: relative;
   transition: all 0.2s;
   background-color: $dark-gray;
   width: 100%;
   max-width: 800px;
+  z-index: 99;
 
   &:not(.active) {
     transform: scale(50%);

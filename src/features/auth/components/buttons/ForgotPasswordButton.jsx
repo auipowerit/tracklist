@@ -10,7 +10,7 @@ export default function ForgotPasswordButton() {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.classList.add("lock-scroll");
+      document.body.classList.add("lock-scroll-modal");
     }
 
     return () => {

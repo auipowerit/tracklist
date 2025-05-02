@@ -35,7 +35,6 @@
   top: 100%;
   right: 0;
   left: 0;
-  z-index: 10;
   @include flexbox(column);
   background-color: $darker-green;
 

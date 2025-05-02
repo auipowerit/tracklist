@@ -64,7 +64,7 @@ function Header({ activeTab, setActiveTab }) {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.classList.add("lock-scroll");
+      document.body.classList.add("lock-scroll-modal");
     }
   }, [isModalOpen]);
 

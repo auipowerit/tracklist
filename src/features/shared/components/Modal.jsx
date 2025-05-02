@@ -3,7 +3,7 @@ import "./styles/modal.scss";
 export default function Modal({ children, isModalOpen, setIsModalOpen }) {
   function onClose() {
     setIsModalOpen(false);
-    document.body.classList.remove("lock-scroll");
+    document.body.classList.remove("lock-scroll-modal");
   }
 
   return (

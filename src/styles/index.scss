@@ -20,6 +20,10 @@ body {
 .lock-scroll {
   position: fixed;
   width: 100%;
+
+  &-modal .hamburger {
+    z-index: -1 !important;
+  }
 }
 
 .wrapper {
