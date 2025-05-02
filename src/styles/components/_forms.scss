@@ -148,10 +148,7 @@
 @media (max-width: 900px) {
   .form-container {
     gap: 1.5em;
-    padding-top: 2em;
     width: 100vw;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
   }
 
   .form-header {
@@ -210,6 +207,7 @@
   }
 
   .form-submit-button {
+    margin: 0;
     box-shadow: none;
     border-radius: 26px;
     font-size: 1.5rem;
