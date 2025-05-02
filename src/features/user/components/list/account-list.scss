@@ -48,7 +48,7 @@
   @include dropdown(right, 1em, 1.5em);
   @include flexbox(column, center, center, 1em);
   z-index: 30;
-  background-color: $darker-gray;
+  background-color: $dark-gray;
 }
 
 .account-list-label {
@@ -101,7 +101,7 @@
   transition: 0.2s;
   cursor: pointer;
   border-radius: 20px;
-  background-color: $dark-gray;
+  background-color: $darker-gray;
 }
 .toggle:before {
   position: absolute;

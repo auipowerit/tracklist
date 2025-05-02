@@ -4,7 +4,7 @@
   @include flexbox(column);
   flex: 1;
   border-right: 2px solid $basic-white;
-  background-color: $dark-green;
+  background-color: $darker-green;
 }
 
 .chatlist-header {
@@ -34,7 +34,7 @@
   padding: 0.5em 0.75em;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 
   img {
@@ -50,7 +50,7 @@
 }
 
 .chatlist-card-active {
-  background-color: $darker-green;
+  background-color: $dark-green;
 }
 
 .chatlist-card-header {

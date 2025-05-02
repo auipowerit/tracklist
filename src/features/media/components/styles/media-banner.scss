@@ -3,7 +3,7 @@
 .media-banner-container {
   @include flexbox(row);
   margin: 3em 6em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  box-shadow: $darker-shadow;
   width: 100%;
   max-width: 800px;
   height: fit-content;
@@ -13,12 +13,12 @@
 .media-banner-image {
   transition: all 0.2s;
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: $light-shadow;
   width: 40%;
   max-width: 300px;
 
   &:hover {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+    box-shadow: $dark-shadow;
   }
 
   img {

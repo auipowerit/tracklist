@@ -3,7 +3,7 @@
 .chatwindow {
   @include flexbox(column, $gap: 0.25em);
   flex: 2;
-  background-color: $darker-gray;
+  background-color: $dark-gray;
   padding: 1em 2em;
   overflow-y: auto;
 }
@@ -37,7 +37,7 @@
   left: 0;
   z-index: 10;
   @include flexbox(column);
-  background-color: $dark-green;
+  background-color: $darker-green;
 
   &.active {
     height: fit-content;
@@ -53,7 +53,7 @@
   text-align: left;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 
   img {

@@ -10,9 +10,9 @@
 .auth-container {
   @include flexbox(column, center, center, 1em);
   margin: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  box-shadow: $dark-shadow;
   border-radius: 12px;
-  background-color: $darker-gray;
+  background-color: $dark-gray;
   padding: 1em;
   width: 100%;
 }
@@ -22,7 +22,7 @@
   padding-bottom: 1em;
 
   span {
-    @include font(1, bold, $basic-green);
+    @include font(1, bold, $light-green);
   }
 }
 
@@ -51,7 +51,7 @@
   width: 100%;
   @include flexbox(column, initial, center, 1em);
   margin-top: 1em;
-  border-top: 1px solid white;
+  border-top: 1px solid $basic-white;
   padding: 1em;
 
   p {
@@ -84,12 +84,12 @@
 
 .reset-password-link {
   cursor: pointer;
-  @include font(0.75, bold, $lighter-green);
+  @include font(0.75, bold, $light-green);
 }
 
 @media (max-width: 900px) {
   .auth-wrapper {
-    background-color: $darker-gray;
+    background-color: $dark-gray;
     padding: 1em 0;
     max-width: unset;
     height: 100%;

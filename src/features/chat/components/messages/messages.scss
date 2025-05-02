@@ -35,11 +35,11 @@
 
 .message-user-button {
   margin-left: auto;
-  background-color: rgba(20, 71, 230, 0.7);
+  background-color: $basic-blue;
 }
 
 .message-friend-button {
-  background-color: rgb(35, 44, 61);
+  background-color: $darker-gray;
 }
 
 .message-delete-button {
@@ -52,11 +52,12 @@
   transform: translate(-50%, -50%);
   opacity: 0;
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  box-shadow: $light-shadow;
   border-radius: 100%;
-  background-color: rgb(35, 44, 61);
+  background-color: $darker-gray;
   width: 30px;
   height: 30px;
+  color: $basic-gray;
 
   &:hover {
     opacity: 1;
@@ -70,26 +71,26 @@
   position: absolute;
   top: -12px;
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 5px $basic-black;
   border-radius: 100%;
   width: 30px;
   height: 30px;
 
   &:not(.message-liked) {
     opacity: 0;
-    background-color: rgb(35, 44, 61);
+    background-color: $darker-gray;
     color: $basic-gray;
   }
 }
 
 .message-liked {
   display: block;
-  background-color: blue;
-  color: red;
+  background-color: $dark-blue;
+  color: $basic-red;
 }
 
 .message-unliked {
-  background-color: rgb(35, 44, 61);
+  background-color: $darker-gray;
   color: $basic-gray;
 }
 
@@ -136,7 +137,7 @@
     width: 100%;
     max-width: 150px;
     object-fit: cover;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    box-shadow: $light-shadow;
   }
 
   span {

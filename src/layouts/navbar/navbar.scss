@@ -46,7 +46,7 @@
   @include dropdown(right, 1em, 1.5em);
   @include flexbox(column, $gap: 1em);
   z-index: 30;
-  background-color: $darker-green;
+  background-color: $dark-green;
 }
 
 .nav-profile-dropdown-header {

@@ -29,11 +29,11 @@
   width: 2.5em;
 
   &:not(.active):hover {
-    color: $lighter-green;
+    color: $light-green;
   }
 
   &.active {
-    color: $lighter-green;
+    color: $light-green;
   }
 }
 

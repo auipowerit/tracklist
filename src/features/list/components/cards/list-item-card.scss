@@ -39,7 +39,7 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      box-shadow: 0 0 10px black;
+      box-shadow: 0 0 10px $basic-black;
     }
   }
 
@@ -52,7 +52,7 @@
   p {
     @include flexbox(row, center, center);
     @include font(1);
-    background-color: $dark-green;
+    background-color: $darker-green;
     width: 1.5em;
     height: 1.5em;
     font-weight: bold;

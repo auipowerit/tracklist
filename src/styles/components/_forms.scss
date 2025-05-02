@@ -30,7 +30,7 @@
 }
 
 .form-media-image {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  box-shadow: $light-shadow;
   aspect-ratio: 1/1;
   width: 50%;
   max-width: 200px;
@@ -75,7 +75,7 @@
   text-align: left;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 
   p {
@@ -110,13 +110,13 @@
 .form-submit-button {
   @include font(1);
   margin: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  background-color: $dark-green;
+  box-shadow: $darker-shadow;
+  background-color: $basic-green;
   padding: 0.5em 1em;
   width: fit-content;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 }
 
@@ -131,7 +131,7 @@
 
 .success-message {
   @include flexbox(row, center, center, 0.5em);
-  @include font(1.25, normal, $lighter-green, italic);
+  @include font(1.25, normal, $light-green, italic);
 }
 
 .success-button {

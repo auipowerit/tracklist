@@ -10,7 +10,7 @@
   padding: 0.5em;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 }
 
@@ -19,7 +19,7 @@
 }
 
 .review-card-image {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  box-shadow: $light-shadow;
   aspect-ratio: 1/1;
   width: 20%;
   min-width: 100px;
@@ -38,7 +38,7 @@
 @media (max-width: 900px) {
   .review-card-container {
     gap: 0.25em;
-    border-bottom: 1px solid $dark-gray;
+    border-bottom: 1px solid $darker-gray;
     padding-bottom: 0.5em;
   }
 

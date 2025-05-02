@@ -27,7 +27,7 @@
   text-align: left;
 
   &:hover {
-    background-color: $darker-green;
+    background-color: $dark-green;
   }
 
   img {
@@ -60,7 +60,7 @@
 
 .share-form-current-user {
   @include flexbox(row, initial, center, 0.5em);
-  background-color: $dark-gray;
+  background-color: $darker-gray;
   padding: 0.25em 0.5em;
 
   p {

@@ -30,7 +30,7 @@
   @include font(0.75);
   @include flexbox(row, initial, center, 0.5em);
   padding: 0.25em 0.5em;
-  background-color: $dark-gray;
+  background-color: $darker-gray;
 
   button {
     @include font(0.75);
@@ -74,7 +74,7 @@
   padding: 0.5em 0.75em;
 
   &:hover {
-    background-color: $dark-gray;
+    background-color: $darker-gray;
   }
 }
 
@@ -86,7 +86,7 @@
   padding: 0.5em 0.75em;
 
   &:hover {
-    background-color: $darker-red;
+    background-color: $dark-red;
   }
 }
 
