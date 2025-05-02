@@ -26,3 +26,21 @@
   height: 100%;
   overflow-y: auto;
 }
+
+@media (max-width: 900px) {
+  .home-container {
+    margin-top: 0.5em;
+  }
+
+  .home-header {
+    justify-content: center;
+    border: none;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .feed-container {
+    padding-top: 1em;
+    mask-image: none;
+    @include gradient(bottom);
+  }
+}

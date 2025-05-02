@@ -40,13 +40,15 @@ export default function ReviewCard({ review }) {
                 subtitle={media.subtitle}
                 category={review.category}
               />
-              <ReviewStars rating={review.rating || 0} />
+
+              <ReviewStars rating={review.rating} />
             </div>
           </div>
         </div>
 
         <ReviewContent review={review} />
       </div>
+
       <ReviewButtons review={review} showComment={true} />
     </div>
   );

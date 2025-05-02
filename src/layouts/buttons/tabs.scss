@@ -20,3 +20,15 @@
     color: $basic-green;
   }
 }
+
+@media (max-width: 900px) {
+  .tabs-container {
+    gap: 1em;
+    margin-bottom: 0;
+  }
+
+  .tab {
+    font-size: 1.25rem;
+    border-width: 4px;
+  }
+}

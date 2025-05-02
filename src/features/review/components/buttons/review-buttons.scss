@@ -1,8 +1,10 @@
 @use "src/styles/abstracts" as *;
 
 .review-buttons {
-  @include flexbox(row, initial, center, 1.5em);
+  @include flexbox(row, initial, center, 1em);
   cursor: pointer;
+  margin-left: 0.25em;
+  padding-left: 0.5em;
 }
 
 .review-button {
@@ -22,5 +24,23 @@
 
   &:hover {
     color: $basic-gray;
+  }
+}
+
+@media (max-width: 900px) {
+  .add-review-button {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 0.75em;
+    border: none;
+    border-radius: 100%;
+    background-color: $darker-green;
+    padding: 0.5em;
+    font-size: 1.5rem;
+
+    p {
+      display: none;
+    }
   }
 }

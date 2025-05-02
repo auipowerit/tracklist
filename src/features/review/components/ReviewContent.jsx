@@ -16,7 +16,7 @@ function ReviewUser({ review }) {
     <div className="review-user-container">
       <div className="review-user">
         <img src={review.profileUrl} />
-        <p>{review.username}</p>
+        <p>@{review.username}</p>
       </div>
       <p className="review-user-date">
         {getTimeSince(review.createdAt.toDate())}

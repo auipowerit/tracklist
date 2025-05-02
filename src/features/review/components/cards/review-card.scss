@@ -35,8 +35,27 @@
   @include flexbox(column, $gap: 0.5em);
 }
 
-.review-card-text {
-  @include font(0.75);
-  padding-right: 1em;
-  text-wrap: break-word;
+@media (max-width: 900px) {
+  .review-card-container {
+    border-bottom: 1px solid $dark-gray;
+    padding-bottom: 0.5em;
+  }
+
+  .review-card {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .review-card-rating {
+    gap: 0;
+  }
+
+  .review-card-info {
+    width: 100%;
+  }
+
+  .review-stars {
+    font-size: 1rem;
+  }
 }

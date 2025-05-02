@@ -6,6 +6,7 @@
 
 .review-user {
   @include flexbox(row, initial, center, 0.5em);
+  @include font(0.75);
 
   img {
     border-radius: 100%;
@@ -20,7 +21,7 @@
 }
 
 .review-user-date {
-  @include font(0.25, 400, $basic-gray);
+  @include font(0.5, 400, $basic-gray);
 }
 
 .review-media-container {
@@ -38,9 +39,9 @@
 .review-title {
   @include gradient(left);
   padding: 0 0.5em;
-  overflow: hidden;
   width: 100%;
   max-width: 400px;
+  overflow: hidden;
 
   p {
     @include font(0.75, bold);
@@ -52,27 +53,46 @@
   @include font(0.75, normal, $basic-gray);
 }
 
-.review-text {
-  @include font(0.5);
-  overflow-wrap: break-word;
-}
-
-.review-content-toggle {
-  cursor: pointer;
-  padding: 0.5em 0;
-  @include font(0.5, 600, blue);
-
-  &:hover {
-    color: $basic-gray;
-  }
-}
-
 .review-stars {
   @include flexbox(row, initial, center, 0.15em);
 }
 
-.review-buttons {
-  @include flexbox(row, initial, center, 0.75em);
-  margin-left: 0.25em;
-  padding-left: 0.5em;
+.review-text {
+  @include font(1);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 900px) {
+  .review-user-container {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .review-user-date {
+    font-size: 0.75rem;
+  }
+
+  .review-user {
+    p {
+      color: $basic-gray;
+      font-weight: normal;
+      font-size: 1rem;
+    }
+  }
+
+  .review-title {
+    mask-image: none;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .review-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .review-text {
+    font-size: 1rem;
+  }
 }
