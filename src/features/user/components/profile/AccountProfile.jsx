@@ -14,7 +14,7 @@ import "./account-profile.scss";
 export default function AccountProfile() {
   const { user, canEdit } = useOutletContext();
 
-  const params = new UrlSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
 
   const { globalUser } = useAuthContext();
