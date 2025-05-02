@@ -6,16 +6,24 @@
 
 .review-form-input-container {
   position: relative;
-  @include flexbox(row, $gap: 0.25em);
+  @include flexbox(row, $gap: 0.5em);
   width: 100%;
 }
 
-.star-rating {
+.review-form-rating {
   @include flexbox(row, center, center, 0.15em);
   padding: 0.5em;
 }
 
-.star-rating-star {
+.review-form-rating-stars {
   @include font(2);
   cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .review-form-info-container {
+    order: 0;
+    gap: 0.5em;
+    width: 100%;
+  }
 }

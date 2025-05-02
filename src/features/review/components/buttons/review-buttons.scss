@@ -28,6 +28,10 @@
 }
 
 @media (max-width: 900px) {
+  .review-buttons {
+    gap: 2em;
+  }
+
   .add-review-button {
     position: fixed;
     right: 0;

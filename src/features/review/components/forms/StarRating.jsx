@@ -26,7 +26,7 @@ export default function StarRating({ rating, setRating }) {
   }
 
   return (
-    <div className="star-rating">
+    <div className="review-form-rating">
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = (hover || rating) === ratingValue - 0.5;
@@ -34,7 +34,7 @@ export default function StarRating({ rating, setRating }) {
         return (
           <span
             key={i}
-            className="star-rating-star"
+            className="review-form-rating-stars"
             onMouseMove={(event) => handleMouseMove(event, ratingValue)}
             onMouseLeave={handleMouseLeave}
           >

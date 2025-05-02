@@ -51,7 +51,14 @@ export default function ReviewForm(props) {
     setMedia({});
   }
 
-  async function handleSearch() {
+  async function handleSearch(e) {
+    e.target.classList.remove("invalid-field");
+
+    if (inputRef.current.value.trim() === "") {
+      setResults([]);
+      return;
+    }
+
     const data = (await searchByName(inputRef.current.value, type, 20)) || [];
     const items = getMediaData(data) || [];
     setResults(items);
@@ -184,7 +191,6 @@ export default function ReviewForm(props) {
             handleChange={handleChange}
             handleClick={handleClick}
           />
-
           <StarRating rating={rating} setRating={setRating} />
         </div>
       </div>
@@ -198,7 +204,16 @@ export default function ReviewForm(props) {
 }
 
 function FormHeader() {
-  return <p className="form-header">Add a review</p>;
+  const { globalUser } = useAuthContext();
+
+  return (
+    <div className="form-header">
+      {globalUser && (
+        <img src={globalUser.profileUrl} className="form-header-image" />
+      )}
+      <p>Add a review</p>
+    </div>
+  );
 }
 
 function FormImage({ media }) {
@@ -211,10 +226,6 @@ function FormInput(props) {
   const { inputRef, type, handleSearch, handleChange, results, handleClick } =
     props;
 
-  function handleInputChange(e) {
-    e.target.classList.remove("invalid-field");
-  }
-
   return (
     <div className="review-form-input-container">
       <input
@@ -222,8 +233,7 @@ function FormInput(props) {
         type="search"
         ref={inputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
-        onKeyUp={handleSearch}
-        onChange={handleInputChange}
+        onChange={handleSearch}
         className="form-input review-input"
       />
 

@@ -4,9 +4,11 @@
   @include flexbox(column, center, center, 1em);
   margin: auto;
   padding: 0.5em 0;
+  width: fit-content;
 }
 
 .form-header {
+  @include flexbox(row, initial, center, 0.5em);
   @include font(1, bold, $basic-white);
   border-bottom: 1px solid $basic-white;
   padding-bottom: 0.25em;
@@ -14,8 +16,16 @@
   text-align: left;
 }
 
+.form-header-image {
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
 .form-content {
-  @include flexbox(row, center, center, 1em);
+  @include flexbox(row, space-evenly, center, 1em);
   width: 100%;
 }
 
@@ -92,7 +102,7 @@
     background-color: transparent;
     padding: 0.5em;
     width: 100%;
-    min-height: 150px;
+    min-height: 175px;
     @include font(0.75);
   }
 }
@@ -100,8 +110,8 @@
 .form-submit-button {
   @include font(1);
   margin: auto;
-  background-color: $dark-green;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  background-color: $dark-green;
   padding: 0.5em 1em;
   width: fit-content;
 
@@ -132,5 +142,72 @@
 
   &:hover {
     color: $basic-gray;
+  }
+}
+
+@media (max-width: 900px) {
+  .form-container {
+    gap: 0.25em;
+    width: 90vw;
+  }
+
+  .form-header {
+    margin-right: auto;
+    margin-bottom: 1em;
+    border-bottom-color: $basic-gray;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .form-content {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .form-media-image {
+    box-shadow: none;
+    width: 75%;
+    height: 75%;
+  }
+
+  .form-input {
+    padding: 0.5em;
+    font-size: 1.25rem;
+  }
+
+  .form-select {
+    width: fit-content;
+    font-size: 1.25rem;
+  }
+
+  .form-media-result {
+    padding: 0.25em 0.5em;
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    p {
+      font-size: 1.5rem;
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .form-textarea-container {
+    font-size: 1.25rem;
+
+    textarea {
+      font-size: 1.25rem;
+    }
+  }
+
+  .form-submit-button {
+    box-shadow: none;
+    border-radius: 26px;
+    padding: 0.5em 1.25em;
+    font-size: 1.5rem;
   }
 }

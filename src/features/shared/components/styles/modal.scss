@@ -43,8 +43,14 @@
   right: 2%;
 }
 
-@media (min-width: 700px) {
+@media (max-width: 900px) {
   .modal-container {
+    padding: 0.5em 1em;
     width: fit-content;
+    max-width: none;
+  }
+
+  .modal-button {
+    font-size: 2.5rem;
   }
 }
