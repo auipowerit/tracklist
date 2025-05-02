@@ -45,10 +45,11 @@
 @media (max-width: 900px) {
   .modal-container {
     width: fit-content;
-    height: fit-content;
     max-width: none;
+    height: fit-content;
     max-height: --webkit-fill-available;
     max-height: 100%;
+    overflow-y: auto;
   }
 
   .modal-button {

@@ -147,8 +147,8 @@
 
 @media (max-width: 900px) {
   .form-container {
-    gap: 1.5em;
     width: 100vw;
+    max-height: 100%;
   }
 
   .form-header {
@@ -156,7 +156,12 @@
     margin-bottom: 0;
     border-bottom-color: $basic-gray;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .form-header-image {
+    width: 35px;
+    height: 35px;
   }
 
   .form-content {
@@ -199,6 +204,8 @@
   .form-textarea-container {
     textarea {
       font-size: 1.25rem;
+      max-height: 115px;
+      min-height: unset;
     }
   }
 
