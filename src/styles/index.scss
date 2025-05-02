@@ -22,6 +22,11 @@ body {
   width: 100%;
 }
 
+.wrapper {
+  @include flexbox(column);
+  height: 100vh;
+}
+
 main {
   @include flexbox(column);
   flex: 1;
@@ -51,11 +56,6 @@ input {
 select {
   border: none;
   background-color: transparent;
-}
-
-.wrapper {
-  @include flexbox(column);
-  height: 100vh;
 }
 
 .empty-message {

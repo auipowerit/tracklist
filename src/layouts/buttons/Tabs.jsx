@@ -4,6 +4,7 @@ export default function Tabs(props) {
   const { tabs, activeTab, setActiveTab, setResults } = props;
 
   function handleClick(tab) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setResults && setResults(null);
     setActiveTab(tab.id);
   }

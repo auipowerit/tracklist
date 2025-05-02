@@ -7,6 +7,7 @@
   width: 100%;
   max-width: 1200px;
   height: 100vh;
+  padding: 0 2em;
 }
 
 .home-header {
@@ -30,17 +31,22 @@
 @media (max-width: 900px) {
   .home-container {
     margin-top: 0.5em;
+    height: fit-content;
+    padding: 0;
   }
 
   .home-header {
     justify-content: center;
     border: none;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: $background-primary;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
   }
 
   .feed-container {
     padding-top: 1em;
     mask-image: none;
-    @include gradient(bottom);
   }
 }
