@@ -15,7 +15,7 @@ export default function ChatButton({ username = "" }) {
   async function handleClick() {
     await fetchUserChat();
 
-    navigate("/messaging");
+    navigate("/messages");
   }
 
   async function fetchUserChat() {

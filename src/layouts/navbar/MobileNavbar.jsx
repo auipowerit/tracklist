@@ -49,9 +49,9 @@ export default function MobileNavbar() {
       <nav ref={menu} className="mobile-nav">
         <MobileNavItem link="/reviews" label="Home" />
         <MobileNavItem link="/search" label="Search" />
-        <MobileNavItem link="/messaging" label="Inbox" />
-
-        <MobileNavProfile />
+        <MobileNavItem link="/messages" label="Messages" />
+        <MobileNavItem link="/inbox" label="Notifications" />
+        <MobileNavItem link="/profile" label="Profile" />
       </nav>
 
       <Overlay overlay={overlay} handleClick={deactivate} />

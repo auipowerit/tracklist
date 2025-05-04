@@ -21,6 +21,38 @@ export default function App() {
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
+          path: "/reviews/:reviewId/",
+          element: <Pages.ReviewPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
+          path: "/search",
+          element: <Pages.SearchPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
+          path: "/artists",
+          element: <Pages.ArtistPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+          children: [
+            {
+              path: "/artists/:artistId",
+              element: <Pages.ArtistProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/artists/:artistId/albums/:albumId",
+              element: <Pages.AlbumProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+            {
+              path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
+              element: <Pages.TrackProfile />,
+              errorElement: <Pages.ErrorPage is404={false} />,
+            },
+          ],
+        },
+        {
           path: "/authenticate",
           element: <Pages.AuthPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
@@ -28,6 +60,16 @@ export default function App() {
         {
           path: "/authenticate/callback",
           element: <Pages.AuthPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
+          path: "/messages",
+          element: <Pages.ChatPage />,
+          errorElement: <Pages.ErrorPage is404={false} />,
+        },
+        {
+          path: "/inbox",
+          element: <Pages.InboxPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
@@ -91,43 +133,6 @@ export default function App() {
               errorElement: <Pages.ErrorPage is404={false} />,
             },
           ],
-        },
-        {
-          path: "/messaging",
-          element: <Pages.ChatPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
-          path: "/search",
-          element: <Pages.SearchPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-        },
-        {
-          path: "/artists",
-          element: <Pages.ArtistPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
-          children: [
-            {
-              path: "/artists/:artistId",
-              element: <Pages.ArtistProfile />,
-              errorElement: <Pages.ErrorPage is404={false} />,
-            },
-            {
-              path: "/artists/:artistId/albums/:albumId",
-              element: <Pages.AlbumProfile />,
-              errorElement: <Pages.ErrorPage is404={false} />,
-            },
-            {
-              path: "/artists/:artistId/albums/:albumId/tracks/:trackId",
-              element: <Pages.TrackProfile />,
-              errorElement: <Pages.ErrorPage is404={false} />,
-            },
-          ],
-        },
-        {
-          path: "/reviews/:reviewId/",
-          element: <Pages.ReviewPage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
         },
         {
           path: "*",

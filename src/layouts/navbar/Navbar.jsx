@@ -3,10 +3,14 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import { faEnvelope, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBell,
+  faEnvelope,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import NavProfile from "./NavProfile";
-import "./navbar.scss";
 import MobileNavbar from "./MobileNavbar";
+import "./navbar.scss";
 
 export default function Navbar() {
   const { globalUser } = useAuthContext();
@@ -30,10 +34,12 @@ export default function Navbar() {
         <NavLogo />
         <NavItem link="/search" icon={faSearch} />
 
-        <div className="nav-messaging">
-          <NavItem link="/messaging" icon={faEnvelope} />
+        <div className="nav-messages">
+          <NavItem link="/messages" icon={faEnvelope} />
           <NotificationBadge unreadCount={unreadCount} />
         </div>
+
+        <NavItem link="/inbox" icon={faBell} />
         <NavProfile globalUser={globalUser} />
       </div>
 

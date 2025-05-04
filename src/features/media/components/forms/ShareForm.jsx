@@ -87,8 +87,8 @@ export default function ShareForm(props) {
     resetValues();
     setIsModalOpen(false);
 
-    // Send to messaging page
-    navigate("/messaging");
+    // Send to messages page
+    navigate("/messages");
   }
 
   function validateData() {

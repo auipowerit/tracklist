@@ -38,6 +38,7 @@ export default function Signup({ setIsRegistration }) {
   async function validateData() {
     const email = formRef.current.elements["email"];
     const password = formRef.current.elements["password"];
+    const repassword = formRef.current.elements["repassword"];
     const username = formRef.current.elements["username"];
 
     if (checkEmptyForm(formRef)) {
@@ -54,6 +55,12 @@ export default function Signup({ setIsRegistration }) {
     if (!isPasswordValid(password.value)) {
       setError("Password must be at least 8 characters long.");
       password.classList.add("invalid-field");
+      return false;
+    }
+
+    if (repassword.value !== password.value) {
+      setError("Passwords do not match.");
+      repassword.classList.add("invalid-field");
       return false;
     }
 
@@ -82,6 +89,11 @@ export default function Signup({ setIsRegistration }) {
         <AuthInput label="Username" name="username" type="text" />
         <AuthInput label="Email" name="email" type="text" />
         <AuthInput label="Password" name="password" type="password" />
+        <AuthInput
+          label="Re-enter Password"
+          name="repassword"
+          type="repassword"
+        />
 
         <Alert message={error} />
         <button type="submit" className="form-submit-button">
