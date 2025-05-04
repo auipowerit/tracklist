@@ -1,19 +1,17 @@
 import { useRef } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { useCommentContext } from "src/features/comment/context/CommentContext";
+import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import { useCommentContext } from "src/features/comment/context/CommentContext";
 import "./comment-input.scss";
 
 export default function CommentInput({ review, setComments }) {
   const { globalUser } = useAuthContext();
   const { addComment } = useCommentContext();
+  const { addNotification } = useInboxContext();
   const { updateReviewState } = useReviewContext();
 
   const inputComment = useRef(null);
-
-  function closeComment() {
-    inputComment.current.value = "";
-  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -50,7 +48,22 @@ export default function CommentInput({ review, setComments }) {
     // Update review state
     updateReviewState(review, newReview);
 
+    // Send notification if not commenting on own review
+    if (globalUser.uid !== review.userId) {
+      await addNotification(
+        review.userId,
+        `${globalUser.username} commented on your review`,
+        `${content.slice(0, 20)}...`,
+        globalUser.uid,
+        "comment",
+      );
+    }
+
     closeComment();
+  }
+
+  function closeComment() {
+    inputComment.current.value = "";
   }
 
   if (!globalUser) {

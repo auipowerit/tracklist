@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   query,
   setDoc,
   updateDoc,
@@ -43,6 +44,7 @@ export function useAuth() {
         lists: [],
         savedLists: [],
         likes: [],
+        notifications: 0,
         createdAt: new Date(),
       };
 
@@ -320,6 +322,34 @@ export function useAuth() {
     }
   }
 
+  async function addToInbox(userId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      await updateDoc(userRef, {
+        notifications: increment(1),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUnreadInbox(userId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || userDoc.empty) return;
+
+      return userDoc.data().notifications;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     signup,
     usernameAvailable,
@@ -342,5 +372,8 @@ export function useAuth() {
 
     likeContent,
     unlikeContent,
+
+    addToInbox,
+    getUnreadInbox,
   };
 }

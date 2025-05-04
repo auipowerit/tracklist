@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { db } from "src/config/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
@@ -13,20 +15,40 @@ import MobileNavbar from "./MobileNavbar";
 import "./navbar.scss";
 
 export default function Navbar() {
-  const { globalUser } = useAuthContext();
+  const { globalUser, getUnreadInbox } = useAuthContext();
   const { chats, getUnreadChatsByUserId } = useChatContext();
 
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  const [unreadNotifs, setUnreadNotifs] = useState(0);
 
   useEffect(() => {
     const fetchUnreadChats = async () => {
       if (!globalUser) return;
       const count = await getUnreadChatsByUserId(globalUser.uid);
-      setUnreadCount(count);
+      setUnreadMessages(count);
     };
 
     fetchUnreadChats();
   }, [globalUser, chats]);
+
+  useEffect(() => {
+    if (!globalUser) {
+      setUnreadNotifs(0);
+      return;
+    }
+
+    const unsubscribe = onSnapshot(
+      doc(db, "users", globalUser.uid),
+      async () => {
+        const count = await getUnreadInbox(globalUser.uid);
+        setUnreadNotifs(count);
+      },
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, [globalUser]);
 
   return (
     <div className="navbar">
@@ -36,10 +58,14 @@ export default function Navbar() {
 
         <div className="nav-messages">
           <NavItem link="/messages" icon={faEnvelope} />
-          <NotificationBadge unreadCount={unreadCount} />
+          <NotificationBadge unreadCount={unreadMessages} />
         </div>
 
-        <NavItem link="/inbox" icon={faBell} />
+        <div className="nav-messages">
+          <NavItem link="/inbox" icon={faBell} />
+          <NotificationBadge unreadCount={unreadNotifs} />
+        </div>
+
         <NavProfile globalUser={globalUser} />
       </div>
 

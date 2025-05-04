@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import "./user-buttons.scss";
+import { useInboxContext } from "src/features/inbox/context/InboxContext";
 
 export default function FollowButton({ user, setUser }) {
   const { globalUser, followUser, unfollowUser } = useAuthContext();
+  const { addNotification } = useInboxContext();
 
   const [isFollowing, setIsFollowing] = useState(
     user.followers.includes(globalUser?.uid) || false,
@@ -13,6 +15,15 @@ export default function FollowButton({ user, setUser }) {
     isFollowing
       ? await unfollowUser(user.uid, globalUser?.uid)
       : await followUser(user.uid, globalUser?.uid);
+
+    if (!isFollowing) {
+      await addNotification(
+        user.uid,
+        `${globalUser.username} started following you`,
+        globalUser.uid,
+        "following",
+      );
+    }
 
     setIsFollowing(!isFollowing);
 
