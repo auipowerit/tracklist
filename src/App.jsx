@@ -1,5 +1,9 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import * as Pages from "./pages";
 import Layout from "./layouts/Layout";
 import AppProviders from "./pages/AppProviders";
@@ -11,12 +15,11 @@ export default function App() {
       element: <Layout />,
       children: [
         {
-          path: "/",
-          element: <Pages.HomePage />,
-          errorElement: <Pages.ErrorPage is404={false} />,
+          index: true,
+          element: <Navigate to="/home" />,
         },
         {
-          path: "/reviews",
+          path: "/home",
           element: <Pages.HomePage />,
           errorElement: <Pages.ErrorPage is404={false} />,
         },

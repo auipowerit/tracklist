@@ -29,3 +29,15 @@
     color: $basic-white;
   }
 }
+
+@media (max-width: 900px) {
+  .sort-button {
+    background-color: $basic-green;
+    padding: 0.5em;
+    font-size: 1.5rem;
+  }
+
+  .sort-dropdown-item {
+    font-size: 1.5rem;
+  }
+}

@@ -14,7 +14,7 @@ export default function Tabs(props) {
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          className={`tab ${activeTab === tab.id && "active"}`}
+          className={`tab ${activeTab === tab.id ? "active" : ""}`}
           onClick={() => handleClick(tab)}
         >
           {tab.label}

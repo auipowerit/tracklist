@@ -51,8 +51,10 @@ export default function Navbar() {
 function NavLogo() {
   return (
     <NavLink
-      to="/reviews"
-      className={({ isActive }) => `navlink nav-logo ${isActive && "active"}`}
+      to="/home"
+      className={({ isActive }) =>
+        `navlink nav-logo ${isActive ? "active" : ""}`
+      }
     >
       <p>TrackList</p>
     </NavLink>
@@ -63,7 +65,7 @@ function NavItem({ link, icon }) {
   return (
     <NavLink
       to={link}
-      className={({ isActive }) => `navlink ${isActive && "active"}`}
+      className={({ isActive }) => `navlink ${isActive ? "active" : ""}`}
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>

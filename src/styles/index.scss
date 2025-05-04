@@ -105,3 +105,9 @@ select {
     background-color: #333;
   }
 }
+
+@media (max-width: 900px) {
+  .empty-message {
+    font-size: 1.5rem;
+  }
+}

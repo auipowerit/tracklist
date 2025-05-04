@@ -47,7 +47,7 @@ export default function MobileNavbar() {
       <Hamburger hamburger={hamburger} handleClick={handleClick} />
 
       <nav ref={menu} className="mobile-nav">
-        <MobileNavItem link="/reviews" label="Home" />
+        <MobileNavItem link="/home" label="Home" />
         <MobileNavItem link="/search" label="Search" />
         <MobileNavItem link="/messages" label="Messages" />
         <MobileNavItem link="/inbox" label="Notifications" />

@@ -41,7 +41,7 @@ export default function AddReviewButton(props) {
   }
 
   function handleSuccessClick() {
-    navigate("/reviews");
+    navigate("/home");
     setIsModalOpen(false);
   }
 
