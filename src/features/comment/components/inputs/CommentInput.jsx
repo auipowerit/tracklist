@@ -52,8 +52,11 @@ export default function CommentInput({ review, setComments }) {
     if (globalUser.uid !== review.userId) {
       await addNotification(
         review.userId,
+        globalUser.uid,
+        globalUser.username,
+        globalUser.profileUrl,
         `${globalUser.username} commented on your review`,
-        `${content.slice(0, 20)}...`,
+        `${content.slice(0, 40)}`,
         review.id,
         "review",
       );

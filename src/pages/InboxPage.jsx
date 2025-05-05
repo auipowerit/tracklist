@@ -1,40 +1,96 @@
 import { useEffect, useState } from "react";
 import { db } from "src/config/firebase";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { doc, onSnapshot } from "firebase/firestore";
+import Loading from "src/features/shared/components/Loading";
+import InboxCard from "src/features/inbox/components/cards/InboxCard";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { useListContext } from "src/features/list/context/ListContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
+import { useReviewContext } from "src/features/review/context/ReviewContext";
+import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import "./styles/inbox.scss";
 
 export default function InboxPage() {
   const { globalUser } = useAuthContext();
   const { readAllNotifications } = useInboxContext();
+  const { getListById } = useListContext();
+  const { getReviewById } = useReviewContext();
+  const { getMediaById } = useSpotifyContext();
 
-  const [notifs, setNotifs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [notifications, setnotifications] = useState([]);
 
   useEffect(() => {
     if (!globalUser) {
-      setNotifs([]);
+      setnotifications([]);
       return;
     }
 
     const unsubscribe = onSnapshot(
       doc(db, "inbox", globalUser.uid),
       async (doc) => {
-        const notifs = doc
+        const notifications = doc
           .data()
-          .notifications.sort((a, b) => a.createdAt - b.createdAt);
+          .notifications.sort((a, b) => b.createdAt - a.createdAt);
 
-        if (notifs.length === 0) return;
+        if (notifications.length === 0) return;
 
         const inboxData = await Promise.all(
-          notifs.map(async (notif) => {
+          notifications.map(async (notification) => {
+            if (notification.category === "review") {
+              const review = await getReviewById(notification.contentId);
+
+              if (!review || review.media.length === 0) {
+                return {
+                  ...notification,
+                  image: DEFAULT_MEDIA_IMG,
+                };
+              }
+
+              return {
+                ...notification,
+                image: review.media.images[0].url,
+              };
+            }
+
+            if (notification.category === "list") {
+              const list = await getListById(notification.contentId);
+
+              if (!list || list.media.length === 0) {
+                return {
+                  ...notification,
+                  image: DEFAULT_MEDIA_IMG,
+                };
+              }
+
+              const media = await getMediaById(
+                list.media[0].id,
+                list.media[0].category,
+              );
+
+              if (!media) {
+                return {
+                  ...notification,
+                  image: DEFAULT_MEDIA_IMG,
+                };
+              }
+
+              return {
+                ...notification,
+                image: media.images[0].url,
+              };
+            }
+
             return {
-              ...notif,
+              ...notification,
             };
           }),
         );
 
-        setNotifs(inboxData);
+        setnotifications(inboxData);
         await readAllNotifications(globalUser.uid);
+        setIsLoading(false);
       },
       (error) => {
         console.log(error);
@@ -44,25 +100,35 @@ export default function InboxPage() {
     return () => unsubscribe();
   }, [globalUser]);
 
-  async function handleClick(notifId) {
-    await readNotification(globalUser.uid, notifId);
+  if (isLoading) {
+    return <Loading />;
   }
 
-  if (notifs.length === 0) {
+  if (notifications.length === 0) {
     return <p className="empty-message">No notifications</p>;
   }
 
   return (
-    <div>
-      {notifs.map((notif) => {
-        return (
-          <div key={notif.id} onClick={() => handleClick(notif.id)}>
-            <p>{notif.category}</p>
-            <p>{notif.title}</p>
-            <p>{notif.subtitle}</p>
-            <p>{notif.contextId}</p>
-          </div>
-        );
+    <div className="inbox">
+      <Header />
+      <InboxList notifications={notifications} />
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <div className="inbox-header">
+      <h1>Inbox</h1>
+    </div>
+  );
+}
+
+function InboxList({ notifications }) {
+  return (
+    <div className="inbox-list">
+      {notifications.map((notification) => {
+        return <InboxCard key={notification.id} notification={notification} />;
       })}
     </div>
   );

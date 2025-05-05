@@ -65,6 +65,9 @@ export default function ReviewButtons({ review, showComment = true }) {
     if (review.userId !== globalUser.uid && !isLiked) {
       await addNotification(
         review.userId,
+        globalUser.uid,
+        globalUser.username,
+        globalUser.profileUrl,
         `${globalUser.username} liked your review`,
         "",
         review.id,

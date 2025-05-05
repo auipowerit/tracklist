@@ -1,0 +1,78 @@
+@use "src/styles/abstracts" as *;
+
+.inbox-card {
+  @include flexrow(space-between, center, 2em);
+  cursor: pointer;
+  border-bottom: 1px solid $basic-gray;
+  padding: 0.5em;
+  width: 100%;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &-info {
+    @include flexrow(center, center, 0.5em);
+
+    &-image {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+
+    &-content {
+      @include flexcol($gap: 0.25em);
+
+      &-title {
+        @include font(0.75, bold);
+      }
+
+      &-subtitle {
+        @include font(0.75, normal, $basic-white);
+      }
+
+      &-date {
+        @include font(0.5, normal, $basic-gray);
+      }
+    }
+  }
+
+  &-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 900px) {
+  .inbox-card {
+    gap: 0.5em;
+    border: none;
+
+    &-info {
+      &-image {
+        width: 30px;
+        height: 30px;
+      }
+
+      &-content {
+        &-title {
+          font-size: 0.75rem;
+        }
+
+        &-subtitle {
+          font-size: 0.75rem;
+        }
+
+        &-date {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    &-image {
+      width: 75px;
+      height: 75px;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+@use "src/styles/abstracts" as *;
+
+.inbox {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  height: 100vh;
+  overflow-y: auto;
+  @include flexcol(initial, center, 1em);
+  background-color: $dark-gray;
+  padding: 2em;
+
+  &-header {
+    @include font(0.75, normal, $basic-green);
+  }
+
+  &-list {
+    @include flexcol(initial, initial, 2em);
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    @include gradient(top);
+    padding: 1em;
+  }
+}
+
+@media (max-width: 900px) {
+  .inbox {
+    padding: 1em 0;
+    height: 100%;
+    overflow-y: visible;
+
+    &-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      background-color: $dark-gray;
+      width: 100%;
+      text-align: center;
+    }
+
+    &-list {
+      gap: 0;
+      padding: 1em 0;
+    }
+  }
+}

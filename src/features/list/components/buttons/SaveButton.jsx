@@ -37,8 +37,11 @@ export default function SaveButton({ list, user }) {
     if (list.userId !== globalUser.uid && !isSaved) {
       await addNotification(
         list.userId,
+        globalUser.uid,
+        globalUser.username,
+        globalUser.profileUrl,
         `${globalUser.username} saved your list`,
-        `${list.name.slice(0, 20)}...`,
+        `${list.name.slice(0, 40)}`,
         list.id,
         "list",
       );

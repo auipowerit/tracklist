@@ -81,8 +81,11 @@ function Buttons({ comment, review, comments, setComments }) {
     if (comment.userId !== globalUser.uid && !userVoted) {
       await addNotification(
         review.userId,
+        globalUser.uid,
+        globalUser.username,
+        globalUser.profileUrl,
         `${globalUser.username} liked your comment`,
-        `${comment.content.slice(0, 20)}...`,
+        `${comment.content.slice(0, 40)}`,
         review.id,
         "review",
       );

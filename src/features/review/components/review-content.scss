@@ -10,8 +10,8 @@
 
   img {
     border-radius: 100%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
   }
 
@@ -73,6 +73,11 @@
   }
 
   .review-user {
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
     p {
       color: $basic-gray;
       font-weight: normal;

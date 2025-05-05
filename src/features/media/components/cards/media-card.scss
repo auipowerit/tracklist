@@ -4,8 +4,8 @@
   @include flexcol();
   transition: all 0.2s;
   cursor: pointer;
-  background-color: $dark-green;
   border-radius: 12px;
+  border: 2px solid $basic-white;
   padding: 0.5em;
   width: 300px;
   height: fit-content;
@@ -18,6 +18,8 @@
   img {
     height: 300px;
     object-fit: cover;
+    box-shadow: $darker-shadow;
+    border-radius: 12px;
   }
 }
 
@@ -44,7 +46,7 @@
 }
 
 .media-card-subtitle {
-  @include font(0.35, bold, $basic-white);
+  @include font(0.35, bold);
 }
 
 .media-card-rating {

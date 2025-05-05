@@ -40,6 +40,10 @@
     gap: 0.25em;
     border-bottom: 1px solid $darker-gray;
     padding-bottom: 0.5em;
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   .review-card {

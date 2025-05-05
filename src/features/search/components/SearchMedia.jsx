@@ -9,28 +9,40 @@ export default function SearchMedia(props) {
   const { category, results, setResults } = props;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [initialResults, setInitialResults] = useState([]);
 
   return (
     <div>
-      <div className="search-header">
-        <SearchBar
-          category={category}
-          setIsLoading={setIsLoading}
-          setResults={setResults}
-          setInitialResults={setInitialResults}
-        />
-
-        <SortResults
-          category={category}
-          results={results}
-          setResults={setResults}
-          initialResults={initialResults}
-        />
-      </div>
+      <Header
+        category={category}
+        setIsLoading={setIsLoading}
+        results={results}
+        setResults={setResults}
+      />
 
       {isLoading && <Loading />}
       <SearchResults results={results} category={category} />
+    </div>
+  );
+}
+
+function Header({ category, setIsLoading, results, setResults }) {
+  const [initialResults, setInitialResults] = useState([]);
+
+  return (
+    <div className="search-header">
+      <SearchBar
+        category={category}
+        setIsLoading={setIsLoading}
+        setResults={setResults}
+        setInitialResults={setInitialResults}
+      />
+
+      <SortResults
+        category={category}
+        results={results}
+        setResults={setResults}
+        initialResults={initialResults}
+      />
     </div>
   );
 }

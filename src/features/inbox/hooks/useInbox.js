@@ -6,16 +6,19 @@ export function useInbox() {
   const { addToInbox } = useAuthContext();
 
   async function addNotification(
-    userId,
+    recipientId,
+    senderId,
+    senderUsername,
+    senderProfileUrl,
     title,
-    subtitle = "",
-    contextId,
+    subtitle,
+    contentId,
     category,
   ) {
     try {
       const id = Date.now().toString();
 
-      const inboxRef = doc(db, "inbox", userId);
+      const inboxRef = doc(db, "inbox", recipientId);
       const inboxDoc = await getDoc(inboxRef);
 
       if (!inboxDoc.exists()) {
@@ -23,28 +26,34 @@ export function useInbox() {
           notifications: [
             {
               id,
+              userId: senderId,
+              username: senderUsername,
+              profileUrl: senderProfileUrl,
               title,
               subtitle,
-              contextId,
+              contentId,
               category,
               createdAt: new Date(),
             },
           ],
         });
       } else {
-        await updateDoc(doc(db, "inbox", userId), {
+        await updateDoc(doc(db, "inbox", recipientId), {
           notifications: arrayUnion({
             id,
+            userId: senderId,
+            username: senderUsername,
+            profileUrl: senderProfileUrl,
             title,
             subtitle,
-            contextId,
+            contentId,
             category,
             createdAt: new Date(),
           }),
         });
       }
 
-      await addToInbox(userId);
+      await addToInbox(recipientId);
     } catch (error) {
       console.log(error);
     }
@@ -69,14 +78,14 @@ export function useInbox() {
     try {
       const inboxRef = doc(db, "inbox", userId);
       const inboxDoc = await getDoc(inboxRef);
-      const notifs = inboxDoc.data().notifications;
+      const notifications = inboxDoc.data().notifications;
 
-      const index = notifs.findIndex((notif) => notif.id === notifId);
+      const index = notifications.findIndex((notif) => notif.id === notifId);
 
       if (index === -1) return;
 
       await updateDoc(inboxRef, {
-        notifications: notifs.filter((_, i) => i !== index),
+        notifications: notifications.filter((_, i) => i !== index),
       });
     } catch (error) {
       console.log(error);
