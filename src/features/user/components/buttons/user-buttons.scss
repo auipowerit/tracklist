@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .follow-button {
-  @include flexbox(row, center);
+  @include flexrow(center);
   @include font(0.75);
   border: 2px solid $basic-white;
   padding: 0.5em 0;
@@ -20,7 +20,7 @@
 }
 
 .logout-button {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(1);
   color: $basic-gray;
 

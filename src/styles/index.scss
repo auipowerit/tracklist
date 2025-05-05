@@ -27,12 +27,12 @@ body {
 }
 
 .wrapper {
-  @include flexbox(column);
+  @include flexcol();
   height: 100vh;
 }
 
 main {
-  @include flexbox(column);
+  @include flexcol();
   flex: 1;
 }
 
@@ -46,7 +46,7 @@ ul {
 }
 
 button {
-  @include flexbox(1, normal, $basic-white);
+  @include font(1, normal, $basic-white);
   cursor: pointer;
   border: none;
   background-color: transparent;

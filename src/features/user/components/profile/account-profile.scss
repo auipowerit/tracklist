@@ -9,16 +9,16 @@
 }
 
 .account-profile-details {
-  @include flexbox(column, $gap: 0.5em);
+  @include flexcol($gap: 0.5em);
   @include font(0.5);
 }
 
 .account-profile-content {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
 }
 
 .account-profile-user {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .account-profile-displayname {
@@ -30,12 +30,12 @@
 }
 
 .account-profile-date {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
   color: $basic-gray;
 }
 
 .account-profile-friends {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 
   a {
     color: $basic-gray;

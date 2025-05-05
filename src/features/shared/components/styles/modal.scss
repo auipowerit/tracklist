@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .modal-overlay {
-  @include flexbox(row, center, center);
+  @include flexrow(center, center);
   @include font(1);
   position: fixed;
   z-index: 98;
@@ -22,7 +22,7 @@
   position: relative;
   transition: all 0.2s;
   background-color: $dark-gray;
-  width: 100%;
+  width: fit-content;
   max-width: 800px;
   z-index: 99;
 
@@ -46,7 +46,6 @@
 
 @media (max-width: 900px) {
   .modal-container {
-    width: fit-content;
     max-width: none;
     height: fit-content;
     max-height: --webkit-fill-available;

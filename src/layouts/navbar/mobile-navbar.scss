@@ -52,7 +52,7 @@
   background-color: $dark-gray;
   width: 100%;
   min-height: 40vh;
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
 
   &.is-active {
     transform: translateY(0);

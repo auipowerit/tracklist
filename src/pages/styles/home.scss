@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .home-container {
-  @include flexbox(column);
+  @include flexcol();
   margin: auto;
   margin-top: 1em;
   width: 100%;
@@ -11,7 +11,7 @@
 }
 
 .home-header {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
   border-bottom: 1px solid $basic-white;
 
   .review-button {
@@ -20,7 +20,7 @@
 }
 
 .feed-container {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   @include gradient(top);
   padding: 2em 0;
   width: 100%;

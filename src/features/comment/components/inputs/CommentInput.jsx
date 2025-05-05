@@ -54,8 +54,8 @@ export default function CommentInput({ review, setComments }) {
         review.userId,
         `${globalUser.username} commented on your review`,
         `${content.slice(0, 20)}...`,
-        globalUser.uid,
-        "comment",
+        review.id,
+        "review",
       );
     }
 

@@ -1,14 +1,14 @@
 @use "src/styles/abstracts" as *;
 
 .form-container {
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
   margin: auto;
   padding: 1em;
   width: fit-content;
 }
 
 .form-header {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(1, bold, $basic-white);
   border-bottom: 1px solid $basic-white;
   padding-bottom: 0.25em;
@@ -25,7 +25,7 @@
 }
 
 .form-content {
-  @include flexbox(row, space-evenly, center, 1em);
+  @include flexrow(space-evenly, center, 1em);
   width: 100%;
 }
 
@@ -60,7 +60,7 @@
   top: 100%;
   right: 0;
   left: 0;
-  @include flexbox(column);
+  @include flexcol();
   background-color: $basic-green;
 
   &.active {
@@ -70,7 +70,7 @@
 }
 
 .form-media-result {
-  @include flexbox(column, initial, left, 0em);
+  @include flexcol(initial, left, 0em);
   padding: 0.15em 0.25em;
   text-align: left;
 
@@ -88,7 +88,7 @@
 }
 
 .form-textarea-container {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
   width: 100%;
 
   textarea {
@@ -103,7 +103,7 @@
 }
 
 .form-textarea-label {
-  @include flexbox(row, space-between, center, 0.5em);
+  @include flexrow(space-between, center, 0.5em);
   @include font(1.25, normal, $basic-gray);
 }
 
@@ -125,17 +125,17 @@
 }
 
 .success-container {
-  @include flexbox(column, center, center, 1em);
-  padding: 1em 0;
+  @include flexcol(center, center, 1em);
+  padding: 2em;
 }
 
 .success-message {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
   @include font(1.25, normal, $light-green, italic);
 }
 
 .success-button {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
   @include font(1);
   border: 1px solid $basic-white;
   padding: 0.5em 0.75em;

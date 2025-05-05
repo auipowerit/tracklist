@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 footer {
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
   padding: 2em 0;
   background-color: rgba(0, 0, 0, 0.4);
   height: fit-content;

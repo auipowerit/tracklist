@@ -5,12 +5,12 @@
 }
 
 .list-form-inputs {
-  @include flexbox(column, center, stretch, 0.5em);
+  @include flexcol(center, stretch, 0.5em);
 }
 
 .list-form-media-input {
   position: relative;
-  @include flexbox(row, $gap: 0.5em);
+  @include flexrow($gap: 0.5em);
 }
 
 .list-form-select {
@@ -20,7 +20,7 @@
 }
 
 .list-form-current-lists {
-  @include flexbox(column, initial, start, 0.25em);
+  @include flexcol(initial, start, 0.25em);
   overflow: auto;
   padding: 0.25em;
   height: 100px;
@@ -28,7 +28,7 @@
 
 .list-form-current-list {
   @include font(0.75);
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   padding: 0.25em 0.5em;
   background-color: $darker-gray;
 
@@ -42,32 +42,32 @@
 }
 
 .list-form-input-container {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
 }
 
 .list-form-input-header {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
 }
 
 .list-form-info-container {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   width: 100%;
 }
 
 .list-form-checkbox-container {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
 }
 
 .list-form-name-container {
-  @include flexbox(column, initial, left, 0.25em);
+  @include flexcol(initial, left, 0.25em);
 }
 
 .list-form-buttons-container {
-  @include flexbox(row, center, center, 1em);
+  @include flexrow(center, center, 1em);
 }
 
 .list-form-back-button {
-  @include flexbox(row, center, center, 0.25em);
+  @include flexrow(center, center, 0.25em);
   @include font(1);
   border-radius: 6px;
   background-color: $basic-gray;
@@ -79,7 +79,7 @@
 }
 
 .list-form-delete-button {
-  @include flexbox(row, center, center, 0.25em);
+  @include flexrow(center, center, 0.25em);
   @include font(1);
   border-radius: 6px;
   background-color: $basic-red;

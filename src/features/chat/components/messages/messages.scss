@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .messages {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   @include gradient(bottom, $bottom: 99%);
   flex-grow: 1;
   padding: 0.5em 0;
@@ -9,7 +9,7 @@
 }
 
 .message-card {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
 }
 
 .message-date {
@@ -19,7 +19,7 @@
 }
 
 .message-bubble {
-  @include flexbox(row, initial, start, 0.5em);
+  @include flexrow(initial, start, 0.5em);
   position: relative;
   border-radius: 12px;
   padding: 0.75em 1em;
@@ -43,9 +43,9 @@
 }
 
 .message-delete-button {
-  @include flexbox(row, center, center);
+  @include flexrow(center, center);
   @include font(0.5, normal, $basic-gray);
-
+  @include badge(0.75, $basic-gray, $darker-gray, 1.75em);
   position: absolute;
   top: 50%;
   left: -10%;
@@ -53,11 +53,6 @@
   opacity: 0;
   cursor: pointer;
   box-shadow: $light-shadow;
-  border-radius: 100%;
-  background-color: $darker-gray;
-  width: 30px;
-  height: 30px;
-  color: $basic-gray;
 
   &:hover {
     opacity: 1;
@@ -65,16 +60,12 @@
 }
 
 .message-like-button {
-  @include flexbox(row, center, center);
   @include font(0.5);
-
+  @include badge(0.75, $basic-gray, $darker-gray, 1.75em);
   position: absolute;
   top: -12px;
   cursor: pointer;
   box-shadow: 0 0 5px $basic-black;
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
 
   &:not(.message-liked) {
     opacity: 0;
@@ -84,7 +75,6 @@
 }
 
 .message-liked {
-  display: block;
   background-color: $dark-blue;
   color: $basic-red;
 }
@@ -108,13 +98,13 @@
 }
 
 .message-body {
-  @include flexbox(column);
+  @include flexcol();
   max-width: 200px;
   word-wrap: break-word;
 }
 
 .message-sender {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
 }
 
 .message-sender-name {
@@ -126,7 +116,7 @@
 }
 
 .message-content-media {
-  @include flexbox(column, center, center, 0.25em);
+  @include flexcol(center, center, 0.25em);
   margin-top: 0.5em;
   background-color: $basic-white;
   padding: 0.5em;
@@ -134,10 +124,10 @@
   text-align: center;
 
   img {
+    box-shadow: $light-shadow;
     width: 100%;
     max-width: 150px;
     object-fit: cover;
-    box-shadow: $light-shadow;
   }
 
   span {

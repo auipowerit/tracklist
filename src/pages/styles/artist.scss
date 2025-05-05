@@ -1,23 +1,23 @@
 @use "src/styles/abstracts" as *;
 
 .artist-page-container {
-  @include flexbox(row, $gap: 1em);
+  @include flexrow($gap: 1em);
   height: 100%;
 }
 
 .artist-page {
-  @include flexbox(column);
+  @include flexcol();
   width: 100%;
 }
 
 .artist-page-content {
-  @include flexbox(column, initial, center, 3em);
+  @include flexcol(initial, center, 3em);
   width: 100%;
   min-height: 100vh;
 }
 
 .artist-page-outlet {
-  @include flexbox(row, center);
+  @include flexrow(center);
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;

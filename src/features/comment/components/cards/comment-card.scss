@@ -1,17 +1,17 @@
 @use "src/styles/abstracts" as *;
 
 .comment-card-container {
-  @include flexbox(column, $gap: 0.5em);
+  @include flexcol($gap: 0.5em);
 }
 .comment-card {
-  @include flexbox(column, initial, initial, 0.75em);
+  @include flexcol(initial, initial, 0.75em);
 }
 .comment-user-container {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .comment-user-info {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.5, bold);
   cursor: pointer;
 
@@ -36,5 +36,5 @@
 }
 
 .comment-buttons {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
 }

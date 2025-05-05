@@ -14,6 +14,7 @@ import {
 
 export default function ListHeader(props) {
   const { list } = props;
+  const { user } = useOutletContext();
 
   return (
     <div className="account-page-header">
@@ -21,6 +22,7 @@ export default function ListHeader(props) {
         <div className="account-list-name-container">
           {list.isPrivate && <LockIcon />}
           <p className="account-list-name">{list.name}</p>
+          <SaveButton list={list} user={user} />
         </div>
         <p className="account-list-description">{list.description}</p>
       </div>
@@ -48,8 +50,6 @@ function ListDropdown(props) {
     orientation,
     setOrientation,
   } = props;
-
-  const { user } = useOutletContext();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -84,16 +84,16 @@ function ListDropdown(props) {
           setOrientation={setOrientation}
         />
 
-        {canEdit ? (
+        {canEdit && (
           <>
             <EditToggle isEditing={isEditing} setIsEditing={setIsEditing} />
 
-            <div className="list-edit-buttons">              
-                <AddToListButton
-                  isModalOpen={isAddModalOpen}
-                  setIsModalOpen={setIsAddModalOpen}
-                  list={list}
-                />
+            <div className="list-edit-buttons">
+              <AddToListButton
+                isModalOpen={isAddModalOpen}
+                setIsModalOpen={setIsAddModalOpen}
+                list={list}
+              />
               <EditListButton
                 isModalOpen={isEditModalOpen}
                 setIsModalOpen={setIsEditModalOpen}
@@ -101,8 +101,6 @@ function ListDropdown(props) {
               />
             </div>
           </>
-        ) : (
-          <SaveButton list={list} user={user} />
         )}
       </div>
     </div>

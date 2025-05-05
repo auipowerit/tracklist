@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .chat-input-form {
-  @include flexbox(row, space-between, center, 0.25em);
+  @include flexrow(space-between, center, 0.25em);
   @include font(0.5);
   border: 1px solid $basic-gray;
   background-color: $dark-gray;

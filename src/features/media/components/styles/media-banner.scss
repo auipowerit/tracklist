@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .media-banner-container {
-  @include flexbox(row);
+  @include flexrow();
   margin: 3em 6em;
   box-shadow: $darker-shadow;
   width: 100%;
@@ -29,7 +29,7 @@
 }
 
 .media-banner-content {
-  @include flexbox(column, space-between, center);
+  @include flexcol(space-between, center);
   flex: 1;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 1em 0;
@@ -38,7 +38,7 @@
 }
 
 .media-banner-title-container {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
   padding: 0 0.5em;
   width: 100%;
   max-width: 400px;
@@ -63,16 +63,16 @@
 }
 
 .media-banner-rating {
-  @include flexbox(column, initial, center, 0.5em);
+  @include flexcol(initial, center, 0.5em);
   @include font(1, bold);
 }
 
 .media-banner-stars {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
 }
 
 .media-rating-bar-container {
-  @include flexbox(row, initial, end, 2px);
+  @include flexrow(initial, end, 2px);
   height: 50px;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .media-banner-buttons {
-  @include flexbox(column, space-evenly, center);
+  @include flexcol(space-evenly, center);
   @include font(0.75);
   background-color: rgba(0, 0, 0, 0.3);
   padding: 0 0.75em;

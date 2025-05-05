@@ -1,21 +1,21 @@
 @use "src/styles/abstracts" as *;
 
 .account-page-container {
-  @include flexbox(column, initial, center, 2em);
+  @include flexcol(initial, center, 2em);
   margin: 0 auto 5em auto;
   width: 100%;
   max-width: 1200px;
 }
 
 .account-page-nav {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
   background-color: $dark-green;
   padding: 1em 2em;
   width: 100%;
 }
 
 .account-nav-profile-link {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(1, normal);
   color: $basic-gray;
 
@@ -33,7 +33,7 @@
 }
 
 .account-page-nav-links-container {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
 }
 
 .account-page-nav-link {
@@ -53,12 +53,12 @@
 }
 
 .account-page-outlet-container {
-  @include flexbox(column, initial, initial, 2em);
+  @include flexcol(initial, initial, 2em);
   height: 100%;
 }
 
 .account-page-header {
-  @include flexbox(row, space-between, end);
+  @include flexrow(space-between, end);
   border-bottom: 1px solid $basic-white;
   padding-bottom: 0.5em;
 
@@ -68,7 +68,7 @@
 }
 
 .account-page-edit-button {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
   border: 2px solid $basic-white;
   padding: 0.25em 0.5em;

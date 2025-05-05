@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .filter-container {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
 
   label {
     @include font(0.75);

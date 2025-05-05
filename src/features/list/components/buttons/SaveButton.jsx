@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { useListContext } from "src/features/list/context/ListContext";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { useListContext } from "src/features/list/context/ListContext";
+import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import "./list-buttons.scss";
 
 export default function SaveButton({ list, user }) {
   const { globalUser } = useAuthContext();
+  const { addNotification } = useInboxContext();
   const { saveList } = useListContext();
 
   const [saves, setSaves] = useState(list.saves.length);
@@ -30,14 +32,28 @@ export default function SaveButton({ list, user }) {
     setSaves(isSaved ? saves - 1 : saves + 1);
     setIsSaved(!isSaved);
     await saveList(list.id, globalUser.uid);
+
+    // Send notification if not author and not already saved
+    if (list.userId !== globalUser.uid && !isSaved) {
+      await addNotification(
+        list.userId,
+        `${globalUser.username} saved your list`,
+        `${list.name.slice(0, 20)}...`,
+        list.id,
+        "list",
+      );
+    }
   }
 
   return (
     <button
       onClick={handleSave}
-      className={`save-list-button ${isSaved && "active"}`}
+      className={`save-list-button ${isSaved ? "active" : ""} ${list.userId === globalUser?.uid ? "disabled" : ""}`}
     >
-      <FontAwesomeIcon icon={faBookmark} className={isActive && "fa-beat"} />
+      <FontAwesomeIcon
+        icon={faBookmark}
+        className={isActive ? "fa-beat" : ""}
+      />
       <p>{saves || 0}</p>
     </button>
   );

@@ -58,12 +58,12 @@ export default function Navbar() {
 
         <div className="nav-messages">
           <NavItem link="/messages" icon={faEnvelope} />
-          <NotificationBadge unreadCount={unreadMessages} />
+          <NotificationBadge unreadCount={unreadMessages} link="/messages" />
         </div>
 
         <div className="nav-messages">
           <NavItem link="/inbox" icon={faBell} />
-          <NotificationBadge unreadCount={unreadNotifs} />
+          <NotificationBadge unreadCount={unreadNotifs} link="/inbox" />
         </div>
 
         <NavProfile globalUser={globalUser} />
@@ -98,7 +98,11 @@ function NavItem({ link, icon }) {
   );
 }
 
-function NotificationBadge({ unreadCount }) {
+function NotificationBadge({ unreadCount, link }) {
   if (!unreadCount || unreadCount === 0) return;
-  return <p className="notification-badge">{unreadCount}</p>;
+  return (
+    <NavLink to={link}>
+      <p className="notification-badge">{unreadCount}</p>
+    </NavLink>
+  );
 }

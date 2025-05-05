@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .basic-button {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
   border: 2px solid $basic-white;
   padding: 0.25em 0.5em;
@@ -21,7 +21,7 @@
   text-align: center;
 
   .button-after {
-    @include flexbox(row, center, center);
+    @include flexrow(center, center);
     position: absolute;
     top: 0;
     right: 0;
@@ -46,7 +46,7 @@
   text-align: center;
 
   .button-before {
-    @include flexbox(row, center, center);
+    @include flexrow(center, center);
     position: absolute;
     top: 0;
     left: 0;

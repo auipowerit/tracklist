@@ -24,7 +24,7 @@ export default function VoteButton(props) {
       setTimeout(() => setIsActive(false), 500);
     }
 
-    const updatedContent = await handleVote(content.id, globalUser.uid);
+    const updatedContent = await handleVote(content.id, globalUser.uid, userVoted);
     updateContent(content, updatedContent);
   }
 

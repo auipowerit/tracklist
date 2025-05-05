@@ -1,13 +1,13 @@
 @use "src/styles/abstracts" as *;
 
 .user-card-container {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
   border: 1px solid $basic-gray;
   padding: 1em;
 }
 
 .user-card {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
   cursor: pointer;
   padding: 0.5em;
@@ -22,11 +22,11 @@
 }
 
 .user-card-info {
-  @include flexbox(column, $gap: 0.5em);
+  @include flexcol($gap: 0.5em);
 }
 
 .user-card-header {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .user-card-displayname {

@@ -7,7 +7,7 @@
 }
 
 .nav-items {
-  @include flexbox(row, initial, center, 1.5em);
+  @include flexrow(initial, center, 1.5em);
   margin: 0 auto;
   width: 90%;
   max-width: 1200px;
@@ -16,7 +16,7 @@
 .navlink {
   @include font(1.5, normal, $basic-gray);
 
-  &:not(.navlink-active):hover {
+  &:hover {
     color: $basic-green;
   }
 
@@ -44,7 +44,7 @@
 
 .nav-profile-dropdown {
   @include dropdown(right, 1em, 1.5em);
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   z-index: 10;
   background-color: $dark-green;
 }
@@ -60,7 +60,7 @@
   @include font(1);
   cursor: pointer;
   width: 100%;
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 
   &:hover {
     color: $basic-gray;
@@ -69,18 +69,17 @@
 
 .nav-messages {
   position: relative;
+
+  &:hover > * {
+    color: $basic-green !important;
+  }
 }
 
 .notification-badge {
-  @include flexbox(row, center, center);
-  @include font(0.5, bold, $basic-white);
+  @include badge(0.5, $basic-white, $basic-red, 1.3em);
   position: absolute;
-  top: 0;
+  top: -10%;
   right: -25%;
-  border-radius: 50%;
-  background-color: $basic-red;
-  width: 18px;
-  height: 18px;
 }
 
 @media (max-width: 900px) {

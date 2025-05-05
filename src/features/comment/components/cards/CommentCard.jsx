@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import VoteButton from "src/features/comment/components/buttons/VoteButton";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
@@ -50,6 +51,7 @@ function UserInfo({ comment }) {
 function Buttons({ comment, review, comments, setComments }) {
   const { globalUser } = useAuthContext();
   const { likeComment, dislikeComment } = useCommentContext();
+  const { addNotification } = useInboxContext();
   const { deleteReviewComment, updateReviewState } = useReviewContext();
 
   async function updateCommentState(comment, updatedComment) {
@@ -72,11 +74,28 @@ function Buttons({ comment, review, comments, setComments }) {
     updateReviewState(review, updatedReview);
   }
 
+  async function handleLike(commentId, userId, userVoted) {
+    const updatedContent = await likeComment(commentId, userId);
+
+    // Send notification if not author and not already liked
+    if (comment.userId !== globalUser.uid && !userVoted) {
+      await addNotification(
+        review.userId,
+        `${globalUser.username} liked your comment`,
+        `${comment.content.slice(0, 20)}...`,
+        review.id,
+        "review",
+      );
+    }
+
+    return updatedContent;
+  }
+
   return (
     <div className="comment-buttons">
       <VoteButton
         content={comment}
-        handleVote={likeComment}
+        handleVote={handleLike}
         updateContent={updateCommentState}
         type="like"
       />

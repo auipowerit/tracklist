@@ -14,7 +14,7 @@
 }
 
 .draggable-item-delete-button {
-  @include flexbox(row, center, center);
+  @include flexrow(center, center);
   @include font(0.5, bold);
   position: absolute;
   top: 1%;

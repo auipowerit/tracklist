@@ -7,7 +7,7 @@
 }
 
 .sort-button {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
   cursor: pointer;
 }

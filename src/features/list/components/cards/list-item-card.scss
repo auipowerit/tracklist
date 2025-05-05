@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .list-item-card {
-  @include flexbox(row);
+  @include flexrow();
   @include font(0.5);
   border: 1px solid transparent;
 
@@ -23,7 +23,7 @@
 }
 
 .list-item-image {
-  @include flexbox(row, $gap: 0.5em);
+  @include flexrow($gap: 0.5em);
   position: relative;
 
   &.horizontal {
@@ -50,7 +50,7 @@
   }
 
   p {
-    @include flexbox(row, center, center);
+    @include flexrow(center, center);
     @include font(1);
     background-color: $darker-green;
     width: 1.5em;
@@ -60,7 +60,7 @@
 }
 
 .list-item-info {
-  @include flexbox(column);
+  @include flexcol();
 
   &.horizontal .list-item-title {
     text-align: center;
@@ -68,7 +68,7 @@
 
   &.vertical {
     height: 100%;
-    @include flexbox(column, center, center);
+    @include flexcol(center, center);
   }
 }
 

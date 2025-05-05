@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .artist-profile {
-  @include flexbox(column, initial, center, 1em);
+  @include flexcol(initial, center, 1em);
   padding: 1em 0;
   width: 100%;
   max-width: 1000px;
@@ -9,7 +9,7 @@
 }
 
 .discography-container {
-  @include flexbox(column, center, initial, 1em);
+  @include flexcol(center, initial, 1em);
   width: 100%;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .load-more {
-  @include flexbox(row, center);
+  @include flexrow(center);
   height: 100px;
 }
 

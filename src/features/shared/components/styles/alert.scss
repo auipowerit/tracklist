@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .alert-container {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
   @include font(0.5, normal, $basic-white, italic);
   opacity: 0;
   margin: 0 auto;

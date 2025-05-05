@@ -1,22 +1,5 @@
 @use "./colors" as *;
 
-@mixin flexbox(
-  $direction: row,
-  $justify: initial,
-  $align: initial,
-  $gap: initial,
-  $wrap: initial,
-  $basis: initial
-) {
-  display: flex;
-  flex-basis: $basis;
-  flex-direction: $direction;
-  flex-wrap: $wrap;
-  justify-content: $justify;
-  align-items: $align;
-  gap: $gap;
-}
-
 @mixin font($size: 1, $weight: normal, $color: $basic-white, $style: normal) {
   color: $color;
   font-style: $style;
@@ -24,14 +7,19 @@
   font-size: calc(#{$size}rem + 0.5vw);
 }
 
-@mixin gradient($direction: top, $top: 5%, $bottom: 95%) {
-  mask-image: linear-gradient(
-    to $direction,
-    transparent 0%,
-    black $top,
-    black $bottom,
-    transparent 100%
-  );
+@mixin flexrow($justify: initial, $align: initial, $gap: initial) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin flexcol($justify: initial, $align: initial, $gap: initial) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
 }
 
 @mixin dropdown($direction: right, $padding-y: 1em, $padding-x: 1.5em) {
@@ -51,4 +39,24 @@
     padding: $padding-y $padding-x;
     max-height: 100vh;
   }
+}
+
+@mixin badge($font-size, $color, $bg-color, $size) {
+  @include font($font-size, bold, $color);
+  @include flexrow(center, center);
+  border-radius: 50%;
+  background-color: $bg-color;
+  width: $size;
+  height: $size;
+  text-align: center;
+}
+
+@mixin gradient($direction: top, $top: 5%, $bottom: 95%) {
+  mask-image: linear-gradient(
+    to $direction,
+    transparent 0%,
+    black $top,
+    black $bottom,
+    transparent 100%
+  );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
@@ -13,6 +14,7 @@ export default function ReviewButtons({ review, showComment = true }) {
   const { deleteComment } = useCommentContext();
   const { setReviews, getNewReviews, likeReview, deleteReview } =
     useReviewContext();
+  const { addNotification } = useInboxContext();
 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -56,12 +58,27 @@ export default function ReviewButtons({ review, showComment = true }) {
     window.location.reload();
   }
 
+  async function handleLike(reviewId, userId) {
+    await likeReview(reviewId, userId);
+
+    // Send notification if not author and not already liked
+    if (review.userId !== globalUser.uid && !isLiked) {
+      await addNotification(
+        review.userId,
+        `${globalUser.username} liked your review`,
+        "",
+        review.id,
+        "review",
+      );
+    }
+  }
+
   return (
     <div className="review-buttons">
       <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}
-        handleLike={likeReview}
+        handleLike={handleLike}
         likes={review?.likes.length || 0}
         id={review.id}
         category={"review"}

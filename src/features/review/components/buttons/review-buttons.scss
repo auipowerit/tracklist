@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .review-buttons {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
   cursor: pointer;
   margin-left: 0.25em;
   padding-left: 0.5em;
@@ -17,7 +17,7 @@
 }
 
 .add-review-button {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
   border: 2px solid $basic-white;
   padding: 0.25em 0.5em;
@@ -33,16 +33,14 @@
   }
 
   .add-review-button {
+    @include badge(1.5, $basic-white, $dark-green, 2.5em);
     position: fixed;
     right: 0;
     bottom: 0;
     margin: 0.75em;
     border: none;
-    border-radius: 100%;
-    background-color: $dark-green;
     box-shadow: $light-shadow;
     padding: 0.75em;
-    font-size: 1.5rem;
     z-index: 1;
 
     p {

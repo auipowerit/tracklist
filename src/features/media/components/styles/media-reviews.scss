@@ -1,21 +1,21 @@
 @use "src/styles/abstracts" as *;
 
 .media-reviews-container {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   width: 100%;
 }
 
 .media-reviews {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   margin-left: 1em;
 }
 
 .media-reviews-header {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
 }
 
 .media-review-card {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
   padding: 1em;
 
   &:hover {
@@ -24,7 +24,7 @@
 }
 
 .media-review-header {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .media-review-image {
@@ -34,12 +34,12 @@
 }
 
 .media-review-info {
-  @include flexbox(row, space-between);
+  @include flexrow(space-between);
   width: 100%;
 }
 
 .media-review-user {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
 }
 
 .media-review-date {

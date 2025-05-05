@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .media-navbar {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   margin-right: auto;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0.5em 1em;

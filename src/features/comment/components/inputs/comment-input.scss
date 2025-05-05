@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .comment-input-container {
-  @include flexbox(column);
+  @include flexcol();
   margin-bottom: 1em;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .comment-input-buttons {
-  @include flexbox(row, end, initial, 0.5em);
+  @include flexrow(end, initial, 0.5em);
 
   button {
     @include font(0.5, bold);

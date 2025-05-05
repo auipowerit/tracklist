@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .account-list {
-  @include flexbox(row, $gap: 1em);
+  @include flexrow($gap: 1em);
   padding-top: 1em;
 
   &.vertical {
@@ -16,11 +16,11 @@
 }
 
 .account-list-title {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
 }
 
 .account-list-name-container {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .account-list-lock {
@@ -46,7 +46,7 @@
 
 .account-list-dropdown {
   @include dropdown(right, 1em, 1.5em);
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
   z-index: 2;
   background-color: $dark-gray;
 }
@@ -58,7 +58,7 @@
 }
 
 .account-list-orientation {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
   width: 100%;
 
   button {
@@ -71,7 +71,7 @@
 }
 
 .account-list-edit {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
   width: 100%;
 }
 
@@ -120,5 +120,5 @@ input:checked + .toggle:before {
 }
 
 .list-edit-buttons {
-  @include flexbox(column, center, flex-start, 1em);
+  @include flexcol(center, flex-start, 1em);
 }

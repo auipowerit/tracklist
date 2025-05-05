@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .error-container {
-  @include flexbox(column, center, center, 0.25em);
+  @include flexcol(center, center, 0.25em);
   @include font(1.25);
   height: 80vh;
   text-align: center;
@@ -20,7 +20,7 @@
 }
 
 .error-button {
-  @include flexbox(row, initial, center, 1em);
+  @include flexrow(initial, center, 1em);
   @include font(1);
   margin-top: 1em;
   border-radius: 12px;

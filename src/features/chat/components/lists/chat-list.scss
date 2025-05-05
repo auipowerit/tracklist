@@ -1,14 +1,14 @@
 @use "src/styles/abstracts" as *;
 
 .chatlist-container {
-  @include flexbox(column);
+  @include flexcol();
   flex: 1;
   border-right: 2px solid $basic-white;
   background-color: $darker-green;
 }
 
 .chatlist-header {
-  @include flexbox(row, space-between, center, 0.5em);
+  @include flexrow(space-between, center, 0.5em);
   @include font(0.75, bold);
   padding: 0.5em;
 }
@@ -24,12 +24,12 @@
 }
 
 .chatlist {
-  @include flexbox(column);
+  @include flexcol();
   overflow-y: auto;
 }
 
 .chatlist-card {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
   cursor: pointer;
   padding: 0.5em 0.75em;
 
@@ -54,5 +54,5 @@
 }
 
 .chatlist-card-header {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }

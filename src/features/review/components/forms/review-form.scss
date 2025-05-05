@@ -1,17 +1,17 @@
 @use "src/styles/abstracts" as *;
 
 .review-form-info-container {
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
 }
 
 .review-form-input-container {
   position: relative;
-  @include flexbox(row, $gap: 0.5em);
+  @include flexrow($gap: 0.5em);
   width: 100%;
 }
 
 .review-form-rating {
-  @include flexbox(column, initial, flex-start, 0.15em);
+  @include flexcol(initial, flex-start, 0.15em);
   padding: 0.25em 0;
   width: 100%;
 }
@@ -24,7 +24,7 @@
 .review-form-rating-stars {
   @include font(2);
   cursor: pointer;
-  @include flexbox(row, center, center, 0.05em);
+  @include flexrow(center, center, 0.05em);
 }
 
 @media (max-width: 900px) {
@@ -36,7 +36,7 @@
   }
 
   .review-form-rating {
-    @include flexbox(row, space-between, center, 0);
+    @include flexrow(space-between, center, 0);
     border-bottom: 1px solid $basic-gray;
   }
 

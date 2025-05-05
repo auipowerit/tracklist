@@ -2,7 +2,7 @@
 
 .share-form-info {
   position: relative;
-  @include flexbox(column, center, center, 0.25em);
+  @include flexcol(center, center, 0.25em);
   width: 100%;
 }
 
@@ -11,7 +11,7 @@
   top: 20%;
   right: 0;
   left: 0;
-  @include flexbox(column);
+  @include flexcol();
   background-color: $basic-green;
 
   &.active {
@@ -22,7 +22,7 @@
 }
 
 .share-form-user-result {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
   padding: 0.25em;
   text-align: left;
 
@@ -40,7 +40,7 @@
 }
 
 .share-form-user-result-info {
-  @include flexbox(column);
+  @include flexcol();
 
   p {
     @include font(0.75, bold);
@@ -52,14 +52,14 @@
 }
 
 .share-form-current-users {
-  @include flexbox(column, initial, start, 0.25em);
+  @include flexcol(initial, start, 0.25em);
   height: 125px;
   overflow: auto;
   padding: 0.25em;
 }
 
 .share-form-current-user {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   background-color: $darker-gray;
   padding: 0.25em 0.5em;
 

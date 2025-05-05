@@ -8,7 +8,7 @@
 }
 
 .auth-container {
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
   margin: auto;
   box-shadow: $dark-shadow;
   border-radius: 12px;
@@ -27,13 +27,13 @@
 }
 
 .auth-form {
-  @include flexbox(column, initial, center, 0.5em);
+  @include flexcol(initial, center, 0.5em);
   margin: auto;
   width: fit-content;
 }
 
 .auth-input-container {
-  @include flexbox(column, initial, flex-start, 0.5em);
+  @include flexcol(initial, flex-start, 0.5em);
 
   label {
     @include font(1);
@@ -49,7 +49,7 @@
 
 .auth-button-container {
   width: 100%;
-  @include flexbox(column, initial, center, 1em);
+  @include flexcol(initial, center, 1em);
   margin-top: 1em;
   border-top: 1px solid $basic-white;
   padding: 1em;
@@ -60,7 +60,7 @@
 }
 
 .auth-button {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
   @include font(1);
   margin: 0 auto;
   border: 1px solid $basic-white;
@@ -78,7 +78,7 @@
 }
 
 .reset-password-container {
-  @include flexbox(row, center, center, 0.5em);
+  @include flexrow(center, center, 0.5em);
   @include font(0.75);
 }
 
@@ -93,7 +93,7 @@
     padding: 1em 0;
     max-width: unset;
     height: 100%;
-    @include flexbox(column, center, center);
+    @include flexcol(center, center);
   }
 
   .auth-container {

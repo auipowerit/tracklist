@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .media-card-container {
-  @include flexbox(column);
+  @include flexcol();
   transition: all 0.2s;
   cursor: pointer;
   background-color: $basic-white;
@@ -21,7 +21,7 @@
 }
 
 .media-card-info {
-  @include flexbox(column, space-between, initial, 0.25em);
+  @include flexcol(space-between, initial, 0.25em);
   flex-grow: 1;
   padding: 0.5em 0;
   text-align: center;
@@ -48,5 +48,5 @@
 }
 
 .media-card-rating {
-  @include flexbox(row, center, center, 0.25em);
+  @include flexrow(center, center, 0.25em);
 }

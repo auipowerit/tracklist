@@ -1,11 +1,11 @@
 @use "src/styles/abstracts" as *;
 
 .review-user-container {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
 }
 
 .review-user {
-  @include flexbox(row, initial, center, 0.5em);
+  @include flexrow(initial, center, 0.5em);
   @include font(0.75);
 
   img {
@@ -25,11 +25,11 @@
 }
 
 .review-media-container {
-  @include flexbox(column);
+  @include flexcol();
 }
 
 .review-title-container {
-  @include flexbox(row, initial, center);
+  @include flexrow(initial, center);
 }
 
 .review-icon {
@@ -54,7 +54,7 @@
 }
 
 .review-stars {
-  @include flexbox(row, initial, center, 0.15em);
+  @include flexrow(initial, center, 0.15em);
 }
 
 .review-text {

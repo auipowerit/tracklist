@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .tabs-container {
-  @include flexbox(row, center, initial, 2em);
+  @include flexrow(center, initial, 2em);
   margin-bottom: 1em;
 }
 

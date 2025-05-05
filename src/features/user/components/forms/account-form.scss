@@ -5,7 +5,7 @@
 }
 
 .user-form-profile-container {
-  @include flexbox(column, center, center, 1em);
+  @include flexcol(center, center, 1em);
 
   img {
     width: 200px;
@@ -15,13 +15,13 @@
 }
 
 .user-form-info {
-  @include flexbox(column, $gap: 1em);
+  @include flexcol($gap: 1em);
 }
 
 .user-form-input-container {
-  @include flexbox(column, $gap: 0.25em);
+  @include flexcol($gap: 0.25em);
 }
 
 .user-form-label {
-  @include flexbox(row, space-between, center);
+  @include flexrow(space-between, center);
 }

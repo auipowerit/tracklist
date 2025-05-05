@@ -10,11 +10,12 @@
 }
 
 .save-list-button {
-  @include flexbox(row, initial, center, 0.25em);
+  @include flexrow(initial, center, 0.25em);
   @include font(0.75);
+  margin-left: 0.5em;
   width: 30px;
 
-  &:hover {
+  &:not(.disabled):hover {
     color: $basic-green;
   }
 
