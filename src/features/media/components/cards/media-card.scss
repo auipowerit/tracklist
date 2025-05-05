@@ -4,11 +4,11 @@
   @include flexcol();
   transition: all 0.2s;
   cursor: pointer;
-  background-color: $basic-white;
+  border: 1px solid $basic-white;
   padding: 0.5em;
   width: 300px;
   height: fit-content;
-  color: $basic-black;
+  color: $basic-white;
 
   &:hover {
     transform: scale(110%);
@@ -38,15 +38,34 @@
     @include font(0.5, bold);
     margin: auto;
     width: fit-content;
-    color: $basic-black;
     white-space: nowrap;
   }
 }
 
 .media-card-subtitle {
-  @include font(0.35, bold);
+  @include font(0.35, bold, $basic-gray);
 }
 
 .media-card-rating {
   @include flexrow(center, center, 0.25em);
+}
+
+@media (max-width: 900px) {
+  .media-card-container {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .media-card-title {
+    p {
+      font-size: 1.5rem;
+    }
+  }
+
+  .media-card-subtitle {
+    font-size: 1rem;
+  }
 }

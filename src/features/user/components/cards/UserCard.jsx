@@ -32,7 +32,6 @@ export default function UserCard({ user: propUser }) {
             <p className="user-card-username">@{user.username}</p>
           </div>
 
-          <p className="user-card-bio">{user.bio}</p>
           <p className="user-card-friends">
             {`${user.followersCount || 0} followers, ${user.followingCount || 0} following`}
           </p>

@@ -28,3 +28,11 @@
     color: $basic-white;
   }
 }
+
+@media (max-width: 900px) {
+  .follow-button {
+    font-size: 1rem;
+    border-radius: 24px;
+    width: 30%;
+  }
+}

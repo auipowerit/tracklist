@@ -14,7 +14,7 @@
   width: fit-content;
 
   img {
-    border-radius: 100%;
+    border-radius: 50%;
     width: 75px;
     height: 75px;
     object-fit: cover;
@@ -37,10 +37,34 @@
   @include font(0.75, normal, $basic-gray);
 }
 
-.user-card-bio {
-  @include font(0.75);
-}
-
 .user-card-friends {
   @include font(0.5, normal, $basic-gray);
+}
+
+@media (max-width: 900px) {
+  .user-card-container {
+    padding: 0.5em;
+  }
+
+  .user-card {
+    padding: 0;
+    font-size: 1rem;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .user-card-header {
+    @include flexcol(initial, flex-start, 0);
+  }
+
+  .user-card-username {
+    font-size: 1rem;
+  }
+
+  .user-card-friends {
+    font-size: 0.75rem;
+  }
 }

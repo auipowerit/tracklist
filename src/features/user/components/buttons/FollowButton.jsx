@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import "./user-buttons.scss";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
+import "./user-buttons.scss";
 
 export default function FollowButton({ user, setUser }) {
   const { globalUser, followUser, unfollowUser } = useAuthContext();

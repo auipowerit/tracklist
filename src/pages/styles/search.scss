@@ -1,9 +1,17 @@
 @use "src/styles/abstracts" as *;
 
 .search-container {
-  @include flexcol($gap: 2em);
   padding: 2em 0;
-  width: 100%;
+}
+
+.search-select {
+  display: none;
+  font-size: 1.5rem;
+  color: $basic-white;
+  margin: 0 auto 1em auto;
+  border-bottom: 1px solid $basic-white;
+  padding: 0.25em 0.5em;
+  width: fit-content;
 }
 
 .search-header {
@@ -57,7 +65,15 @@
 
 @media (max-width: 900px) {
   .search-container {
-    padding: 1em 0;
+    padding: 1em;
+
+    .tabs-container {
+      display: none;
+    }
+
+    .search-select {
+      display: block;
+    }
   }
 
   .search-header {
@@ -66,9 +82,9 @@
     flex-direction: column;
     align-items: center;
     z-index: 2;
+    margin-bottom: 1em;
     background-color: $background-primary;
     padding: 0 1em 1em 1em;
-    margin-bottom: 1em;
   }
 
   .searchbar {
