@@ -31,6 +31,7 @@
     overflow-y: visible;
 
     &-header {
+      font-size: 1.25rem;
       position: sticky;
       top: 0;
       z-index: 2;
@@ -41,7 +42,7 @@
     }
 
     &-list {
-      gap: 0;
+      gap: 0.5em;
       mask-image: none;
       padding: 0;
     }
