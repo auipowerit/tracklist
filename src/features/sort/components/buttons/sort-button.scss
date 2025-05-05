@@ -32,9 +32,9 @@
 
 @media (max-width: 900px) {
   .sort-button {
-    background-color: $basic-green;
-    padding: 0.5em;
+    padding: 0.25em 0.5em;
     font-size: 1.5rem;
+    border: 1px solid $basic-white;
   }
 
   .sort-dropdown-item {

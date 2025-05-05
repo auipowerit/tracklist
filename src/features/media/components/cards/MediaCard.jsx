@@ -25,19 +25,8 @@ export default function MediaCard(props) {
 
           subtitle:
             defaultSubtitle ||
-            (media.followers ? (
-              <>
-                {media?.followers?.total.toLocaleString()}
-                {media?.followers?.total === 1 ? " follower" : " followers"}
-              </>
-            ) : (
-              media.artists?.[0]?.name ||
-              formatDateMDYLong(
-                media.album?.release_date || media?.release_date,
-              ) ||
-              defaultDate
-            )),
-
+            media.artists?.[0]?.name ||
+            formatDateMDYLong(media.album?.release_date || media?.release_date),
           image:
             media.album?.images?.[0]?.url ||
             media.images?.[0]?.url ||
