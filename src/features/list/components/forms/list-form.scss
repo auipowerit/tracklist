@@ -1,97 +1,97 @@
 @use "src/styles/abstracts" as *;
 
 .list-form {
-  width: 100%;
-}
+  width: 700px !important;
+  max-width: 100%;
 
-.list-form-inputs {
-  @include flexcol(center, stretch, 0.5em);
-}
+  &__content {
+    @include flexcol($gap: 1em);
+    width: 100%;
+  }
 
-.list-form-media-input {
-  position: relative;
-  @include flexrow($gap: 0.5em);
-}
+  &__inputs {
+    @include flexcol(center, stretch, 0.5em);
+  }
 
-.list-form-select {
-  width: 100%;
-  border: 1px solid $basic-white;
-  padding: 0.25em;
-}
+  &__checkboxes {
+    @include flexrow(initial, center, 1em);
+  }
 
-.list-form-current-lists {
-  @include flexcol(initial, start, 0.25em);
-  overflow: auto;
-  padding: 0.25em;
-  height: 100px;
-}
+  &__input {
+    @include flexrow(initial, center, 0.25em);
 
-.list-form-current-list {
-  @include font(0.75);
-  @include flexrow(initial, center, 0.5em);
-  padding: 0.25em 0.5em;
-  background-color: $darker-gray;
+    &--header {
+      @include flexrow(space-between, center);
+    }
+  }
 
-  button {
-    @include font(0.75);
+  &__buttons {
+    @include flexrow(center, center, 1em);
+  }
 
-    &:hover {
-      color: $basic-gray;
+  &__search {
+    position: relative;
+    @include flexrow($gap: 0.5em);
+  }
+
+  &__select {
+    border: 1px solid $basic-white;
+    padding: 0.25em;
+    width: 100%;
+  }
+
+  &__name {
+    @include flexcol(initial, left, 0.25em);
+  }
+
+  &__lists {
+    @include flexcol(initial, start, 0.25em);
+    padding: 0.25em;
+    height: 100px;
+    overflow: auto;
+
+    &-item {
+      @include font(0.75);
+      @include flexrow(initial, center, 0.5em);
+      background-color: $darker-gray;
+      padding: 0.25em 0.5em;
+
+      &--remove {
+        @include font(0.75);
+
+        &:hover {
+          color: $basic-gray;
+        }
+      }
+    }
+  }
+
+  &__button {
+    @include flexrow(center, center, 0.25em);
+    @include font(1);
+    border-radius: 6px;
+    padding: 0.5em 0.75em;
+
+    &--back {
+      background-color: $basic-gray;
+
+      &:hover {
+        background-color: $darker-gray;
+      }
+    }
+
+    &--delete {
+      background-color: $basic-red;
+
+      &:hover {
+        background-color: $dark-red;
+      }
     }
   }
 }
 
-.list-form-input-container {
-  @include flexrow(initial, center, 0.25em);
-}
-
-.list-form-input-header {
-  @include flexrow(space-between, center);
-}
-
-.list-form-info-container {
-  @include flexcol($gap: 1em);
-  width: 100%;
-}
-
-.list-form-checkbox-container {
-  @include flexrow(initial, center, 1em);
-}
-
-.list-form-name-container {
-  @include flexcol(initial, left, 0.25em);
-}
-
-.list-form-buttons-container {
-  @include flexrow(center, center, 1em);
-}
-
-.list-form-back-button {
-  @include flexrow(center, center, 0.25em);
-  @include font(1);
-  border-radius: 6px;
-  background-color: $basic-gray;
-  padding: 0.5em 0.75em;
-
-  &:hover {
-    background-color: $darker-gray;
-  }
-}
-
-.list-form-delete-button {
-  @include flexrow(center, center, 0.25em);
-  @include font(1);
-  border-radius: 6px;
-  background-color: $basic-red;
-  padding: 0.5em 0.75em;
-
-  &:hover {
-    background-color: $dark-red;
-  }
-}
-
-@media (min-width: 700px) {
+@media (max-width: 900px) {
   .list-form {
-    width: 700px;
+    width: 100%;
   }
 }

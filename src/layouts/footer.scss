@@ -1,32 +1,25 @@
 @use "src/styles/abstracts" as *;
 
-footer {
-  @include flexcol(center, center, 1em);
-  padding: 2em 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  height: fit-content;
-}
-
-.footer-text {
+.footer {
   @include font(0.5, normal, $basic-gray);
+  @include flexcol(center, center, 1em);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2em 0;
+  height: fit-content;
   text-align: center;
-  line-height: 2em;
-}
 
-.footer-link {
-  color: $basic-white;
+  &__link {
+    color: $basic-white;
 
-  &:hover {
-    color: $light-green;
+    &:hover {
+      color: $light-green;
+    }
   }
 }
 
 @media (max-width: 900px) {
-  footer {
+  .footer {
     padding: 1em;
-  }
-
-  .footer-text {
     font-size: 0.75rem;
   }
 }

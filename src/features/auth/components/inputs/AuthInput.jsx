@@ -1,6 +1,6 @@
 export default function AuthInput({ label, name, type, ...props }) {
   function handleChange(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
   }
 
   return (

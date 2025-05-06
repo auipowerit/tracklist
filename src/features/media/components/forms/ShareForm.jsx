@@ -105,7 +105,7 @@ export default function ShareForm(props) {
     }
 
     if (currentUsers.length === 0) {
-      friendInput.classList.add("invalid-field");
+      friendInput.classList.add("form__input--invalid");
       setError("Please select at least one friend.");
       return false;
     }
@@ -120,17 +120,17 @@ export default function ShareForm(props) {
     setCurrentUser([]);
     setMessage("");
     setError("");
-    formRef.current.elements["friend"].classList.remove("invalid-field");
+    formRef.current.elements["friend"].classList.remove("form__input--invalid");
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="form-container">
+    <form ref={formRef} onSubmit={handleSubmit} className="form share-form">
       <FormHeader category={category} />
 
-      <div className="form-content">
+      <div className="form__content">
         <FormImage media={media} />
 
-        <div className="share-form-info">
+        <div className="share-form__search">
           <FormInput
             input={input}
             setInput={setInput}
@@ -154,14 +154,16 @@ export default function ShareForm(props) {
 }
 
 function FormHeader({ category }) {
-  return <p className="form-header">{`Share this ${category} with friends`}</p>;
+  return (
+    <p className="form__header">{`Share this ${category} with friends`}</p>
+  );
 }
 
 function FormImage({ media }) {
   return (
     <img
       src={media?.media?.image || media?.image || DEFAULT_MEDIA_IMG}
-      className="form-media-image"
+      className="form__image"
     />
   );
 }
@@ -203,7 +205,7 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
       onChange={handleSearch}
       type="text"
       placeholder="Search for a friend..."
-      className="form-input"
+      className="form__input"
       name="friend"
     />
   );
@@ -211,18 +213,22 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
 
 function FormUserResults({ users, handleAddUser }) {
   return (
-    <div className={`share-form-user-results ${users.length > 0 && "active"}`}>
+    <div className={`share-form__search--dropdown ${users.length > 0 && "active"}`}>
       {users.map((user) => (
         <button
           key={user.uid}
           type="button"
           onClick={() => handleAddUser(user)}
-          className="share-form-user-result"
+          className="share-form__search--item"
         >
-          <img src={user.profileUrl} />
-          <div className="share-form-user-result-info">
-            <p>{user.displayname}</p>
-            <span>@{user.username}</span>
+          <img src={user.profileUrl} className="share-form__search--image" />
+          <div className="share-form__search--info">
+            <p className="share-form__search--displayname">
+              {user.displayname}
+            </p>
+            <span className="share-form__search--username">
+              @{user.username}
+            </span>
           </div>
         </button>
       ))}
@@ -236,12 +242,16 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
   }
 
   return (
-    <div className="share-form-current-users">
+    <div className="share-form__users">
       {currentUsers?.map((user) => {
         return (
-          <div key={user.uid} className="share-form-current-user">
-            <p>@{user.username}</p>
-            <button type="button" onClick={() => handleRemoveUser(user.uid)}>
+          <div key={user.uid} className="share-form__user">
+            <p className="share-form__user--username">@{user.username}</p>
+            <button
+              type="button"
+              onClick={() => handleRemoveUser(user.uid)}
+              className="share-form__user--remove"
+            >
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </div>
@@ -262,14 +272,14 @@ function FormMessage({ message, setMessage }) {
       value={message}
       onChange={handleChange}
       placeholder="Include a message..."
-      className="form-input"
+      className="form__input"
     />
   );
 }
 
 function FormButton({ currentUsers }) {
   return (
-    <button type="submit" className="form-submit-button">
+    <button type="submit" className="form__submit">
       {`Send ${currentUsers.length > 1 ? "seperately" : ""} `}
     </button>
   );

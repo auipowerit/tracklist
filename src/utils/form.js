@@ -6,7 +6,7 @@ export function checkEmptyForm(formRef) {
       (e.nodeName === "INPUT" || e.nodeName === "TEXTAREA") &&
       e.value.trim() === ""
     ) {
-      e.classList.add("invalid-field");
+      e.classList.add("form__input--invalid");
       isEmpty = true;
     }
   });

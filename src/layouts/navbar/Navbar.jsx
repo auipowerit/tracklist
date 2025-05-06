@@ -51,17 +51,17 @@ export default function Navbar() {
   }, [globalUser]);
 
   return (
-    <div className="navbar">
-      <div className="nav-items">
+    <div className="nav">
+      <div className="navbar">
         <NavLogo />
         <NavItem link="/search" icon={faSearch} />
 
-        <div className="nav-messages">
+        <div className="navbar__messages">
           <NavItem link="/messages" icon={faEnvelope} />
           <NotificationBadge unreadCount={unreadMessages} link="/messages" />
         </div>
 
-        <div className="nav-messages">
+        <div className="navbar__messages">
           <NavItem link="/inbox" icon={faBell} />
           <NotificationBadge unreadCount={unreadNotifs} link="/inbox" />
         </div>
@@ -79,7 +79,7 @@ function NavLogo() {
     <NavLink
       to="/home"
       className={({ isActive }) =>
-        `navlink nav-logo ${isActive ? "active" : ""}`
+        `navbar__link navbar__logo ${isActive ? "active" : ""}`
       }
     >
       <p>TrackList</p>
@@ -91,7 +91,7 @@ function NavItem({ link, icon }) {
   return (
     <NavLink
       to={link}
-      className={({ isActive }) => `navlink ${isActive ? "active" : ""}`}
+      className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>
@@ -102,7 +102,7 @@ function NotificationBadge({ unreadCount, link }) {
   if (!unreadCount || unreadCount === 0) return;
   return (
     <NavLink to={link}>
-      <p className="notification-badge">{unreadCount}</p>
+      <p className="navbar__badge">{unreadCount}</p>
     </NavLink>
   );
 }

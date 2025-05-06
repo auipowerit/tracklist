@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.alert-container {
+.alert {
   @include flexrow(center, center, 0.5em);
   @include font(0.5, normal, $basic-white, italic);
   opacity: 0;
@@ -13,14 +13,14 @@
   &.active {
     opacity: 1;
   }
-}
 
-.alert-icon {
-  color: $basic-red;
+  &__icon {
+    color: $basic-red;
+  }
 }
 
 @media (max-width: 900px) {
-  .alert-container {
+  .alert {
     font-size: 1rem;
     padding: 0;
   }

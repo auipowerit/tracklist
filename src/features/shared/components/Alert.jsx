@@ -4,8 +4,8 @@ import "./styles/alert.scss";
 
 export default function Alert({ message }) {
   return (
-    <div className={`alert-container ${message && "active"}`}>
-      <FontAwesomeIcon icon={faCircleExclamation} className="alert-icon" />
+    <div className={`alert ${message && "active"}`}>
+      <FontAwesomeIcon icon={faCircleExclamation} className="alert__icon" />
       <p>{message}</p>
     </div>
   );

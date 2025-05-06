@@ -46,7 +46,7 @@ export default function MobileNavbar() {
     <div>
       <Hamburger hamburger={hamburger} handleClick={handleClick} />
 
-      <nav ref={menu} className="mobile-nav">
+      <nav ref={menu} className="mobile-navbar">
         <MobileNavItem link="/home" label="Home" />
         <MobileNavItem link="/search" label="Search" />
         <MobileNavItem link="/messages" label="Messages" />
@@ -67,7 +67,7 @@ function Hamburger({ hamburger, handleClick }) {
       onClick={handleClick}
       className="hamburger"
     >
-      <div className="mobile-bar" />
+      <div className="hamburger__bar" />
     </button>
   );
 }
@@ -77,7 +77,7 @@ function MobileNavItem({ link, label }) {
     <NavLink
       to={link}
       className={({ isActive }) =>
-        `mobile-nav-link ${isActive ? "active" : ""}`
+        `mobile-navbar__link ${isActive ? "active" : ""}`
       }
     >
       <p>{label}</p>
@@ -85,21 +85,8 @@ function MobileNavItem({ link, label }) {
   );
 }
 
-function MobileNavProfile() {
-  return (
-    <NavLink
-      to="/profile"
-      className={({ isActive }) =>
-        `mobile-nav-link ${isActive ? "active" : ""}`
-      }
-    >
-      <FontAwesomeIcon icon={faUser} />
-    </NavLink>
-  );
-}
-
 function Overlay({ overlay, handleClick }) {
   return (
-    <div ref={overlay} onClick={handleClick} className="mobile-nav-overlay" />
+    <div ref={overlay} onClick={handleClick} className="mobile-navbar__overlay" />
   );
 }

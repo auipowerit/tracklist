@@ -1,93 +1,93 @@
 @use "src/styles/abstracts" as *;
 
-.navbar {
+.nav {
   background-color: $basic-black;
   padding: 1em 0;
   width: 100%;
 }
 
-.nav-items {
+.navbar {
   @include flexrow(initial, center, 1.5em);
   margin: 0 auto;
   width: 90%;
   max-width: 1200px;
-}
 
-.navlink {
-  @include font(1.5, normal, $basic-gray);
+  &__link {
+    @include font(1.5, normal, $basic-gray);
 
-  &:hover {
-    color: $basic-green;
+    &:hover {
+      color: $basic-green;
+    }
+
+    &.active {
+      color: $basic-green;
+    }
   }
 
-  &.active {
-    color: $basic-green;
+  &__logo {
+    @include font(1.5, bold, $basic-gray);
+    margin-right: auto;
+  }
+
+  &__messages {
+    position: relative;
+
+    &:hover > * {
+      color: $basic-green !important;
+    }
+  }
+
+  &__profile {
+    position: relative;
+  }
+
+  &__image {
+    cursor: pointer;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  &__badge {
+    @include badge(0.5, $basic-white, $basic-red, 1.3em);
+    position: absolute;
+    top: -10%;
+    right: -25%;
   }
 }
 
-.nav-logo {
-  @include font(1.5, bold, $basic-gray);
-  margin-right: auto;
-}
-
-.nav-profile {
-  cursor: pointer;
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-}
-
-.nav-profile-dropdown-container {
-  position: relative;
-}
-
-.nav-profile-dropdown {
+.navbar-dropdown {
   @include dropdown(right, 1em, 1.5em);
   @include flexcol($gap: 1em);
   z-index: 10;
   background-color: $dark-green;
-}
 
-.nav-profile-dropdown-header {
-  @include font(1, bold);
-  padding-bottom: 0.5em;
-  text-align: center;
-  text-wrap: nowrap;
-}
-
-.nav-profile-dropdown-item {
-  @include font(1);
-  cursor: pointer;
-  width: 100%;
-  @include flexrow(initial, center, 0.5em);
-
-  &:hover {
-    color: $basic-gray;
+  &__header {
+    @include font(1, bold);
+    padding-bottom: 0.5em;
+    text-align: center;
+    text-wrap: nowrap;
   }
-}
 
-.nav-messages {
-  position: relative;
+  &__item {
+    @include font(1);
+    cursor: pointer;
+    width: 100%;
+    @include flexrow(initial, center, 0.5em);
 
-  &:hover > * {
-    color: $basic-green !important;
+    &:hover {
+      color: $basic-gray;
+    }
   }
-}
-
-.notification-badge {
-  @include badge(0.5, $basic-white, $basic-red, 1.3em);
-  position: absolute;
-  top: -10%;
-  right: -25%;
 }
 
 @media (max-width: 900px) {
-  .navbar {
+  .nav {
     padding: 0.5em 0;
   }
 
-  .nav-items {
+  .navbar {
     display: none;
   }
 }

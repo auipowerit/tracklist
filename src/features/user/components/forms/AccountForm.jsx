@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -47,12 +46,12 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form onSubmit={handleSubmit} className="form user-form">
       <FormHeader />
-      <div className="form-content user-form-content">
+      <div className="form__content user-form__content">
         <FormImage globalUser={globalUser} />
 
-        <div className="user-form-info">
+        <div className="user-form__info">
           <FormName name={name} setName={setName} />
           <FormBio bio={bio} setBio={setBio} />
         </div>
@@ -63,15 +62,15 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
 }
 
 function FormHeader() {
-  return <p className="form-header">Edit Account</p>;
+  return <p className="form__header">Edit Account</p>;
 }
 
 function FormImage({ globalUser }) {
   const { redirectToSpotifyAuth } = useSpotifyContext();
 
   return (
-    <div className="user-form-profile-container">
-      <img src={globalUser?.profileUrl} />
+    <div className="user-form__profile">
+      <img src={globalUser?.profileUrl} className="user-form__image" />
 
       <button
         type="button"
@@ -97,8 +96,8 @@ function FormName({ name, setName }) {
   }
 
   return (
-    <div className="user-form-input-container">
-      <div className="user-form-label">
+    <div className="user-form__inputs">
+      <div className="user-form__label">
         <label htmlFor="name">Display name</label>
         <p style={{ color: color }}>
           {name.length || 0}/{ACCOUNT_NAME_LIMIT}
@@ -109,7 +108,7 @@ function FormName({ name, setName }) {
         type="text"
         value={name}
         onChange={handleChange}
-        className="form-input"
+        className="form__input"
       />
     </div>
   );
@@ -127,8 +126,8 @@ function FormBio({ bio, setBio }) {
   }
 
   return (
-    <div className="form-textarea-container">
-      <div className="user-form-label">
+    <div className="form__textarea">
+      <div className="user-form__label">
         <label htmlFor="bio">Bio</label>
         <p style={{ color: color }}>
           {bio.length || 0}/{ACCOUNT_BIO_LIMIT}
@@ -139,7 +138,7 @@ function FormBio({ bio, setBio }) {
         type="text"
         value={bio}
         onChange={handleChange}
-        className="border-1 h-full border-white px-2 py-1"
+        className="form__textarea--input"
       />
     </div>
   );
@@ -147,7 +146,7 @@ function FormBio({ bio, setBio }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form-submit-button">
+    <button type="submit" className="form__submit">
       Save changes
     </button>
   );

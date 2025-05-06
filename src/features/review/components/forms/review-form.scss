@@ -1,51 +1,51 @@
 @use "src/styles/abstracts" as *;
 
-.review-form-info-container {
+.review-form {
   @include flexcol(center, center, 1em);
+
+  &__search {
+    position: relative;
+    @include flexrow($gap: 0.5em);
+    width: 100%;
+  }
 }
 
-.review-form-input-container {
-  position: relative;
-  @include flexrow($gap: 0.5em);
-  width: 100%;
-}
-
-.review-form-rating {
+.rating {
   @include flexcol(initial, flex-start, 0.15em);
   padding: 0.25em 0;
   width: 100%;
-}
 
-.review-form-rating-title {
-  @include font(1.25, normal, $basic-gray);
-  padding-right: 0.5em;
-}
+  &__title {
+    @include font(1.25, normal, $basic-gray);
+    padding-right: 0.5em;
+  }
 
-.review-form-rating-stars {
-  @include font(2);
-  cursor: pointer;
-  @include flexrow(center, center, 0.05em);
+  &__stars {
+    @include font(2);
+    cursor: pointer;
+    @include flexrow(center, center, 0.05em);
+  }
 }
 
 @media (max-width: 900px) {
-  .review-form-info-container {
+  .review-form {
+    align-items: flex-start;
     order: 0;
     gap: 1em;
     width: 100%;
-    align-items: flex-start;
   }
 
-  .review-form-rating {
+  .rating {
     @include flexrow(space-between, center, 0);
     border-bottom: 1px solid $basic-gray;
-  }
 
-  .review-form-rating-title {
-    font-size: 1.25rem;
-    padding-right: 0.25em;
-  }
+    &__title {
+      padding-right: 0.25em;
+      font-size: 1.25rem;
+    }
 
-  .review-form-rating-stars {
-    font-size: 2rem;
+    &__stars {
+      font-size: 2rem;
+    }
   }
 }

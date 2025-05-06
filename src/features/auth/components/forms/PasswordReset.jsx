@@ -20,11 +20,11 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
   function resetValues() {
     setError("");
     inputRef.current.value = "";
-    inputRef.current.classList.remove("invalid-field");
+    inputRef.current.classList.remove("form__input--invalid");
   }
 
   function handleChange(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
   }
 
   async function handleSubmit() {
@@ -42,19 +42,19 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
 
     if (!email.value) {
       setError("Please enter an email.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
     if (!(await checkIfEmailExists(email.value))) {
       setError("This email does not exist.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
@@ -62,14 +62,14 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
   }
 
   return (
-    <div className="auth-form">
-      <h1 className="form-header">Reset your password</h1>
+    <div className="auth--container">
+      <h1 className="form__header">Reset your password</h1>
 
-      <div className="auth-input-container">
+      <div className="auth__input--wrapper">
         <label htmlFor="reset-email">Email</label>
         <input
           ref={inputRef}
-          className="auth-input"
+          className="auth__input"
           name="reset-email"
           type="reset-email"
           onChange={handleChange}
@@ -77,11 +77,7 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
       </div>
 
       <Alert message={error} />
-      <button
-        type="button"
-        onClick={handleSubmit}
-        className="form-submit-button"
-      >
+      <button type="button" onClick={handleSubmit} className="form__submit">
         Submit
       </button>
     </div>

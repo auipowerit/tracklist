@@ -26,10 +26,10 @@ export default function StarRating({ rating, setRating }) {
   }
 
   return (
-    <div className="review-form-rating">
-      <p className="review-form-rating-title">Your rating</p>
+    <div className="rating">
+      <p className="rating__title">Your rating</p>
 
-      <div className="review-form-rating-stars">
+      <div className="rating__stars">
         {[...Array(5)].map((_, i) => {
           const ratingValue = i + 1;
           const isHalf = (hover || rating) === ratingValue - 0.5;

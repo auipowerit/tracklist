@@ -1,6 +1,115 @@
 @use "src/styles/abstracts" as *;
 
 .form {
+  @include flexcol(center, center, 1em);
+  margin: auto;
+  padding: 1em;
+  width: fit-content;
+
+  &__header {
+    @include flexrow(initial, center, 0.5em);
+    @include font(1, bold, $basic-white);
+    border-bottom: 1px solid $basic-white;
+    padding-bottom: 0.25em;
+    width: 100%;
+    text-align: left;
+  }
+
+  &__user {
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  &__content {
+    @include flexrow(space-evenly, center, 1em);
+    width: 100%;
+  }
+
+  &__image {
+    box-shadow: $light-shadow;
+    aspect-ratio: 1/1;
+    width: 50%;
+    max-width: 200px;
+    height: 50%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  &__input {
+    @include font(0.75);
+    outline: none;
+    border: 1px solid $basic-white;
+    padding: 0.25em 0.5em;
+    width: 100%;
+
+    &--invalid {
+      background-color: $error-highlight !important;
+    }
+  }
+
+  &__select {
+    @include font(0.75, normal, $basic-white);
+
+    option {
+      color: $basic-black;
+    }
+  }
+
+  &__search-list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    @include flexcol();
+    background-color: $basic-green;
+
+    &.active {
+      height: 200px;
+      overflow: auto;
+    }
+  }
+
+  &__search-item {
+    @include flexcol(initial, left, 0em);
+    padding: 0.15em 0.25em;
+    text-align: left;
+
+    &:hover {
+      background-color: $dark-green;
+    }
+
+    &--title {
+      @include font(1);
+    }
+
+    &--subtitle {
+      @include font(0.65, normal);
+    }
+  }
+
+  &__textarea {
+    @include flexcol($gap: 0.25em);
+    width: 100%;
+
+    &--label {
+      @include flexrow(space-between, center, 0.5em);
+      @include font(1.25, normal, $basic-gray);
+    }
+
+    &--input {
+      outline: none;
+      border: 1px solid $basic-white;
+      background-color: transparent;
+      padding: 0.5em;
+      width: 100%;
+      min-height: 150px;
+      @include font(0.75);
+    }
+  }
+
   &__submit {
     @include font(1);
     margin: auto;
@@ -15,229 +124,118 @@
   }
 }
 
-.form-container {
-  @include flexcol(center, center, 1em);
-  margin: auto;
-  padding: 1em;
-  width: fit-content;
-}
-
-.form-header {
-  @include flexrow(initial, center, 0.5em);
-  @include font(1, bold, $basic-white);
-  border-bottom: 1px solid $basic-white;
-  padding-bottom: 0.25em;
-  width: 100%;
-  text-align: left;
-}
-
-.form-header-image {
-  border-radius: 100%;
-  aspect-ratio: 1/1;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-.form-content {
-  @include flexrow(space-evenly, center, 1em);
-  width: 100%;
-}
-
-.form-media-image {
-  box-shadow: $light-shadow;
-  aspect-ratio: 1/1;
-  width: 50%;
-  max-width: 200px;
-  height: 50%;
-  max-height: 200px;
-  object-fit: cover;
-}
-
-.form-input {
-  @include font(0.75);
-  outline: none;
-  border: 1px solid $basic-white;
-  padding: 0.25em 0.5em;
-  width: 100%;
-}
-
-.form-select {
-  @include font(0.75, normal, $basic-white);
-
-  option {
-    color: $basic-black;
-  }
-}
-
-.form-media-results {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
-  @include flexcol();
-  background-color: $basic-green;
-
-  &.active {
-    height: 200px;
-    overflow: auto;
-  }
-}
-
-.form-media-result {
-  @include flexcol(initial, left, 0em);
-  padding: 0.15em 0.25em;
-  text-align: left;
-
-  &:hover {
-    background-color: $dark-green;
-  }
-
-  p {
-    @include font(1);
-  }
-
-  span {
-    @include font(0.65, normal);
-  }
-}
-
-.form-textarea-container {
-  @include flexcol($gap: 0.25em);
-  width: 100%;
-
-  textarea {
-    outline: none;
-    border: 1px solid $basic-white;
-    background-color: transparent;
-    padding: 0.5em;
-    width: 100%;
-    min-height: 150px;
-    @include font(0.75);
-  }
-}
-
-.form-textarea-label {
-  @include flexrow(space-between, center, 0.5em);
-  @include font(1.25, normal, $basic-gray);
-}
-
-.invalid-field {
-  background-color: $error-highlight !important;
-}
-
-.success-container {
+.success {
   @include flexcol(center, center, 1em);
   padding: 2em;
-}
 
-.success-message {
-  @include flexrow(center, center, 0.5em);
-  @include font(1.25, normal, $light-green, italic);
-}
+  &__message {
+    @include flexrow(center, center, 0.5em);
+    @include font(1.25, normal, $light-green, italic);
+  }
 
-.success-button {
-  @include flexrow(center, center, 0.5em);
-  @include font(1);
-  border: 1px solid $basic-white;
-  padding: 0.5em 0.75em;
+  &__button {
+    @include flexrow(center, center, 0.5em);
+    @include font(1);
+    border: 1px solid $basic-white;
+    padding: 0.5em 0.75em;
 
-  &:hover {
-    color: $basic-gray;
+    &:hover {
+      color: $basic-gray;
+    }
   }
 }
 
 @media (max-width: 900px) {
-  .form-container {
+  .form {
     width: 100vw;
     max-height: 100%;
-  }
 
-  .form-header {
-    margin-right: auto;
-    margin-bottom: 0;
-    border-bottom-color: $basic-gray;
-    width: 100%;
-    font-size: 1.25rem;
-  }
-
-  .form-header-image {
-    width: 35px;
-    height: 35px;
-  }
-
-  .form-content {
-    flex-direction: column;
-    gap: 1em;
-  }
-
-  .form-media-image {
-    box-shadow: none;
-    max-width: 150px;
-    max-height: 150px;
-  }
-
-  .form-input {
-    padding: 0.5em;
-    font-size: 1.25rem;
-  }
-
-  .form-select {
-    width: fit-content;
-    font-size: 1.25rem;
-  }
-
-  .form-media-result {
-    padding: 0.25em 0.5em;
-
-    &:hover {
-      background-color: transparent;
+    &__header {
+      margin-right: auto;
+      margin-bottom: 0;
+      border-bottom-color: $basic-gray;
+      width: 100%;
+      font-size: 1.25rem;
     }
 
-    p {
+    &__user {
+      width: 35px;
+      height: 35px;
+    }
+
+    &__content {
+      flex-direction: column;
+      gap: 1em;
+    }
+
+    &__image {
+      box-shadow: none;
+      max-width: 150px;
+      max-height: 150px;
+    }
+
+    &__input {
+      padding: 0.5em;
+      font-size: 1.25rem;
+    }
+
+    &__select {
+      width: fit-content;
+      font-size: 1.25rem;
+    }
+
+    &__search-item {
+      padding: 0.25em 0.5em;
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      &--title {
+        font-size: 1.5rem;
+      }
+
+      &--subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    &__textarea {
+      &--input {
+        min-height: unset;
+        max-height: 115px;
+        font-size: 1.25rem;
+      }
+
+      &--label {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__submit {
+      margin: 0;
+      box-shadow: none;
+      border-radius: 26px;
+      font-size: 1.5rem;
+    }
+  }
+
+  .success {
+    padding: 3em 2em;
+
+    &__message {
       font-size: 1.5rem;
     }
 
-    span {
-      font-size: 1rem;
-    }
-  }
+    &__button {
+      border: none;
+      border-radius: 26px;
+      background-color: $basic-green;
+      font-size: 1.5rem;
 
-  .form-textarea-container {
-    textarea {
-      font-size: 1.25rem;
-      max-height: 115px;
-      min-height: unset;
-    }
-  }
-
-  .form-textarea-label {
-    font-size: 1.25rem;
-  }
-
-  .form-submit-button {
-    margin: 0;
-    box-shadow: none;
-    border-radius: 26px;
-    font-size: 1.5rem;
-  }
-
-  .success-container {
-    padding: 3em 2em;
-  }
-
-  .success-message {
-    font-size: 1.5rem;
-  }
-
-  .success-button {
-    font-size: 1.5rem;
-    border: none;
-    background-color: $basic-green;
-    border-radius: 26px;
-
-    svg {
-      display: none;
+      svg {
+        display: none;
+      }
     }
   }
 }

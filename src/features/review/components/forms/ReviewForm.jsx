@@ -52,7 +52,7 @@ export default function ReviewForm(props) {
   }
 
   async function handleSearch(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
 
     if (inputRef.current.value.trim() === "") {
       setResults([]);
@@ -106,7 +106,7 @@ export default function ReviewForm(props) {
     }
 
     if (!media || !media.id) {
-      mediaInput.classList.add("invalid-field");
+      mediaInput.classList.add("form__input--invalid");
       setError("Please select media to review.");
       return false;
     }
@@ -118,7 +118,7 @@ export default function ReviewForm(props) {
 
     if (content === "") {
       setError("Please provide a review.");
-      reviewText.classList.add("invalid-field");
+      reviewText.classList.add("form__input--invalid");
       return false;
     }
 
@@ -171,18 +171,18 @@ export default function ReviewForm(props) {
     inputRef.current.value = "";
     setContent("");
     setError("");
-    formRef.current.elements["media"].classList.remove("invalid-field");
-    formRef.current.elements["review"].classList.remove("invalid-field");
+    formRef.current.elements["media"].classList.remove("form__input--invalid");
+    formRef.current.elements["review"].classList.remove("form__input--invalid");
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="form-container">
+    <form ref={formRef} onSubmit={handleSubmit} className="form">
       <FormHeader />
 
-      <div className="form-content">
+      <div className="form__content">
         <FormImage media={media} />
 
-        <div className="review-form-info-container">
+        <div className="review-form">
           <FormInput
             inputRef={inputRef}
             type={type}
@@ -207,10 +207,8 @@ function FormHeader() {
   const { globalUser } = useAuthContext();
 
   return (
-    <div className="form-header">
-      {globalUser && (
-        <img src={globalUser.profileUrl} className="form-header-image" />
-      )}
+    <div className="form__header">
+      {globalUser && <img src={globalUser.profileUrl} className="form__user" />}
       <p>Add a review</p>
     </div>
   );
@@ -218,7 +216,7 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form-media-image" />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
   );
 }
 
@@ -227,17 +225,17 @@ function FormInput(props) {
     props;
 
   return (
-    <div className="review-form-input-container">
+    <div className="review-form__search">
       <input
         name="media"
         type="search"
         ref={inputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
         onChange={handleSearch}
-        className="form-input review-input"
+        className="form__input"
       />
 
-      <select value={type} onChange={handleChange} className="form-select">
+      <select value={type} onChange={handleChange} className="form__select">
         <option value="artist">artist</option>
         <option value="album">album</option>
         <option value="track">song</option>
@@ -254,16 +252,18 @@ function FormInput(props) {
 
 function FormSearchResults({ results, handleClick, type }) {
   return (
-    <div className={`form-media-results ${results.length > 0 && "active"}`}>
+    <div className={`form__search-list ${results.length > 0 && "active"}`}>
       {results.map(({ id, name, subtitle }) => (
         <button
           type="button"
           key={id}
           onClick={() => handleClick(id, name)}
-          className="form-media-result"
+          className="form__search-item"
         >
-          <p>{name}</p>
-          {type !== "artist" && <span>{subtitle}</span>}
+          <p className="form__search-item--title">{name}</p>
+          {type !== "artist" && (
+            <span className="form__search-item--subtitle">{subtitle}</span>
+          )}
         </button>
       ))}
     </div>
@@ -272,7 +272,7 @@ function FormSearchResults({ results, handleClick, type }) {
 
 function FormReview({ content, setContent }) {
   function handleChange(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > REVIEW_LIMIT) {
       setContent(e.target.value.slice(0, REVIEW_LIMIT));
@@ -285,8 +285,8 @@ function FormReview({ content, setContent }) {
   const color = content.length >= REVIEW_LIMIT ? "red" : "gray";
 
   return (
-    <div className="form-textarea-container">
-      <div className="form-textarea-label">
+    <div className="form__textarea">
+      <div className="form__textarea--label">
         <p>Your review</p>
         <p style={{ color: color }}>
           {content.length || 0}/{REVIEW_LIMIT}
@@ -298,6 +298,7 @@ function FormReview({ content, setContent }) {
         value={content}
         onChange={handleChange}
         rows="5"
+        className="form__textarea--input"
       />
     </div>
   );
@@ -305,7 +306,7 @@ function FormReview({ content, setContent }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form-submit-button">
+    <button type="submit" className="form__submit">
       Post
     </button>
   );

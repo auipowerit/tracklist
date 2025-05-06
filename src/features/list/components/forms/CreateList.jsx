@@ -80,32 +80,32 @@ export default function CreateList(props) {
     }
 
     if (name === "" && description === "") {
-      nameInput.classList.add("invalid-field");
-      descriptionInput.classList.add("invalid-field");
+      nameInput.classList.add("form__input--invalid");
+      descriptionInput.classList.add("form__input--invalid");
       setError("Please fill out all fields.");
       return false;
     }
 
     if (name === "") {
-      nameInput.classList.add("invalid-field");
+      nameInput.classList.add("form__input--invalid");
       setError("Please provide a name.");
       return false;
     }
 
     if (name.length > LIST_NAME_LIMIT) {
-      nameInput.classList.add("invalid-field");
+      nameInput.classList.add("form__input--invalid");
       setError(`Please keep the name under ${LIST_NAME_LIMIT} characters.`);
       return false;
     }
 
     if (description === "") {
-      descriptionInput.classList.add("invalid-field");
+      descriptionInput.classList.add("form__input--invalid");
       setError("Please provide a description.");
       return false;
     }
 
     if (description.length > LIST_DESCRIPTION_LIMIT) {
-      descriptionInput.classList.add("invalid-field");
+      descriptionInput.classList.add("form__input--invalid");
       setError(
         `Please keep the description under ${LIST_DESCRIPTION_LIMIT} characters.`,
       );
@@ -123,21 +123,21 @@ export default function CreateList(props) {
     setError("");
     if (setNewList) setNewList(false);
 
-    formRef.current.elements["listname"].classList.remove("invalid-field");
-    formRef.current.elements["description"].classList.remove("invalid-field");
+    formRef.current.elements["listname"].classList.remove(
+      "form__input--invalid",
+    );
+    formRef.current.elements["description"].classList.remove(
+      "form__input--invalid",
+    );
   }
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={handleSubmit}
-      className="form-container list-form"
-    >
+    <form ref={formRef} onSubmit={handleSubmit} className="form list-form">
       <FormHeader list={list} />
 
-      <div className="list-form-info-container">
+      <div className="list-form__content">
         <FormName name={name} setName={setName} />
-        <div className="list-form-checkbox-container">
+        <div className="list-form__checkboxes">
           <FormCheckbox
             name="Ranking"
             isChecked={isRanking}
@@ -168,14 +168,14 @@ export default function CreateList(props) {
 
 function FormHeader({ list }) {
   const title = list ? "Edit List" : "Create New List";
-  return <p className="form-header">{title}</p>;
+  return <p className="form__header">{title}</p>;
 }
 
 function FormName({ name, setName }) {
   const color = name.length >= LIST_NAME_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > LIST_NAME_LIMIT) {
       setName(e.target.value.slice(0, LIST_NAME_LIMIT));
@@ -185,8 +185,8 @@ function FormName({ name, setName }) {
   }
 
   return (
-    <div className="list-form-name-container">
-      <div className="list-form-input-header">
+    <div className="list-form__name">
+      <div className="list-form__input--header">
         <label htmlFor="listname">Name</label>
         <p style={{ color: color }}>
           {name.length || 0}/{LIST_NAME_LIMIT}
@@ -199,7 +199,7 @@ function FormName({ name, setName }) {
         placeholder="Provide a name..."
         value={name}
         onChange={handleChange}
-        className="form-input"
+        className="form__input"
       />
     </div>
   );
@@ -207,7 +207,7 @@ function FormName({ name, setName }) {
 
 function FormCheckbox({ name, isChecked, setIsChecked }) {
   return (
-    <div className="list-form-input-container">
+    <div className="list-form__input">
       <input
         id={name}
         name={name}
@@ -225,7 +225,7 @@ function FormDescription({ description, setDescription }) {
   const color = description.length >= LIST_DESCRIPTION_LIMIT ? "red" : "gray";
 
   function handleChange(e) {
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > LIST_DESCRIPTION_LIMIT) {
       setDescription(e.target.value.slice(0, LIST_DESCRIPTION_LIMIT));
@@ -235,8 +235,8 @@ function FormDescription({ description, setDescription }) {
   }
 
   return (
-    <div className="form-textarea-container">
-      <div className="list-form-input-header">
+    <div className="form__textarea">
+      <div className="list-form__input--header">
         <label htmlFor="description">Description</label>
         <p style={{ color: color }}>
           {description.length || 0}/{LIST_DESCRIPTION_LIMIT}
@@ -271,18 +271,18 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
   }
 
   return (
-    <div className="list-form-buttons-container">
+    <div className="list-form__buttons">
       {setNewList && (
         <button
           type="button"
           onClick={() => setNewList(false)}
-          className="list-form-back-button"
+          className="list-form__button--back"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back</p>
         </button>
       )}
-      <button type="submit" className="form-submit-button">
+      <button type="submit" className="form__submit">
         {list ? "Save" : "Create"}
       </button>
 
@@ -290,7 +290,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         <button
           type="button"
           onClick={handleDelete}
-          className="list-form-delete-button"
+          className="list-form__button--delete"
         >
           <FontAwesomeIcon icon={faTrash} />
           <p>Delete</p>

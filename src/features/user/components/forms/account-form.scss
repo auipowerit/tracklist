@@ -1,27 +1,29 @@
 @use "src/styles/abstracts" as *;
 
-.user-form-content {
-  gap: 2em;
-}
+.user-form {
+  &__content {
+    gap: 2em;
+  }
 
-.user-form-profile-container {
-  @include flexcol(center, center, 1em);
+  &__profile {
+    @include flexcol(center, center, 1em);
+  }
 
-  img {
+  &__image {
     width: 200px;
     height: 200px;
     object-fit: cover;
   }
-}
 
-.user-form-info {
-  @include flexcol($gap: 1em);
-}
+  &__info {
+    @include flexcol($gap: 1em);
+  }
 
-.user-form-input-container {
-  @include flexcol($gap: 0.25em);
-}
+  &__inputs {
+    @include flexcol($gap: 0.25em);
+  }
 
-.user-form-label {
-  @include flexrow(space-between, center);
+  &__label {
+    @include flexrow(space-between, center);
+  }
 }

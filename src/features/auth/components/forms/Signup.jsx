@@ -48,25 +48,25 @@ export default function Signup({ setIsRegistration }) {
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
     if (!isPasswordValid(password.value)) {
       setError("Password must be at least 8 characters long.");
-      password.classList.add("invalid-field");
+      password.classList.add("form__input--invalid");
       return false;
     }
 
     if (repassword.value !== password.value) {
       setError("Passwords do not match.");
-      repassword.classList.add("invalid-field");
+      repassword.classList.add("form__input--invalid");
       return false;
     }
 
     if (!(await usernameAvailable(username.value))) {
       setError("This username is unavailable.");
-      username.classList.add("invalid-field");
+      username.classList.add("form__input--invalid");
       return false;
     }
 

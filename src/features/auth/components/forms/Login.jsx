@@ -35,25 +35,25 @@ export default function Login({ setIsRegistration }) {
 
     if (email.value === "") {
       setError("Please enter an email.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
     if (password.value === "") {
       setError("Please enter a password.");
-      password.classList.add("invalid-field");
+      password.classList.add("form__input--invalid");
       return false;
     }
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");
-      email.classList.add("invalid-field");
+      email.classList.add("form__input--invalid");
       return false;
     }
 
     if (!isPasswordValid(password.value)) {
       setError("Password must be at least 8 characters long.");
-      password.classList.add("invalid-field");
+      password.classList.add("form__input--invalid");
       return false;
     }
 

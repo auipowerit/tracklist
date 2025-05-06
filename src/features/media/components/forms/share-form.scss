@@ -1,77 +1,79 @@
 @use "src/styles/abstracts" as *;
 
-.share-form-info {
-  position: relative;
-  @include flexcol(center, center, 0.25em);
-  width: 100%;
-}
+.share-form {
+  &__search {
+    position: relative;
+    @include flexcol(center, center, 0.25em);
+    width: 100%;
 
-.share-form-user-results {
-  position: absolute;
-  top: 20%;
-  right: 0;
-  left: 0;
-  @include flexcol();
-  background-color: $basic-green;
+    &--dropdown {
+      position: absolute;
+      top: 20%;
+      right: 0;
+      left: 0;
+      @include flexcol();
+      background-color: $basic-green;
 
-  &.active {
-    height: fit-content;
-    max-height: 200px;
+      &.active {
+        height: fit-content;
+        max-height: 200px;
+        overflow: auto;
+      }
+    }
+
+    &--item {
+      @include flexrow(initial, center, 0.25em);
+      padding: 0.25em;
+      text-align: left;
+
+      &:hover {
+        background-color: $dark-green;
+      }
+    }
+
+    &--image {
+      border-radius: 100%;
+      aspect-ratio: 1/1;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+
+    &--info {
+      @include flexcol();
+    }
+
+    &--displayname {
+      @include font(0.75, bold);
+    }
+
+    &--username {
+      @include font(0.75);
+    }
+  }
+
+  &__users {
+    @include flexcol(initial, start, 0.25em);
+    padding: 0.25em;
+    height: 125px;
     overflow: auto;
   }
-}
 
-.share-form-user-result {
-  @include flexrow(initial, center, 0.25em);
-  padding: 0.25em;
-  text-align: left;
+  &__user {
+    @include flexrow(initial, center, 0.5em);
+    background-color: $darker-gray;
+    padding: 0.25em 0.5em;
 
-  &:hover {
-    background-color: $dark-green;
-  }
+    &--username {
+      @include font(0.75, bold);
+    }
 
-  img {
-    aspect-ratio: 1/1;
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 100%;
-  }
-}
+    &--remove {
+      @include font(0.75);
 
-.share-form-user-result-info {
-  @include flexcol();
-
-  p {
-    @include font(0.75, bold);
-  }
-
-  span {
-    @include font(0.75);
-  }
-}
-
-.share-form-current-users {
-  @include flexcol(initial, start, 0.25em);
-  height: 125px;
-  overflow: auto;
-  padding: 0.25em;
-}
-
-.share-form-current-user {
-  @include flexrow(initial, center, 0.5em);
-  background-color: $darker-gray;
-  padding: 0.25em 0.5em;
-
-  p {
-    @include font(0.75, bold);
-  }
-
-  button {
-    @include font(0.75);
-
-    &:hover {
-      color: $basic-gray;
+      &:hover {
+        color: $basic-gray;
+      }
     }
   }
 }

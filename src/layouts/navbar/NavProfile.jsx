@@ -41,11 +41,11 @@ export default function NavProfile() {
   }
 
   return (
-    <div ref={dropdownRef} className="nav-profile-dropdown-container">
+    <div ref={dropdownRef} className="navbar__profile">
       <img
         src={globalUser?.profileUrl || DEFAULT_PROFILE_IMG}
         onClick={handleUserClick}
-        className="nav-profile"
+        className="navbar__image"
       />
 
       <DropdownMenu
@@ -86,26 +86,20 @@ function DropdownMenu({ showDropdown, setShowDropdown, items }) {
   }
 
   return (
-    <ul className={`nav-profile-dropdown ${showDropdown && "active"}`}>
+    <ul className={`navbar-dropdown ${showDropdown && "active"}`}>
       <li>
-        <p className="nav-profile-dropdown-header">
-          Hi, {globalUser?.username}
-        </p>
+        <p className="navbar-dropdown__header">Hi, {globalUser?.username}</p>
       </li>
       {items.map(({ label, path, icon }) => (
         <li key={label}>
-          <Link
-            to={path}
-            onClick={onClose}
-            className="nav-profile-dropdown-item"
-          >
+          <Link to={path} onClick={onClose} className="navbar-dropdown__item">
             <FontAwesomeIcon icon={icon} />
             <p>{label}</p>
           </Link>
         </li>
       ))}
       <li>
-        <button onClick={handleLogout} className="nav-profile-dropdown-item">
+        <button onClick={handleLogout} className="navbar-dropdown__item">
           <FontAwesomeIcon icon={faSignOut} />
           <p>Logout</p>
         </button>

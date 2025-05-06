@@ -97,13 +97,13 @@ export default function AddToList(props) {
     }
 
     if (currentLists.length <= 0) {
-      listInput.classList.add("invalid-field");
+      listInput.classList.add("form__input--invalid");
       setError("Please select a list.");
       return false;
     }
 
     if (!media) {
-      mediaInput.classList.add("invalid-field");
+      mediaInput.classList.add("form__input--invalid");
       setError("Please select media to add.");
       return false;
     }
@@ -120,22 +120,18 @@ export default function AddToList(props) {
     setType("artist");
     selectRef.current.value = "";
     mediaInputRef.current.value = "";
-    formRef.current.elements["media"].classList.remove("invalid-field");
-    formRef.current.elements["list"].classList.remove("invalid-field");
+    formRef.current.elements["media"].classList.remove("form__input--invalid");
+    formRef.current.elements["list"].classList.remove("form__input--invalid");
   }
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={handleSubmit}
-      className="form-container list-form"
-    >
+    <form ref={formRef} onSubmit={handleSubmit} className="form list-form">
       <FormHeader />
 
-      <div className="form-content">
+      <div className="form__content">
         <FormImage media={media} />
 
-        <div className="list-form-inputs">
+        <div className="list-form__inputs">
           <FormMediaInput
             type={type}
             setType={setType}
@@ -165,12 +161,12 @@ export default function AddToList(props) {
 }
 
 function FormHeader() {
-  return <p className="form-header">Add to list</p>;
+  return <p className="form__header">Add to list</p>;
 }
 
 function FormImage({ media }) {
   return (
-    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form-media-image" />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
   );
 }
 
@@ -212,18 +208,18 @@ function FormMediaInput(props) {
   }
 
   return (
-    <div className="list-form-media-input">
+    <div className="list-form__search">
       <input
         name="media"
         type="search"
         ref={mediaInputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
         onKeyUp={handleSearch}
-        onChange={(e) => e.target.classList.remove("invalid-field")}
-        className="form-input"
+        onChange={(e) => e.target.classList.remove("form__input--invalid")}
+        className="form__input"
       />
 
-      <select value={type} onChange={handleChange} className="form-select">
+      <select value={type} onChange={handleChange} className="form__select">
         <option value="artist">artist</option>
         <option value="album">album</option>
         <option value="track">song</option>
@@ -256,15 +252,13 @@ function FormMediaResults(props) {
   }
 
   return (
-    <div
-      className={`form-media-results ${mediaResults.length > 0 && "active"}`}
-    >
+    <div className={`form__search-list ${mediaResults.length > 0 && "active"}`}>
       {mediaResults.map(({ id, name, subtitle }) => (
         <button
           key={id}
           type="button"
           onClick={() => handleClick(id, name)}
-          className="form-media-result"
+          className="form__search-item"
         >
           <p>{name}</p>
           {type !== "artist" && <span>{subtitle}</span>}
@@ -279,7 +273,7 @@ function FormListInput(props) {
 
   function handleSelect(e) {
     e.stopPropagation();
-    e.target.classList.remove("invalid-field");
+    e.target.classList.remove("form__input--invalid");
 
     addToCurrentLists(e.target.value);
   }
@@ -290,7 +284,7 @@ function FormListInput(props) {
       ref={selectRef}
       defaultValue=""
       onChange={handleSelect}
-      className="form-select list-form-select"
+      className="form__select list-form__select"
     >
       <option value="" disabled hidden>
         -- Select a list --
@@ -309,12 +303,16 @@ function FormListInput(props) {
 
 function FormLists({ currentLists, removeFromCurrentLists }) {
   return (
-    <div className="list-form-current-lists">
+    <div className="list-form__lists">
       {currentLists?.map((list) => {
         return (
-          <div key={list.id} className="list-form-current-list">
+          <div key={list.id} className="list-form__lists-item">
             <p>{list.name}</p>
-            <button type="button" onClick={() => removeFromCurrentLists(list)}>
+            <button
+              type="button"
+              onClick={() => removeFromCurrentLists(list)}
+              className="list-form__lists-item--remove"
+            >
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </div>
@@ -326,7 +324,7 @@ function FormLists({ currentLists, removeFromCurrentLists }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form-submit-button">
+    <button type="submit" className="form__submit">
       Add to List
     </button>
   );
