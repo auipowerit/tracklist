@@ -22,7 +22,7 @@ export default function AlbumProfile() {
   }, []);
 
   return (
-    <div className="album-profile">
+    <div className="album">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
@@ -40,7 +40,7 @@ export default function AlbumProfile() {
 
 function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div className="tracklist-container">
+    <div>
       {tracks && tracks.length > 0 && (
         <div className="tracklist">
           {tracks.map((track) => {
@@ -76,9 +76,9 @@ function TrackCard({ track, artistId, albumId }) {
   return (
     <Link
       to={`/artists/${artistId}/albums/${albumId}/tracks/${track.id}`}
-      className="trackcard"
+      className="tracklist__card"
     >
-      <p>
+      <p className="tracklist__name">
         {track.track_number}. {track.name}
       </p>
       <ReviewStars rating={rating?.avgRating || 0} size={30} />

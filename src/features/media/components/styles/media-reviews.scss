@@ -1,55 +1,55 @@
 @use "src/styles/abstracts" as *;
 
-.media-reviews-container {
-  @include flexcol($gap: 1em);
-  width: 100%;
-}
-
 .media-reviews {
   @include flexcol($gap: 1em);
-  margin-left: 1em;
+  width: 100%;
+
+  &__header {
+    @include flexrow(initial, center, 1em);
+  }
+
+  &__list {
+    @include flexcol($gap: 1em);
+    margin-left: 1em;
+  }
 }
 
-.media-reviews-header {
-  @include flexrow(initial, center, 1em);
-}
-
-.media-review-card {
+.media-review {
   @include flexcol($gap: 1em);
   padding: 1em;
 
   &:hover {
     background-color: $dark-green;
   }
-}
 
-.media-review-header {
-  @include flexrow(initial, center, 0.5em);
-}
+  &__header {
+    @include flexrow(initial, center, 0.5em);
+  }
 
-.media-review-image {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-}
+  &__image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
 
-.media-review-info {
-  @include flexrow(space-between);
-  width: 100%;
-}
+  &__info {
+    @include flexrow(space-between);
+    width: 100%;
+  }
 
-.media-review-user {
-  @include flexcol($gap: 0.25em);
-}
+  &__user {
+    @include flexcol($gap: 0.25em);
+  }
 
-.media-review-date {
-  @include font(0.25, normal, $basic-gray);
-}
+  &__date {
+    @include font(0.25, normal, $basic-gray);
+  }
 
-.media-review-username {
-  @include font(0.5, normal, $basic-gray);
+  &__username {
+    @include font(0.5, normal, $basic-gray);
+  }
 
-  span {
+  &--highlight {
     @include font(initial, bold, $basic-white);
   }
 }

@@ -31,12 +31,12 @@ function MediaBanner({ media, category, setActiveTab, setFilter }) {
   if (!data || !media) return;
 
   return (
-    <div className="media-banner-container">
+    <div className="media-banner">
       <SpotifyImage
         image={data.image}
         spotifyUrl={media.external_urls.spotify}
       />
-      <div className="media-banner-content">
+      <div className="media-banner__content">
         <Title name={data.title} subtitle={data.subtitle} />
         <Rating
           mediaId={media.id}
@@ -56,9 +56,9 @@ function SpotifyImage({ image, spotifyUrl }) {
       onClick={() => window.open(spotifyUrl)}
       data-tooltip-id="media-tooltip"
       data-tooltip-content="Open in Spotify"
-      className="media-banner-image"
+      className="media-banner__image--wrapper"
     >
-      <img src={image || DEFAULT_MEDIA_IMG} />
+      <img src={image || DEFAULT_MEDIA_IMG} className="media-banner__image" />
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
     </div>
   );
@@ -79,26 +79,26 @@ function Title({ name, subtitle }) {
   }, [name]);
 
   return (
-    <div className="media-banner-title-container">
-      <div className="media-banner-title">
-        <p ref={titleRef}>{name}</p>
+    <div className="media-banner__header">
+      <div className="media-banner__title--wrapper">
+        <p ref={titleRef} className="media-banner__title">{name}</p>
       </div>
 
-      <p className="media-banner-subtitle">{subtitle}</p>
+      <p className="media-banner__subtitle">{subtitle}</p>
     </div>
   );
 }
 
 function Rating({ mediaId, rating, setActiveTab, setFilter }) {
   return (
-    <div className="media-banner-rating">
+    <div className="media-banner__rating">
       <RatingBar
         mediaId={mediaId}
         setActiveTab={setActiveTab}
         setFilter={setFilter}
       />
 
-      <div className="media-banner-stars">
+      <div className="media-banner__stars">
         <p>{rating.avgRating?.toFixed(1) || ""}</p>
         <ReviewStars rating={rating.avgRating || 0} size={22} />
         <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>

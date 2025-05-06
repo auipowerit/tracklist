@@ -94,7 +94,7 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="artist-page-container">
+    <div className="artist-page">
       <MediaGradient
         image={
           memoizedMedia.album?.images?.[0]?.url ||
@@ -102,37 +102,34 @@ export default function ArtistPage() {
           DEFAULT_MEDIA_IMG
         }
       />
-
-      <div className="artist-page">
-        <MediaNavBar
-          artist={memoizedMedia.artist}
-          album={memoizedMedia.album}
-          track={memoizedMedia.track}
+      <MediaNavBar
+        artist={memoizedMedia.artist}
+        album={memoizedMedia.album}
+        track={memoizedMedia.track}
+        category={category}
+      />
+      <div className="artist-page__content">
+        <MediaBanner
+          media={
+            memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
+          }
           category={category}
+          setActiveTab={setActiveTab}
+          setFilter={setFilter}
         />
-        <div className="artist-page-content">
-          <MediaBanner
-            media={
-              memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
-            }
-            category={category}
-            setActiveTab={setActiveTab}
-            setFilter={setFilter}
-          />
 
-          <div className="artist-page-outlet">
-            <Outlet
-              context={{
-                artist: memoizedMedia.artist,
-                album: memoizedMedia.album,
-                track: memoizedMedia.track,
-                activeTab: activeTab,
-                setActiveTab: setActiveTab,
-                filter: filter,
-                setFilter: setFilter,
-              }}
-            />
-          </div>
+        <div className="artist-page__outlet">
+          <Outlet
+            context={{
+              artist: memoizedMedia.artist,
+              album: memoizedMedia.album,
+              track: memoizedMedia.track,
+              activeTab: activeTab,
+              setActiveTab: setActiveTab,
+              filter: filter,
+              setFilter: setFilter,
+            }}
+          />
         </div>
       </div>
     </div>

@@ -26,8 +26,8 @@ export default function MediaReviews({ mediaId, filter, setFilter }) {
   }
 
   return (
-    <div className="media-reviews-container">
-      <div className="media-reviews-header">
+    <div className="media-reviews">
+      <div className="media-reviews__header">
         <SortReviews
           reviews={filteredReviews}
           setReviews={setFilteredReviews}
@@ -47,7 +47,7 @@ export default function MediaReviews({ mediaId, filter, setFilter }) {
 
 function Reviews({ reviews }) {
   return (
-    <div className="media-reviews">
+    <div className="media-reviews__list">
       {reviews &&
         (reviews.length > 0 ? (
           reviews.map((review) => {

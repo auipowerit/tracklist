@@ -15,7 +15,7 @@ export default function TrackProfile() {
   }, []);
 
   return (
-    <div className="track-profile">
+    <div className="track">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <MediaReviews mediaId={track?.id} filter={filter} setFilter={setFilter} />
     </div>

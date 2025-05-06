@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.artist-profile {
+.artist {
   @include flexcol(initial, center, 1em);
   padding: 1em 0;
   width: 100%;
@@ -8,37 +8,32 @@
   height: 100%;
 }
 
-.discography-container {
+.discography {
   @include flexcol(center, initial, 1em);
   width: 100%;
-}
 
-.discography {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  justify-content: start;
-  gap: 2em;
-  margin: auto;
-  padding: 1em;
-  width: fit-content;
-  width: 100%;
-  height: 100%;
-}
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-content: start;
+    gap: 2em;
+    margin: auto;
+    padding: 1em;
+    width: fit-content;
+    width: 100%;
+    height: 100%;
+  }
 
-.load-more {
-  @include flexrow(center);
-  height: 100px;
-}
+  &__button {
+    @include font(0.75);
+    margin: auto;
+    background-color: $basic-green;
+    padding: 0.5em 1em;
+    width: fit-content;
+    height: fit-content;
 
-.load-more-button {
-  @include font(0.75);
-  margin: auto;
-  background-color: $basic-green;
-  padding: 0.5em 1em;
-  width: fit-content;
-  height: fit-content;
-
-  &:hover {
-    background-color: $dark-green;
+    &:hover {
+      background-color: $dark-green;
+    }
   }
 }

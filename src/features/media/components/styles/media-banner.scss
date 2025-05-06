@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.media-banner-container {
+.media-banner {
   @include flexrow();
   margin: 3em 6em;
   box-shadow: $darker-shadow;
@@ -8,102 +8,101 @@
   max-width: 800px;
   height: fit-content;
   text-align: center;
-}
 
-.media-banner-image {
-  transition: all 0.2s;
-  cursor: pointer;
-  box-shadow: $light-shadow;
-  width: 40%;
-  max-width: 300px;
-
-  &:hover {
-    box-shadow: $dark-shadow;
-  }
-
-  img {
+  &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    &--wrapper {
+      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: $light-shadow;
+      width: 40%;
+      max-width: 300px;
+
+      &:hover {
+        box-shadow: $dark-shadow;
+      }
+    }
   }
-}
 
-.media-banner-content {
-  @include flexcol(space-between, center);
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 1em 0;
-  height: 100%;
-  overflow: hidden;
-}
+  &__content {
+    @include flexcol(space-between, center);
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1em 0;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.media-banner-title-container {
-  @include flexcol($gap: 0.25em);
-  padding: 0 0.5em;
-  width: 100%;
-  max-width: 400px;
-}
+  &__header {
+    @include flexcol($gap: 0.25em);
+    padding: 0 0.5em;
+    width: 100%;
+    max-width: 400px;
+  }
 
-.media-banner-title {
-  @include gradient(left);
-  padding: 0 1em;
-  width: 100%;
-  overflow: hidden;
-
-  p {
+  &__title {
     @include font(1.25, bold);
     margin: auto;
     width: fit-content;
     white-space: nowrap;
+
+    &--wrapper {
+      @include gradient(left);
+      padding: 0 1em;
+      width: 100%;
+      overflow: hidden;
+    }
   }
-}
 
-.media-banner-subtitle {
-  @include font(0.75, normal, $basic-gray);
-}
-
-.media-banner-rating {
-  @include flexcol(initial, center, 0.5em);
-  @include font(1, bold);
-}
-
-.media-banner-stars {
-  @include flexrow(center, center, 0.5em);
-}
-
-.media-rating-bar-container {
-  @include flexrow(initial, end, 2px);
-  height: 50px;
-}
-
-.media-rating-bar {
-  @include font(0.5);
-  position: relative;
-  transition: all 0.2s;
-  cursor: pointer;
-  margin: 5px 0;
-  border-radius: 1px 1px 0 0;
-  background-color: $basic-gray;
-  width: 20px;
-  min-height: 4px;
-
-  &:hover {
-    background-color: $basic-white;
+  &__subtitle {
+    @include font(0.75, normal, $basic-gray);
   }
-}
 
-.media-rating-bar-fill {
-  position: absolute;
-  top: -10px;
-  right: -2px;
-  bottom: 0;
-  left: -2px;
-}
+  &__rating {
+    @include flexcol(initial, center, 0.5em);
+    @include font(1, bold);
+  }
 
-.media-banner-buttons {
-  @include flexcol(space-evenly, center);
-  @include font(0.75);
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 0 0.75em;
-  height: 100%;
+  &__stars {
+    @include flexrow(center, center, 0.5em);
+  }
+
+  &__bar {
+    @include flexrow(initial, end, 2px);
+    height: 50px;
+
+    &--item {
+      @include font(0.5);
+      position: relative;
+      transition: all 0.2s;
+      cursor: pointer;
+      margin: 5px 0;
+      border-radius: 1px 1px 0 0;
+      background-color: $basic-gray;
+      width: 20px;
+      min-height: 4px;
+
+      &:hover {
+        background-color: $basic-white;
+      }
+    }
+
+    &--fill {
+      position: absolute;
+      top: -10px;
+      right: -2px;
+      bottom: 0;
+      left: -2px;
+    }
+  }
+
+  &__buttons {
+    @include flexcol(space-evenly, center);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 0 0.75em;
+    height: 100%;
+  }
 }

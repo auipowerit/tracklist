@@ -44,7 +44,7 @@ function NavLink({ link, category, label, title }) {
   const color = isActive ? ACTIVE_COLOR : "";
 
   return (
-    <Link to={link} style={{ color }} className="media-navbar-link">
+    <Link to={link} style={{ color }} className="media-navbar__link">
       {title}
     </Link>
   );

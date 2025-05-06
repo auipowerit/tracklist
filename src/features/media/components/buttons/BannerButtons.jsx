@@ -23,7 +23,7 @@ export default function BannerButtons({ mediaId, name, category }) {
   }, []);
 
   return (
-    <div className="media-banner-buttons">
+    <div className="media-banner__buttons">
       <HeartButton
         isLiked={isLiked}
         setIsLiked={setIsLiked}

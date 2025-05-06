@@ -49,7 +49,7 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
   }
 
   return (
-    <div className="media-rating-bar-container">
+    <div className="media-banner__bar">
       {ratings &&
         Object.keys(ratings)
           .sort((a, b) => parseFloat(a) - parseFloat(b))
@@ -64,9 +64,9 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
                 data-tooltip-content={content}
                 style={{ height: `${percentage}%` }}
                 onClick={() => handleClick(key)}
-                className="media-rating-bar"
+                className="media-banner__bar--item"
               >
-                <div className="media-rating-bar-fill" />
+                <div className="media-banner__bar--fill" />
                 <Tooltip
                   id="reviews-tooltip"
                   place="top"
