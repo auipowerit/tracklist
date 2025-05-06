@@ -8,8 +8,6 @@ export function useInbox() {
   async function addNotification(
     recipientId,
     senderId,
-    senderUsername,
-    senderProfileUrl,
     title,
     subtitle,
     contentId,
@@ -21,14 +19,13 @@ export function useInbox() {
       const inboxRef = doc(db, "inbox", recipientId);
       const inboxDoc = await getDoc(inboxRef);
 
+      // If inbox doesn't exist, create it
       if (!inboxDoc.exists()) {
         await setDoc(inboxRef, {
           notifications: [
             {
               id,
-              userId: senderId,
-              username: senderUsername,
-              profileUrl: senderProfileUrl,
+              senderId,
               title,
               subtitle,
               contentId,
@@ -38,12 +35,37 @@ export function useInbox() {
           ],
         });
       } else {
+        if (subtitle === "") {
+          // Check if notification already exists
+          const index = inboxDoc
+            .data()
+            .notifications.findIndex(
+              (notif) =>
+                notif.contentId === contentId &&
+                notif.category === category &&
+                notif.senderId === senderId &&
+                notif.subtitle === "",
+            );
+
+          // If notification already exists, update createdAt
+          if (index !== -1) {
+            const notifications = inboxDoc.data().notifications;
+            notifications[index].createdAt = new Date();
+
+            await updateDoc(inboxRef, {
+              notifications,
+            });
+
+            await addToInbox(recipientId);
+            return;
+          }
+        }
+
+        // If notification doesn't exist, add it
         await updateDoc(doc(db, "inbox", recipientId), {
           notifications: arrayUnion({
             id,
-            userId: senderId,
-            username: senderUsername,
-            profileUrl: senderProfileUrl,
+            senderId,
             title,
             subtitle,
             contentId,

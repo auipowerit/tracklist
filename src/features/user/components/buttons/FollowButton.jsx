@@ -20,8 +20,6 @@ export default function FollowButton({ user, setUser }) {
       await addNotification(
         user.uid,
         globalUser.uid,
-        globalUser.username,
-        globalUser.profileUrl,
         `${globalUser.username} started following you`,
         "",
         globalUser.username,

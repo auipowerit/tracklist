@@ -12,7 +12,7 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./styles/inbox.scss";
 
 export default function InboxPage() {
-  const { globalUser } = useAuthContext();
+  const { globalUser, getUserById } = useAuthContext();
   const { readAllNotifications } = useInboxContext();
   const { getListById } = useListContext();
   const { getReviewById } = useReviewContext();
@@ -30,6 +30,12 @@ export default function InboxPage() {
     const unsubscribe = onSnapshot(
       doc(db, "inbox", globalUser.uid),
       async (doc) => {
+        if (!doc.exists()) {
+          setnotifications([]);
+          setIsLoading(false);
+          return;
+        }
+
         const notifications = doc
           .data()
           .notifications.sort((a, b) => b.createdAt - a.createdAt);
@@ -38,18 +44,24 @@ export default function InboxPage() {
 
         const inboxData = await Promise.all(
           notifications.map(async (notification) => {
+            const user = await getUserById(notification.senderId);
+
             if (notification.category === "review") {
               const review = await getReviewById(notification.contentId);
 
               if (!review || review.media.length === 0) {
                 return {
                   ...notification,
+                  username: user.username,
+                  profileUrl: user.profileUrl,
                   image: DEFAULT_MEDIA_IMG,
                 };
               }
 
               return {
                 ...notification,
+                username: user.username,
+                profileUrl: user.profileUrl,
                 image: review.media.images[0].url,
               };
             }
@@ -60,6 +72,8 @@ export default function InboxPage() {
               if (!list || list.media.length === 0) {
                 return {
                   ...notification,
+                  username: user.username,
+                  profileUrl: user.profileUrl,
                   image: DEFAULT_MEDIA_IMG,
                 };
               }
@@ -72,18 +86,25 @@ export default function InboxPage() {
               if (!media) {
                 return {
                   ...notification,
+                  username: user.username,
+                  profileUrl: user.profileUrl,
                   image: DEFAULT_MEDIA_IMG,
                 };
               }
 
               return {
                 ...notification,
+                username: user.username,
+                profileUrl: user.profileUrl,
+                subtitle: list.name,
                 image: media.images[0].url,
               };
             }
 
             return {
               ...notification,
+              username: user.username,
+              profileUrl: user.profileUrl,
             };
           }),
         );
@@ -104,10 +125,6 @@ export default function InboxPage() {
     return <Loading />;
   }
 
-  if (notifications.length === 0) {
-    return <p className="empty-message">No notifications</p>;
-  }
-
   return (
     <div className="inbox">
       <Header />
@@ -125,6 +142,10 @@ function Header() {
 }
 
 function InboxList({ notifications }) {
+  if (notifications.length === 0) {
+    return <p className="empty-message">No notifications</p>;
+  }
+
   return (
     <div className="inbox-list">
       {notifications.map((notification) => {

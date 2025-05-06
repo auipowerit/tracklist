@@ -53,8 +53,6 @@ export default function CommentInput({ review, setComments }) {
       await addNotification(
         review.userId,
         globalUser.uid,
-        globalUser.username,
-        globalUser.profileUrl,
         `${globalUser.username} commented on your review`,
         `${content.slice(0, 40)}`,
         review.id,

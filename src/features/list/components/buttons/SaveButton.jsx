@@ -38,10 +38,8 @@ export default function SaveButton({ list, user }) {
       await addNotification(
         list.userId,
         globalUser.uid,
-        globalUser.username,
-        globalUser.profileUrl,
         `${globalUser.username} saved your list`,
-        `${list.name.slice(0, 40)}`,
+        "",
         list.id,
         "list",
       );

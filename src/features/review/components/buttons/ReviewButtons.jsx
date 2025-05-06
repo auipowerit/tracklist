@@ -66,8 +66,6 @@ export default function ReviewButtons({ review, showComment = true }) {
       await addNotification(
         review.userId,
         globalUser.uid,
-        globalUser.username,
-        globalUser.profileUrl,
         `${globalUser.username} liked your review`,
         "",
         review.id,
