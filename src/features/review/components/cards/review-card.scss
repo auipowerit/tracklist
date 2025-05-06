@@ -1,42 +1,42 @@
 @use "src/styles/abstracts" as *;
 
-.review-card-container {
-  @include flexcol();
-}
-
 .review-card {
-  @include flexcol($gap: 0.5em);
-  cursor: pointer;
-  padding: 0.5em;
+  @include flexcol();
 
-  &:hover {
-    background-color: $dark-green;
+  &--container {
+    @include flexcol($gap: 0.5em);
+    cursor: pointer;
+    padding: 0.5em;
+
+    &:hover {
+      background-color: $dark-green;
+    }
+  }
+
+  &__header {
+    @include flexrow(initial, stretch, 1em);
+  }
+
+  &__image {
+    box-shadow: $light-shadow;
+    aspect-ratio: 1/1;
+    width: 20%;
+    min-width: 100px;
+    max-width: 175px;
+    object-fit: cover;
+  }
+
+  &__info {
+    @include flexcol(space-between);
+  }
+
+  &__rating {
+    @include flexcol($gap: 0.5em);
   }
 }
 
-.review-card-header {
-  @include flexrow(initial, stretch, 1em);
-}
-
-.review-card-image {
-  box-shadow: $light-shadow;
-  aspect-ratio: 1/1;
-  width: 20%;
-  min-width: 100px;
-  max-width: 175px;
-  object-fit: cover;
-}
-
-.review-card-info {
-  @include flexcol(space-between);
-}
-
-.review-card-rating {
-  @include flexcol($gap: 0.5em);
-}
-
 @media (max-width: 900px) {
-  .review-card-container {
+  .review-card {
     gap: 0.25em;
     border-bottom: 1px solid $darker-gray;
     padding-bottom: 0.5em;
@@ -44,25 +44,25 @@
     &:last-child {
       border-bottom: none;
     }
-  }
 
-  .review-card {
-    gap: 1em;
+    &--container {
+      gap: 1em;
 
-    &:hover {
-      background-color: transparent;
+      &:hover {
+        background-color: transparent;
+      }
     }
-  }
 
-  .review-card-rating {
-    gap: 0;
-  }
+    &__rating {
+      gap: 0;
+    }
 
-  .review-card-info {
-    width: 100%;
-  }
+    &__info {
+      width: 100%;
+    }
 
-  .review-stars {
-    font-size: 1rem;
+    .review-stars {
+      font-size: 1rem;
+    }
   }
 }

@@ -36,7 +36,7 @@ export default function LikedReviews({ user }) {
             return <ReviewCard key={review.id} review={review} />;
           })
         ) : (
-          <p className="empty-message">There are no liked reviews yet!</p>
+          <p className="empty__message">There are no liked reviews yet!</p>
         ))}
     </div>
   );

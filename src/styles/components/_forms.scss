@@ -1,5 +1,20 @@
 @use "src/styles/abstracts" as *;
 
+.form {
+  &__submit {
+    @include font(1);
+    margin: auto;
+    box-shadow: $darker-shadow;
+    background-color: $basic-green;
+    padding: 0.5em 1em;
+    width: fit-content;
+
+    &:hover {
+      background-color: $dark-green;
+    }
+  }
+}
+
 .form-container {
   @include flexcol(center, center, 1em);
   margin: auto;
@@ -105,19 +120,6 @@
 .form-textarea-label {
   @include flexrow(space-between, center, 0.5em);
   @include font(1.25, normal, $basic-gray);
-}
-
-.form-submit-button {
-  @include font(1);
-  margin: auto;
-  box-shadow: $darker-shadow;
-  background-color: $basic-green;
-  padding: 0.5em 1em;
-  width: fit-content;
-
-  &:hover {
-    background-color: $dark-green;
-  }
 }
 
 .invalid-field {

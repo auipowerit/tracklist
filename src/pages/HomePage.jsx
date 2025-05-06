@@ -31,19 +31,8 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  /*
-  if (!globalUser) {
-    return (
-      <p className="empty-message">
-        Log into your TrackList account to view the latest reviews from the
-        friends you follow!
-      </p>
-    );
-  }
-  */
-
   return (
-    <div className="home-container">
+    <div className="home">
       {globalUser && (
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       )}
@@ -69,8 +58,9 @@ function Header({ activeTab, setActiveTab }) {
   }, [isModalOpen]);
 
   return (
-    <div className="home-header">
+    <div className="home__header">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+
       <ReviewButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
@@ -78,17 +68,17 @@ function Header({ activeTab, setActiveTab }) {
 
 function FeedResults({ results }) {
   if (results.length === 0) {
-    return <p className="empty-message">No reviews found!</p>;
+    return <p className="empty__message">No reviews found!</p>;
   }
 
   return (
-    <div className="feed-container">
+    <div className="home__feed">
       {results.length > 0 ? (
         results.map((review) => {
           return <ReviewCard key={review.id} review={review} onPage={false} />;
         })
       ) : (
-        <p className="empty-message"></p>
+        <p className="empty__message"></p>
       )}
     </div>
   );

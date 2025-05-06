@@ -130,7 +130,7 @@ function Lists({ user, activeTab }) {
           })}
         </ul>
       ) : (
-        <p className="empty-message">There are no lists yet!</p>
+        <p className="empty__message">There are no lists yet!</p>
       )}
     </div>
   );

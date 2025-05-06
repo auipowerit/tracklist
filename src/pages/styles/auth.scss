@@ -1,154 +1,147 @@
 @use "src/styles/abstracts" as *;
 
-.auth-wrapper {
+.auth {
   margin: auto;
   padding: 2em 0;
   width: 100%;
   max-width: 600px;
-}
 
-.auth-container {
-  @include flexcol(center, center, 1em);
-  margin: auto;
-  box-shadow: $dark-shadow;
-  border-radius: 12px;
-  background-color: $dark-gray;
-  padding: 1em;
-  width: 100%;
-}
-
-.auth-header {
-  @include font(1);
-  padding-bottom: 1em;
-
-  span {
-    @include font(1, bold, $light-green);
+  &--container {
+    @include flexcol(center, center, 1em);
+    margin: auto;
+    box-shadow: $dark-shadow;
+    border-radius: 12px;
+    background-color: $dark-gray;
+    padding: 1em;
+    width: 100%;
   }
-}
 
-.auth-form {
-  @include flexcol(initial, center, 0.5em);
-  margin: auto;
-  width: fit-content;
-}
+  &__header {
+    @include font(1);
+    padding-bottom: 1em;
 
-.auth-input-container {
-  @include flexcol(initial, flex-start, 0.5em);
+    &--highlight {
+      @include font(1, bold, $light-green);
+    }
+  }
 
-  label {
+  &__form {
+    @include flexcol(initial, center, 0.5em);
+    margin: auto;
+    width: fit-content;
+  }
+
+  &__input--wrapper {
+    @include flexcol(initial, flex-start, 0.5em);
+  }
+
+  &__label {
     @include font(1);
   }
-}
 
-.auth-input {
-  @include font(1);
-  outline: none;
-  border: 2px solid $basic-white;
-  padding: 0.15em 0.25em;
-}
+  &__input {
+    @include font(1);
+    outline: none;
+    border: 2px solid $basic-white;
+    padding: 0.15em 0.25em;
+  }
 
-.auth-button-container {
-  width: 100%;
-  @include flexcol(initial, center, 1em);
-  margin-top: 1em;
-  border-top: 1px solid $basic-white;
-  padding: 1em;
-
-  p {
+  &__button--wrapper {
     @include font(0.75);
+    @include flexcol(initial, center, 1em);
+    margin-top: 1em;
+    border-top: 1px solid $basic-white;
+    padding: 1em;
+    width: 100%;
+  }
+
+  &__button {
+    @include flexrow(center, center, 0.5em);
+    @include font(1);
+    margin: 0 auto;
+    border: 1px solid $basic-white;
+    padding: 0.5em 1.5em;
+
+    &--before:hover {
+      padding-right: 1em;
+      padding-left: 2em;
+    }
+
+    &--after:hover {
+      padding-right: 2em;
+      padding-left: 1em;
+    }
   }
 }
 
-.auth-button {
-  @include flexrow(center, center, 0.5em);
-  @include font(1);
-  margin: 0 auto;
-  border: 1px solid $basic-white;
-  padding: 0.5em 1.5em;
-
-  &:hover.auth-before {
-    padding-right: 1em;
-    padding-left: 2em;
-  }
-
-  &:hover.auth-after {
-    padding-right: 2em;
-    padding-left: 1em;
-  }
-}
-
-.reset-password-container {
+.reset {
   @include flexrow(center, center, 0.5em);
   @include font(0.75);
-}
 
-.reset-password-link {
-  cursor: pointer;
-  @include font(0.75, bold, $light-green);
+  &__link {
+    cursor: pointer;
+    @include font(0.75, bold, $light-green);
+  }
 }
 
 @media (max-width: 900px) {
-  .auth-wrapper {
+  .auth {
     background-color: $dark-gray;
     padding: 1em 0;
     max-width: unset;
     height: 100%;
     @include flexcol(center, center);
-  }
 
-  .auth-container {
-    margin: auto;
-    box-shadow: none;
-    border-radius: 0px;
-    background-color: initial;
-    padding: 0;
-    width: 100%;
-    height: fit-content;
-  }
+    &--container {
+      margin: auto;
+      box-shadow: none;
+      border-radius: 0px;
+      padding: 0;
+      width: 100%;
+      height: fit-content;
+    }
 
-  .auth-form {
-    width: 90%;
-  }
+    &__form {
+      width: 90%;
+    }
 
-  .auth-header {
-    font-size: 1.25rem;
+    &__header {
+      font-size: 1.25rem;
 
-    span {
+      &--highlight {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__input--wrapper {
+      align-items: stretch;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    &__label {
       font-size: 1.25rem;
     }
-  }
 
-  .auth-input-container {
-    align-items: stretch;
-    width: 100%;
-    max-width: 500px;
-
-    label {
+    &__input {
       font-size: 1.25rem;
     }
-  }
 
-  .auth-input {
-    font-size: 1.25rem;
-  }
+    &__button--wrapper {
+      border: none;
+      font-size: 1rem;
+    }
 
-  .reset-password-container {
-    font-size: 1rem;
-  }
-
-  .reset-password-link {
-    font-size: 1rem;
-  }
-
-  .auth-button-container {
-    border: none;
-
-    p {
+    &__button {
       font-size: 1rem;
     }
   }
 
-  .auth-button {
+  .reset {
     font-size: 1rem;
+
+    &__link {
+      font-size: 1rem;
+    }
   }
 }

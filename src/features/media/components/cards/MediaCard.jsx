@@ -8,8 +8,6 @@ import "./media-card.scss";
 export default function MediaCard(props) {
   const { media, defaultSubtitle, onClick } = props;
 
-  const defaultDate = "01/01/2000";
-
   const { getAvgRating } = useReviewContext();
 
   const [fetchedMedia, setFetchedMedia] = useState({});
@@ -54,20 +52,23 @@ export default function MediaCard(props) {
   }, [fetchedMedia]);
 
   return (
-    <div className="media-card-container" onClick={onClick}>
-      <img src={fetchedMedia.data?.image || DEFAULT_MEDIA_IMG} />
+    <div className="media-card" onClick={onClick}>
+      <img
+        src={fetchedMedia.data?.image || DEFAULT_MEDIA_IMG}
+        className="media-card__image"
+      />
 
-      <div className="media-card-info">
-        <div className="media-card-title">
-          <p ref={titleRef}>{fetchedMedia.data?.title || ""}</p>
+      <div className="media-card__info">
+        <div className="media-card__title--wrapper">
+          <p ref={titleRef} className="media-card__title">{fetchedMedia.data?.title || ""}</p>
         </div>
 
-        <p className="media-card-subtitle">
+        <p className="media-card__subtitle">
           {fetchedMedia.data?.subtitle || ""}
         </p>
       </div>
 
-      <div className="media-card-rating">
+      <div className="media-card__rating">
         <p>{fetchedMedia.avgRating?.toFixed(1) || ""}</p>
         <ReviewStars rating={fetchedMedia.avgRating || 0} />
         <p>{(fetchedMedia.avgRating && `(${fetchedMedia.count})`) || ""}</p>

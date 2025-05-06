@@ -54,7 +54,7 @@ export default function LikedMedia({ user, activeTab }) {
             })}
           </div>
         ) : (
-          <p className="empty-message">
+          <p className="empty__message">
             {`There are no liked ${activeTab}s yet!`}
           </p>
         ))}

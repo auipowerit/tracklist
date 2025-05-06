@@ -60,7 +60,7 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
             return (
               <div
                 key={key}
-                data-tooltip-id="media-tooltip"
+                data-tooltip-id="reviews-tooltip"
                 data-tooltip-content={content}
                 style={{ height: `${percentage}%` }}
                 onClick={() => handleClick(key)}
@@ -68,7 +68,7 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
               >
                 <div className="media-rating-bar-fill" />
                 <Tooltip
-                  id="media-tooltip"
+                  id="reviews-tooltip"
                   place="top"
                   type="dark"
                   effect="float"

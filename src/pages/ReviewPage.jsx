@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { formatDateMDYLong } from "src/utils/date";
 import Loading from "src/features/shared/components/Loading";
 import MediaDetails from "src/features/review/components/MediaDetails";
+import { ReviewStars } from "src/features/review/components/ReviewContent";
 import CommentList from "src/features/comment/components/lists/CommentList";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import ReviewButtons from "src/features/review/components/buttons/ReviewButtons";
-import { ReviewStars } from "src/features/review/components/ReviewContent";
 import "./styles/review.scss";
 
 export default function ReviewPage() {
@@ -88,7 +89,7 @@ function ReviewHeader({ review }) {
         </div>
 
         <p className="review-section-date">
-          {review.createdAt.toDate().toDateString()}
+          {formatDateMDYLong(review.createdAt.toDate())}
         </p>
       </div>
     </div>

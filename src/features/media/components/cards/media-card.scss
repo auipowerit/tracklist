@@ -1,11 +1,11 @@
 @use "src/styles/abstracts" as *;
 
-.media-card-container {
+.media-card {
   @include flexcol();
   transition: all 0.2s;
   cursor: pointer;
-  border-radius: 12px;
   border: 2px solid $basic-white;
+  border-radius: 12px;
   padding: 0.5em;
   width: 300px;
   height: fit-content;
@@ -15,65 +15,63 @@
     transform: scale(110%);
   }
 
-  img {
-    height: 300px;
-    object-fit: cover;
+  &__image {
     box-shadow: $darker-shadow;
     border-radius: 12px;
+    height: 300px;
+    object-fit: cover;
   }
-}
 
-.media-card-info {
-  @include flexcol(space-between, initial, 0.25em);
-  flex-grow: 1;
-  padding: 0.5em 0;
-  text-align: center;
-}
+  &__info {
+    @include flexcol(space-between, initial, 0.25em);
+    flex-grow: 1;
+    padding: 0.5em 0;
+    text-align: center;
+  }
 
-.media-card-title {
-  padding: 0 0.5em;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  @include gradient(left);
-
-  p {
+  &__title {
     @include font(0.5, bold);
     margin: auto;
     width: fit-content;
     white-space: nowrap;
+
+    &--wrapper {
+      padding: 0 0.5em;
+      width: 100%;
+      overflow: hidden;
+      text-align: center;
+      @include gradient(left);
+    }
+  }
+
+  &__subtitle {
+    @include font(0.35, bold);
+  }
+
+  &__rating {
+    @include font(0.75, bold);
+    @include flexrow(center, center, 0.25em);
   }
 }
 
-.media-card-subtitle {
-  @include font(0.35, bold);
-}
-
-.media-card-rating {
-  @include font(0.75, bold);
-  @include flexrow(center, center, 0.25em);
-}
-
 @media (max-width: 900px) {
-  .media-card-container {
+  .media-card {
     transition: none;
 
     &:hover {
       transform: none;
     }
-  }
 
-  .media-card-title {
-    p {
+    &__title {
       font-size: 1.5rem;
     }
-  }
 
-  .media-card-subtitle {
-    font-size: 1rem;
-  }
+    &__subtitle {
+      font-size: 1rem;
+    }
 
-  .media-card-rating {
-    font-size: 1.25rem;
+    &__rating {
+      font-size: 1.25rem;
+    }
   }
 }

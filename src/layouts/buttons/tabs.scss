@@ -1,34 +1,34 @@
 @use "src/styles/abstracts" as *;
 
-.tabs-container {
+.tabs {
   @include flexrow(center, initial, 2em);
   margin-bottom: 1em;
-}
 
-.tab {
-  @include font(1, bold, $basic-gray);
-  border-bottom: 2px solid transparent;
-  padding: 0.25em 0;
-  letter-spacing: 0.05em;
+  &__button {
+    @include font(1, bold, $basic-gray);
+    border-bottom: 2px solid transparent;
+    padding: 0.25em 0;
+    letter-spacing: 0.05em;
 
-  &:hover {
-    color: $basic-green;
-  }
+    &:hover {
+      color: $basic-green;
+    }
 
-  &.active {
-    border-color: $basic-green;
-    color: $basic-green;
+    &.active {
+      border-color: $basic-green;
+      color: $basic-green;
+    }
   }
 }
 
 @media (max-width: 900px) {
-  .tabs-container {
+  .tabs {
     margin-bottom: 0;
-  }
 
-  .tab {
-    border-width: 5px;
-    padding: 0.5em 0;
-    font-size: 1.5rem;
+    &__button {
+      border-width: 5px;
+      padding: 0.5em 0;
+      font-size: 1.5rem;
+    }
   }
 }

@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.inbox-card {
+.inbox__card {
   @include flexrow(space-between, center, 2em);
   cursor: pointer;
   border-bottom: 1px solid $basic-gray;
@@ -11,33 +11,30 @@
     border-bottom: none;
   }
 
-  &-info {
+  &__info {
     @include flexrow(center, center, 0.5em);
-
-    &-image {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-    }
-
-    &-content {
-      @include flexcol($gap: 0.25em);
-
-      &-title {
-        @include font(0.75, bold);
-      }
-
-      &-subtitle {
-        @include font(0.75, normal, $basic-white);
-      }
-
-      &-date {
-        @include font(0.5, normal, $basic-gray);
-      }
-    }
   }
 
-  &-image {
+  &__profile {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+
+  &__content {
+    @include flexcol($gap: 0.25em);
+  }
+
+  &__title,
+  &__subtitle {
+    @include font(0.75, normal);
+  }
+
+  &__date {
+    @include font(0.5, bold, $basic-gray);
+  }
+
+  &__media {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -45,32 +42,22 @@
 }
 
 @media (max-width: 900px) {
-  .inbox-card {
+  .inbox__card {
     gap: 0.5em;
     border: none;
 
-    &-info {
-      &-image {
-        width: 40px;
-        height: 40px;
-      }
-
-      &-content {
-        &-title {
-          font-size: 1rem;
-        }
-
-        &-subtitle {
-          font-size: 1rem;
-        }
-
-        &-date {
-          font-size: 1rem;
-        }
-      }
+    &__profile {
+      width: 40px;
+      height: 40px;
     }
 
-    &-image {
+    &__title,
+    &__subtitle,
+    &__date {
+      font-size: 1rem;
+    }
+
+    &__media {
       width: 75px;
       height: 75px;
     }

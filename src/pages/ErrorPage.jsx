@@ -14,13 +14,13 @@ export default function ErrorPage({ is404 }) {
     : "Oops! Something went wrong :(";
 
   return (
-    <div className="error-container">
-      <FontAwesomeIcon icon={faExclamationTriangle} className="error-logo" />
+    <div className="error">
+      <FontAwesomeIcon icon={faExclamationTriangle} className="error__icon" />
 
-      <h1 className="error-header">{errorMessage}</h1>
-      {error && <p className="error-message">"{error.message}"</p>}
+      <h1 className="error__header">{errorMessage}</h1>
+      {error && <p className="error__message">"{error.message}"</p>}
 
-      <Link to="/home" className="error-button">
+      <Link to="/home" className="error__button">
         <FontAwesomeIcon icon={faHome} />
         Go to home
       </Link>

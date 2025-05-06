@@ -4,9 +4,7 @@
   @include flexrow(center);
   @include font(0.75);
   border: 2px solid $basic-white;
-  padding: 0.5em 0;
-  width: 20%;
-  max-width: 125px;
+  padding: 0.5em;
   height: fit-content;
 
   &.active {
@@ -33,6 +31,5 @@
   .follow-button {
     font-size: 1rem;
     border-radius: 24px;
-    width: 30%;
   }
 }

@@ -79,12 +79,12 @@ export default function Signup({ setIsRegistration }) {
   }
 
   return (
-    <div className="auth-container">
-      <h1 className="auth-header">
-        Sign up for <span>TrackList</span>
+    <div className="auth--container">
+      <h1 className="auth__header">
+        Sign up for <span className="auth__header--highlight">TrackList</span>
       </h1>
 
-      <form ref={formRef} onSubmit={handleSubmit} className="auth-form">
+      <form ref={formRef} onSubmit={handleSubmit} className="auth__form">
         <AuthInput label="Display Name" name="displayname" type="text" />
         <AuthInput label="Username" name="username" type="text" />
         <AuthInput label="Email" name="email" type="text" />
@@ -96,15 +96,15 @@ export default function Signup({ setIsRegistration }) {
         />
 
         <Alert message={error} />
-        <button type="submit" className="form-submit-button">
+        <button type="submit" className="form__submit">
           Submit
         </button>
       </form>
-      <div className="auth-button-container">
+      <div className="auth__button--wrapper">
         <p>Already have an account with us?</p>
         <button
           onClick={() => setIsRegistration(false)}
-          className="forward-button auth-button auth-after"
+          className="forward-button auth__button auth__button--after"
         >
           <p>Log in</p>
           <FontAwesomeIcon icon={faArrowRight} className="button-after" />

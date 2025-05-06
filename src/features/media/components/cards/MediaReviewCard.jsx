@@ -3,6 +3,7 @@ import {
   ReviewContent,
   ReviewStars,
 } from "src/features/review/components/ReviewContent";
+import { formatDateMDYLong } from "src/utils/date";
 
 export default function MediaReviewCard({ review }) {
   return (
@@ -27,7 +28,7 @@ function Header({ review }) {
         </div>
 
         <p className="media-review-date">
-          {review.createdAt.toDate().toDateString()}
+          {formatDateMDYLong(review.createdAt.toDate())}
         </p>
       </div>
     </div>

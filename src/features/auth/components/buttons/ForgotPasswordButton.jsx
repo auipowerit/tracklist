@@ -35,12 +35,12 @@ export default function ForgotPasswordButton() {
         </Modal>
       )}
 
-      <div className="reset-password-container">
+      <div className="reset">
         <p>Forgot password?</p>
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          className="link reset-password-link"
+          className="link reset__link"
         >
           Click here
         </button>

@@ -19,7 +19,7 @@ export default function SearchPage() {
   }, [activeTab]);
 
   return (
-    <div className="search-container">
+    <div className="search">
       <Tabs
         tabs={tabs}
         activeTab={activeTab}
@@ -49,7 +49,7 @@ function SearchSelect({ activeTab, setActiveTab, setResults }) {
   }
 
   return (
-    <select value={activeTab} onChange={handleChange} className="search-select">
+    <select value={activeTab} onChange={handleChange} className="search__select">
       <option value="artists">Artists</option>
       <option value="albums">Albums</option>
       <option value="tracks">Tracks</option>

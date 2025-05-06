@@ -54,7 +54,7 @@ export default function FriendsList({ activeTab, user }) {
             })}
           </ul>
         ) : (
-          <p className="empty-message">
+          <p className="empty__message">
             {activeTab === "following"
               ? "No one followed yet!"
               : "No followers yet!"}

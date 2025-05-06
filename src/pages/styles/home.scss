@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.home-container {
+.home {
   @include flexcol();
   margin: auto;
   margin-top: 1em;
@@ -8,45 +8,45 @@
   max-width: 1200px;
   height: 100vh;
   padding: 0 2em;
-}
 
-.home-header {
-  @include flexrow(space-between, center);
-  border-bottom: 1px solid $basic-white;
+  &__header {
+    @include flexrow(space-between, center);
+    border-bottom: 1px solid $basic-white;
 
-  .review-button {
-    margin-left: auto;
+    .review-button {
+      margin-left: auto;
+    }
   }
-}
 
-.feed-container {
-  @include flexcol($gap: 1em);
-  @include gradient(top);
-  padding: 2em 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+  &__feed {
+    @include flexcol($gap: 1em);
+    @include gradient(top);
+    padding: 2em 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
 }
 
 @media (max-width: 900px) {
-  .home-container {
+  .home {
     margin-top: 0.5em;
     height: fit-content;
     padding: 0;
-  }
 
-  .home-header {
-    justify-content: center;
-    border: none;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background-color: $background-primary;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-  }
+    &__header {
+      justify-content: center;
+      border: none;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: $background-primary;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+    }
 
-  .feed-container {
-    padding: 0;
-    mask-image: none;
+    &__feed {
+      padding: 0;
+      mask-image: none;
+    }
   }
 }

@@ -31,7 +31,7 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
             )}
           </div>
         ) : (
-          <p className="empty-message">Nothing to show!</p>
+          <p className="empty__message">Nothing to show!</p>
         ))}
     </div>
   );

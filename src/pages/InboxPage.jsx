@@ -135,7 +135,7 @@ export default function InboxPage() {
 
 function Header() {
   return (
-    <div className="inbox-header">
+    <div className="inbox__header">
       <h1>Inbox</h1>
     </div>
   );
@@ -143,11 +143,11 @@ function Header() {
 
 function InboxList({ notifications }) {
   if (notifications.length === 0) {
-    return <p className="empty-message">No notifications</p>;
+    return <p className="empty__message">No notifications</p>;
   }
 
   return (
-    <div className="inbox-list">
+    <div className="inbox__list">
       {notifications.map((notification) => {
         return <InboxCard key={notification.id} notification={notification} />;
       })}

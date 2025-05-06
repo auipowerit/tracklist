@@ -22,10 +22,6 @@ export default function ArtistPage() {
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState("");
 
-  const mediaId = useMemo(() => {
-    return params.trackId || params.albumId || params.artistId;
-  }, [params]);
-
   const category = useMemo(() => {
     return params.trackId ? "track" : params.albumId ? "album" : "artist";
   }, [params.trackId, params.albumId]);
@@ -38,6 +34,11 @@ export default function ArtistPage() {
   useEffect(() => {
     fetchMedia();
   }, [params]);
+
+  useEffect(() => {
+    if (activeTab === "reviews") return;
+    setFilter("all");
+  }, [activeTab]);
 
   async function fetchMedia() {
     try {

@@ -62,7 +62,7 @@ select {
   background-color: transparent;
 }
 
-.empty-message {
+.empty__message {
   @include font(1, normal, $basic-gray, italic);
   margin: auto;
   padding: 4em 0;
@@ -107,7 +107,7 @@ select {
 }
 
 @media (max-width: 900px) {
-  .empty-message {
+  .empty__message {
     font-size: 1.5rem;
   }
 }

@@ -58,14 +58,15 @@ export default function SearchBar(props) {
   }
 
   return (
-    <form onSubmit={handleSearch} className="searchbar">
+    <form onSubmit={handleSearch} className="search__bar">
       <input
         type="text"
         ref={searchInput}
         placeholder={placeholderMap[category]}
+        className="search__input"
       />
 
-      <button type="submit">
+      <button type="submit" className="search__submit">
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </form>

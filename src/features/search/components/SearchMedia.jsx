@@ -29,7 +29,7 @@ function Header({ category, setIsLoading, results, setResults }) {
   const [initialResults, setInitialResults] = useState([]);
 
   return (
-    <div className="search-header">
+    <div className="search__header">
       <SearchBar
         category={category}
         setIsLoading={setIsLoading}

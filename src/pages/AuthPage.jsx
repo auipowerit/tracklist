@@ -29,7 +29,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="auth-wrapper">
+    <div className="auth">
       {isRegistration ? (
         <Signup setIsRegistration={setIsRegistration} />
       ) : (

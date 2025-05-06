@@ -75,7 +75,7 @@ function ReviewsList({ user }) {
         })}
       </ul>
     ) : (
-      <p className="empty-message">There are no reviews yet!</p>
+      <p className="empty__message">There are no reviews yet!</p>
     ))
   );
 }

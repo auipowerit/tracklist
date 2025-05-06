@@ -1,109 +1,109 @@
 @use "src/styles/abstracts" as *;
 
-.review-user-container {
-  @include flexrow(initial, center, 0.5em);
-}
+.review {
+  &__user {
+    @include flexrow(initial, center, 0.5em);
 
-.review-user {
-  @include flexrow(initial, center, 0.5em);
-  @include font(0.75);
+    &--container {
+      @include flexrow(initial, center, 0.5em);
+      @include font(0.75);
+    }
 
-  img {
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
+    &--image {
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+
+    &--date {
+      @include font(0.5, 400, $basic-gray);
+    }
   }
 
-  p {
-    font-weight: bold;
+  &__media {
+    @include flexcol();
+
+    &--container {
+      @include flexrow(initial, center);
+    }
+
+    &--icon {
+      color: $basic-gray;
+    }
+
+    &--title {
+      @include gradient(left);
+      padding: 0 0.5em;
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+
+      p {
+        @include font(0.75, bold);
+        white-space: nowrap;
+      }
+    }
+
+    &--subtitle {
+      @include font(0.75, normal, $basic-gray);
+    }
   }
-}
 
-.review-user-date {
-  @include font(0.5, 400, $basic-gray);
-}
-
-.review-media-container {
-  @include flexcol();
-}
-
-.review-title-container {
-  @include flexrow(initial, center);
-}
-
-.review-icon {
-  color: $basic-gray;
-}
-
-.review-title {
-  @include gradient(left);
-  padding: 0 0.5em;
-  width: 100%;
-  max-width: 400px;
-  overflow: hidden;
-
-  p {
-    @include font(0.75, bold);
-    white-space: nowrap;
+  &__stars {
+    @include flexrow(initial, center, 0.15em);
   }
-}
 
-.review-subtitle {
-  @include font(0.75, normal, $basic-gray);
-}
-
-.review-stars {
-  @include flexrow(initial, center, 0.15em);
-}
-
-.review-text {
-  @include font(1);
-  overflow-wrap: break-word;
+  &__text {
+    @include font(1);
+    overflow-wrap: break-word;
+  }
 }
 
 @media (max-width: 900px) {
-  .review-user-container {
-    justify-content: space-between;
-    width: 100%;
-  }
+  .review {
+    &__user {
+      justify-content: space-between;
+      width: 100%;
 
-  .review-user-date {
-    font-size: 0.75rem;
-  }
+      &--container {
+        color: $basic-gray;
+        font-weight: normal;
+        font-size: 1rem;
+      }
 
-  .review-user {
-    img {
-      width: 30px;
-      height: 30px;
+      &--image {
+        width: 30px;
+        height: 30px;
+      }
+
+      &--date {
+        font-size: 0.75rem;
+      }
     }
 
-    p {
-      color: $basic-gray;
-      font-weight: normal;
-      font-size: 1rem;
+    &__media {
+      &--title {
+        mask-image: none;
+
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      &__subtitle {
+        font-size: 0.75rem;
+      }
     }
-  }
 
-  .review-title {
-    mask-image: none;
-
-    p {
-      font-size: 1rem;
+    &__stars {
+      span {
+        font-size: 1.25rem;
+      }
     }
-  }
 
-  .review-subtitle {
-    font-size: 0.75rem;
-  }
-
-  .review-stars {
-    span {
+    &__text {
       font-size: 1.25rem;
     }
-  }
-
-  .review-text {
-    font-size: 1.25rem;
   }
 }

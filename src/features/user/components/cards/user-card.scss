@@ -1,71 +1,69 @@
 @use "src/styles/abstracts" as *;
 
-.user-card-container {
+.user-card {
   @include flexrow(space-between, center);
   border: 1px solid $basic-gray;
   padding: 1em;
-}
 
-.user-card {
-  @include flexrow(initial, center, 0.5em);
-  @include font(0.75);
-  cursor: pointer;
-  padding: 0.5em;
-  width: fit-content;
+  &--container {
+    @include flexrow(initial, center, 0.5em);
+    @include font(0.75);
+    cursor: pointer;
+    padding: 0.5em;
+    width: fit-content;
+  }
 
-  img {
+  &__image {
     border-radius: 50%;
     width: 75px;
     height: 75px;
     object-fit: cover;
   }
-}
-
-.user-card-info {
-  @include flexcol($gap: 0.5em);
-}
-
-.user-card-header {
-  @include flexrow(initial, center, 0.5em);
-}
-
-.user-card-displayname {
-  font-weight: bold;
-}
-
-.user-card-username {
-  @include font(0.75, normal, $basic-gray);
-}
-
-.user-card-friends {
-  @include font(0.5, normal, $basic-gray);
-}
-
-@media (max-width: 900px) {
-  .user-card-container {
-    padding: 0.5em;
-    border: none;
+  &__info {
+    @include flexcol($gap: 0.5em);
   }
 
-  .user-card {
-    padding: 0;
-    font-size: 1rem;
+  &__header {
+    @include flexrow(initial, center, 0.5em);
+  }
 
-    img {
+  &__displayname {
+    font-weight: bold;
+  }
+
+  &__username {
+    @include font(0.75, normal, $basic-gray);
+  }
+
+  &__friends {
+    @include font(0.5, normal, $basic-gray);
+  }
+}
+@media (max-width: 900px) {
+  .user-card {
+    padding: 0.5em;
+    border: none;
+
+    &--container {
+      padding: 0;
+      font-size: 1rem;
+    }
+
+    &__image {
       width: 50px;
       height: 50px;
     }
-  }
 
-  .user-card-header {
-    @include flexcol(initial, flex-start, 0);
-  }
+    &__header {
+      @include flexcol(initial, flex-start, 0);
+    }
 
-  .user-card-username {
-    font-size: 1rem;
-  }
+    &__username {
+      font-size: 1rem;
+    }
 
-  .user-card-friends {
-    font-size: 0.75rem;
+    &__friends {
+      font-size: 0.75rem;
+    }
   }
 }

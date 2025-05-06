@@ -47,7 +47,7 @@ function List({ list, items, setItems, isEditing, orientation }) {
   if (items?.length === 0) {
     return (
       <div className="account-list">
-        <p className="empty-message">This list is empty.</p>
+        <p className="empty__message">This list is empty.</p>
       </div>
     );
   }

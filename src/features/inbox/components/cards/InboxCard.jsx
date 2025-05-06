@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { getTimeSince } from "src/utils/date";
+import { getTimeSinceShort } from "src/utils/date";
 import "./inbox-card.scss";
 
 export default function InboxCard({ notification }) {
@@ -29,12 +29,12 @@ export default function InboxCard({ notification }) {
   return (
     <div
       onClick={() => handleClick(notification.category, notification.contentId)}
-      className="inbox-card"
+      className="inbox__card"
     >
-      <div className="inbox-card-info">
+      <div className="inbox__card__info">
         <UserImage profileUrl={notification.profileUrl} />
 
-        <div className="inbox-card-info-content">
+        <div className="inbox__card__content">
           <Content notification={notification} />
           <Date createdAt={notification.createdAt} />
         </div>
@@ -46,16 +46,16 @@ export default function InboxCard({ notification }) {
 }
 
 function UserImage({ profileUrl }) {
-  return <img src={profileUrl} className="inbox-card-info-image" />;
+  return <img src={profileUrl} className="inbox__card__profile" />;
 }
 
 function Content({ notification }) {
   return (
     <>
-      <p className="inbox-card-info-content-title">{notification.title}</p>
+      <p className="inbox__card__title">{notification.title}</p>
 
       {notification.subtitle && (
-        <p className="inbox-card-info-content-subtitle">
+        <p className="inbox__card__subtitle">
           "
           {notification.subtitle.length > 40
             ? notification.subtitle.slice(0, 40) + "..."
@@ -69,14 +69,12 @@ function Content({ notification }) {
 
 function Date({ createdAt }) {
   return (
-    <p className="inbox-card-info-content-date">
-      {getTimeSince(createdAt.toDate())}
-    </p>
+    <p className="inbox__card__date">{getTimeSinceShort(createdAt.toDate())}</p>
   );
 }
 
 function MediaImage({ image }) {
   if (!image) return;
 
-  return <img src={image} className="inbox-card-image" />;
+  return <img src={image} className="inbox__card__media" />;
 }

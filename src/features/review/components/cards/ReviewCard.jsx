@@ -23,18 +23,18 @@ export default function ReviewCard({ review }) {
   }, []);
 
   return (
-    <div className="review-card-container">
+    <div className="review-card">
       <div
         onClick={() => navigate(`/reviews/${review.id}`)}
-        className="review-card"
+        className="review-card--container"
       >
-        <div className="review-card-header">
-          <img src={review.media.image} className="review-card-image" />
+        <div className="review-card__header">
+          <img src={review.media.image} className="review-card__image" />
 
-          <div className="review-card-info">
+          <div className="review-card__info">
             <ReviewUser review={review} />
 
-            <div className="review-card-rating">
+            <div className="review-card__rating">
               <ReviewMediaTitle
                 title={media.title}
                 subtitle={media.subtitle}

@@ -63,7 +63,7 @@ function Header({ comments, setComments }) {
 
 function Comments({ comments, setComments, review }) {
   if (!comments || comments?.length === 0) {
-    return <p className="empty-message">No comments yet!</p>;
+    return <p className="empty__message">No comments yet!</p>;
   }
 
   return (

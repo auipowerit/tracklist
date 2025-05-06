@@ -13,12 +13,12 @@ import "./review-content.scss";
 
 function ReviewUser({ review }) {
   return (
-    <div className="review-user-container">
-      <div className="review-user">
-        <img src={review.profileUrl} />
+    <div className="review__user">
+      <div className="review__user--container">
+        <img src={review.profileUrl} className="review__user--image" />
         <p>@{review.username}</p>
       </div>
-      <p className="review-user-date">
+      <p className="review__user--date">
         {getTimeSince(review.createdAt.toDate())}
       </p>
     </div>
@@ -51,13 +51,13 @@ function ReviewMediaTitle({ title, subtitle, category }) {
   };
 
   return (
-    <div className="review-media-container">
-      <div className="review-title-container">
+    <div className="review__media">
+      <div className="review__media--container">
         <div
           data-tooltip-content={capitalizeFirstLetter(category)}
           data-tooltip-id="category-tooltip"
         >
-          <FontAwesomeIcon icon={icon} className="review-icon" />
+          <FontAwesomeIcon icon={icon} className="review__media--icon" />
           <Tooltip
             id="category-tooltip"
             place="top"
@@ -65,12 +65,12 @@ function ReviewMediaTitle({ title, subtitle, category }) {
             effect="float"
           />
         </div>
-        <div className="review-title">
+        <div className="review__media--title">
           <p ref={titleRef}>{title}</p>
         </div>
       </div>
 
-      <p className="review-subtitle">{subtitle}</p>
+      <p className="review__media--subtitle">{subtitle}</p>
     </div>
   );
 }
@@ -83,7 +83,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
   }
 
   return (
-    <div className="review-stars">
+    <div className="review__stars">
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1;
         const isHalf = rating === ratingValue - 0.5;
@@ -112,7 +112,7 @@ function ReviewStars({ rating = 0, size = 20 }) {
 
 function ReviewContent({ review }) {
   return (
-    <p className="review-text">
+    <p className="review__text">
       {review.content.length > 150
         ? `${review.content.slice(0, 150)}...`
         : review.content}
