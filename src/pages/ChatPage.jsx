@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MOBILE_WIDTH } from "src/data/const";
+import ChatList from "src/features/chat/components/lists/ChatList";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import ChatList from "src/features/chat/components/lists/ChatList";
 import ChatWindow from "src/features/chat/components/sections/ChatWindow";
 import "./styles/chat.scss";
 
@@ -44,8 +45,8 @@ export default function ChatPage() {
     setActiveChatUser(chat);
     setActiveChatId(chat.chatId);
     setChatWindowKey(chat.chatId);
-    
-    if (window.innerWidth <= 900) {
+
+    if (window.innerWidth <= MOBILE_WIDTH) {
       setIsCollapsed(true);
     }
 

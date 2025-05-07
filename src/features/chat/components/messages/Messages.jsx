@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { MOBILE_WIDTH } from "src/data/const";
 import { formatDateDMD } from "src/utils/date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +14,15 @@ export default function Messages({ messages }) {
   const prevMessagLength = useRef(messages.length);
 
   useLayoutEffect(() => {
+    // Scroll to bottom if on mobile
+    if (window.innerWidth <= MOBILE_WIDTH) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+      return;
+    }
+
     // Scroll to bottom if new message comes in
     if (prevMessagLength.current >= messages.length) return;
     chatRef.current.scrollTop = chatRef.current.scrollHeight;

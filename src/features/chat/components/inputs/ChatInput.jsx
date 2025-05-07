@@ -33,7 +33,11 @@ export default function ChatInput() {
   }
 
   return (
-    <form onSubmit={handleNewMessage} className="chats-compose">
+    <form
+      onSubmit={handleNewMessage}
+      id="chats-compose"
+      className="chats-compose"
+    >
       <input
         ref={inputRef}
         text="text"

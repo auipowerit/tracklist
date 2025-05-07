@@ -1,6 +1,7 @@
+import { MOBILE_WIDTH } from "src/data/const";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
   faSquareCaretLeft,
@@ -37,7 +38,7 @@ function Header({ setIsCollapsed }) {
     setActiveChatId("-1");
     setActiveChatUser({});
 
-    if (window.innerWidth <= 900) {
+    if (window.innerWidth <= MOBILE_WIDTH) {
       setIsCollapsed(true);
     }
   }

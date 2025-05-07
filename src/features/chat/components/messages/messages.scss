@@ -25,7 +25,7 @@
     border-radius: 12px;
     padding: 0.75em 1em;
     width: fit-content;
-    max-width: 90%;
+    max-width: 80%;
 
     &--clicked {
       .message__delete,
@@ -72,13 +72,13 @@
   }
 
   &__like {
-    top: -12px;
+    top: -0.75em;
     box-shadow: 0 0 5px $basic-black;
     background-color: $darker-gray;
     color: $basic-gray;
 
     &--user {
-      left: -12px;
+      left: -0.75em;
 
       &.message__like--unliked {
         display: none;
@@ -86,7 +86,7 @@
     }
 
     &--friend {
-      right: -12px;
+      right: -0.75em;
 
       &:hover {
         opacity: 1;
@@ -186,7 +186,7 @@
     }
 
     &__button {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
     &__image {

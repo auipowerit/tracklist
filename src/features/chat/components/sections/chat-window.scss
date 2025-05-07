@@ -64,6 +64,7 @@
   &__header {
     @include flexrow(initial, center, 1em);
     @include font(0.75, bold);
+    position: relative;
     border-bottom: 1px solid $basic-gray;
     padding-bottom: 0.25em;
 
@@ -74,7 +75,11 @@
 
   &__collapse {
     display: none;
-    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+    font-size: 2rem;
   }
 }
 
@@ -108,12 +113,13 @@
     &__header {
       position: sticky;
       top: 0;
+      justify-content: center;
       z-index: 2;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $dark-gray;
       border: none;
-      font-size: 1rem;
+      background-color: $dark-gray;
       padding: 1em;
+      font-size: 1rem;
     }
 
     &__collapse {
