@@ -1,9 +1,15 @@
 @use "src/styles/abstracts" as *;
 
-.chat-container {
+.chat {
   @include flexrow(initial, stretch);
   margin: auto;
   width: 100%;
   max-width: 1000px;
   height: 80vh;
+}
+
+@media (max-width: 900px) {
+  .chat {
+    height: 100%;
+  }
 }

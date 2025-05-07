@@ -1,25 +1,53 @@
 @use "src/styles/abstracts" as *;
 
-.chat-input-form {
+.chats-compose {
   @include flexrow(space-between, center, 0.25em);
   @include font(0.5);
   border: 1px solid $basic-gray;
   background-color: $dark-gray;
   padding: 0.75em;
+
+  &:focus-within {
+    border-color: $basic-white;
+  }
+
+  &__input {
+    @include font(0.75);
+    flex-grow: 1;
+    outline: none;
+    width: 100%;
+  }
+
+  &__button {
+    @include font(0.75);
+    cursor: pointer;
+    color: $basic-gray;
+
+    &:hover {
+      color: $basic-green;
+    }
+  }
 }
 
-.chat-input {
-  @include font(0.75);
-  flex-grow: 1;
-  outline: none;
-}
+@media (max-width: 900px) {
+  .chats-compose {
+    position: sticky;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 0.15em 0.15em 0.15em 0.5em;
+    font-size: 1.5rem;
 
-.chat-input-button {
-  @include font(0.75);
-  cursor: pointer;
-  color: $basic-gray;
+    &__input {
+      font-size: 1.5rem;
+    }
 
-  &:hover {
-    color: $basic-green;
+    &__button {
+      font-size: 1.5rem;
+      @include badge(1.2, $basic-white, $darker-green, 2em);
+
+      &:hover {
+        background-color: $darker-green;
+      }
+    }
   }
 }

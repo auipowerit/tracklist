@@ -1,19 +1,33 @@
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenToSquare,
+  faSquareCaretLeft,
+  faSquareCaretRight,
+} from "@fortawesome/free-solid-svg-icons";
 import "./chat-list.scss";
 
-export default function ChatList({ handleOpenChat }) {
+export default function ChatList({
+  handleOpenChat,
+  isCollapsed,
+  setIsCollapsed,
+}) {
   return (
-    <div className="chatlist-container">
-      <Header />
-      <Chats handleOpenChat={handleOpenChat} />
+    <div
+      className={`chatlist ${isCollapsed ? "chatlist--collapsed" : "chatlist--active"}`}
+    >
+      {!isCollapsed && <Header setIsCollapsed={setIsCollapsed} />}
+      {!isCollapsed && <Chats handleOpenChat={handleOpenChat} />}
+      <CollapseButton
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+      />
     </div>
   );
 }
 
-function Header() {
+function Header({ setIsCollapsed }) {
   const { globalUser } = useAuthContext();
   const { setActiveChatId, activeChatUser, setActiveChatUser } =
     useChatContext();
@@ -22,15 +36,19 @@ function Header() {
     if (!activeChatUser || !globalUser) return;
     setActiveChatId("-1");
     setActiveChatUser({});
+
+    if (window.innerWidth <= 900) {
+      setIsCollapsed(true);
+    }
   }
 
   return (
-    <div className="chatlist-header">
-      <p>All chats</p>
+    <div className="chatlist__header">
+      <h2>All chats</h2>
       <button
         type="button"
         onClick={handleNewChat}
-        className="chatlist-new-button"
+        className="chatlist__compose"
       >
         <FontAwesomeIcon icon={faPenToSquare} />
       </button>
@@ -42,7 +60,7 @@ function Chats({ handleOpenChat }) {
   const { chats } = useChatContext();
 
   return (
-    <div className="chatlist">
+    <div className="chatlist__chats">
       {chats &&
         chats.length > 0 &&
         chats.map((chat) => {
@@ -63,7 +81,7 @@ function ChatCard({ chat, handleOpenChat }) {
 
   const isActive = activeChatUser.uid === chat.uid;
 
-  const color = chat.unread > 0 ? "chatlist-unread" : "";
+  const color = chat.unread > 0 ? "chatlist__unread" : "";
 
   const lastMessage =
     chat.lastMessage.length > 40
@@ -73,13 +91,27 @@ function ChatCard({ chat, handleOpenChat }) {
   return (
     <div
       onClick={() => handleOpenChat(chat)}
-      className={`chatlist-card ${isActive && "chatlist-card-active"}`}
+      className={`chatlist__card ${isActive ? "chatlist__card--active" : ""}`}
     >
-      <div className="chatlist-card-header">
-        <img src={chat.profileUrl} />
+      <div className="chatlist__user">
+        <img src={chat.profileUrl} className="chatlist__image" />
         <p>{chat.username}</p>
       </div>
+
       <p className={color}>{lastMessage}</p>
     </div>
+  );
+}
+
+function CollapseButton({ isCollapsed, setIsCollapsed }) {
+  const icon = isCollapsed ? faSquareCaretRight : faSquareCaretLeft;
+
+  return (
+    <button
+      onClick={() => setIsCollapsed(!isCollapsed)}
+      className={`chatlist__collapse ${isCollapsed ? "chatlist__collapse--active" : ""}`}
+    >
+      <FontAwesomeIcon icon={icon} />
+    </button>
   );
 }

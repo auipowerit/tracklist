@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "src/config/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -10,7 +12,7 @@ import ChatInput from "../inputs/ChatInput";
 import Messages from "../messages/Messages";
 import "./chat-window.scss";
 
-export default function ChatWindow() {
+export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
   const { globalUser } = useAuthContext();
   const { activeChatId, activeChatUser, readMessage } = useChatContext();
   const { getReviewById } = useReviewContext();
@@ -88,12 +90,14 @@ export default function ChatWindow() {
   }, [activeChatId, activeChatUser]);
 
   return (
-    <div className="chatwindow">
+    <div
+      className={`chats ${isCollapsed ? "chats--active" : "chats--collapsed"}`}
+    >
       {activeChatId === "-1" ? (
         <SearchUsers />
       ) : (
         <>
-          <Header />
+          <Header setIsCollapsed={setIsCollapsed} />
           <Messages messages={messages} />
           <ChatInput />
         </>
@@ -147,32 +151,26 @@ function SearchUsers() {
   }
 
   return (
-    <div className="chatwindow-search">
+    <div className="chats__search">
       <input
         value={input}
         onChange={handleSearch}
         type="text"
         placeholder="Search for a friend..."
-        className="chatwindow-search-input"
+        className="chats__search-input"
       />
-      <div
-        className={`chatwindow-search-results ${users.length > 0 && "active"}`}
-      >
+      <div className={`chats__search-dropdown ${users.length > 0 && "active"}`}>
         {users.map((user) => (
           <button
             key={user.uid}
             type="button"
             onClick={() => handleAddUser(user.uid)}
-            className="chatwindow-search-item"
+            className="chats__search-user"
           >
-            <img src={user.profileUrl} />
-            <div className="chatwindow-search-item-info">
-              <p className="chatwindow-search-item-displayname">
-                {user.displayname}
-              </p>
-              <p className="chatwindow-search-item-username">
-                @{user.username}
-              </p>
+            <img src={user.profileUrl} className="chats__search-image" />
+            <div className="chats__search-info">
+              <p className="chats__searchdisplayname">{user.displayname}</p>
+              <p className="chats__search-username">@{user.username}</p>
             </div>
           </button>
         ))}
@@ -181,15 +179,26 @@ function SearchUsers() {
   );
 }
 
-function Header() {
-  const { activeChatUser } = useChatContext();
+function Header({ setIsCollapsed }) {
+  const { activeChatUser, setActiveChatId } = useChatContext();
+
+  function handleCollapse() {
+    setActiveChatId("-1");
+    setIsCollapsed(false);
+  }
 
   return (
-    <Link
-      to={`/users/${activeChatUser.username}`}
-      className="chatwindow-header"
-    >
-      {activeChatUser.displayname || "Display Name"}
-    </Link>
+    <div className="chats__header">
+      <button
+        type="button"
+        onClick={handleCollapse}
+        className="chats__collapse"
+      >
+        <FontAwesomeIcon icon={faSquareCaretLeft} />
+      </button>
+      <Link to={`/users/${activeChatUser.username}`}>
+        <h2>{activeChatUser.displayname || "Display Name"}</h2>
+      </Link>
+    </div>
   );
 }

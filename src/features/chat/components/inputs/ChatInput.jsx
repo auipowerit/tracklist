@@ -33,14 +33,14 @@ export default function ChatInput() {
   }
 
   return (
-    <form onSubmit={handleNewMessage} className="chat-input-form">
+    <form onSubmit={handleNewMessage} className="chats-compose">
       <input
         ref={inputRef}
         text="text"
         placeholder={`Message ${activeChatUser.displayname || "user"}...`}
-        className="chat-input"
+        className="chats-compose__input"
       />
-      <button type="submit" className="chat-input-button">
+      <button type="submit" className="chats-compose__button">
         <FontAwesomeIcon icon={faPaperPlane} />
       </button>
     </form>

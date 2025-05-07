@@ -4,150 +4,202 @@
   @include flexcol($gap: 1em);
   @include gradient(bottom, $bottom: 99%);
   flex-grow: 1;
-  padding: 0.5em 0;
+  padding: 0.5em 1em;
+  max-width: 100%;
+  overflow-x: scroll;
   overflow-y: auto;
 }
 
-.message-card {
+.message {
   @include flexcol($gap: 0.25em);
-}
 
-.message-date {
-  align-self: center;
-  padding: 1.5em 0;
-  @include font(0.25, normal, $basic-gray);
-}
+  &__date {
+    @include font(0.25, normal, $basic-gray);
+    align-self: center;
+    padding: 1.5em 0;
+  }
 
-.message-bubble {
-  @include flexrow(initial, start, 0.5em);
-  position: relative;
-  border-radius: 12px;
-  padding: 0.75em 1em;
-  width: fit-content;
+  &__bubble {
+    @include flexrow(initial, start, 0.5em);
+    position: relative;
+    border-radius: 12px;
+    padding: 0.75em 1em;
+    width: fit-content;
+    max-width: 90%;
 
-  &:hover {
-    .message-delete-button,
-    .message-unliked {
+    &--clicked {
+      .message__delete,
+      .message__like {
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      .message__delete,
+      .message__like {
+        opacity: 1;
+      }
+    }
+
+    &--user {
+      margin-left: auto;
+      background-color: $basic-blue;
+    }
+
+    &--friend {
+      background-color: $darker-gray;
+    }
+  }
+
+  &__button {
+    @include font(0.5);
+    @include badge(0.65, $basic-gray, $darker-gray, 1.65em);
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__delete {
+    top: 50%;
+    left: -10%;
+    transform: translate(-50%, -50%);
+    box-shadow: $light-shadow;
+    color: $basic-gray;
+
+    &:hover {
       opacity: 1;
+    }
+  }
+
+  &__like {
+    top: -12px;
+    box-shadow: 0 0 5px $basic-black;
+    background-color: $darker-gray;
+    color: $basic-gray;
+
+    &--user {
+      left: -12px;
+
+      &.message__like--unliked {
+        display: none;
+      }
+    }
+
+    &--friend {
+      right: -12px;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &--liked {
+      opacity: 1;
+      background-color: $dark-blue;
+      color: $basic-red;
+    }
+
+    &--unliked {
+      background-color: $darker-gray;
+      color: $basic-gray;
+    }
+  }
+
+  &__image {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+  }
+
+  &__body {
+    @include flexcol();
+    width: fit-content;
+  }
+
+  &__sender {
+    @include flexrow(initial, center, 0.25em);
+  }
+
+  &__username {
+    font-weight: bold;
+  }
+
+  &__time {
+    @include font(0.25, normal, $basic-gray);
+  }
+
+  &__text {
+    @include font(0.5);
+    width: fit-content;
+    word-break: break-all;
+  }
+
+  &__error {
+    @include font(initial, normal, $basic-gray, italic);
+  }
+
+  &__media {
+    @include flexcol(center, center, 0.25em);
+    margin-top: 0.5em;
+    background-color: $basic-white;
+    padding: 0.5em;
+    color: $basic-black;
+    text-align: center;
+
+    &--image {
+      box-shadow: $light-shadow;
+      width: 100%;
+      max-width: 150px;
+      object-fit: cover;
+    }
+
+    &--highlight {
+      font-weight: bold;
+    }
+
+    &--title {
+      width: fit-content;
+      @include font(0.5, bold);
+    }
+
+    &--subtitle {
+      @include font(0.35, normal, $basic-gray);
     }
   }
 }
 
-.message-user-button {
-  margin-left: auto;
-  background-color: $basic-blue;
-}
-
-.message-friend-button {
-  background-color: $darker-gray;
-}
-
-.message-delete-button {
-  @include flexrow(center, center);
-  @include font(0.5, normal, $basic-gray);
-  @include badge(0.65, $basic-gray, $darker-gray, 1.65em);
-  position: absolute;
-  top: 50%;
-  left: -10%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  cursor: pointer;
-  box-shadow: $light-shadow;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.message-like-button {
-  @include font(0.5);
-  @include badge(0.65, $basic-gray, $darker-gray, 1.65em);
-  position: absolute;
-  top: -12px;
-  cursor: pointer;
-  box-shadow: 0 0 5px $basic-black;
-
-  &:not(.message-liked) {
-    opacity: 0;
-    background-color: $darker-gray;
-    color: $basic-gray;
-  }
-}
-
-.message-liked {
-  background-color: $dark-blue;
-  color: $basic-red;
-}
-
-.message-unliked {
-  background-color: $darker-gray;
-  color: $basic-gray;
-}
-
-.message-user-button {
-  left: -12px;
-}
-.message-friend-button {
-  right: -12px;
-}
-
-.message-image {
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-}
-
-.message-body {
-  @include flexcol();
-  max-width: 200px;
-  word-wrap: break-word;
-}
-
-.message-sender {
-  @include flexrow(initial, center, 0.25em);
-}
-
-.message-sender-name {
-  font-weight: bold;
-}
-
-.message-time {
-  @include font(0.25, normal, $basic-gray);
-}
-
-.message-content-media {
-  @include flexcol(center, center, 0.25em);
-  margin-top: 0.5em;
-  background-color: $basic-white;
-  padding: 0.5em;
-  color: $basic-black;
-  text-align: center;
-
-  img {
-    box-shadow: $light-shadow;
-    width: 100%;
-    max-width: 150px;
-    object-fit: cover;
+@media (max-width: 900px) {
+  .messages {
+    mask-image: none;
+    padding: 0.5em;
+    max-width: 100vw;
+    overflow-y: unset;
   }
 
-  span {
-    font-weight: bold;
-  }
+  .message {
+    &__date {
+      font-size: 1rem;
+    }
 
-  .title {
-    width: fit-content;
-    @include font(0.5, bold);
-  }
-  .subtitle {
-    @include font(0.25);
-  }
-}
+    &__bubble {
+      padding: 0.5em;
+    }
 
-.message-text {
-  @include font(0.5);
-  word-wrap: break-word;
-}
+    &__button {
+      font-size: 1rem;
+    }
 
-.message-error {
-  @include font(initial, normal, $basic-gray, italic);
+    &__image {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__time {
+      font-size: 0.75rem;
+    }
+
+    &__text {
+      font-size: 1rem;
+    }
+  }
 }

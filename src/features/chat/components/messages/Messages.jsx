@@ -42,12 +42,21 @@ function MessageCard({ message, index, messages }) {
 
   const isCurrentUser = message.senderId === globalUser.uid;
 
+  function handleClick(e) {
+    e.target.classList.add("message__bubble--clicked");
+
+    setTimeout(() => {
+      e.target.classList.remove("message__bubble--clicked");
+    }, 2000);
+  }
+
   return (
-    <div className={"message-card"}>
+    <div className="message">
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        className={`message-bubble ${isCurrentUser ? "message-user-button" : "message-friend-button"}`}
+        onClick={handleClick}
+        className={`message__bubble ${isCurrentUser ? "message__bubble--user" : "message__bubble--friend"}`}
       >
         {isCurrentUser && (
           <MessageDeleteButton
@@ -59,7 +68,8 @@ function MessageCard({ message, index, messages }) {
         <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
 
         <MessageImage message={message} />
-        <div className="message-body">
+
+        <div className="message__body">
           <MessageUsername message={message} />
           <MessageContent message={message} category={message.category} />
         </div>
@@ -78,7 +88,7 @@ function MessageDate({ message, index, messages }) {
 
   if (!isDifferentDate) return;
 
-  return <p className="message-date">{formatDateDMD(date)}</p>;
+  return <p className="message__date">{formatDateDMD(date)}</p>;
 }
 
 function MessageDeleteButton({ message, isCurrentUser }) {
@@ -100,7 +110,7 @@ function MessageDeleteButton({ message, isCurrentUser }) {
     <button
       type="button"
       onClick={handleDelete}
-      className="message-delete-button"
+      className="message__button message__delete"
     >
       <FontAwesomeIcon icon={faTrash} />
     </button>
@@ -109,6 +119,13 @@ function MessageDeleteButton({ message, isCurrentUser }) {
 
 function MessageLikeButton({ message, isCurrentUser }) {
   const { likeMessage } = useChatContext();
+
+  const color = message.isLiked
+    ? "message__like--liked"
+    : "message__like--unliked";
+  const position = isCurrentUser
+    ? "message__like--user"
+    : "message__like--friend";
 
   async function handleLike() {
     if (isCurrentUser) return;
@@ -119,9 +136,7 @@ function MessageLikeButton({ message, isCurrentUser }) {
     <button
       type="button"
       onClick={handleLike}
-      className={`message-like-button ${
-        message.isLiked ? "message-liked" : !isCurrentUser && "message-unliked"
-      } ${isCurrentUser ? "message-user-button" : "message-friend-button"}`}
+      className={`message__button message__like ${color} ${position}`}
     >
       <FontAwesomeIcon icon={faHeart} />
     </button>
@@ -131,16 +146,16 @@ function MessageLikeButton({ message, isCurrentUser }) {
 function MessageImage({ message }) {
   return (
     <Link to={`/users/${message.username}`}>
-      <img src={message.profileUrl} className="message-image" />
+      <img src={message.profileUrl} className="message__image" />
     </Link>
   );
 }
 
 function MessageUsername({ message }) {
   return (
-    <div className="message-sender">
-      <p className="message-sender-name">{message.username}</p>
-      <p className="message-time">
+    <div className="message__sender">
+      <p className="message__username">{message.username}</p>
+      <p className="message__time">
         {message.createdAt.toDate().toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "2-digit",
@@ -153,18 +168,20 @@ function MessageUsername({ message }) {
 function MessageContent({ message, category }) {
   if (category === "review") {
     if (!message.review) {
-      return <p className="message-text message-error">Review not available</p>;
+      return (
+        <p className="message__text message__error">Review not available</p>
+      );
     }
 
     return (
-      <Link
-        to={`/reviews/${message.review.id}`}
-        className="message-content-media"
-      >
+      <Link to={`/reviews/${message.review.id}`} className="message__media">
         <p>
-          Review by<span>@{message.review.username}</span>
+          Review by
+          <span className="message__media--highlight">
+            @{message.review.username}
+          </span>
         </p>
-        <img src={message.mediaData.image} />
+        <img src={message.mediaData.image} className="message__media--image" />
         <ReviewStars rating={message.review.rating} />
       </Link>
     );
@@ -172,21 +189,23 @@ function MessageContent({ message, category }) {
 
   if (category !== "") {
     if (!message.media) {
-      return <p className="message-text message-error">Media not available</p>;
+      return (
+        <p className="message__text message__error">Media not available</p>
+      );
     }
 
     return (
-      <Link to={message.mediaData.titleLink} className="message-content-media">
-        <img src={message.mediaData.image} />
-        <p className="title">{message.mediaData.title}</p>
-        <p className="subtitle">{message.mediaData.subtitle}</p>
+      <Link to={message.mediaData.titleLink} className="message__media">
+        <img src={message.mediaData.image} className="message__media--image" />
+        <p className="message_media--title">{message.mediaData.title}</p>
+        <p className="message__media--subtitle">{message.mediaData.subtitle}</p>
       </Link>
     );
   }
 
   if (message.isDeleted) {
-    return <p className="message-text message-error">{message.text}</p>;
+    return <p className="message__text message__error">{message.text}</p>;
   }
 
-  return <p className="message-text">{message.text}</p>;
+  return <p className="message__text">{message.text}</p>;
 }

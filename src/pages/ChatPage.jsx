@@ -12,6 +12,7 @@ export default function ChatPage() {
 
   const [mounted, setMounted] = useState(false);
   const [chatWindowKey, setChatWindowKey] = useState(0);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,14 +44,26 @@ export default function ChatPage() {
     setActiveChatUser(chat);
     setActiveChatId(chat.chatId);
     setChatWindowKey(chat.chatId);
+    
+    if (window.innerWidth <= 900) {
+      setIsCollapsed(true);
+    }
 
     await readMessage(chat.chatId, globalUser.uid);
   }
 
   return (
-    <div className="chat-container">
-      <ChatList handleOpenChat={handleOpenChat} />
-      <ChatWindow key={chatWindowKey} />
+    <div className="chat">
+      <ChatList
+        handleOpenChat={handleOpenChat}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+      />
+      <ChatWindow
+        key={chatWindowKey}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+      />
     </div>
   );
 }

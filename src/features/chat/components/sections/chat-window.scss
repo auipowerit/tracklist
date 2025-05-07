@@ -1,73 +1,123 @@
 @use "src/styles/abstracts" as *;
 
-.chatwindow {
+.chats {
   @include flexcol($gap: 0.25em);
   flex: 2;
   background-color: $dark-gray;
   padding: 1em 2em;
   overflow-y: auto;
-}
 
-.chatwindow-header {
-  @include font(1, bold);
-  border-bottom: 1px solid $basic-gray;
-  padding-bottom: 0.25em;
+  &__search {
+    position: relative;
 
-  &:hover {
-    color: $basic-gray;
+    &-input {
+      @include font(0.75);
+      outline: none;
+      border: 1px solid $basic-white;
+      padding: 0.5em 0.75em;
+      width: 100%;
+    }
+
+    &-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      @include flexcol();
+      background-color: $darker-green;
+
+      &.active {
+        height: fit-content;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    }
+
+    &-user {
+      @include flexrow(initial, center, 0.25em);
+      @include font(0.75);
+      padding: 0.25em 0.5em;
+      text-align: left;
+
+      &:hover {
+        background-color: $dark-green;
+      }
+    }
+
+    &-image {
+      border-radius: 100%;
+      aspect-ratio: 1/1;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+
+    &-info {
+      @include flexcol(start, flex-start, 0.25em);
+    }
+
+    &-displayname {
+      @include font(0.75, bold);
+    }
+  }
+
+  &__header {
+    @include flexrow(initial, center, 1em);
+    @include font(0.75, bold);
+    border-bottom: 1px solid $basic-gray;
+    padding-bottom: 0.25em;
+
+    &:hover {
+      color: $basic-gray;
+    }
+  }
+
+  &__collapse {
+    display: none;
+    font-size: 1.5rem;
   }
 }
 
-.chatwindow-search {
-  position: relative;
-}
+@media (max-width: 900px) {
+  .chats {
+    padding: 0;
 
-.chatwindow-search-input {
-  @include font(0.75);
-  outline: none;
-  border: 1px solid $basic-white;
-  padding: 0.5em 0.75em;
-  width: 100%;
-}
+    &--active {
+      overflow-y: unset;
+    }
 
-.chatwindow-search-results {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
-  @include flexcol();
-  background-color: $darker-green;
+    &__search {
+      &-input {
+        font-size: 1.5rem;
+      }
 
-  &.active {
-    height: fit-content;
-    max-height: 200px;
-    overflow-y: auto;
+      &-user {
+        font-size: 1.5rem;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &-image {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    &__header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      background-color: $dark-gray;
+      border: none;
+      font-size: 1rem;
+      padding: 1em;
+    }
+
+    &__collapse {
+      display: initial;
+    }
   }
-}
-
-.chatwindow-search-item {
-  @include flexrow(initial, center, 0.25em);
-  @include font(0.75);
-  padding: 0.25em 0.5em;
-  text-align: left;
-
-  &:hover {
-    background-color: $dark-green;
-  }
-
-  img {
-    border-radius: 100%;
-    aspect-ratio: 1/1;
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-  }
-}
-
-.chatwidow-search-item-info {
-  @include flexcol(start, flex-start, 0.25em);
-}
-
-.chatwindow-search-item-displayname {
-  @include font(0.75, bold);
 }
