@@ -4,6 +4,7 @@
   @include flexcol();
   position: relative;
   flex: 1;
+  transition: all 0.2s;
   border-right: 2px solid $basic-white;
   background-color: $darker-green;
 
@@ -15,12 +16,12 @@
   &__header {
     @include flexrow(space-between, center, 0.5em);
     @include font(0.5, bold);
-    padding: 0.5em;
+    padding: 0.75em;
     overflow: hidden;
   }
 
   &__compose {
-    @include font(0.75);
+    @include font(1);
     cursor: pointer;
     color: $basic-white;
 
@@ -107,6 +108,10 @@
 
     &__card {
       font-size: 1.25rem;
+
+      &--active {
+        background-color: transparent;
+      }
     }
 
     &__image {

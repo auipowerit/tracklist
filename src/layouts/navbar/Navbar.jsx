@@ -22,13 +22,22 @@ export default function Navbar() {
   const [unreadNotifs, setUnreadNotifs] = useState(0);
 
   useEffect(() => {
-    const fetchUnreadChats = async () => {
-      if (!globalUser) return;
-      const count = await getUnreadChatsByUserId(globalUser.uid);
-      setUnreadMessages(count);
-    };
+    if (!globalUser) {
+      setUnreadMessages(0);
+      return;
+    }
 
-    fetchUnreadChats();
+    const unsubscribe = onSnapshot(
+      doc(db, "userchats", globalUser.uid),
+      async () => {
+        const chatCount = await getUnreadChatsByUserId(globalUser.uid);
+        setUnreadMessages(chatCount);
+      },
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, [globalUser, chats]);
 
   useEffect(() => {
@@ -40,8 +49,8 @@ export default function Navbar() {
     const unsubscribe = onSnapshot(
       doc(db, "users", globalUser.uid),
       async () => {
-        const count = await getUnreadInbox(globalUser.uid);
-        setUnreadNotifs(count);
+        const inboxCount = await getUnreadInbox(globalUser.uid);
+        setUnreadNotifs(inboxCount);
       },
     );
 
@@ -69,7 +78,10 @@ export default function Navbar() {
         <NavProfile globalUser={globalUser} />
       </div>
 
-      <MobileNavbar />
+      <MobileNavbar
+        unreadMessages={unreadMessages}
+        unreadNotifs={unreadNotifs}
+      />
     </div>
   );
 }

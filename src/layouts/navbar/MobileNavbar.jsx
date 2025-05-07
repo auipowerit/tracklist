@@ -1,10 +1,8 @@
 import { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./mobile-navbar.scss";
 
-export default function MobileNavbar() {
+export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
   const location = useLocation();
 
   const hamburger = useRef(null);
@@ -49,8 +47,17 @@ export default function MobileNavbar() {
       <nav ref={menu} className="mobile-navbar">
         <MobileNavItem link="/home" label="Home" />
         <MobileNavItem link="/search" label="Search" />
-        <MobileNavItem link="/messages" label="Messages" />
-        <MobileNavItem link="/inbox" label="Notifications" />
+
+        <div className="mobile-navbar__messages">
+          <MobileNavItem link="/messages" label="Chat" />
+          <NotificationBadge unreadCount={unreadMessages} />
+        </div>
+
+        <div className="mobile-navbar__messages">
+          <MobileNavItem link="/inbox" label="Inbox" />
+          <NotificationBadge unreadCount={unreadNotifs} />
+        </div>
+
         <MobileNavItem link="/profile" label="Profile" />
       </nav>
 
@@ -85,8 +92,17 @@ function MobileNavItem({ link, label }) {
   );
 }
 
+function NotificationBadge({ unreadCount }) {
+  if (!unreadCount || unreadCount === 0) return;
+  return <p className="mobile-navbar__badge">{unreadCount}</p>;
+}
+
 function Overlay({ overlay, handleClick }) {
   return (
-    <div ref={overlay} onClick={handleClick} className="mobile-navbar__overlay" />
+    <div
+      ref={overlay}
+      onClick={handleClick}
+      className="mobile-navbar__overlay"
+    />
   );
 }

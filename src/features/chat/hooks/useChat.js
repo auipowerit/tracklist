@@ -146,7 +146,7 @@ export function useChat() {
 
           userChatsData.chats[chatIndex].lastMessage = text;
 
-          const unreadCount = userChatsData.chats[chatIndex].unread;
+          const unreadCount = userChatsData.chats[chatIndex].unread || 0;
 
           userChatsData.chats[chatIndex].unread =
             userId === senderId ? unreadCount : unreadCount + 1;

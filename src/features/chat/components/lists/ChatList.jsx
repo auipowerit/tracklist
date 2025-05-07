@@ -18,8 +18,12 @@ export default function ChatList({
     <div
       className={`chatlist ${isCollapsed ? "chatlist--collapsed" : "chatlist--active"}`}
     >
-      {!isCollapsed && <Header setIsCollapsed={setIsCollapsed} />}
-      {!isCollapsed && <Chats handleOpenChat={handleOpenChat} />}
+      {!isCollapsed && (
+        <>
+          <Header setIsCollapsed={setIsCollapsed} />
+          <Chats handleOpenChat={handleOpenChat} />
+        </>
+      )}
       <CollapseButton
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
@@ -35,7 +39,7 @@ function Header({ setIsCollapsed }) {
 
   async function handleNewChat() {
     if (!activeChatUser || !globalUser) return;
-    setActiveChatId("-1");
+    setActiveChatId(-1);
     setActiveChatUser({});
 
     if (window.innerWidth <= MOBILE_WIDTH) {

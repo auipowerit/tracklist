@@ -36,7 +36,7 @@ export default function ChatPage() {
         return;
       }
 
-      setActiveChatId("-1");
+      setActiveChatId(-1);
       setActiveChatUser({});
     };
   }, [loadingUser, globalUser, mounted]);

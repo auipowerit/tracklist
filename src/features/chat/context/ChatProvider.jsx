@@ -7,7 +7,7 @@ import ChatContext from "./ChatContext";
 
 export default function ChatProvder({ children }) {
   const [chats, setChats] = useState(null);
-  const [activeChatId, setActiveChatId] = useState("-1");
+  const [activeChatId, setActiveChatId] = useState(-1);
   const [activeChatUser, setActiveChatUser] = useState({});
 
   const { globalUser, getUserById } = useAuthContext();
@@ -27,6 +27,7 @@ export default function ChatProvder({ children }) {
         const fetchedChats = await Promise.all(
           doc.data().chats.map(async (chat) => {
             const user = await getUserById(chat.recipientId);
+
             return {
               ...chat,
               ...user,

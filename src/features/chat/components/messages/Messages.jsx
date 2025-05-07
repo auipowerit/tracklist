@@ -18,7 +18,6 @@ export default function Messages({ messages }) {
     if (window.innerWidth <= MOBILE_WIDTH) {
       window.scrollTo({
         top: document.body.scrollHeight,
-        behavior: "smooth",
       });
       return;
     }

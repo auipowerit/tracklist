@@ -7,60 +7,6 @@
   padding: 1em 2em;
   overflow-y: auto;
 
-  &__search {
-    position: relative;
-
-    &-input {
-      @include font(0.75);
-      outline: none;
-      border: 1px solid $basic-white;
-      padding: 0.5em 0.75em;
-      width: 100%;
-    }
-
-    &-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      @include flexcol();
-      background-color: $darker-green;
-
-      &.active {
-        height: fit-content;
-        max-height: 200px;
-        overflow-y: auto;
-      }
-    }
-
-    &-user {
-      @include flexrow(initial, center, 0.25em);
-      @include font(0.75);
-      padding: 0.25em 0.5em;
-      text-align: left;
-
-      &:hover {
-        background-color: $dark-green;
-      }
-    }
-
-    &-image {
-      border-radius: 100%;
-      aspect-ratio: 1/1;
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-    }
-
-    &-info {
-      @include flexcol(start, flex-start, 0.25em);
-    }
-
-    &-displayname {
-      @include font(0.75, bold);
-    }
-  }
-
   &__header {
     @include flexrow(initial, center, 1em);
     @include font(0.75, bold);
@@ -86,28 +32,10 @@
 @media (max-width: 900px) {
   .chats {
     padding: 0;
+    padding-bottom: 0.75em;
 
     &--active {
       overflow-y: unset;
-    }
-
-    &__search {
-      &-input {
-        font-size: 1.5rem;
-      }
-
-      &-user {
-        font-size: 1.5rem;
-
-        &:hover {
-          background-color: transparent;
-        }
-      }
-
-      &-image {
-        width: 50px;
-        height: 50px;
-      }
     }
 
     &__header {
@@ -120,6 +48,10 @@
       background-color: $dark-gray;
       padding: 1em;
       font-size: 1rem;
+
+      &:hover {
+        color: $basic-white;
+      }
     }
 
     &__collapse {

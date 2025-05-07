@@ -1,0 +1,158 @@
+@use "src/styles/abstracts" as *;
+
+.chat-compose {
+  @include flexrow(space-between, center, 0.25em);
+  @include font(0.5);
+  border: 1px solid $basic-gray;
+  background-color: $dark-gray;
+  padding: 0.75em;
+
+  &:focus-within {
+    border-color: $basic-white;
+  }
+
+  &__input {
+    @include font(0.75);
+    flex-grow: 1;
+    outline: none;
+    width: 100%;
+  }
+
+  &__button {
+    @include font(0.75);
+    cursor: pointer;
+    color: $basic-gray;
+
+    &:hover {
+      color: $basic-green;
+    }
+  }
+}
+
+.chat-search {
+  position: relative;
+
+  &__cancel {
+    display: none;
+    cursor: pointer;
+    padding: 0 0.5em;
+    color: $basic-white;
+    font-size: 2rem;
+  }
+
+  &__input {
+    @include font(0.75);
+    outline: none;
+    border: 1px solid $basic-gray;
+    padding: 0.5em 0.75em;
+    width: 100%;
+
+    &:focus {
+      border-color: $basic-white;
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    @include flexcol();
+    background-color: $darker-green;
+
+    &.active {
+      height: fit-content;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  }
+
+  &__user {
+    @include flexrow(initial, center, 0.25em);
+    @include font(0.75);
+    padding: 0.25em 0.5em;
+    text-align: left;
+
+    &:hover {
+      background-color: $dark-green;
+    }
+  }
+
+  &__image {
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  &__info {
+    @include flexcol(start, flex-start, 0.25em);
+  }
+
+  &__displayname {
+    @include font(0.75, bold);
+  }
+}
+
+@media (max-width: 900px) {
+  .chat-compose {
+    position: sticky;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 0.15em 0.15em 0.15em 0.5em;
+    font-size: 1.5rem;
+
+    &__input {
+      font-size: 1.5rem;
+    }
+
+    &__button {
+      font-size: 1.5rem;
+      @include badge(1.2, $basic-white, $darker-green, 2em);
+
+      &:hover {
+        background-color: $darker-green;
+      }
+    }
+  }
+
+  .chat-search {
+    padding: 0.5em;
+    @include flexrow(center, center, 0.5em);
+
+    &__cancel {
+      display: unset;
+    }
+
+    &__input {
+      padding: 0.5em;
+      font-size: 1.5rem;
+    }
+
+    &__dropdown {
+      background-color: transparent;
+    }
+
+    &__user {
+      font-size: 1.5rem;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &__image {
+      width: 50px;
+      height: 50px;
+    }
+
+    &__displayname {
+      font-size: 1.5rem;
+    }
+
+    &__username {
+      font-size: 1.25rem;
+    }
+  }
+}

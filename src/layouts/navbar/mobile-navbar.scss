@@ -92,6 +92,18 @@
       pointer-events: unset;
     }
   }
+
+  &__messages {
+    position: relative;
+  }
+
+  &__badge {
+    @include badge(0.5, $basic-white, $basic-red, 1.2em);
+    position: absolute;
+    top: 0;
+    right: -1em;
+    font-size: 1.25rem;
+  }
 }
 
 @media (min-width: 900px) {

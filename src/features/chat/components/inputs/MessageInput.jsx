@@ -1,15 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
-import "./chat-input.scss";
+import "./chat-inputs.scss";
 
-export default function ChatInput() {
+export default function MessageInput() {
   const { globalUser } = useAuthContext();
   const { activeChatId, activeChatUser, sendMessage } = useChatContext();
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   async function handleNewMessage(e) {
     e.preventDefault();
@@ -22,29 +26,30 @@ export default function ChatInput() {
     )
       return;
 
+    const message = inputRef.current.value;
+    inputRef.current.value = "";
+
     await sendMessage(
       activeChatId,
       globalUser.uid,
       activeChatUser.uid,
-      inputRef.current.value,
+      message,
     );
-
-    inputRef.current.value = "";
   }
 
   return (
     <form
       onSubmit={handleNewMessage}
-      id="chats-compose"
-      className="chats-compose"
+      id="chat-compose"
+      className="chat-compose"
     >
       <input
         ref={inputRef}
         text="text"
         placeholder={`Message ${activeChatUser.displayname || "user"}...`}
-        className="chats-compose__input"
+        className="chat-compose__input"
       />
-      <button type="submit" className="chats-compose__button">
+      <button type="submit" className="chat-compose__button">
         <FontAwesomeIcon icon={faPaperPlane} />
       </button>
     </form>
