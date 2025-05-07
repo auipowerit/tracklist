@@ -100,10 +100,7 @@ export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
       className={`chats ${isCollapsed ? "chats--active" : "chats--collapsed"}`}
     >
       {activeChatId === -1 ? (
-        <ChatSearchInput
-          isCollapsed={isCollapsed}
-          setIsCollapsed={setIsCollapsed}
-        />
+        <ChatSearchInput setIsCollapsed={setIsCollapsed} />
       ) : (
         <>
           <Header setIsCollapsed={setIsCollapsed} />

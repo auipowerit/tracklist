@@ -14,17 +14,17 @@ export default function Messages({ messages }) {
   const prevMessagLength = useRef(messages.length);
 
   useLayoutEffect(() => {
-    // Scroll to bottom if on mobile
+    // Scroll to bottom if new message comes in
+    if (prevMessagLength.current >= messages.length) return;
+
+    // Scroll to bottom for mobile and desktop
     if (window.innerWidth <= MOBILE_WIDTH) {
       window.scrollTo({
         top: document.body.scrollHeight,
       });
-      return;
+    } else {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-
-    // Scroll to bottom if new message comes in
-    if (prevMessagLength.current >= messages.length) return;
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
 
     prevMessagLength.current = messages.length;
   }, [messages]);

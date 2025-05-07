@@ -6,7 +6,6 @@
   flex-grow: 1;
   padding: 0.5em 1em;
   max-width: 100%;
-  overflow-x: scroll;
   overflow-y: auto;
 }
 
@@ -183,10 +182,37 @@
 
     &__bubble {
       padding: 0.5em;
+
+      &:hover {
+        pointer-events: none;
+      }
+
+      &--clicked {
+        .message__delete,
+        .message__like {
+          display: unset;
+        }
+      }
     }
 
     &__button {
       font-size: 1.25rem;
+    }
+
+    &__delete {
+      display: none;
+    }
+
+    &__like {
+      &--user {  
+        &.message__like--unliked {
+          display: none;
+        }
+      }
+  
+      &--unliked {
+        display: none;
+      }
     }
 
     &__image {

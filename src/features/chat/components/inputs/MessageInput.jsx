@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -10,10 +10,6 @@ export default function MessageInput() {
   const { activeChatId, activeChatUser, sendMessage } = useChatContext();
 
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
 
   async function handleNewMessage(e) {
     e.preventDefault();

@@ -1,21 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretSquareLeft } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
 
-export default function ChatSearchInput({ isCollapsed, setIsCollapsed }) {
+export default function ChatSearchInput({ setIsCollapsed }) {
   const { globalUser, getUserById, searchByUsername } = useAuthContext();
   const { chats, addChat, setActiveChatId, setActiveChatUser } =
     useChatContext();
 
   const [users, setUsers] = useState([]);
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, [isCollapsed]);
 
   async function handleSearch(e) {
     e.preventDefault();
