@@ -1,0 +1,36 @@
+@use "src/styles/abstracts" as *;
+
+.search-results {
+  margin: auto;
+  width: fit-content;
+
+  &--users {
+    @include flexcol();
+    width: 800px;
+    max-width: 100%;
+  }
+
+  &--media {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3em;
+  }
+}
+
+@media (max-width: 1200px) {
+  .search-results--media {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .search-results--media {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .search-results--media {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

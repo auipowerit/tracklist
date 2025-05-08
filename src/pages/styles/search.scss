@@ -3,112 +3,36 @@
 .search {
   padding: 2em 0;
 
-  &__select {
-    display: none;
-    margin: 0 auto 1em auto;
-    border-bottom: 4px solid $basic-green;
-    padding: 0.25em 0.5em;
-    width: fit-content;
-    color: $basic-green;
-    font-size: 1.5rem;
-  }
-
   &__header {
     @include flexrow(center, center, 1em);
     margin-bottom: 3em;
     width: 100%;
   }
-
-  &__bar {
-    @include flexrow(center, center, 1em);
-    @include font(1.25);
-    border: 1px solid $basic-white;
-    padding: 0.25em 0.5em;
-  }
-
-  &__input {
-    @include font(1.25, normal);
-    outline: none;
-  }
-
-  &__submit {
-    @include font(1, normal, $basic-white);
-
-    &:hover {
-      color: $basic-green;
-    }
-  }
-
-  &__results {
-    margin: auto;
-    width: fit-content;
-
-    &--users {
-      @include flexcol();
-      width: 800px;
-      max-width: 100%;
-    }
-
-    &--media {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 3em;
-    }
-  }
-}
-
-@media (max-width: 1200px) {
-  .search__results--media {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 900px) {
   .search {
-    padding: 1em 0.5em;
+    padding: 1em 0;
 
     .tabs {
       display: none;
     }
 
-    &__select {
-      display: block;
-    }
-
     &__header {
       position: sticky;
       top: 0;
-      flex-direction: column;
-      align-items: center;
+      @include flexcol($gap: 1em);
       z-index: 2;
       margin-bottom: 1em;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
       background-color: $background-primary;
       padding: 0 1em 1em 1em;
+      width: 100%;
     }
 
-    &__bar {
-      padding: 0.25em;
-      max-width: 100%;
+    &__options {
+      @include flexrow(space-evenly, center);
+      width: 100%;
     }
-
-    &__input {
-      padding: 0 0.25em;
-      max-width: 100%;
-      font-size: 1.75rem;
-    }
-
-    &__submit {
-      display: none;
-    }
-
-    &__results--media {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-}
-
-@media (max-width: 600px) {
-  .search__results--media {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }

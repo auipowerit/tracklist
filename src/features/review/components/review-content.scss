@@ -51,6 +51,7 @@
   }
 
   &__stars {
+    @include font(1);
     @include flexrow(initial, center, 0.15em);
   }
 

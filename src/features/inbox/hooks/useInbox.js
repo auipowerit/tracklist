@@ -35,30 +35,28 @@ export function useInbox() {
           ],
         });
       } else {
-        if (subtitle === "") {
-          // Check if notification already exists
-          const index = inboxDoc
-            .data()
-            .notifications.findIndex(
-              (notif) =>
-                notif.contentId === contentId &&
-                notif.category === category &&
-                notif.senderId === senderId &&
-                notif.subtitle === "",
-            );
+        // Check if notification already exists
+        const index = inboxDoc
+          .data()
+          .notifications.findIndex(
+            (notif) =>
+              notif.contentId === contentId &&
+              notif.category === category &&
+              notif.senderId === senderId &&
+              notif.subtitle === subtitle,
+          );
 
-          // If notification already exists, update createdAt
-          if (index !== -1) {
-            const notifications = inboxDoc.data().notifications;
-            notifications[index].createdAt = new Date();
+        // If notification already exists, update createdAt
+        if (index !== -1) {
+          const notifications = inboxDoc.data().notifications;
+          notifications[index].createdAt = new Date();
 
-            await updateDoc(inboxRef, {
-              notifications,
-            });
+          await updateDoc(inboxRef, {
+            notifications,
+          });
 
-            await addToInbox(recipientId);
-            return;
-          }
+          await addToInbox(recipientId);
+          return;
         }
 
         // If notification doesn't exist, add it

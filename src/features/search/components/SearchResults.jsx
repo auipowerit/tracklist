@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import MediaCard from "src/features/media/components/cards/MediaCard";
 import UserCard from "src/features/user/components/cards/UserCard";
+import "./search-results.scss";
 
 export default function SearchResults({ results, category }) {
   if (!results) {
@@ -13,7 +14,7 @@ export default function SearchResults({ results, category }) {
 
   return (
     <div
-      className={`search__results ${category === "user" ? "serach__results--users" : "search__results--media"}`}
+      className={`search-results ${category === "user" ? "serach-results--users" : "search-results--media"}`}
     >
       {results.map((result) => (
         <ResultCard

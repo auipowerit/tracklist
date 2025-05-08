@@ -3,6 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import "./searchbar.scss";
 
 export default function SearchBar(props) {
   const { category, setIsLoading, setResults, setInitialResults } = props;
@@ -58,15 +59,15 @@ export default function SearchBar(props) {
   }
 
   return (
-    <form onSubmit={handleSearch} className="search__bar">
+    <form onSubmit={handleSearch} className="searchbar">
       <input
         type="text"
         ref={searchInput}
         placeholder={placeholderMap[category]}
-        className="search__input"
+        className="searchbar__input"
       />
 
-      <button type="submit" className="search__submit">
+      <button type="submit" className="searchbar__submit">
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </form>

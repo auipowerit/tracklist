@@ -1,0 +1,15 @@
+@use "src/styles/abstracts" as *;
+
+.search-select {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .search-select {
+    display: block;
+    border: 1px solid $basic-white;
+    padding: 0.25em 0.5em;
+    color: $basic-white;
+    font-size: 1.5rem;
+  }
+}

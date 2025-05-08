@@ -77,13 +77,18 @@ function Buttons({ comment, review, comments, setComments }) {
   async function handleLike(commentId, userId, userVoted) {
     const updatedContent = await likeComment(commentId, userId);
 
+    const content =
+      comment.content.length > 40
+        ? `${comment.content.slice(0, 40)}...`
+        : comment.content;
+
     // Send notification if not author and not already liked
     if (comment.userId !== globalUser.uid && !userVoted) {
       await addNotification(
-        review.userId,
+        comment.userId,
         globalUser.uid,
         `${globalUser.username} liked your comment`,
-        `${comment.content.slice(0, 40)}`,
+        `${content}`,
         review.id,
         "review",
       );

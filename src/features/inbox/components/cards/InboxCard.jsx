@@ -55,13 +55,7 @@ function Content({ notification }) {
       <p className="inbox__card__title">{notification.title}</p>
 
       {notification.subtitle && (
-        <p className="inbox__card__subtitle">
-          "
-          {notification.subtitle.length > 40
-            ? notification.subtitle.slice(0, 40) + "..."
-            : notification.subtitle}
-          "
-        </p>
+        <p className="inbox__card__subtitle">"{notification.subtitle}"</p>
       )}
     </>
   );

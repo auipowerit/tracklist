@@ -1,0 +1,40 @@
+@use "src/styles/abstracts" as *;
+
+.searchbar {
+  @include flexrow(center, center, 1em);
+  @include font(1.25);
+  border: 1px solid $basic-white;
+  padding: 0.25em 0.5em;
+
+  &__input {
+    @include font(1.25, normal);
+    outline: none;
+  }
+
+  &__submit {
+    @include font(1, normal, $basic-white);
+
+    &:hover {
+      color: $basic-green;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .searchbar {
+    gap: 0.5em;
+    padding: 0.5em;
+    max-width: 100%;
+    border-radius: 24px;
+
+    &__input {
+      width: 100%;
+      font-size: 1.75rem;
+    }
+
+    &__submit {
+      padding: 0 0.25em;
+      font-size: 1.75rem;
+    }
+  }
+}
