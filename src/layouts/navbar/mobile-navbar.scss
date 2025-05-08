@@ -5,20 +5,20 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  @include flexrow(space-evenly, center);
+  @include flexrow(space-between, center);
   z-index: 2;
   background-color: $basic-black;
-  padding: 1em 0;
-  font-size: 2rem;
+  padding: 1em 2em;
 
   transition: opacity 0.3s ease-in-out;
 
   &.hidden {
     opacity: 0.5;
-    //transform: translateY(100%);
   }
 
   &__link {
+    font-size: 1.5rem;
+
     &.active {
       color: $basic-green;
     }
