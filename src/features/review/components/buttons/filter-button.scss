@@ -1,15 +1,16 @@
 @use "src/styles/abstracts" as *;
 
-.filter-container {
+.reviews-filter {
   @include flexrow(initial, center, 1em);
 
-  label {
+  &__label {
     @include font(0.75);
   }
-}
 
-.filter-select {
-  border: 1px solid $basic-white;
-  @include font(0.75);
-  padding: 0.25em 0.5em;
+  &__select {
+    border: 1px solid $basic-white;
+    @include font(0.75);
+    padding: 0.25em 0.5em;
+    background-color: $dark-green;
+  }
 }

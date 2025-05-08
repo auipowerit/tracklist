@@ -9,31 +9,33 @@
   }
 }
 
-.dislike-button {
+.vote-button {
   @include flexrow(initial, center, 0.25em);
   @include font(0.75, 400);
   width: 2.5em;
 
-  &:not(.active):hover {
-    color: $basic-red;
+  &--loading {
+    pointer-events: none;
   }
 
-  &.active {
-    color: $basic-red;
-  }
-}
+  &--like {
+    &:hover {
+      color: $light-green;
+    }
 
-.like-button {
-  @include flexrow(initial, center, 0.25em);
-  @include font(0.75, 400);
-  width: 2.5em;
-
-  &:not(.active):hover {
-    color: $light-green;
+    &--active {
+      color: $light-green;
+    }
   }
 
-  &.active {
-    color: $light-green;
+  &--dislike {
+    &:hover {
+      color: $basic-red;
+    }
+
+    &--active {
+      color: $basic-red;
+    }
   }
 }
 

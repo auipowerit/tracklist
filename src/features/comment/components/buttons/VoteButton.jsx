@@ -5,41 +5,52 @@ import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import "./comment-button.scss";
 
 export default function VoteButton(props) {
-  const { content, handleVote, updateContent, type } = props;
+  const { comment, handleVote, updateComment, type } = props;
   const { globalUser } = useAuthContext();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
+
+  const count =
+    type === "like" ? comment.likes.length : comment.dislikes.length || 0;
 
   const userVoted = globalUser
     ? type === "like"
-      ? content?.likes.includes(globalUser.uid)
-      : content?.dislikes.includes(globalUser.uid)
+      ? comment?.likes.includes(globalUser.uid)
+      : comment?.dislikes.includes(globalUser.uid)
     : false;
 
   async function handleClick() {
     if (!globalUser) return;
 
+    setIsLoading(true);
+
+    // Animate if not removing vote
     if (!userVoted) {
       setIsActive(true);
       setTimeout(() => setIsActive(false), 500);
     }
 
-    const updatedContent = await handleVote(content.id, globalUser.uid, userVoted);
-    updateContent(content, updatedContent);
+    const updatedComment = await handleVote(
+      comment.id,
+      globalUser.uid,
+      userVoted,
+    );
+    updateComment(comment, updatedComment);
+
+    setIsLoading(false);
   }
 
   return (
     <button
       onClick={handleClick}
-      className={`${type}-button ${userVoted && "active"}`}
+      className={`vote-button vote-button--${type} ${userVoted && `vote-button--${type}--active`} ${isLoading && `vote-button--loading`}`}
     >
       <FontAwesomeIcon
         icon={type === "like" ? faThumbsUp : faThumbsDown}
-        className={isActive && "fa-beat"}
+        className={isActive ? "fa-beat" : ""}
       />
-      <p>
-        {type === "like" ? content?.likes.length : content?.dislikes.length}
-      </p>
+      <p>{count}</p>
     </button>
   );
 }

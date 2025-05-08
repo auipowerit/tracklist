@@ -18,8 +18,16 @@
     color: $basic-green;
   }
 
-  &.active {
+  &--active {
     color: $basic-green;
+  }
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  .fa-beat {
+    pointer-events: none;
   }
 }
 

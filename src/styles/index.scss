@@ -59,7 +59,11 @@ input {
 
 select {
   border: none;
-  background-color: $background-primary;
+  background-color: $dark-gray;
+
+  option {
+    color: $basic-white !important;
+  }
 }
 
 .empty__message {

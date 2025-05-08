@@ -75,7 +75,7 @@ function Buttons({ comment, review, comments, setComments }) {
   }
 
   async function handleLike(commentId, userId, userVoted) {
-    const updatedContent = await likeComment(commentId, userId);
+    const updatedComment = await likeComment(commentId, userId);
 
     const content =
       comment.content.length > 40
@@ -94,23 +94,24 @@ function Buttons({ comment, review, comments, setComments }) {
       );
     }
 
-    return updatedContent;
+    return updatedComment;
   }
 
   return (
     <div className="comment-buttons">
       <VoteButton
-        content={comment}
+        comment={comment}
+        updateComment={updateCommentState}
         handleVote={handleLike}
-        updateContent={updateCommentState}
         type="like"
       />
       <VoteButton
-        content={comment}
+        comment={comment}
+        updateComment={updateCommentState}
         handleVote={dislikeComment}
-        updateContent={updateCommentState}
         type="dislike"
       />
+
       {globalUser?.uid === comment.userId && (
         <DeleteButton type="comment" deleteContent={handleDelete} />
       )}

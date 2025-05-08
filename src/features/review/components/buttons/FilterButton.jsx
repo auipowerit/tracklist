@@ -23,12 +23,14 @@ export default function FilterReviews(props) {
   }
 
   return (
-    <div className="filter-container">
-      <label htmlFor="star-filter">Filter by</label>
+    <div className="reviews-filter">
+      <label htmlFor="star-filter" className="reviews-filter__label">
+        Filter by
+      </label>
       <select
         id="star-filter"
         name="star-filter"
-        className="filter-select"
+        className="reviews-filter__select"
         value={filter}
         onChange={handleChange}
       >
