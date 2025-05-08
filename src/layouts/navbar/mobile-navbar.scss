@@ -1,95 +1,26 @@
 @use "src/styles/abstracts" as *;
 
-.hamburger {
-  position: relative;
-  float: right;
-  z-index: 10;
-  cursor: pointer;
-  margin-top: 1em;
-  margin-right: 1.5em;
-  border: none;
-  background: none;
-  width: 35px;
-
-  &__bar,
-  &:after,
-  &:before {
-    display: block;
-    transition: all 0.4s;
-    margin: 8px 0;
-    background-color: $basic-white;
-    width: 100%;
-    height: 5px;
-    content: "";
-  }
-
-  &.is-active {
-    &:before {
-      transform: rotate(-45deg) translate(-12px, 8px);
-    }
-
-    &:after {
-      transform: rotate(45deg) translate(-10px, -6px);
-    }
-
-    .hamburger__bar {
-      opacity: 0;
-    }
-  }
-}
-
 .mobile-navbar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  transform: translateY(-200px);
-  visibility: hidden;
-  opacity: 0;
-  z-index: 9;
-  transition: all 0.3s ease-out;
-  box-shadow: $dark-shadow;
-  background-color: $dark-gray;
+  position: sticky;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  min-height: 40vh;
-  @include flexcol(center, center, 1em);
+  @include flexrow(space-evenly, center);
+  z-index: 2;
+  background-color: $basic-black;
+  padding: 1em 0;
+  font-size: 2rem;
 
-  &.is-active {
-    transform: translateY(0);
-    visibility: visible;
-    opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
+  &.hidden {
+    opacity: 0.5;
+    //transform: translateY(100%);
   }
 
   &__link {
-    display: block;
-    margin: 0 auto;
-    padding-top: 0.3em;
-    width: 100%;
-    color: $basic-gray;
-    font-weight: bold;
-    font-size: 1.7rem;
-    text-align: center;
-    text-decoration: none;
-
     &.active {
-      color: $light-green;
-    }
-  }
-
-  &__overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0;
-    z-index: 8;
-    transition: all 150ms;
-    background-color: rgba(0, 0, 0, 0.7);
-    pointer-events: none;
-
-    &.is-active {
-      opacity: 1;
-      pointer-events: unset;
+      color: $basic-green;
     }
   }
 
@@ -107,10 +38,6 @@
 }
 
 @media (min-width: 900px) {
-  .hamburger {
-    display: none;
-  }
-
   .mobile-navbar {
     display: none;
   }

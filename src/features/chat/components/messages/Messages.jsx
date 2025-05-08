@@ -52,10 +52,12 @@ function MessageCard({ message, index, messages }) {
   const isCurrentUser = message.senderId === globalUser.uid;
 
   function handleClick(e) {
-    e.target.classList.add("message__bubble--clicked");
+    // Reveal heart or delete button
+    e.target.parentNode.classList.add("message__bubble--clicked");
 
+    // Hide heart or delete button after 2 seconds
     setTimeout(() => {
-      e.target.classList.remove("message__bubble--clicked");
+      e.target.parentNode.classList.remove("message__bubble--clicked");
     }, 2000);
   }
 
@@ -64,9 +66,10 @@ function MessageCard({ message, index, messages }) {
       <MessageDate message={message} index={index} messages={messages} />
 
       <div
-        onClick={handleClick}
         className={`message__bubble ${isCurrentUser ? "message__bubble--user" : "message__bubble--friend"}`}
       >
+        <div onClick={handleClick} className="message__bubble__overlay" />
+
         {isCurrentUser && !message.isDeleted && (
           <MessageDeleteButton
             message={message}

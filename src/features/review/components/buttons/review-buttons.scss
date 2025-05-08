@@ -36,7 +36,7 @@
     @include badge(1.5, $basic-white, $dark-green, 2.5em);
     position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: 3.5em;
     margin: 0.75em;
     border: none;
     box-shadow: $light-shadow;

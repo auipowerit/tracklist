@@ -42,72 +42,7 @@ export default function InboxPage() {
 
         if (notifications.length === 0) return;
 
-        const inboxData = await Promise.all(
-          notifications.map(async (notification) => {
-            const user = await getUserById(notification.senderId);
-
-            if (notification.category === "review") {
-              const review = await getReviewById(notification.contentId);
-
-              if (!review || review.media.length === 0) {
-                return {
-                  ...notification,
-                  username: user.username,
-                  profileUrl: user.profileUrl,
-                  image: DEFAULT_MEDIA_IMG,
-                };
-              }
-
-              return {
-                ...notification,
-                username: user.username,
-                profileUrl: user.profileUrl,
-                image: review.media.images[0].url,
-              };
-            }
-
-            if (notification.category === "list") {
-              const list = await getListById(notification.contentId);
-
-              if (!list || list.media.length === 0) {
-                return {
-                  ...notification,
-                  username: user.username,
-                  profileUrl: user.profileUrl,
-                  image: DEFAULT_MEDIA_IMG,
-                };
-              }
-
-              const media = await getMediaById(
-                list.media[0].id,
-                list.media[0].category,
-              );
-
-              if (!media) {
-                return {
-                  ...notification,
-                  username: user.username,
-                  profileUrl: user.profileUrl,
-                  image: DEFAULT_MEDIA_IMG,
-                };
-              }
-
-              return {
-                ...notification,
-                username: user.username,
-                profileUrl: user.profileUrl,
-                subtitle: list.name,
-                image: media.images[0].url,
-              };
-            }
-
-            return {
-              ...notification,
-              username: user.username,
-              profileUrl: user.profileUrl,
-            };
-          }),
-        );
+        const inboxData = await processNotifications(notifications);
 
         setnotifications(inboxData);
         await readAllNotifications(globalUser.uid);
@@ -120,6 +55,77 @@ export default function InboxPage() {
 
     return () => unsubscribe();
   }, [globalUser]);
+
+  async function processNotifications(notifications) {
+    const inboxData = await Promise.all(
+      notifications.map(async (notification) => {
+        const user = await getUserById(notification.senderId);
+
+        if (notification.category === "review") {
+          const review = await getReviewById(notification.contentId);
+
+          if (!review || review.media.length === 0) {
+            return {
+              ...notification,
+              username: user.username,
+              profileUrl: user.profileUrl,
+              image: DEFAULT_MEDIA_IMG,
+            };
+          }
+
+          return {
+            ...notification,
+            username: user.username,
+            profileUrl: user.profileUrl,
+            image: review.media.images[0].url,
+          };
+        }
+
+        if (notification.category === "list") {
+          const list = await getListById(notification.contentId);
+
+          if (!list || list.media.length === 0) {
+            return {
+              ...notification,
+              username: user.username,
+              profileUrl: user.profileUrl,
+              image: DEFAULT_MEDIA_IMG,
+            };
+          }
+
+          const media = await getMediaById(
+            list.media[0].id,
+            list.media[0].category,
+          );
+
+          if (!media) {
+            return {
+              ...notification,
+              username: user.username,
+              profileUrl: user.profileUrl,
+              image: DEFAULT_MEDIA_IMG,
+            };
+          }
+
+          return {
+            ...notification,
+            username: user.username,
+            profileUrl: user.profileUrl,
+            subtitle: list.name,
+            image: media.images[0].url,
+          };
+        }
+
+        return {
+          ...notification,
+          username: user.username,
+          profileUrl: user.profileUrl,
+        };
+      }),
+    );
+
+    return inboxData;
+  }
 
   if (isLoading) {
     return <Loading />;
@@ -136,7 +142,7 @@ export default function InboxPage() {
 function Header() {
   return (
     <div className="inbox__header">
-      <h1>Inbox</h1>
+      <h1>Notifications</h1>
     </div>
   );
 }

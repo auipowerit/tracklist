@@ -2,22 +2,19 @@
 
 .media-card {
   @include flexcol();
-  transition: all 0.2s;
   cursor: pointer;
-  border: 2px solid $basic-white;
-  border-radius: 12px;
+  transition: all 0.2s;
   padding: 0.5em;
+  background-color: $basic-white;
   width: 300px;
   height: fit-content;
-  color: $basic-white;
 
   &:hover {
-    transform: scale(110%);
+    transform: scale(1.05);
   }
 
   &__image {
     box-shadow: $darker-shadow;
-    border-radius: 12px;
     height: 300px;
     object-fit: cover;
   }
@@ -30,7 +27,7 @@
   }
 
   &__title {
-    @include font(0.5, bold);
+    @include font(0.5, bold, $basic-black);
     margin: auto;
     width: fit-content;
     white-space: nowrap;
@@ -45,7 +42,7 @@
   }
 
   &__subtitle {
-    @include font(0.35, bold);
+    @include font(0.35, bold, $basic-gray);
   }
 
   &__rating {

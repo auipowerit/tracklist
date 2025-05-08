@@ -1,85 +1,61 @@
 import { useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBell,
+  faEnvelope,
+  faHome,
+  faSearch,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import "./mobile-navbar.scss";
 
 export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
-  const location = useLocation();
-
-  const hamburger = useRef(null);
-  const menu = useRef(null);
-  const overlay = useRef(null);
+  const mobileRef = useRef();
 
   useEffect(() => {
-    return () => {
-      if (!hamburger.current || !menu.current) return;
-      deactivate();
-    };
-  }, [location.pathname]);
+    window.addEventListener("scroll", handleScroll);
+  }, []);
 
-  function handleClick() {
-    if (!hamburger.current || !menu.current || !overlay.current) return;
+  function handleScroll() {
+    const scrollPosition = window.scrollY;
 
-    if (hamburger.current.classList.contains("is-active")) {
-      deactivate();
+    // Check if the user is scrolling down
+    if (scrollPosition > 200) {
+      // Hide the mobile navbar
+      mobileRef.current.classList.add("hidden");
     } else {
-      activate();
+      // Show the mobile navbar
+      mobileRef.current.classList.remove("hidden");
     }
   }
 
-  function activate() {
-    hamburger.current.classList.add("is-active");
-    menu.current.classList.add("is-active");
-    overlay.current.classList.add("is-active");
-    document.body.classList.add("lock-scroll");
-  }
-
-  function deactivate() {
-    hamburger.current.classList.remove("is-active");
-    menu.current.classList.remove("is-active");
-    overlay.current.classList.remove("is-active");
-    document.body.classList.remove("lock-scroll");
+  function handleClick() {
+    // Show the mobile navbar
+    mobileRef.current.classList.remove("hidden");
   }
 
   return (
-    <div>
-      <Hamburger hamburger={hamburger} handleClick={handleClick} />
+    <nav ref={mobileRef} className="mobile-navbar" onClick={handleClick}>
+      <MobileNavItem link="/home" icon={faHome} />
+      <MobileNavItem link="/search" icon={faSearch} />
 
-      <nav ref={menu} className="mobile-navbar">
-        <MobileNavItem link="/home" label="Home" />
-        <MobileNavItem link="/search" label="Search" />
+      <div className="mobile-navbar__messages">
+        <MobileNavItem link="/messages" icon={faEnvelope} />
+        <NotificationBadge unreadCount={unreadMessages} />
+      </div>
 
-        <div className="mobile-navbar__messages">
-          <MobileNavItem link="/messages" label="Chat" />
-          <NotificationBadge unreadCount={unreadMessages} />
-        </div>
+      <div className="mobile-navbar__messages">
+        <MobileNavItem link="/inbox" icon={faBell} />
+        <NotificationBadge unreadCount={unreadNotifs} />
+      </div>
 
-        <div className="mobile-navbar__messages">
-          <MobileNavItem link="/inbox" label="Inbox" />
-          <NotificationBadge unreadCount={unreadNotifs} />
-        </div>
-
-        <MobileNavItem link="/profile" label="Profile" />
-      </nav>
-
-      <Overlay overlay={overlay} handleClick={deactivate} />
-    </div>
+      <MobileNavItem link="/profile" icon={faUser} />
+    </nav>
   );
 }
 
-function Hamburger({ hamburger, handleClick }) {
-  return (
-    <button
-      ref={hamburger}
-      type="button"
-      onClick={handleClick}
-      className="hamburger"
-    >
-      <div className="hamburger__bar" />
-    </button>
-  );
-}
-
-function MobileNavItem({ link, label }) {
+function MobileNavItem({ link, icon }) {
   return (
     <NavLink
       to={link}
@@ -87,7 +63,7 @@ function MobileNavItem({ link, label }) {
         `mobile-navbar__link ${isActive ? "active" : ""}`
       }
     >
-      <p>{label}</p>
+      <FontAwesomeIcon icon={icon} />
     </NavLink>
   );
 }
@@ -95,14 +71,4 @@ function MobileNavItem({ link, label }) {
 function NotificationBadge({ unreadCount }) {
   if (!unreadCount || unreadCount === 0) return;
   return <p className="mobile-navbar__badge">{unreadCount}</p>;
-}
-
-function Overlay({ overlay, handleClick }) {
-  return (
-    <div
-      ref={overlay}
-      onClick={handleClick}
-      className="mobile-navbar__overlay"
-    />
-  );
 }

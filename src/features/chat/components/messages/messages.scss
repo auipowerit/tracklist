@@ -13,7 +13,7 @@
   @include flexcol($gap: 0.25em);
 
   &__date {
-    @include font(0.25, normal, $basic-gray);
+    @include font(0.5, normal, $basic-gray);
     align-self: center;
     padding: 1.5em 0;
   }
@@ -26,14 +26,14 @@
     width: fit-content;
     max-width: 80%;
 
-    &--clicked {
+    &:hover {
       .message__delete,
       .message__like {
         opacity: 1;
       }
     }
 
-    &:hover {
+    &--clicked {
       .message__delete,
       .message__like {
         opacity: 1;
@@ -47,6 +47,14 @@
 
     &--friend {
       background-color: $darker-gray;
+    }
+
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 

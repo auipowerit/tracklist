@@ -15,8 +15,7 @@ import "./chat-window.scss";
 
 export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
   const { globalUser } = useAuthContext();
-  const { activeChatId, activeChatUser, readMessage, setUnreadMessages } =
-    useChatContext();
+  const { activeChatId, activeChatUser, readMessage } = useChatContext();
   const { getReviewById } = useReviewContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
@@ -37,55 +36,10 @@ export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
 
         if (messages.length === 0) return;
 
-        const messageData = await Promise.all(
-          messages.map(async (message) => {
-            // Check if message sender is current user
-            const user =
-              message.senderId === globalUser.uid ? globalUser : activeChatUser;
-
-            if (message.category === "review") {
-              const review = await getReviewById(message.text);
-              const mediaData = getMediaLinks(review?.media);
-
-              return {
-                chatId: activeChatId,
-                ...message,
-                username: user.username,
-                profileUrl: user.profileUrl,
-                review,
-                mediaData,
-              };
-            }
-
-            if (message.category) {
-              const media = await getMediaById(message.text, message.category);
-              const mediaData = getMediaLinks(media);
-
-              return {
-                chatId: activeChatId,
-                ...message,
-                username: user.username,
-                profileUrl: user.profileUrl,
-                media,
-                mediaData,
-              };
-            }
-
-            return {
-              chatId: activeChatId,
-              ...message,
-              username: user.username,
-              profileUrl: user.profileUrl,
-            };
-          }),
-        );
-
+        const messageData = await processMessages(messages);
         setMessages(messageData);
 
-        // Delay read message to allow navbar to sync unread count
-        setTimeout(async () => {
-          await readMessage(activeChatId, globalUser.uid);
-        }, 1500);
+        markAsRead();
       },
       (error) => {
         console.log(error);
@@ -94,6 +48,62 @@ export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
 
     return () => unsubscribe();
   }, [activeChatId, activeChatUser]);
+
+  async function processMessages(messages) {
+    const messageData = await Promise.all(
+      messages.map(async (message) => {
+        if (!message || !globalUser) return null;
+
+        // Check if message sender is current user
+        const user =
+          message.senderId === globalUser.uid ? globalUser : activeChatUser;
+
+        if (message.category === "review") {
+          const review = await getReviewById(message.text);
+          const mediaData = getMediaLinks(review?.media);
+
+          return {
+            chatId: activeChatId,
+            ...message,
+            username: user.username,
+            profileUrl: user.profileUrl,
+            review,
+            mediaData,
+          };
+        }
+
+        if (message.category) {
+          const media = await getMediaById(message.text, message.category);
+          const mediaData = getMediaLinks(media);
+
+          return {
+            chatId: activeChatId,
+            ...message,
+            username: user.username,
+            profileUrl: user.profileUrl,
+            media,
+            mediaData,
+          };
+        }
+
+        return {
+          chatId: activeChatId,
+          ...message,
+          username: user.username,
+          profileUrl: user.profileUrl,
+        };
+      }),
+    );
+
+    return messageData;
+  }
+
+  async function markAsRead() {
+    // Delay read message to allow navbar to sync unread count
+    setTimeout(async () => {
+      await readMessage(activeChatId, globalUser.uid);
+    }, 1500);
+  }
 
   return (
     <div

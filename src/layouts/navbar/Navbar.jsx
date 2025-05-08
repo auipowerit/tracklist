@@ -1,63 +1,16 @@
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { db } from "src/config/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { useChatContext } from "src/features/chat/context/ChatContext";
 import {
   faBell,
   faEnvelope,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import NavProfile from "./NavProfile";
-import MobileNavbar from "./MobileNavbar";
 import "./navbar.scss";
 
-export default function Navbar() {
-  const { globalUser, getUnreadInbox } = useAuthContext();
-  const { chats, getUnreadChatsByUserId } = useChatContext();
-
-  const [unreadMessages, setUnreadMessages] = useState(0);
-  const [unreadNotifs, setUnreadNotifs] = useState(0);
-
-  useEffect(() => {
-    if (!globalUser) {
-      setUnreadMessages(0);
-      return;
-    }
-
-    const unsubscribe = onSnapshot(
-      doc(db, "userchats", globalUser.uid),
-      async () => {
-        const chatCount = await getUnreadChatsByUserId(globalUser.uid);
-        setUnreadMessages(chatCount);
-      },
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [globalUser, chats]);
-
-  useEffect(() => {
-    if (!globalUser) {
-      setUnreadNotifs(0);
-      return;
-    }
-
-    const unsubscribe = onSnapshot(
-      doc(db, "users", globalUser.uid),
-      async () => {
-        const inboxCount = await getUnreadInbox(globalUser.uid);
-        setUnreadNotifs(inboxCount);
-      },
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [globalUser]);
+export default function Navbar({ unreadMessages, unreadNotifs }) {
+  const { globalUser } = useAuthContext();
 
   return (
     <div className="nav">
@@ -77,11 +30,6 @@ export default function Navbar() {
 
         <NavProfile globalUser={globalUser} />
       </div>
-
-      <MobileNavbar
-        unreadMessages={unreadMessages}
-        unreadNotifs={unreadNotifs}
-      />
     </div>
   );
 }
