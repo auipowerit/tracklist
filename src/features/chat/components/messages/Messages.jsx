@@ -67,14 +67,16 @@ function MessageCard({ message, index, messages }) {
         onClick={handleClick}
         className={`message__bubble ${isCurrentUser ? "message__bubble--user" : "message__bubble--friend"}`}
       >
-        {isCurrentUser && (
+        {isCurrentUser && !message.isDeleted && (
           <MessageDeleteButton
             message={message}
             isCurrentUser={isCurrentUser}
           />
         )}
 
-        <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
+        {!message.isDeleted && (
+          <MessageLikeButton message={message} isCurrentUser={isCurrentUser} />
+        )}
 
         <MessageImage message={message} />
 

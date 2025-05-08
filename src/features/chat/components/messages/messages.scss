@@ -183,10 +183,6 @@
     &__bubble {
       padding: 0.5em;
 
-      &:hover {
-        pointer-events: none;
-      }
-
       &--clicked {
         .message__delete,
         .message__like {
@@ -204,12 +200,12 @@
     }
 
     &__like {
-      &--user {  
+      &--user {
         &.message__like--unliked {
           display: none;
         }
       }
-  
+
       &--unliked {
         display: none;
       }

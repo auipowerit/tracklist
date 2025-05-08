@@ -8,12 +8,18 @@ import {
   faSquareCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
 import "./chat-list.scss";
+import { useEffect } from "react";
 
 export default function ChatList({
   handleOpenChat,
   isCollapsed,
   setIsCollapsed,
 }) {
+  useEffect(() => {
+    if (isCollapsed) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [isCollapsed]);
+
   return (
     <div
       className={`chatlist ${isCollapsed ? "chatlist--collapsed" : "chatlist--active"}`}
