@@ -7,9 +7,9 @@ import {
   useParams,
 } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
-import ChatButton from "src/features/chat/components/buttons/ChatButton";
 import NavLinks from "src/features/user/components/nav/NavLinks";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
+import ChatButton from "src/features/user/components/buttons/ChatButton";
 import LogoutButton from "src/features/user/components/buttons/LogoutButton";
 import "./styles/account.scss";
 
@@ -52,14 +52,14 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="account-page-container">
-      <div className="account-page-nav">
+    <div className="account">
+      <div className="account__navbar">
         <Profile user={user} />
         <NavLinks username={user.username} />
         {canEdit ? <LogoutButton /> : <ChatButton username={user.username} />}
       </div>
 
-      <div className="account-page-outlet">
+      <div className="account__outlet">
         <Outlet context={{ user, canEdit }} />
       </div>
     </div>
@@ -77,9 +77,9 @@ function Profile({ user }) {
   return (
     <Link
       to={`/users/${user.username}`}
-      className={`account-nav-profile-link ${isHomePage && "active"}`}
+      className={`account__nav-link ${isHomePage && "account__nav-link--active"}`}
     >
-      <img src={user.profileUrl} />
+      <img src={user.profileUrl} className="account__image" />
       <p>{user.username}</p>
     </Link>
   );

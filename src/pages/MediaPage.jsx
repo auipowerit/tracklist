@@ -5,10 +5,10 @@ import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import MediaNavBar from "../features/media/components/nav/MediaNavBar";
-import MediaBanner from "../features/media/components/MediaBanner";
-import "./styles/artist.scss";
+import MediaBanner from "../features/media/components/banner/MediaBanner";
+import "./styles/media.scss";
 
-export default function ArtistPage() {
+export default function MediaPage() {
   const { getMediaById } = useSpotifyContext();
   const params = useParams();
 
@@ -46,30 +46,9 @@ export default function ArtistPage() {
       const albumId = params.albumId;
       const trackId = params.trackId;
 
-      let fetchedArtist = null;
-      if (artistId && artistId !== previousArtistId.current) {
-        setIsLoading(true);
-        fetchedArtist = await getMediaById(artistId, "artist");
-        previousArtistId.current = artistId;
-      }
-
-      let fetchedAlbum = media.album;
-      if (albumId) {
-        if (albumId !== previousAlbumId.current) {
-          setIsLoading(true);
-          fetchedAlbum = await getMediaById(albumId, "album");
-          previousAlbumId.current = albumId;
-        }
-      } else {
-        previousAlbumId.current = null;
-        fetchedAlbum = null;
-      }
-
-      let fetchedTrack = null;
-      if (trackId) {
-        setIsLoading(true);
-        fetchedTrack = await getMediaById(trackId, "track");
-      }
+      const fetchedArtist = await fetchArtist(artistId);
+      const fetchedAlbum = await fetchAlbum(albumId);
+      const fetchedTrack = await fetchTrack(trackId);
 
       const newMedia = {
         artist: fetchedArtist || media.artist,
@@ -77,11 +56,9 @@ export default function ArtistPage() {
         track: fetchedTrack || null,
       };
 
-      setMedia((prevMedia) =>
-        JSON.stringify(prevMedia) !== JSON.stringify(newMedia)
-          ? newMedia
-          : prevMedia,
-      );
+      if (!isEqual(media, newMedia)) {
+        setMedia(newMedia);
+      }
     } catch (error) {
       console.error("Error fetching media:", error);
     } finally {
@@ -89,12 +66,51 @@ export default function ArtistPage() {
     }
   }
 
+  async function fetchArtist(artistId) {
+    if (artistId && artistId !== previousArtistId.current) {
+      setIsLoading(true);
+      const artist = await getMediaById(artistId, "artist");
+      previousArtistId.current = artistId;
+      return artist;
+    }
+
+    return null;
+  }
+
+  async function fetchAlbum(albumId) {
+    if (albumId && albumId !== previousAlbumId.current) {
+      setIsLoading(true);
+      const album = await getMediaById(albumId, "album");
+      previousAlbumId.current = albumId;
+      return album;
+    } else if (!albumId) {
+      previousAlbumId.current = null;
+      return null;
+    }
+
+    return media.album;
+  }
+
+  async function fetchTrack(trackId) {
+    if (trackId) {
+      setIsLoading(true);
+      const track = await getMediaById(trackId, "track");
+      return track;
+    }
+
+    return null;
+  }
+
+  function isEqual(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
+  }
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="artist-page">
+    <div className="media">
       <MediaGradient
         image={
           memoizedMedia.album?.images?.[0]?.url ||
@@ -108,7 +124,7 @@ export default function ArtistPage() {
         track={memoizedMedia.track}
         category={category}
       />
-      <div className="artist-page__content">
+      <div className="media__content">
         <MediaBanner
           media={
             memoizedMedia.track || memoizedMedia.album || memoizedMedia.artist
@@ -118,7 +134,7 @@ export default function ArtistPage() {
           setFilter={setFilter}
         />
 
-        <div className="artist-page__outlet">
+        <div className="media__outlet">
           <Outlet
             context={{
               artist: memoizedMedia.artist,

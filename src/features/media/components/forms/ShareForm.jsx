@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import Alert from "src/features/shared/components/Alert";
+import Alert from "src/features/shared/components/alerts/Alert";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -213,7 +213,9 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
 
 function FormUserResults({ users, handleAddUser }) {
   return (
-    <div className={`share-form__search--dropdown ${users.length > 0 && "active"}`}>
+    <div
+      className={`share-form__search--dropdown ${users.length > 0 && "active"}`}
+    >
       {users.map((user) => (
         <button
           key={user.uid}

@@ -1,0 +1,43 @@
+@use "src/styles/abstracts" as *;
+
+.success {
+  @include flexcol(center, center, 1em);
+  padding: 2em;
+
+  &__message {
+    @include flexrow(center, center, 0.5em);
+    @include font(1.25, normal, $light-green, italic);
+  }
+
+  &__button {
+    @include flexrow(center, center, 0.5em);
+    @include font(1);
+    border: 1px solid $basic-white;
+    padding: 0.5em 0.75em;
+
+    &:hover {
+      color: $basic-gray;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .success {
+    padding: 3em 2em;
+
+    &__message {
+      font-size: 1.5rem;
+    }
+
+    &__button {
+      border: none;
+      border-radius: 26px;
+      background-color: $basic-green;
+      font-size: 1.5rem;
+
+      svg {
+        display: none;
+      }
+    }
+  }
+}

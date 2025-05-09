@@ -17,7 +17,7 @@ export default function AccountLikes() {
   ];
 
   return (
-    <div className="account-page-outlet-container">
+    <div className="account__section">
       <Header />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <LikedContent activeTab={activeTab} user={user} />
@@ -27,8 +27,8 @@ export default function AccountLikes() {
 
 function Header() {
   return (
-    <div className="account-page-header">
-      <p>Likes</p>
+    <div className="account__header">
+      <h2 className="account__title">Likes</h2>
     </div>
   );
 }

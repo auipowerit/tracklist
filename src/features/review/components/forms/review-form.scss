@@ -12,3 +12,12 @@
     width: 100%;
   }
 }
+
+@media (max-width: 900px) {
+  .review-form {
+    &__content {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

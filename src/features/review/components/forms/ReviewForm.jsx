@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DEFAULT_MEDIA_IMG, REVIEW_LIMIT } from "src/data/const";
-import Alert from "src/features/shared/components/Alert";
+import Alert from "src/features/shared/components/alerts/Alert";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
@@ -173,9 +173,9 @@ export default function ReviewForm(props) {
     setMedia({});
     setType("artist");
     setRating(0);
-    inputRef.current.value = "";
     setContent("");
     setError("");
+    inputRef.current.value = "";
     formRef.current.elements["media"].classList.remove("form__input--invalid");
     formRef.current.elements["review"].classList.remove("form__input--invalid");
   }
@@ -196,7 +196,11 @@ export default function ReviewForm(props) {
         />
       </div>
 
-      <StarRating rating={rating} setRating={setRating} />
+      <StarRating
+        rating={rating}
+        setRating={setRating}
+        isModalOpen={isModalOpen}
+      />
       <FormReview content={content} setContent={setContent} />
 
       <Alert message={error} />

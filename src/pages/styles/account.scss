@@ -1,79 +1,100 @@
 @use "src/styles/abstracts" as *;
 
-.account-page-container {
+.account {
   @include flexcol(initial, center, 2em);
-  margin: 0 auto 5em auto;
+  margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-}
+  min-height: 80vh;
 
-.account-page-nav {
-  @include flexrow(space-between, center);
-  background-color: $dark-green;
-  padding: 1em 2em;
-  width: 100%;
-}
-
-.account-nav-profile-link {
-  @include flexrow(initial, center, 0.5em);
-  @include font(1, normal);
-  color: $basic-gray;
-
-  &:hover,
-  &.active {
-    color: $basic-white;
+  &__navbar {
+    @include flexrow(space-between, center);
+    flex-wrap: wrap;
+    background-color: $dark-green;
+    padding: 0.75em 2em;
+    width: 100%;
   }
 
-  img {
+  &__nav-links {
+    @include flexrow(initial, center, 1em);
+  }
+
+  &__nav-link {
+    @include flexrow(initial, center, 0.5em);
+    @include font(1, normal);
+    color: $basic-gray;
+
+    &:hover,
+    &--active {
+      color: $basic-white;
+    }
+  }
+
+  &__image {
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
   }
-}
 
-.account-page-nav-links-container {
-  @include flexrow(initial, center, 1em);
-}
-
-.account-page-nav-link {
-  @include font(1, normal);
-  color: $basic-gray;
-
-  &:hover,
-  &.active {
-    color: $basic-white;
+  &__outlet {
+    padding: 0 1em;
+    width: 100%;
+    height: 100%;
   }
-}
 
-.account-page-outlet {
-  margin: auto;
-  width: 100%;
-  padding: 0 1em;
-}
+  &__section {
+    @include flexcol(initial, initial, 2em);
+    height: 100%;
+  }
 
-.account-page-outlet-container {
-  @include flexcol(initial, initial, 2em);
-  height: 100%;
-}
+  &__header {
+    @include flexrow(space-between, end);
+    border-bottom: 1px solid $basic-white;
+    padding: 0.5em 0;
+  }
 
-.account-page-header {
-  @include flexrow(space-between, end);
-  border-bottom: 1px solid $basic-white;
-  padding-bottom: 0.5em;
-
-  & > p {
+  &__title {
     @include font(1);
   }
 }
 
-.account-page-edit-button {
-  @include flexrow(initial, center, 0.5em);
-  @include font(0.75);
-  border: 2px solid $basic-white;
-  padding: 0.25em 0.5em;
+@media (max-width: 900px) {
+  .account {
+    &__navbar {
+      justify-content: space-evenly;
+      padding: 0.5em 0.25em;
+    }
 
-  &:hover {
-    color: $basic-gray;
+    &__nav-link {
+      gap: 0.25em;
+    }
+
+    &__nav-link {
+      font-size: 0.85rem;
+    }
+
+    &__image {
+      width: 20px;
+      height: 20px;
+    }
+
+    &__outlet {
+      padding: 0;
+    }
+
+    &__header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid $basic-gray;
+      background-color: $background-primary;
+      padding: 0.5em 0.25em;
+    }
+
+    &__title {
+      font-size: 1rem;
+    }
   }
 }

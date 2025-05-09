@@ -1,0 +1,15 @@
+@use "src/styles/abstracts" as *;
+
+.media-reviews {
+  @include flexcol($gap: 1em);
+  width: 100%;
+
+  &__header {
+    @include flexrow(initial, center, 1em);
+  }
+
+  &__list {
+    @include flexcol($gap: 1em);
+    margin-left: 1em;
+  }
+}

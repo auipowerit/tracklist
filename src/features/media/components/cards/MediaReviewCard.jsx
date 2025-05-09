@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import {
-  ReviewContent,
-  ReviewStars,
-} from "src/features/review/components/ReviewContent";
 import { formatDateMDYLong } from "src/utils/date";
+import ReviewStars from "src/features/review/components/rating/ReviewStars";
+import "./media-review-card.scss";
 
 export default function MediaReviewCard({ review }) {
   return (
     <Link to={`/reviews/${review.id}`} className="media-review">
       <Header review={review} />
-      <ReviewContent review={review} />
+      <Content review={review} />
     </Link>
   );
 }
@@ -25,6 +23,7 @@ function Header({ review }) {
             Review by{" "}
             <span className="media-review--highlight">{review.username}</span>
           </p>
+
           <ReviewStars rating={review.rating} />
         </div>
 
@@ -33,5 +32,15 @@ function Header({ review }) {
         </p>
       </div>
     </div>
+  );
+}
+
+function Content({ review }) {
+  return (
+    <p className="media-review__content">
+      {review.content.length > 150
+        ? `${review.content.slice(0, 150)}...`
+        : review.content}
+    </p>
   );
 }

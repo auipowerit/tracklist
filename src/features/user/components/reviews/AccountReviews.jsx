@@ -3,14 +3,14 @@ import { useOutletContext } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
-import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
+import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 import "./account-reviews.scss";
 
 export default function AccountReviews() {
   const { user, canEdit } = useOutletContext();
 
   return (
-    <div className="account-page-outlet-container">
+    <div className="account__section">
       <Header canEdit={canEdit} />
       <ReviewsList user={user} />
     </div>
@@ -27,10 +27,10 @@ function Header({ canEdit }) {
   }, [isModalOpen]);
 
   return (
-    <div className="account-page-header">
-      <p>Reviews</p>
+    <div className="account__header">
+      <h2 className="account__title">Reviews</h2>
       {canEdit && (
-        <ReviewButton
+        <AddReviewButton
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
         />

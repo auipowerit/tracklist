@@ -1,16 +1,16 @@
 @use "src/styles/abstracts" as *;
 
 .review-card {
-  @include flexcol();
+  @include flexcol($gap: 0.5em);
+  cursor: pointer;
+  padding: 0.5em;
 
-  &--container {
-    @include flexcol($gap: 0.5em);
-    cursor: pointer;
-    padding: 0.5em;
+  &:hover {
+    background-color: $dark-green;
+  }
 
-    &:hover {
-      background-color: $dark-green;
-    }
+  &__container {
+    @include flexcol();
   }
 
   &__header {
@@ -30,32 +30,87 @@
     @include flexcol(space-between);
   }
 
+  &__user {
+    @include flexrow(initial, center, 0.5em);
+    @include font(0.75);
+
+    &__container {
+      @include flexrow(initial, center, 0.5em);
+    }
+  }
+
+  &__profile {
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  &__date {
+    @include font(0.5, 400, $basic-gray);
+
+    &--mobile {
+      display: none;
+    }
+  }
+
   &__rating {
     @include flexcol($gap: 0.5em);
+  }
+
+  &__content {
+    @include font(1);
+    overflow-wrap: break-word;
   }
 }
 
 @media (max-width: 900px) {
   .review-card {
-    gap: 0.25em;
-    border-bottom: 1px solid $darker-gray;
-    padding-bottom: 0.5em;
+    gap: 1em;
+
+    &:hover {
+      background-color: transparent;
+    }
 
     &:last-child {
       border-bottom: none;
     }
 
-    &--container {
-      gap: 1em;
-
-      &:hover {
-        background-color: transparent;
-      }
+    &__container {
+      gap: 0.25em;
+      border-bottom: 1px solid $darker-gray;
+      padding-bottom: 0.5em;
     }
 
     &__info {
       width: 80%;
       overflow-x: hidden;
+    }
+
+    &__user {
+      flex-wrap: wrap;
+      color: $basic-gray;
+      font-weight: normal;
+      font-size: 1rem;
+
+      &__container {
+        width: 100%;
+      }
+    }
+
+    &__profile {
+      width: 30px;
+      height: 30px;
+    }
+
+    &__date {
+      display: none;
+
+      &--mobile {
+        display: unset;
+        font-weight: bold;
+        font-size: 0.75rem;
+      }
     }
 
     &__rating {
@@ -64,6 +119,10 @@
 
     .review-stars {
       font-size: 1rem;
+    }
+
+    &__content {
+      font-size: 1.25rem;
     }
   }
 }

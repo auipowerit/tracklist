@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
-import SuccessMessage from "src/features/shared/components/SuccessMessage";
+import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import ListForm from "../forms/ListForm";
 import "./list-buttons.scss";
 
@@ -37,17 +37,14 @@ export default function AddListButton({ isModalOpen, setIsModalOpen }) {
     <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         {success ? (
-          <SuccessMessage
+          <SuccessAlert
             message={"List created!"}
             link={"Go to lists"}
             icon={faArrowRight}
             onClick={handleSuccessClick}
           />
         ) : (
-          <ListForm
-            isModalOpen={isModalOpen}
-            setSuccess={setSuccess}
-          />
+          <ListForm isModalOpen={isModalOpen} setSuccess={setSuccess} />
         )}
       </Modal>
 

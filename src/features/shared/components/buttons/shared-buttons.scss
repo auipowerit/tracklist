@@ -43,25 +43,13 @@
 @media (max-width: 900px) {
   .heart-button {
     font-size: 1.25rem;
-
-    &:hover {
-      pointer-events: none;
-    }
   }
 
   .share-button {
     font-size: 1.25rem;
-
-    &:hover {
-      pointer-events: none;
-    }
   }
 
   .delete-button {
     font-size: 1.25rem;
-
-    &:hover {
-      pointer-events: none;
-    }
   }
 }

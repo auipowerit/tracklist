@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { formatDateMDYLong } from "src/utils/date";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import { ReviewStars } from "src/features/review/components/ReviewContent";
+import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import "./media-card.scss";
 
@@ -60,7 +60,9 @@ export default function MediaCard(props) {
 
       <div className="media-card__info">
         <div className="media-card__title--wrapper">
-          <p ref={titleRef} className="media-card__title">{fetchedMedia.data?.title || ""}</p>
+          <p ref={titleRef} className="media-card__title">
+            {fetchedMedia.data?.title || ""}
+          </p>
         </div>
 
         <p className="media-card__subtitle">

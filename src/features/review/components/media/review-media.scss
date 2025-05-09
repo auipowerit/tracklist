@@ -1,9 +1,8 @@
 @use "src/styles/abstracts" as *;
 
 .review-media {
-  @include flexcol(space-evenly, center);
+  @include flexcol(space-evenly, center, 0.25em);
   flex-basis: 30%;
-  border: 1px solid $basic-gray;
   padding: 0.5em 1em 0 1em;
   min-width: 30%;
   height: 100%;
@@ -19,9 +18,8 @@
 
   &__info {
     @include flexcol($gap: 0.5em);
-    padding: 0.25em 0.5em;
     width: 100%;
-    max-width: 275px;
+    max-width: 100%;
   }
 
   &__title {
@@ -35,7 +33,7 @@
     }
 
     &--wrapper {
-      @include gradient(left);
+      @include gradient(left, 5%, 99%);
       padding: 0 0.5em;
       width: 100%;
       overflow: hidden;
@@ -57,7 +55,6 @@
     align-self: flex-end;
     gap: 1em;
     margin: 0 auto;
-    border: none;
     padding: 1em;
     width: 100%;
     max-width: 100%;

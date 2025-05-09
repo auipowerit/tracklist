@@ -17,7 +17,7 @@ export default function ListHeader(props) {
   const { user } = useOutletContext();
 
   return (
-    <div className="account-page-header">
+    <div className="account__header">
       <div className="account-list-title">
         <div className="account-list-name-container">
           {list.isPrivate && <LockIcon />}

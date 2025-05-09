@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import Tabs from "src/layouts/buttons/Tabs";
-import MediaReviews from "../MediaReviews";
+import MediaReviews from "../reviews/MediaReviews";
 import "./track-profile.scss";
 
 export default function TrackProfile() {

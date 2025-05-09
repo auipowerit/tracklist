@@ -1,12 +1,12 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import RatingBar from "src/features/review/components/rating/RatingBar";
-import { ReviewStars } from "src/features/review/components/ReviewContent";
+import RatingBar from "./RatingBar";
+import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import BannerButtons from "./buttons/BannerButtons";
-import "./styles/media-banner.scss";
+import BannerButtons from "./BannerButtons";
+import "./media-banner.scss";
 
 function MediaBanner({ media, category, setActiveTab, setFilter }) {
   const { getAvgRating } = useReviewContext();
@@ -81,7 +81,9 @@ function Title({ name, subtitle }) {
   return (
     <div className="media-banner__header">
       <div className="media-banner__title--wrapper">
-        <p ref={titleRef} className="media-banner__title">{name}</p>
+        <p ref={titleRef} className="media-banner__title">
+          {name}
+        </p>
       </div>
 
       <p className="media-banner__subtitle">{subtitle}</p>

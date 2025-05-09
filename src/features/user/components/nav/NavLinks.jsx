@@ -15,12 +15,12 @@ export default function NavLinks({ username }) {
   };
 
   return (
-    <div className="account-page-nav-links-container">
+    <div className="account__nav-links">
       {children.map((child) => (
         <Link
           key={child.id}
           to={`/users/${username}/${child.id}`}
-          className={`account-page-nav-link ${isActive(child.id) && "active"}`}
+          className={`account__nav-link ${isActive(child.id) && "account__nav-link--active"}`}
         >
           {child.title}
         </Link>

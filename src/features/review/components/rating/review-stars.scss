@@ -1,0 +1,15 @@
+@use "src/styles/abstracts" as *;
+
+.review-stars {
+  @include font(1);
+  @include flexrow(initial, center, 0.15em);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .review-stars {
+    &__star {
+      font-size: 1.25rem;
+    }
+  }
+}

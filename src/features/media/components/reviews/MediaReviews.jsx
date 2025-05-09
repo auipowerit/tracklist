@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import SortReviews from "src/features/sort/components/SortReviews";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import FilterReviews from "src/features/review/components/buttons/FilterButton";
-import MediaReviewCard from "src/features/media/components/cards/MediaReviewCard";
-import "./styles/media-reviews.scss";
+import MediaReviewCard from "../cards/MediaReviewCard";
+import "./media-reviews.scss";
 
 export default function MediaReviews({ mediaId, filter, setFilter }) {
   const { getReviewsByMediaId } = useReviewContext();

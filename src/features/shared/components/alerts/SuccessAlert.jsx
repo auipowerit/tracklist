@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import "./success-alert.scss";
 
-export default function SuccessMessage({ message, link, icon, onClick }) {
+export default function SuccessAlert({ message, link, icon, onClick }) {
   return (
     <div className="success">
       <div className="success__message">

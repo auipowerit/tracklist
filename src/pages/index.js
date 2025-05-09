@@ -5,7 +5,7 @@ export { default as ReviewPage } from "./ReviewPage";
 
 export { default as SearchPage } from "./SearchPage";
 
-export { default as ArtistPage } from "./ArtistPage";
+export { default as MediaPage } from "./MediaPage";
 export { default as ArtistProfile } from "../features/media/components/artist/ArtistProfile";
 export { default as AlbumProfile } from "../features/media/components/album/AlbumProfile";
 export { default as TrackProfile } from "../features/media/components/track/TrackProfile";

@@ -10,3 +10,9 @@
   @include flexcol($gap: 1em);
   width: 100%;
 }
+
+@media (max-width: 900px) {
+  .account-friends-container {
+    height: auto;
+  }
+}

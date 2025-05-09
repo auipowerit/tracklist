@@ -1,19 +1,5 @@
 @use "src/styles/abstracts" as *;
 
-.media-reviews {
-  @include flexcol($gap: 1em);
-  width: 100%;
-
-  &__header {
-    @include flexrow(initial, center, 1em);
-  }
-
-  &__list {
-    @include flexcol($gap: 1em);
-    margin-left: 1em;
-  }
-}
-
 .media-review {
   @include flexcol($gap: 1em);
   padding: 1em;
@@ -41,15 +27,20 @@
     @include flexcol($gap: 0.25em);
   }
 
-  &__date {
-    @include font(0.25, normal, $basic-gray);
-  }
-
   &__username {
     @include font(0.5, normal, $basic-gray);
   }
 
   &--highlight {
     @include font(initial, bold, $basic-white);
+  }
+
+  &__date {
+    @include font(0.5, normal, $basic-gray);
+  }
+
+  &__content {
+    @include font(1);
+    overflow-wrap: break-word;
   }
 }

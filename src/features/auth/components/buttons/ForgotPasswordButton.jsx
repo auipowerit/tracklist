@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import SuccessMessage from "src/features/shared/components/SuccessMessage";
+import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import PasswordReset from "../forms/PasswordReset";
 
 export default function ForgotPasswordButton() {
@@ -22,7 +22,7 @@ export default function ForgotPasswordButton() {
     <div>
       {success ? (
         <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-          <SuccessMessage
+          <SuccessAlert
             message="Reset email sent!"
             link="Go to login"
             icon={faArrowRight}

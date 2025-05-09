@@ -35,7 +35,7 @@ export default function App() {
         },
         {
           path: "/artists",
-          element: <Pages.ArtistPage />,
+          element: <Pages.MediaPage />,
           errorElement: <Pages.ErrorPage is404={false} />,
           children: [
             {

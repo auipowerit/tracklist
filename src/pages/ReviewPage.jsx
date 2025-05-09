@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { formatDateMDYLong, formatDateMDYShort } from "src/utils/date";
 import Loading from "src/features/shared/components/Loading";
-import MediaDetails from "src/features/review/components/media/MediaDetails";
-import { ReviewStars } from "src/features/review/components/ReviewContent";
+import { formatDateMDYLong, formatDateMDYShort } from "src/utils/date";
+import ReviewMedia from "src/features/review/components/media/ReviewMedia";
 import CommentList from "src/features/comment/components/lists/CommentList";
+import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import ReviewButtons from "src/features/review/components/buttons/ReviewButtons";
 import "./styles/review.scss";
@@ -56,7 +56,7 @@ export default function ReviewPage() {
 function Review({ review }) {
   return (
     <div className="review__container">
-      <MediaDetails review={review} />
+      <ReviewMedia review={review} />
 
       <div className="review__content">
         <div className="review__section">
@@ -77,7 +77,7 @@ function ReviewHeader({ review }) {
 
       <div className="review__details">
         <div className="review__title">
-          <p className="review__user">
+          <div className="review__user">
             Review by&nbsp;
             <Link to={`/users/${review.username}`} className="review__username">
               {review.username}
@@ -85,7 +85,7 @@ function ReviewHeader({ review }) {
             <p className="review__date review__date--mobile">
               {` on ${formatDateMDYShort(review.createdAt.toDate())}`}
             </p>
-          </p>
+          </div>
 
           <p className="review__date">
             {formatDateMDYLong(review.createdAt.toDate())}

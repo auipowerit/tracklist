@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { isEmailValid } from "src/utils/form";
-import Alert from "src/features/shared/components/Alert";
+import Alert from "src/features/shared/components/alerts/Alert";
 import { useAuthContext } from "../../context/AuthContext";
 
 export default function PasswordReset({ isModalOpen, setSuccess }) {

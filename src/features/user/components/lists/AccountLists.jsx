@@ -21,7 +21,7 @@ export default function AccountLists() {
   ];
 
   return (
-    <div className="account-page-outlet-container">
+    <div className="account__section">
       <Header canEdit={canEdit} />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <Lists user={user} activeTab={activeTab} />
@@ -39,8 +39,8 @@ function Header({ canEdit }) {
   }, [isModalOpen]);
 
   return (
-    <div className="account-page-header">
-      <p>Lists</p>
+    <div className="account__header">
+      <h2 className="account__title">Lists</h2>
       {canEdit && (
         <AddListButton
           isModalOpen={isModalOpen}

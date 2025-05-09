@@ -27,6 +27,7 @@ export default function FilterReviews(props) {
       <label htmlFor="star-filter" className="reviews-filter__label">
         Filter by
       </label>
+
       <select
         id="star-filter"
         name="star-filter"

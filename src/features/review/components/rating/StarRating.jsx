@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import "./star-rating.scss";
 
-export default function StarRating({ rating, setRating }) {
+export default function StarRating({ rating, setRating, isModalOpen }) {
   const [hover, setHover] = useState(null);
+
+  useEffect(() => {
+    if (!isModalOpen) setHover(null);
+  }, [isModalOpen]);
 
   function getStarColor(ratingValue) {
     return ratingValue <= (hover || rating) ? "#ffc107" : "#94969c";

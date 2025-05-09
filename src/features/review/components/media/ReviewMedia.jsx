@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import "./media-details.scss";
+import "./review-media.scss";
 
-export default function MediaDetails({ review }) {
+export default function ReviewMedia({ review }) {
   const { getMediaLinks } = useSpotifyContext();
 
   const [mediaData, setMediaData] = useState({});

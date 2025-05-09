@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import SuccessMessage from "src/features/shared/components/SuccessMessage";
+import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import {
   faArrowRight,
   faList,
@@ -50,7 +50,7 @@ export default function AddToListButton(props) {
     <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         {success ? (
-          <SuccessMessage
+          <SuccessAlert
             message={"Changes saved!"}
             link={"Go to lists"}
             icon={faArrowRight}

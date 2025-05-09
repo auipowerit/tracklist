@@ -4,8 +4,8 @@ import { db } from "src/config/firebase.js";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useChatContext } from "src/features/chat/context/ChatContext.js";
 import { useAuthContext } from "src/features/auth/context/AuthContext.js";
-import Footer from "./Footer";
 import ToTop from "./buttons/ToTop.jsx";
+import Footer from "./footer/Footer.jsx";
 import Navbar from "./navbar/Navbar.jsx";
 import MobileNavbar from "./navbar/MobileNavbar.jsx";
 
@@ -19,10 +19,11 @@ export default function Layout() {
   useEffect(() => {
     if (!globalUser) {
       setUnreadMessages(0);
+      setUnreadNotifs(0);
       return;
     }
 
-    const unsubscribe = onSnapshot(
+    const unsubscribeChats = onSnapshot(
       doc(db, "userchats", globalUser.uid),
       async () => {
         const chatCount = await getUnreadChatsByUserId(globalUser.uid);
@@ -30,18 +31,7 @@ export default function Layout() {
       },
     );
 
-    return () => {
-      unsubscribe();
-    };
-  }, [globalUser, chats]);
-
-  useEffect(() => {
-    if (!globalUser) {
-      setUnreadNotifs(0);
-      return;
-    }
-
-    const unsubscribe = onSnapshot(
+    const unsubscribeNotifications = onSnapshot(
       doc(db, "users", globalUser.uid),
       async () => {
         const inboxCount = await getUnreadInbox(globalUser.uid);
@@ -50,9 +40,10 @@ export default function Layout() {
     );
 
     return () => {
-      unsubscribe();
+      unsubscribeChats();
+      unsubscribeNotifications();
     };
-  }, [globalUser]);
+  }, [globalUser, chats]);
 
   return (
     <div className="wrapper">

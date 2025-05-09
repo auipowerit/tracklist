@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
+import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
 import AddToListButton from "src/features/list/components/buttons/AddToListButton";
+import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
   const { globalUser } = useAuthContext();
@@ -31,7 +31,7 @@ export default function BannerButtons({ mediaId, name, category }) {
         category={category}
       />
 
-      <ReviewButton
+      <AddReviewButton
         isModalOpen={isReviewModalOpen}
         setIsModalOpen={setIsReviewModalOpen}
         showIcon={true}

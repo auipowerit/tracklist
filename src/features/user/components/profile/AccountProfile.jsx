@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -75,7 +75,7 @@ export default function AccountProfile() {
   }
 
   return (
-    <div className="account-page-outlet-container">
+    <div className="account__section">
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <AccountForm
           isModalOpen={isModalOpen}
@@ -85,7 +85,7 @@ export default function AccountProfile() {
 
       <Header user={user} setIsModalOpen={setIsModalOpen} canEdit={canEdit} />
 
-      <div className="account-profile-content">
+      <div className="account-profile">
         {user.spotifyUrl ? (
           <SpotifyImage user={user} />
         ) : (
@@ -100,8 +100,8 @@ export default function AccountProfile() {
 
 function Header({ user, setIsModalOpen, canEdit }) {
   return (
-    <div className="account-page-header">
-      <p>Profile</p>
+    <div className="account__header">
+      <h2 className="account__title">Profile</h2>
       {canEdit ? (
         <EditProfileButton setIsModalOpen={setIsModalOpen} />
       ) : (
@@ -119,37 +119,49 @@ function SpotifyImage({ user }) {
       data-tooltip-id="profile-tooltip"
       data-tooltip-content="Open Spotify Profile"
     >
-      <img src={user.profileUrl} className="account-profile-image" />
+      <img src={user.profileUrl} className="account-profile__image" />
       <Tooltip id="profile-tooltip" place="top" type="dark" effect="float" />
     </Link>
   );
 }
 
 function ProfileImage({ user }) {
-  return <img src={user.profileUrl} className="account-profile-image" />;
+  return <img src={user.profileUrl} className="account-profile__image" />;
 }
 
 function ProfileDetails({ user }) {
   return (
-    <div className="account-profile-details">
-      <div className="account-profile-user">
-        <p className="account-profile-displayname">{user.displayname}</p>
-        <p className="account-profile-username">@{user.username}</p>
+    <div className="account-profile__details">
+      <div className="account-profile__user">
+        <p className="account-profile__displayname">{user.displayname}</p>
+        <p className="account-profile__username">@{user.username}</p>
       </div>
 
-      <p className="account-profile-bio">{user.bio}</p>
+      <p className="account-profile__bio">{user.bio}</p>
 
-      <div className="account-profile-date">
+      <div className="account-profile__date">
         <FontAwesomeIcon icon={faCalendar} />
         <p>Joined on {formatDateMDYLong(user.createdAt.toDate())}</p>
       </div>
 
-      <div className="account-profile-friends">
-        <Link to={`/users/${user.username}/friends`}>
-          <span>{user.followers.length}</span> followers
+      <div className="account-profile__friends">
+        <Link
+          to={`/users/${user.username}/friends`}
+          className="account-profile__link"
+        >
+          <span className="account-profile__count">
+            {user.followers.length}
+          </span>{" "}
+          followers
         </Link>
-        <Link to={`/users/${user.username}/friends`}>
-          <span>{user.followers.length}</span> following
+        <Link
+          to={`/users/${user.username}/friends`}
+          className="account-profile__link"
+        >
+          <span className="account-profile__count">
+            {user.followers.length}
+          </span>{" "}
+          following
         </Link>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { formatDateDMD } from "src/utils/date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { ReviewStars } from "src/features/review/components/ReviewContent";
+import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useChatContext } from "../../context/ChatContext";
 import "./messages.scss";
 

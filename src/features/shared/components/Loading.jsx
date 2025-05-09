@@ -4,7 +4,7 @@ import "./styles/loading.scss";
 
 export default function Loading() {
   return (
-    <div className="loading-container">
+    <div className="loading">
       <FontAwesomeIcon icon={faSpinner} spin />
       <p>Loading...</p>
     </div>

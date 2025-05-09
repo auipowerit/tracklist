@@ -1,4 +1,4 @@
-import "./styles/modal.scss";
+import "./modal.scss";
 
 export default function Modal({ children, isModalOpen, setIsModalOpen }) {
   function onClose() {
@@ -7,15 +7,12 @@ export default function Modal({ children, isModalOpen, setIsModalOpen }) {
   }
 
   return (
-    <div
-      className={`modal-overlay ${isModalOpen && "active"}`}
-      onClick={onClose}
-    >
+    <div className={`modal ${isModalOpen && "modal--active"}`} onClick={onClose}>
       <div
-        className={`modal-container ${isModalOpen && "active"}`}
+        className={`modal__container ${isModalOpen && "modal__container--active"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button type="button" onClick={onClose} className="modal-button">
+        <button type="button" onClick={onClose} className="modal__button">
           &times;
         </button>
 

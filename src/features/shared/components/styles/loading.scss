@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.loading-container {
+.loading {
   @include flexcol(center, center, 0.25em);
   @include font(2.5);
   text-align: center;

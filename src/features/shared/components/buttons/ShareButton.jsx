@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -2,6 +2,7 @@
 
 .tabs {
   @include flexrow(center, initial, 2em);
+  flex-wrap: wrap;
   margin-bottom: 1em;
 
   &__button {

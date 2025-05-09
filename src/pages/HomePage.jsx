@@ -4,7 +4,7 @@ import Loading from "src/features/shared/components/Loading";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
-import ReviewButton from "src/features/review/components/buttons/AddReviewButton";
+import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 import "./styles/home.scss";
 
 export default function HomePage() {
@@ -61,7 +61,10 @@ function Header({ activeTab, setActiveTab }) {
     <div className="home__header">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <ReviewButton isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <AddReviewButton
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 }

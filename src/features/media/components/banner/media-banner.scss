@@ -50,8 +50,8 @@
     white-space: nowrap;
 
     &--wrapper {
-      @include gradient(left);
-      padding: 0 1em;
+      @include gradient(left, 5%, 99%);
+      padding: 0 0.5em;
       width: 100%;
       overflow: hidden;
     }

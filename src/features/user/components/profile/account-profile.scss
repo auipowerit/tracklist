@@ -1,51 +1,51 @@
 @use "src/styles/abstracts" as *;
 
-.account-profile-image {
-  border-radius: 100%;
-  width: 100%;
-  max-width: 125px;
-  max-height: 125px;
-  object-fit: cover;
-}
-
-.account-profile-details {
-  @include flexcol($gap: 0.5em);
-  @include font(0.5);
-}
-
-.account-profile-content {
+.account-profile {
   @include flexrow(initial, center, 1em);
-}
 
-.account-profile-user {
-  @include flexrow(initial, center, 0.5em);
-}
+  &__image {
+    border-radius: 100%;
+    width: 100%;
+    max-width: 125px;
+    max-height: 125px;
+    object-fit: cover;
+  }
 
-.account-profile-displayname {
-  @include font(0.75, bold);
-}
+  &__details {
+    @include flexcol($gap: 0.5em);
+    @include font(0.5);
+  }
 
-.account-profile-username {
-  color: $basic-gray;
-}
+  &__user {
+    @include flexrow(initial, center, 0.5em);
+  }
 
-.account-profile-date {
-  @include flexrow(initial, center, 0.25em);
-  color: $basic-gray;
-}
+  &__displayname {
+    @include font(0.75, bold);
+  }
 
-.account-profile-friends {
-  @include flexrow(initial, center, 0.5em);
+  &__username {
+    color: $basic-gray;
+  }
 
-  a {
+  &__date {
+    @include flexrow(initial, center, 0.25em);
+    color: $basic-gray;
+  }
+
+  &__friends {
+    @include flexrow(initial, center, 0.5em);
+  }
+
+  &__link {
     color: $basic-gray;
 
     &:hover {
       color: $basic-white;
     }
+  }
 
-    span {
-      @include font(initial, bold, $basic-white);
-    }
+  &__count {
+    @include font(initial, bold, $basic-white);
   }
 }

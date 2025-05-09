@@ -1,0 +1,49 @@
+@use "src/styles/abstracts" as *;
+
+.review-card-media {
+  @include flexcol();
+
+  &__header {
+    @include flexrow(initial, center, 0.25em);
+  }
+
+  &__icon {
+    color: $basic-gray;
+  }
+
+  &__title {
+    @include font(0.75, bold);
+    width: fit-content;
+    white-space: nowrap;
+
+    &--wrapper {
+      @include gradient(left, 5%, 99%);
+      padding: 0 0.25em;
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+    }
+  }
+
+  &__subtitle {
+    @include font(0.75, normal, $basic-gray);
+  }
+}
+
+@media (max-width: 900px) {
+  .review-card-media {
+    max-width: 100%;
+
+    &__title {
+      max-width: unset;
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    &__subtitle {
+      font-size: 0.75rem;
+    }
+  }
+}

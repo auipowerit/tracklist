@@ -1,5 +1,15 @@
 @use "src/styles/abstracts" as *;
 
+.chat-button {
+  @include font(1);
+  cursor: pointer;
+  color: $basic-gray;
+
+  &:hover {
+    color: $basic-white;
+  }
+}
+
 .follow-button {
   @include flexrow(center);
   @include font(0.75);
@@ -28,8 +38,16 @@
 }
 
 @media (max-width: 900px) {
+  .chat-button {
+    font-size: 1rem;
+  }
+
   .follow-button {
     font-size: 1rem;
     border-radius: 24px;
+  }
+
+  .logout-button {
+    font-size: 1rem;
   }
 }

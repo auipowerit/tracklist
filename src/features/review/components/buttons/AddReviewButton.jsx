@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import SuccessMessage from "src/features/shared/components/SuccessMessage";
+import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import {
   faArrowRight,
   faPenToSquare,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewForm from "../forms/ReviewForm";
-import Modal from "src/features/shared/components/Modal";
+import Modal from "src/features/shared/components/modal/Modal";
 import "./review-buttons.scss";
 
 export default function AddReviewButton(props) {
@@ -50,7 +50,7 @@ export default function AddReviewButton(props) {
     <div>
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         {success ? (
-          <SuccessMessage
+          <SuccessAlert
             message={"Review submitted!"}
             link={"Go to reviews"}
             icon={faArrowRight}

@@ -22,7 +22,7 @@ export default function AccountList() {
   }
 
   return (
-    <div className="account-page-outlet-container">
+    <div className="account__section">
       <ListHeader
         list={list}
         canEdit={canEdit}

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Alert from "src/features/shared/components/Alert";
+import Alert from "src/features/shared/components/alerts/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
