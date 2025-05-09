@@ -38,7 +38,7 @@
       z-index: 1;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
       background-color: $background-primary;
-      padding: 1em 0.5em;
+      padding: 1em;
     }
 
     &__title {
@@ -67,7 +67,7 @@
       padding: 0.25em 0.5em;
       color: $basic-black;
       font-weight: bold;
-      font-size: 1.25rem;
+      font-size: 1rem;
 
       &--active {
         background-color: $darker-gray;

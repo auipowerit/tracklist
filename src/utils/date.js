@@ -35,6 +35,17 @@ export function formatDateMDLong(date) {
   return formattedDate;
 }
 
+/* 01/01/2025 */
+export function formatDateMDYShort(date) {
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return formattedDate;
+}
+
 /* January 1, 2025 */
 export function formatDateMDYLong(date) {
   if (!date) return null;

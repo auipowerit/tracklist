@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { formatDateMDYLong } from "src/utils/date";
+import { formatDateMDYLong, formatDateMDYShort } from "src/utils/date";
 import Loading from "src/features/shared/components/Loading";
 import MediaDetails from "src/features/review/components/media/MediaDetails";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
@@ -82,6 +82,9 @@ function ReviewHeader({ review }) {
             <Link to={`/users/${review.username}`} className="review__username">
               {review.username}
             </Link>
+            <p className="review__date review__date--mobile">
+              {` on ${formatDateMDYShort(review.createdAt.toDate())}`}
+            </p>
           </p>
 
           <p className="review__date">

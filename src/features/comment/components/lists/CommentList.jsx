@@ -36,7 +36,6 @@ export default function CommentList({ review }) {
   return (
     <div className="comments">
       <Header review={review} comments={comments} setComments={setComments} />
-
       <Comments comments={comments} setComments={setComments} review={review} />
     </div>
   );
@@ -44,6 +43,10 @@ export default function CommentList({ review }) {
 
 function Header({ review, comments, setComments }) {
   function sortMethod(sortValue) {
+    if (!comments) {
+      return [];
+    }
+
     return comments.sort((a, b) => {
       switch (sortValue) {
         case "newest":
