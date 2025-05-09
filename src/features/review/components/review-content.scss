@@ -15,9 +15,13 @@
       height: 40px;
       object-fit: cover;
     }
+  }
 
-    &--date {
-      @include font(0.5, 400, $basic-gray);
+  &__date {
+    @include font(0.5, 400, $basic-gray);
+
+    &--mobile {
+      display: none;
     }
   }
 
@@ -34,8 +38,8 @@
 
     &__title {
       @include font(0.75, bold);
-      white-space: nowrap;
       width: fit-content;
+      white-space: nowrap;
 
       &--wrapper {
         @include gradient(left);
@@ -54,6 +58,7 @@
   &__stars {
     @include font(1);
     @include flexrow(initial, center, 0.15em);
+    flex-wrap: wrap;
   }
 
   &__text {
@@ -65,10 +70,10 @@
 @media (max-width: 900px) {
   .review-content {
     &__user {
-      justify-content: space-between;
       width: 100%;
 
       &--container {
+        flex-wrap: wrap;
         color: $basic-gray;
         font-weight: normal;
         font-size: 1rem;
@@ -78,14 +83,19 @@
         width: 30px;
         height: 30px;
       }
+    }
 
-      &--date {
+    &__date {
+      display: none;
+
+      &--mobile {
+        display: unset;
+        font-weight: bold;
         font-size: 0.75rem;
       }
     }
 
     &__media {
-      background-color: red;
       max-width: 100%;
 
       &--title {

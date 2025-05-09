@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Tooltip } from "react-tooltip";
-import { getTimeSince } from "src/utils/date";
+import { getTimeSince, getTimeSinceShort } from "src/utils/date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCompactDisc,
@@ -17,8 +17,11 @@ function ReviewUser({ review }) {
       <div className="review-content__user--container">
         <img src={review.profileUrl} className="review-content__user--image" />
         <p>@{review.username}</p>
+        <p className="review-content__date review-content__date--mobile">
+          {getTimeSinceShort(review.createdAt.toDate())}
+        </p>
       </div>
-      <p className="review-content__user--date">
+      <p className=" review-content__date">
         {getTimeSince(review.createdAt.toDate())}
       </p>
     </div>

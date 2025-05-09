@@ -11,8 +11,8 @@
 
   &__stars {
     @include font(2);
-    cursor: pointer;
     @include flexrow(center, center, 0.05em);
+    cursor: pointer;
   }
 }
 
