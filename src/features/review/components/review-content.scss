@@ -32,16 +32,17 @@
       color: $basic-gray;
     }
 
-    &--title {
-      @include gradient(left);
-      padding: 0 0.5em;
-      width: 100%;
-      max-width: 400px;
-      overflow: hidden;
+    &__title {
+      @include font(0.75, bold);
+      white-space: nowrap;
+      width: fit-content;
 
-      p {
-        @include font(0.75, bold);
-        white-space: nowrap;
+      &--wrapper {
+        @include gradient(left);
+        padding: 0 1em;
+        width: 100%;
+        max-width: 400px;
+        overflow: hidden;
       }
     }
 
@@ -84,8 +85,11 @@
     }
 
     &__media {
+      background-color: red;
+      max-width: 100%;
+
       &--title {
-        mask-image: none;
+        max-width: unset;
 
         p {
           font-size: 1rem;

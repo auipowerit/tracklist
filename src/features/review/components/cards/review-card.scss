@@ -53,12 +53,14 @@
       }
     }
 
-    &__rating {
-      gap: 0;
+    &__info {
+      width: 80%;
+      background-color: blue;
+      overflow-x: hidden;
     }
 
-    &__info {
-      width: 100%;
+    &__rating {
+      gap: 0;
     }
 
     .review-stars {

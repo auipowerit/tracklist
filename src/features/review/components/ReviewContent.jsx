@@ -68,8 +68,10 @@ function ReviewMediaTitle({ title, subtitle, category }) {
             effect="float"
           />
         </div>
-        <div className="review-content__media--title">
-          <p ref={titleRef}>{title}</p>
+        <div className="review-content__media__title--wrapper">
+          <p ref={titleRef} className="review-content__media__title">
+            {title}
+          </p>
         </div>
       </div>
 
