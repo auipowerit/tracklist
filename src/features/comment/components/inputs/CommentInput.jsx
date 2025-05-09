@@ -72,17 +72,30 @@ export default function CommentInput({ review, setComments }) {
   }
 
   return (
-    <form className="comment-input-container" onSubmit={handleSubmit}>
+    <form className="comment-form" onSubmit={handleSubmit}>
+      {globalUser && (
+        <img src={globalUser.profileUrl} className="comment-form__profile" />
+      )}
+
       <input
         ref={inputComment}
         placeholder="Add a comment..."
-        className="comment-input"
+        className="comment-form__input"
       />
 
-      <div className="comment-input-buttons">
-        <button type="submit">Post</button>
+      <div className="comment-form__buttons">
+        <button
+          type="submit"
+          className="comment-form__button comment-form__button--submit"
+        >
+          Post
+        </button>
 
-        <button type="button" onClick={closeComment}>
+        <button
+          type="button"
+          onClick={closeComment}
+          className="comment-form__button comment-form__button--cancel"
+        >
           Cancel
         </button>
       </div>

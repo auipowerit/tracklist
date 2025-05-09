@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import "./star-rating.scss";
 
 export default function StarRating({ rating, setRating }) {
   const [hover, setHover] = useState(null);
@@ -26,10 +27,10 @@ export default function StarRating({ rating, setRating }) {
   }
 
   return (
-    <div className="rating">
-      <p className="rating__title">Your rating</p>
+    <div className="star-rating">
+      <p className="star-rating__title">Your rating</p>
 
-      <div className="rating__stars">
+      <div className="star-rating__stars">
         {[...Array(5)].map((_, i) => {
           const ratingValue = i + 1;
           const isHalf = (hover || rating) === ratingValue - 0.5;

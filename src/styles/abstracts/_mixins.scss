@@ -9,6 +9,7 @@
 
 @mixin flexrow($justify: initial, $align: initial, $gap: initial) {
   display: flex;
+  flex-direction: row;
   justify-content: $justify;
   align-items: $align;
   gap: $gap;

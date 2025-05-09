@@ -30,21 +30,21 @@ export default function SortButton(props) {
   }, []);
 
   return (
-    <div ref={sorterRef} className="sort-button-container">
+    <div ref={sorterRef} className="sort">
       <button
         onClick={() => results?.length > 0 && setShowSort(!showSort)}
-        className="sort-button"
+        className="sort__button"
       >
         <FontAwesomeIcon icon={faSort} />
         <p>Sort by</p>
       </button>
 
-      <div className={`sort-dropdown ${showSort ? "active" : ""}`}>
+      <div className={`sort__dropdown ${showSort ? "active" : ""}`}>
         {sortOptions.map((option) => (
           <button
             key={option.value}
             onClick={() => sortResults(option.value)}
-            className="sort-dropdown-item"
+            className="sort__item"
           >
             {option.label}
           </button>

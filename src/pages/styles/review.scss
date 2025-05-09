@@ -1,124 +1,76 @@
 @use "src/styles/abstracts" as *;
 
-.review-wrapper {
+.review {
   @include flexcol(initial, initial, 2em);
   margin: auto;
   margin-top: 2em;
   width: 100%;
   max-width: 1200px;
   height: 100%;
-}
 
-.review-section-container {
-  @include flexrow(initial, stretch, 0.25em);
-  padding-bottom: 1em;
-  height: fit-content;
-}
-
-.review-section {
-  @include flexcol(space-between);
-  flex-basis: 70%;
-  overflow: auto;
-}
-
-.review-section-media-container {
-  @include flexcol(center, center);
-  flex-basis: 30%;
-  padding: 0.25em;
-  min-width: 30%;
-  height: 100%;
-
-  img {
-    cursor: pointer;
-    width: 100%;
-    min-width: 125px;
-    height: 100%;
-    max-height: 275px;
-    object-fit: contain;
+  &__container {
+    @include flexrow(initial, stretch, 0.25em);
+    padding-bottom: 1em;
+    height: fit-content;
   }
-}
 
-.review-section-media-info-container {
-  @include flexcol();
-  padding: 0.25em 0.5em;
-  width: 100%;
-  max-width: 275px;
-}
+  &__content {
+    @include flexcol(space-between);
+    flex-basis: 70%;
 
-.review-section-title {
-  @include gradient(left);
-  padding: 0 0.25em;
-  width: 100%;
-  overflow: hidden;
+    overflow: auto;
+  }
 
-  p {
-    @include font(0.5, bold);
-    margin: auto;
-    width: fit-content;
-    white-space: nowrap;
+  &__section {
+    @include flexcol($gap: 1em);
+    width: 100%;
+    height: 100%;
+    height: 100%;
+    max-height: 350px;
+  }
+
+  &__header {
+    @include flexrow(initial, center, 0.5em);
+  }
+
+  &__profile {
+    border-radius: 100%;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+  }
+
+  &__details {
+    @include flexcol();
+    width: 100%;
+  }
+
+  &__title {
+    @include flexrow(space-between, center);
+  }
+
+  &__user {
+    @include font(0.75, normal, $basic-gray);
+    padding-bottom: 0.25em;
+  }
+
+  &__username {
+    @include font(initial, bold, $basic-white);
 
     &:hover {
       color: $basic-gray;
     }
   }
-}
 
-.review-section-subtitle {
-  @include font(0.5, normal, $basic-gray);
-  text-align: center;
-  text-wrap: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.review-section-details-container {
-  @include flexcol($gap: 1em);
-  width: 100%;
-  height: 100%;
-  height: 100%;
-  max-height: 350px;
-}
-
-.review-section-header {
-  @include flexrow(initial, center, 0.5em);
-
-  img {
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
+  &__date {
+    @include font(0.5, normal, $basic-gray);
   }
-}
 
-.review-section-info-container {
-  @include flexrow(space-between, flex-start);
-  width: 100%;
-}
-
-.review-section-user-container {
-  @include flexcol($gap: 0.25em);
-}
-
-.review-section-user-info {
-  @include font(0.5, normal, $basic-gray);
-}
-
-.review-section-username {
-  @include font(initial, bold, $basic-white);
-
-  &:hover {
-    color: $basic-gray;
+  &__text {
+    @include font(0.75);
+    @include gradient(top);
+    padding: 0.5em;
+    overflow: auto;
+    text-wrap: break-word;
   }
-}
-
-.review-section-date {
-  @include font(0.35, normal, $basic-gray);
-}
-
-.review-section-content {
-  @include font(0.75);
-  @include gradient(top);
-  padding: 0.5em;
-  overflow: auto;
-  text-wrap: break-word;
 }

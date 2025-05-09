@@ -1,0 +1,29 @@
+@use "src/styles/abstracts" as *;
+
+.star-rating {
+  @include flexcol(initial, flex-start, 0.15em);
+  width: 100%;
+
+  &__title {
+    @include font(1.25, normal, $basic-gray);
+    padding-right: 0.5em;
+  }
+
+  &__stars {
+    @include font(2);
+    cursor: pointer;
+    @include flexrow(center, center, 0.05em);
+  }
+}
+
+@media (max-width: 900px) {
+  .star-rating {
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__stars {
+      font-size: 2rem;
+    }
+  }
+}

@@ -1,50 +1,14 @@
 @use "src/styles/abstracts" as *;
 
 .review-form {
-  @include flexcol(center, center, 1em);
-
   &__search {
     position: relative;
     @include flexrow($gap: 0.5em);
     width: 100%;
   }
-}
 
-.rating {
-  @include flexcol(initial, flex-start, 0.15em);
-  padding: 0.25em 0;
-  width: 100%;
-
-  &__title {
-    @include font(1.25, normal, $basic-gray);
-    padding-right: 0.5em;
-  }
-
-  &__stars {
-    @include font(2);
-    cursor: pointer;
-    @include flexrow(center, center, 0.05em);
-  }
-}
-
-@media (max-width: 900px) {
-  .review-form {
-    align-items: flex-start;
-    order: 0;
-    gap: 1em;
+  &__content {
+    @include flexrow(space-between, flex-start, 1em);
     width: 100%;
-  }
-
-  .rating {
-    @include flexrow(space-between, center, 0);
-
-    &__title {
-      padding-right: 0.25em;
-      font-size: 1.25rem;
-    }
-
-    &__stars {
-      font-size: 2rem;
-    }
   }
 }

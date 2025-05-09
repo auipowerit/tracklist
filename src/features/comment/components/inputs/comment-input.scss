@@ -1,33 +1,68 @@
 @use "src/styles/abstracts" as *;
 
-.comment-input-container {
+.comment-form {
   @include flexcol();
-  margin-bottom: 1em;
-}
 
-.comment-input {
-  @include font(0.75);
-  outline: none;
-  border-bottom: 1px solid $basic-gray;
-  padding-bottom: 0.5em;
-  width: 100%;
-
-  &:focus {
-    outline: none;
-    border-color: $basic-white;
+  &__profile {
+    display: none;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
   }
-}
 
-.comment-input-buttons {
-  @include flexrow(end, initial, 0.5em);
+  &__input {
+    @include font(0.75);
+    outline: none;
+    border-bottom: 1px solid $basic-gray;
+    padding-bottom: 0.5em;
+    width: 100%;
 
-  button {
+    &:focus {
+      outline: none;
+      border-color: $basic-white;
+    }
+  }
+
+  &__buttons {
+    @include flexrow(end, initial, 0.5em);
+  }
+
+  &__button {
     @include font(0.5, bold);
     margin-top: 0.5em;
     padding: 0.25em 0.75em;
 
     &:hover {
       color: $light-green;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .comment-form {
+    @include flexrow(space-between, center, 0.5em);
+    position: sticky;
+    background-color: $background-primary;
+    padding: 0.5em;
+    width: 100%;
+
+    &__profile {
+      display: block;
+    }
+
+    &__input {
+      border: 1px solid $basic-gray;
+      padding: 0.25em 0.15em;
+      font-size: 1.25rem;
+
+      &:focus {
+        border-color: $basic-white;
+      }
+    }
+
+    &__buttons {
+      display: none;
     }
   }
 }

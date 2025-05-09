@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import RatingBar from "src/features/review/components/RatingBar";
+import RatingBar from "src/features/review/components/rating/RatingBar";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";

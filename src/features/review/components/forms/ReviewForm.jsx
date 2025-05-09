@@ -4,7 +4,7 @@ import Alert from "src/features/shared/components/Alert";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
-import StarRating from "./StarRating";
+import StarRating from "../rating/StarRating";
 import "./review-form.scss";
 
 export default function ReviewForm(props) {
@@ -54,14 +54,19 @@ export default function ReviewForm(props) {
   async function handleSearch(e) {
     e.target.classList.remove("form__input--invalid");
 
+    // Confirm search time contains characters
+    if (inputRef.current.value.trim() !== "") {
+      const data = (await searchByName(inputRef.current.value, type, 20)) || [];
+      const items = getMediaData(data) || [];
+      setResults(items);
+    }
+
+    // Clear results if search term is empty
+    // Necessary due to async while typing
     if (inputRef.current.value.trim() === "") {
       setResults([]);
       return;
     }
-
-    const data = (await searchByName(inputRef.current.value, type, 20)) || [];
-    const items = getMediaData(data) || [];
-    setResults(items);
   }
 
   function getMediaData(data) {
@@ -176,25 +181,22 @@ export default function ReviewForm(props) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="form">
+    <form ref={formRef} onSubmit={handleSubmit} className="form review-form">
       <FormHeader />
 
-      <div className="form__content">
+      <div className="review-form__content">
         <FormImage media={media} />
-
-        <div className="review-form">
-          <FormInput
-            inputRef={inputRef}
-            type={type}
-            results={results}
-            handleSearch={handleSearch}
-            handleChange={handleChange}
-            handleClick={handleClick}
-          />
-          <StarRating rating={rating} setRating={setRating} />
-        </div>
+        <FormInput
+          inputRef={inputRef}
+          type={type}
+          results={results}
+          handleSearch={handleSearch}
+          handleChange={handleChange}
+          handleClick={handleClick}
+        />
       </div>
 
+      <StarRating rating={rating} setRating={setRating} />
       <FormReview content={content} setContent={setContent} />
 
       <Alert message={error} />

@@ -1,18 +1,82 @@
 @use "src/styles/abstracts" as *;
 
-.comments-container {
+.comments {
   @include flexcol($gap: 2em);
   padding: 0 1em 5em 1em;
+
+  &__header {
+    @include flexcol(initial, initial, 1em);
+  }
+
+  &__title {
+    @include font(0.75, bold);
+
+    &-container {
+      @include flexrow(initial, center, 1em);
+      padding-bottom: 1em;
+    }
+  }
+
+  &__list {
+    @include flexcol(initial, initial, 1em);
+  }
+
+  &__tabs {
+    display: none;
+  }
 }
 
-.comments-header-container {
-  @include flexrow(initial, center, 1em);
-}
+@media (max-width: 900px) {
+  .comments {
+    padding: 0;
 
-.comments-header {
-  @include font(0.75, bold);
-}
+    &__header {
+      position: sticky;
+      top: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      background-color: $background-primary;
+      padding: 1em 0.5em;
+    }
 
-.comments-list {
-  @include flexcol(initial, initial, 1em);
+    &__title {
+      font-size: 1.25rem;
+
+      &-container {
+        padding-bottom: 0;
+      }
+    }
+
+    &__list {
+      gap: 2em;
+      padding: 0 1em 2em 1em;
+    }
+
+    &__tabs {
+      @include flexrow(initial, center, 1em);
+      padding-bottom: 0.5em;
+      max-width: 100%;
+      overflow-x: scroll;
+    }
+
+    &__tab {
+      border-radius: 8px;
+      background-color: $basic-white;
+      padding: 0.25em 0.5em;
+      color: $basic-black;
+      font-weight: bold;
+      font-size: 1.25rem;
+
+      &--active {
+        background-color: $darker-gray;
+        color: $basic-white;
+      }
+    }
+  }
+
+  .sort {
+    display: none;
+  }
 }

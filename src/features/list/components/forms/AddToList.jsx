@@ -188,23 +188,40 @@ function FormMediaInput(props) {
     setMedia(null);
   }
 
-  async function handleSearch() {
-    const data = await searchByName(mediaInputRef.current.value, type, 20);
+  async function handleSearch(e) {
+    e.target.classList.remove("form__input--invalid");
 
-    const items =
-      data?.artists?.items || data?.albums?.items || data?.tracks?.items || [];
+    // Confirm search time contains characters
+    if (mediaInputRef.current?.value.trim() !== "") {
+      const data =
+        (await searchByName(mediaInputRef.current?.value.trim(), type, 20)) ||
+        [];
 
-    const ids = items.map((item) => item?.id) || [];
-    const names = items.map((item) => item?.name) || [];
-    const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
+      const items =
+        data?.artists?.items ||
+        data?.albums?.items ||
+        data?.tracks?.items ||
+        [];
 
-    setMediaResults(
-      ids.map((id, index) => ({
-        id,
-        name: names[index],
-        subtitle: subtitles[index],
-      })),
-    );
+      const ids = items.map((item) => item?.id) || [];
+      const names = items.map((item) => item?.name) || [];
+      const subtitles = items.map((item) => item.artists?.[0].name || []) || [];
+
+      setMediaResults(
+        ids.map((id, index) => ({
+          id,
+          name: names[index],
+          subtitle: subtitles[index],
+        })),
+      );
+    }
+
+    // Clear results if search term is empty
+    // Necessary due to async while typing
+    if (mediaInputRef.current?.value.trim() === "") {
+      setMediaResults([]);
+      return;
+    }
   }
 
   return (
@@ -214,8 +231,7 @@ function FormMediaInput(props) {
         type="search"
         ref={mediaInputRef}
         placeholder={`Search for ${type === "track" ? "a " : "an "}${type}...`}
-        onKeyUp={handleSearch}
-        onChange={(e) => e.target.classList.remove("form__input--invalid")}
+        onChange={handleSearch}
         className="form__input"
       />
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
 import Loading from "src/features/shared/components/Loading";
-import MediaDetails from "src/features/review/components/MediaDetails";
+import MediaDetails from "src/features/review/components/media/MediaDetails";
 import { ReviewStars } from "src/features/review/components/ReviewContent";
 import CommentList from "src/features/comment/components/lists/CommentList";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -46,7 +46,7 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="review-wrapper">
+    <div className="review">
       <Review review={review} />
       <CommentList review={review} />
     </div>
@@ -55,14 +55,15 @@ export default function ReviewPage() {
 
 function Review({ review }) {
   return (
-    <div className="review-section-container">
+    <div className="review__container">
       <MediaDetails review={review} />
 
-      <div className="review-section">
-        <div className="review-section-details-container">
+      <div className="review__content">
+        <div className="review__section">
           <ReviewHeader review={review} />
-          <p className="review-section-content">{review.content}</p>
+          <p className="review__text">{review.content}</p>
         </div>
+
         <ReviewButtons review={review} showComment={false} />
       </div>
     </div>
@@ -71,26 +72,24 @@ function Review({ review }) {
 
 function ReviewHeader({ review }) {
   return (
-    <div className="review-section-header">
-      <img src={review.profileUrl} />
+    <div className="review__header">
+      <img src={review.profileUrl} className="review__profile" />
 
-      <div className="review-section-info-container">
-        <div className="review-section-user-container">
-          <p className="review-section-user-info">
+      <div className="review__details">
+        <div className="review__title">
+          <p className="review__user">
             Review by&nbsp;
-            <Link
-              to={`/users/${review.username}`}
-              className="review-section-username"
-            >
+            <Link to={`/users/${review.username}`} className="review__username">
               {review.username}
             </Link>
           </p>
-          <ReviewStars rating={review.rating} />
+
+          <p className="review__date">
+            {formatDateMDYLong(review.createdAt.toDate())}
+          </p>
         </div>
 
-        <p className="review-section-date">
-          {formatDateMDYLong(review.createdAt.toDate())}
-        </p>
+        <ReviewStars rating={review.rating} />
       </div>
     </div>
   );

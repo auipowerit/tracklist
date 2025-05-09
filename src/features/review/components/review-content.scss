@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.review {
+.review-content {
   &__user {
     @include flexrow(initial, center, 0.5em);
 
@@ -62,7 +62,7 @@
 }
 
 @media (max-width: 900px) {
-  .review {
+  .review-content {
     &__user {
       justify-content: space-between;
       width: 100%;

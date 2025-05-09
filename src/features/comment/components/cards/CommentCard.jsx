@@ -12,9 +12,9 @@ export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
 
   return (
-    <div className="comment-card-container">
-      <Body comment={comment} />
-
+    <div className="comment-card">
+      <Header comment={comment} />
+      <Content comment={comment} />
       <Buttons
         comment={comment}
         review={review}
@@ -25,27 +25,28 @@ export default function CommentCard(props) {
   );
 }
 
-function Body({ comment }) {
+function Header({ comment }) {
   return (
-    <div className="comment-card">
-      <div className="comment-user-container">
-        <UserInfo comment={comment} />
-        <p className="comment-date">
-          {getTimeSince(comment.createdAt.toDate())}
-        </p>
-      </div>
-      <p className="comment-content">{comment.content}</p>
+    <div className="comment-card__header">
+      <UserInfo comment={comment} />
+      <p className="comment-card__date">
+        {getTimeSince(comment.createdAt.toDate())}
+      </p>
     </div>
   );
 }
 
 function UserInfo({ comment }) {
   return (
-    <Link to={`/users/${comment.username}`} className="comment-user-info">
-      <img src={comment.profileUrl} />
-      <p>@{comment.username}</p>
+    <Link to={`/users/${comment.username}`} className="comment-card__user">
+      <img src={comment.profileUrl} className="comment-card__profile" />
+      <p className="comment-card__username">@{comment.username}</p>
     </Link>
   );
+}
+
+function Content({ comment }) {
+  return <p className="comment-card__content">{comment.content}</p>;
 }
 
 function Buttons({ comment, review, comments, setComments }) {
@@ -98,7 +99,7 @@ function Buttons({ comment, review, comments, setComments }) {
   }
 
   return (
-    <div className="comment-buttons">
+    <div className="comment-card__buttons">
       <VoteButton
         comment={comment}
         updateComment={updateCommentState}

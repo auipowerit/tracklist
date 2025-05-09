@@ -1,40 +1,59 @@
 @use "src/styles/abstracts" as *;
 
-.comment-card-container {
-  @include flexcol($gap: 0.5em);
-}
 .comment-card {
-  @include flexcol(initial, initial, 0.75em);
-}
-.comment-user-container {
-  @include flexrow(initial, center, 0.5em);
-}
+  @include flexcol($gap: 0.5em);
 
-.comment-user-info {
-  @include flexrow(initial, center, 0.5em);
-  @include font(0.5, bold);
-  cursor: pointer;
-
-  &:hover {
-    color: $basic-gray;
+  &__header {
+    @include flexrow(initial, center, 0.5em);
   }
 
-  img {
+  &__user {
+    @include flexrow(initial, center, 0.5em);
+    @include font(0.5, bold);
+    cursor: pointer;
+
+    &:hover {
+      color: $basic-gray;
+    }
+  }
+
+  &__profile {
     border-radius: 100%;
     width: 30px;
     height: 30px;
     object-fit: cover;
   }
+
+  &__date {
+    @include font(0.5, normal, $basic-gray);
+  }
+
+  &__content {
+    @include font(0.75);
+  }
+
+  &__buttons {
+    @include flexrow(initial, center, 0.25em);
+  }
 }
 
-.comment-date {
-  @include font(0.5, normal, $basic-gray);
-}
+@media (max-width: 900px) {
+  .comment-card {
+    &__user {
+      font-size: 1.25rem;
+    }
 
-.comment-content {
-  @include font(0.75);
-}
+    &__profile {
+      width: 40px;
+      height: 40px;
+    }
 
-.comment-buttons {
-  @include flexrow(initial, center, 0.25em);
+    &__date {
+      font-size: 1rem;
+    }
+
+    &__content {
+      font-size: 1.25rem;
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import "./media-details.scss";
 
 export default function MediaDetails({ review }) {
   const { getMediaLinks } = useSpotifyContext();
@@ -18,7 +19,7 @@ export default function MediaDetails({ review }) {
   }, []);
 
   return (
-    <div className="review-section-media-container">
+    <div className="review-media">
       <MediaImage
         image={mediaData.image || DEFAULT_MEDIA_IMG}
         link={mediaData.titleLink}
@@ -31,7 +32,13 @@ export default function MediaDetails({ review }) {
 function MediaImage({ image, link }) {
   const navigate = useNavigate();
 
-  return <img src={image} onClick={() => navigate(link)} />;
+  return (
+    <img
+      src={image}
+      onClick={() => navigate(link)}
+      className="review-media__image"
+    />
+  );
 }
 
 function MediaInfo({ mediaData }) {
@@ -49,11 +56,13 @@ function MediaInfo({ mediaData }) {
   }, [mediaData]);
 
   return (
-    <div className="review-section-media-info-container">
-      <Link to={mediaData.titleLink} className="review-section-title">
-        <p ref={titleRef}>{mediaData.title}</p>
+    <div className="review-media__info">
+      <Link to={mediaData.titleLink} className="review-media__title--wrapper">
+        <p ref={titleRef} className="review-media__title">
+          {mediaData.title}
+        </p>
       </Link>
-      <Link to={mediaData.subtitleLink} className="review-section-subtitle">
+      <Link to={mediaData.subtitleLink} className="review-media__subtitle">
         {mediaData.subtitle}
       </Link>
     </div>

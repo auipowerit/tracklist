@@ -1,43 +1,45 @@
 @use "src/styles/abstracts" as *;
 
-.sort-button-container {
+.sort {
   position: relative;
   z-index: 2;
   width: fit-content;
-}
 
-.sort-button {
-  @include flexrow(initial, center, 0.5em);
-  @include font(0.75);
-  cursor: pointer;
-}
+  &__button {
+    @include flexrow(initial, center, 0.5em);
+    @include font(0.75);
+    cursor: pointer;
+  }
 
-.sort-dropdown {
-  @include dropdown(left, 0.5em, 0.5em);
-  background-color: $basic-white;
-  color: $basic-black;
-}
+  &__dropdown {
+    @include dropdown(left, 0.5em, 0.5em);
+    background-color: $basic-white;
+    color: $basic-black;
+  }
 
-.sort-dropdown-item {
-  @include font(0.75, normal, $basic-black);
-  padding: 0.25em 0.5em;
-  width: 100%;
-  text-align: start;
+  &__item {
+    @include font(0.75, normal, $basic-black);
+    padding: 0.25em 0.5em;
+    width: 100%;
+    text-align: start;
 
-  &:hover {
-    background-color: $basic-gray;
-    color: $basic-white;
+    &:hover {
+      background-color: $basic-gray;
+      color: $basic-white;
+    }
   }
 }
 
 @media (max-width: 900px) {
-  .sort-button {
-    padding: 0.25em 0.5em;
-    font-size: 1.5rem;
-    border: 1px solid $basic-white;
-  }
+  .sort {
+    &__button {
+      border: 1px solid $basic-white;
+      padding: 0.25em 0.5em;
+      font-size: 1.5rem;
+    }
 
-  .sort-dropdown-item {
-    font-size: 1.5rem;
+    &__item {
+      font-size: 1.5rem;
+    }
   }
 }

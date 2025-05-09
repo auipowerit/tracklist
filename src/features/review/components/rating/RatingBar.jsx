@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import "./rating-bar.scss";
 
 export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
   const { getRatings } = useReviewContext();
@@ -49,7 +50,7 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
   }
 
   return (
-    <div className="media-banner__bar">
+    <div className="rating-bar">
       {ratings &&
         Object.keys(ratings)
           .sort((a, b) => parseFloat(a) - parseFloat(b))
@@ -64,9 +65,9 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
                 data-tooltip-content={content}
                 style={{ height: `${percentage}%` }}
                 onClick={() => handleClick(key)}
-                className="media-banner__bar--item"
+                className="rating-bar__item"
               >
-                <div className="media-banner__bar--fill" />
+                <div className="rating-bar__fill" />
                 <Tooltip
                   id="reviews-tooltip"
                   place="top"
