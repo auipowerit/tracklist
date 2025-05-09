@@ -11,6 +11,10 @@
   text-decoration: none;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   background-color: $background-primary;
   min-height: 100vh;
@@ -28,7 +32,8 @@ body {
 
 .wrapper {
   @include flexcol();
-  height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
 }
 
 main {
