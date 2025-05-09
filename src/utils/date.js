@@ -128,3 +128,27 @@ export function getTimeSinceShort(date) {
   const years = Math.round(months / 12);
   return years + "y ago";
 }
+
+/* Today / Last 7 Days */
+export function getTimeSinceDay(date) {
+  const now = new Date();
+  const days = Math.round((now - date) / 1000 / 60 / 60 / 24);
+
+  if (days === 0) {
+    return "Today";
+  }
+
+  if (days === 1) {
+    return "Yesterday";
+  }
+
+  if (days <= 7) {
+    return "Last 7 days";
+  }
+
+  if (days <= 30) {
+    return "Last 30 days";
+  }
+
+  return "Older";
+}

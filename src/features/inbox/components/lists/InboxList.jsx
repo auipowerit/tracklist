@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "src/config/firebase";
+import { getTimeSinceDay } from "src/utils/date";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { doc, onSnapshot } from "firebase/firestore";
 import Loading from "src/features/shared/components/Loading";
@@ -9,6 +10,7 @@ import { useListContext } from "src/features/list/context/ListContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import "./inbox-list.scss";
 
 export default function InboxList() {
   const { globalUser, getUserById } = useAuthContext();
@@ -59,6 +61,7 @@ export default function InboxList() {
     const inboxData = await Promise.all(
       notifications.map(async (notification) => {
         const user = await getUserById(notification.senderId);
+        const timeSince = getTimeSinceDay(notification.createdAt.toDate());
 
         if (notification.category === "review") {
           const review = await getReviewById(notification.contentId);
@@ -69,6 +72,7 @@ export default function InboxList() {
               username: user.username,
               profileUrl: user.profileUrl,
               image: DEFAULT_MEDIA_IMG,
+              timeSince,
             };
           }
 
@@ -76,7 +80,11 @@ export default function InboxList() {
             ...notification,
             username: user.username,
             profileUrl: user.profileUrl,
-            image: review.media.images[0].url,
+            image:
+              review.media.image ||
+              review.media.images?.[0].url ||
+              DEFAULT_MEDIA_IMG,
+            timeSince,
           };
         }
 
@@ -89,6 +97,7 @@ export default function InboxList() {
               username: user.username,
               profileUrl: user.profileUrl,
               image: DEFAULT_MEDIA_IMG,
+              timeSince,
             };
           }
 
@@ -103,6 +112,7 @@ export default function InboxList() {
               username: user.username,
               profileUrl: user.profileUrl,
               image: DEFAULT_MEDIA_IMG,
+              timeSince,
             };
           }
 
@@ -111,7 +121,8 @@ export default function InboxList() {
             username: user.username,
             profileUrl: user.profileUrl,
             subtitle: list.name,
-            image: media.images[0].url,
+            image: media.image || media.images?.[0].url || DEFAULT_MEDIA_IMG,
+            timeSince,
           };
         }
 
@@ -119,11 +130,17 @@ export default function InboxList() {
           ...notification,
           username: user.username,
           profileUrl: user.profileUrl,
+          timeSince,
         };
       }),
     );
 
-    return inboxData;
+    // Sort by timeSince then by date
+    const sortedInbox = inboxData.sort(
+      (a, b) => b.timeSince - a.timeSince || b.createdAt - a.createdAt,
+    );
+
+    return sortedInbox;
   }
 
   if (isLoading) {
@@ -135,9 +152,21 @@ export default function InboxList() {
   }
 
   return (
-    <div className="inbox__list">
-      {notifications.map((notification) => {
-        return <InboxCard key={notification.id} notification={notification} />;
+    <div className="inbox-list">
+      {notifications.map((notification, i) => {
+        // Check if timeSince is different than previous notification
+        const prevTimeSince = notifications[i - 1];
+        const showTimeSince =
+          i === 0 || prevTimeSince.timeSince !== notification.timeSince;
+
+        return (
+          <div key={notification.id} className="inbox-list__item">
+            {showTimeSince && (
+              <h2 className="inbox-list__time">{notification.timeSince}</h2>
+            )}
+            <InboxCard key={notification.id} notification={notification} />
+          </div>
+        );
       })}
     </div>
   );

@@ -1,0 +1,28 @@
+@use "src/styles/abstracts" as *;
+
+.inbox-list {
+  @include flexcol(initial, initial);
+  @include gradient(bottom);
+  padding: 0 1em 1em 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+
+  &__time {
+    @include font(1.5, bold);
+    padding-top: 1em;
+  }
+}
+
+@media (max-width: 900px) {
+  .inbox-list {
+    gap: 0.5em;
+    mask-image: none;
+    padding: 1em 0;
+
+    &__time {
+      padding-top: 0.25em;
+      font-size: 1.25rem;
+    }
+  }
+}

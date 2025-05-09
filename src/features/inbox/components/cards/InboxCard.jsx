@@ -29,12 +29,12 @@ export default function InboxCard({ notification }) {
   return (
     <div
       onClick={() => handleClick(notification.category, notification.contentId)}
-      className="inbox__card"
+      className="inbox-card"
     >
-      <div className="inbox__card__info">
+      <div className="inbox-card__info">
         <UserImage profileUrl={notification.profileUrl} />
 
-        <div className="inbox__card__content">
+        <div className="inbox-card__content">
           <Content notification={notification} />
           <Date createdAt={notification.createdAt} />
         </div>
@@ -46,16 +46,16 @@ export default function InboxCard({ notification }) {
 }
 
 function UserImage({ profileUrl }) {
-  return <img src={profileUrl} className="inbox__card__profile" />;
+  return <img src={profileUrl} className="inbox-card__profile" />;
 }
 
 function Content({ notification }) {
   return (
     <>
-      <p className="inbox__card__title">{notification.title}</p>
+      <p className="inbox-card__title">{notification.title}</p>
 
       {notification.subtitle && (
-        <p className="inbox__card__subtitle">"{notification.subtitle}"</p>
+        <p className="inbox-card__subtitle">"{notification.subtitle}"</p>
       )}
     </>
   );
@@ -63,12 +63,12 @@ function Content({ notification }) {
 
 function Date({ createdAt }) {
   return (
-    <p className="inbox__card__date">{getTimeSinceShort(createdAt.toDate())}</p>
+    <p className="inbox-card__date">{getTimeSinceShort(createdAt.toDate())}</p>
   );
 }
 
 function MediaImage({ image }) {
   if (!image) return;
 
-  return <img src={image} className="inbox__card__media" />;
+  return <img src={image} className="inbox-card__media" />;
 }

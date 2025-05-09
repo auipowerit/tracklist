@@ -1,14 +1,5 @@
 @use "src/styles/abstracts" as *;
 
-.delete-button {
-  @include font(0.75, bold);
-  padding: 0.25em 0.75em;
-
-  &:hover {
-    color: $basic-red;
-  }
-}
-
 .heart-button {
   @include flexrow(initial, center, 0.25em);
   @include font(0.75);
@@ -40,16 +31,37 @@
   }
 }
 
-@media (max-width: 900px) {
-  .delete-button {
-    font-size: 1.25rem;
-  }
+.delete-button {
+  @include font(0.75);
+  padding: 0.25em 0.75em;
 
+  &:hover {
+    color: $basic-red;
+  }
+}
+
+@media (max-width: 900px) {
   .heart-button {
     font-size: 1.25rem;
+
+    &:hover {
+      pointer-events: none;
+    }
   }
 
   .share-button {
     font-size: 1.25rem;
+
+    &:hover {
+      pointer-events: none;
+    }
+  }
+
+  .delete-button {
+    font-size: 1.25rem;
+
+    &:hover {
+      pointer-events: none;
+    }
   }
 }

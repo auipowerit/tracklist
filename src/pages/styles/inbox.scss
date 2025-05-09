@@ -7,26 +7,17 @@
   height: 100vh;
   overflow-y: auto;
   @include flexcol(initial, center, 1em);
-  padding: 2em;
+  padding: 2em 0;
 
   &__header {
     @include font(0.75, normal, $basic-green);
-  }
-
-  &__list {
-    @include flexcol(initial, initial, 1em);
-    @include gradient(bottom);
-    padding: 1em;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
   }
 }
 
 @media (max-width: 900px) {
   .inbox {
     gap: 0;
-    padding: 0;
+    padding: 0 0.5em;
     height: 100%;
     overflow-y: visible;
 
@@ -41,12 +32,6 @@
       width: 100%;
       font-size: 1rem;
       text-align: center;
-    }
-
-    &__list {
-      gap: 0.5em;
-      mask-image: none;
-      padding: 0;
     }
   }
 }
