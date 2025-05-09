@@ -41,9 +41,13 @@
   &__input {
     @include font(0.75);
     outline: none;
-    border: 1px solid $basic-white;
+    border: 1px solid $basic-gray;
     padding: 0.25em 0.5em;
     width: 100%;
+
+    &:focus {
+      border-color: $basic-white;
+    }
 
     &--invalid {
       background-color: $error-highlight !important;
@@ -101,12 +105,16 @@
 
     &--input {
       outline: none;
-      border: 1px solid $basic-white;
+      border: 1px solid $basic-gray;
       background-color: transparent;
       padding: 0.5em;
       width: 100%;
       min-height: 150px;
       @include font(0.75);
+
+      &:focus {
+        border-color: $basic-white;
+      }
     }
   }
 

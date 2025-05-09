@@ -23,35 +23,37 @@ export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
     // Check if the user is scrolling down
     if (scrollPosition > 200) {
       // Hide the mobile navbar
-      mobileRef.current.classList.add("hidden");
+      mobileRef.current.classList.add("mobile-navbar--hidden");
     } else {
       // Show the mobile navbar
-      mobileRef.current.classList.remove("hidden");
+      mobileRef.current.classList.remove("mobile-navbar--hidden");
     }
   }
 
   function handleClick() {
     // Show the mobile navbar
-    mobileRef.current.classList.remove("hidden");
+    mobileRef.current.classList.remove("mobile-navbar--hidden");
   }
 
   return (
-    <nav ref={mobileRef} className="mobile-navbar" onClick={handleClick}>
-      <MobileNavItem link="/home" icon={faHome} />
-      <MobileNavItem link="/search" icon={faSearch} />
+    <div ref={mobileRef} className="mobile-navbar">
+      <nav className="mobile-navbar--container" onClick={handleClick}>
+        <MobileNavItem link="/home" icon={faHome} />
+        <MobileNavItem link="/search" icon={faSearch} />
 
-      <div className="mobile-navbar__messages">
-        <MobileNavItem link="/messages" icon={faEnvelope} />
-        <NotificationBadge unreadCount={unreadMessages} />
-      </div>
+        <div className="mobile-navbar__messages">
+          <MobileNavItem link="/messages" icon={faEnvelope} />
+          <NotificationBadge unreadCount={unreadMessages} />
+        </div>
 
-      <div className="mobile-navbar__messages">
-        <MobileNavItem link="/inbox" icon={faBell} />
-        <NotificationBadge unreadCount={unreadNotifs} />
-      </div>
+        <div className="mobile-navbar__messages">
+          <MobileNavItem link="/inbox" icon={faBell} />
+          <NotificationBadge unreadCount={unreadNotifs} />
+        </div>
 
-      <MobileNavItem link="/profile" icon={faUser} />
-    </nav>
+        <MobileNavItem link="/profile" icon={faUser} />
+      </nav>
+    </div>
   );
 }
 

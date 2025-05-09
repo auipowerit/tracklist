@@ -38,7 +38,7 @@ export default function AccountProfile() {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.classList.add("lock-scroll-modal");
+      document.body.classList.add("lock-scroll");
     }
   }, [isModalOpen]);
 

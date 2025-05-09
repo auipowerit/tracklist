@@ -37,6 +37,7 @@ export default function AddReviewButton(props) {
       navigate("/authenticate");
       return;
     }
+
     setIsModalOpen(true);
   }
 

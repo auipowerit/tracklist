@@ -16,15 +16,15 @@ body {
   min-height: 100vh;
   min-height: 100svh;
   color: $basic-white;
+
+  .lock-scroll {
+    overflow: hidden;
+  }
 }
 
 .lock-scroll {
   position: fixed;
   width: 100%;
-
-  &-modal .hamburger {
-    z-index: -1 !important;
-  }
 }
 
 .wrapper {

@@ -37,7 +37,6 @@
 
   .rating {
     @include flexrow(space-between, center, 0);
-    border-bottom: 1px solid $basic-gray;
 
     &__title {
       padding-right: 0.25em;

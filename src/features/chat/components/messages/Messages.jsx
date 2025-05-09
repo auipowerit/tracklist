@@ -15,7 +15,7 @@ export default function Messages({ messages }) {
 
   useLayoutEffect(() => {
     // Don't scroll to bottom if low message count
-    if (messages.length < 5) return;
+    if (messages.length < 3) return;
 
     // Scroll to bottom if new message comes in
     if (prevMessagLength.current >= messages.length) return;
