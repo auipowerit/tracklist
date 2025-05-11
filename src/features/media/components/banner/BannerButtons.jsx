@@ -13,6 +13,8 @@ export default function BannerButtons({ mediaId, name, category }) {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
+  const isModalOpen = isListModalOpen || isReviewModalOpen || isShareModalOpen;
+
   useEffect(() => {
     setIsLiked(
       globalUser?.likes
@@ -21,6 +23,12 @@ export default function BannerButtons({ mediaId, name, category }) {
         .includes(mediaId),
     );
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+  }, [isModalOpen]);
 
   return (
     <div className="media-banner__buttons">

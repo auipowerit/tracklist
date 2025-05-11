@@ -13,7 +13,7 @@ export default function ReviewButtons({ review, showComment = true }) {
   const { deleteComment } = useCommentContext();
   const { setReviews, getNewReviews, deleteReview } = useReviewContext();
 
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,12 @@ export default function ReviewButtons({ review, showComment = true }) {
         .includes(review.id),
     );
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+  }, [isModalOpen]);
 
   async function handleDelete() {
     const comments = review.comments;
@@ -69,8 +75,8 @@ export default function ReviewButtons({ review, showComment = true }) {
         <CommentButton review={review} />
       ) : (
         <ShareButton
-          isModalOpen={isShareModalOpen}
-          setIsModalOpen={setIsShareModalOpen}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
           mediaId={review.id}
           category="review"
         />

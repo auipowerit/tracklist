@@ -14,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "src/config/firebase";
+import { EARLIEST_REVIEW_DATE } from "src/data/const";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 
@@ -49,9 +50,9 @@ export function useReview() {
       const reviewsRef = collection(db, "reviews");
 
       const earliestDate = new Date();
-      earliestDate.setDate(earliestDate.getDate() - 10);
+      earliestDate.setDate(earliestDate.getDate() - EARLIEST_REVIEW_DATE);
 
-      // Get the 20 most liked reviews from the last 10 days
+      // Get the 20 most liked reviews from the last X days
       const q = query(
         reviewsRef,
         where("createdAt", ">", earliestDate),
