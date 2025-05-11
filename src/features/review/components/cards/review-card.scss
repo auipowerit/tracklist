@@ -76,16 +76,19 @@
       border-bottom: none;
     }
 
+    &__info {
+      gap: 1em;
+      width: 80%;
+      overflow-x: hidden;
+    }
+
     &__container {
       gap: 0.25em;
       border-bottom: 1px solid $darker-gray;
       padding-bottom: 0.5em;
     }
 
-    &__info {
-      width: 80%;
-      overflow-x: hidden;
-    }
+    
 
     &__user {
       flex-wrap: wrap;
@@ -109,12 +112,12 @@
       &--mobile {
         display: unset;
         font-weight: bold;
-        font-size: 0.75rem;
+        font-size: 1rem;
       }
     }
 
     &__rating {
-      gap: 0;
+      gap: 0.25em;
     }
 
     .review-stars {

@@ -9,6 +9,7 @@
 
   &__icon {
     color: $basic-gray;
+    @include font(0.75, normal, $basic-gray);
   }
 
   &__title {
@@ -34,16 +35,17 @@
   .review-card-media {
     max-width: 100%;
 
+    &__icon {
+      font-size: 1.25rem;
+    }
+
     &__title {
       max-width: unset;
-
-      p {
-        font-size: 1rem;
-      }
+      font-size: 1.25rem;
     }
 
     &__subtitle {
-      font-size: 0.75rem;
+      font-size: 1.25rem;
     }
   }
 }
