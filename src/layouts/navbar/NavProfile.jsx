@@ -86,7 +86,9 @@ function DropdownMenu({ showDropdown, setShowDropdown, items }) {
   }
 
   return (
-    <ul className={`navbar-dropdown ${showDropdown && "active"}`}>
+    <ul
+      className={`navbar-dropdown ${showDropdown ? "navbar-dropdown--active" : ""}`}
+    >
       <li>
         <p className="navbar-dropdown__header">Hi, {globalUser?.username}</p>
       </li>

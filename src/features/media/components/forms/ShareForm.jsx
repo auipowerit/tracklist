@@ -214,21 +214,21 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
 function FormUserResults({ users, handleAddUser }) {
   return (
     <div
-      className={`share-form__search--dropdown ${users.length > 0 && "active"}`}
+      className={`share-form__search__dropdown ${users.length > 0 ? "share-form__search__dropdown--active" : ""}`}
     >
       {users.map((user) => (
         <button
           key={user.uid}
           type="button"
           onClick={() => handleAddUser(user)}
-          className="share-form__search--item"
+          className="share-form__search__item"
         >
-          <img src={user.profileUrl} className="share-form__search--image" />
-          <div className="share-form__search--info">
-            <p className="share-form__search--displayname">
+          <img src={user.profileUrl} className="share-form__search__image" />
+          <div className="share-form__search__info">
+            <p className="share-form__search__displayname">
               {user.displayname}
             </p>
-            <span className="share-form__search--username">
+            <span className="share-form__search__username">
               @{user.username}
             </span>
           </div>
@@ -248,11 +248,11 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
       {currentUsers?.map((user) => {
         return (
           <div key={user.uid} className="share-form__user">
-            <p className="share-form__user--username">@{user.username}</p>
+            <p className="share-form__user__username">@{user.username}</p>
             <button
               type="button"
               onClick={() => handleRemoveUser(user.uid)}
-              className="share-form__user--remove"
+              className="share-form__user__remove"
             >
               <FontAwesomeIcon icon={faXmark} />
             </button>
@@ -282,7 +282,7 @@ function FormMessage({ message, setMessage }) {
 function FormButton({ currentUsers }) {
   return (
     <button type="submit" className="form__submit">
-      {`Send ${currentUsers.length > 1 ? "seperately" : ""} `}
+      {`Send${currentUsers.length > 1 ? " seperately" : ""} `}
     </button>
   );
 }

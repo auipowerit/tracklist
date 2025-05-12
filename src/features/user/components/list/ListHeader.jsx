@@ -78,7 +78,9 @@ function ListDropdown(props) {
         setShowDropdown={setShowDropdown}
       />
 
-      <div className={`account-list-dropdown ${showDropdown && "active"}`}>
+      <div
+        className={`account-list-dropdown ${showDropdown ? "account-list-dropdown--active" : ""}`}
+      >
         <OrientationButtons
           orientation={orientation}
           setOrientation={setOrientation}
@@ -126,14 +128,16 @@ function OrientationButtons({ orientation, setOrientation }) {
 
       <button
         onClick={() => setOrientation("horizontal")}
-        className={orientation === "horizontal" ? "active" : ""}
+        className={`account-list-button
+          ${orientation === "horizontal" ? "account-list-button--active" : ""}`}
       >
         <FontAwesomeIcon icon={faTableCellsLarge} />
       </button>
 
       <button
         onClick={() => setOrientation("vertical")}
-        className={orientation === "vertical" ? "active" : ""}
+        className={`account-list-button
+          ${orientation === "vertical" ? "account-list-button--active" : ""}`}
       >
         <FontAwesomeIcon icon={faBars} />
       </button>

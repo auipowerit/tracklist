@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -9,9 +9,13 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import "./mobile-navbar.scss";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
 
 export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
   const mobileRef = useRef();
+  const location = useLocation();
+
+  const { globalUser } = useAuthContext();
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -35,35 +39,63 @@ export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
     mobileRef.current.classList.remove("mobile-navbar--hidden");
   }
 
+  function isActive(page) {
+    return location.pathname.startsWith(`/${page}`);
+  }
+
   return (
     <div ref={mobileRef} className="mobile-navbar">
       <nav className="mobile-navbar--container" onClick={handleClick}>
-        <MobileNavItem link="/home" icon={faHome} />
-        <MobileNavItem link="/search" icon={faSearch} />
+        <MobileNavItem
+          link="/home"
+          icon={faHome}
+          isActive={isActive("home") || isActive("reviews")}
+        />
+        <MobileNavItem
+          link="/search"
+          icon={faSearch}
+          isActive={isActive("search")}
+        />
 
         <div className="mobile-navbar__messages">
-          <MobileNavItem link="/messages" icon={faEnvelope} />
+          <MobileNavItem
+            link="/messages"
+            icon={faEnvelope}
+            isActive={isActive("messages")}
+          />
           <NotificationBadge unreadCount={unreadMessages} />
         </div>
 
         <div className="mobile-navbar__messages">
-          <MobileNavItem link="/inbox" icon={faBell} />
+          <MobileNavItem
+            link="/inbox"
+            icon={faBell}
+            isActive={isActive("inbox")}
+          />
           <NotificationBadge unreadCount={unreadNotifs} />
         </div>
 
-        <MobileNavItem link="/profile" icon={faUser} />
+        <MobileNavItem
+          link={
+            globalUser ? `/users/${globalUser.username}/reviews` : "/profile"
+          }
+          icon={faUser}
+          isActive={
+            isActive("profile") ||
+            (globalUser && isActive(`users/${globalUser.username}`)) ||
+            isActive("authenticate")
+          }
+        />
       </nav>
     </div>
   );
 }
 
-function MobileNavItem({ link, icon }) {
+function MobileNavItem({ link, icon, isActive }) {
   return (
     <NavLink
       to={link}
-      className={({ isActive }) =>
-        `mobile-navbar__link ${isActive ? "active" : ""}`
-      }
+      className={`mobile-navbar__link ${isActive ? "mobile-navbar__link--active" : ""}`}
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>

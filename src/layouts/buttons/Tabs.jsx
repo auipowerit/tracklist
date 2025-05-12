@@ -15,7 +15,7 @@ export default function Tabs(props) {
         <button
           key={tab.id}
           onClick={() => handleClick(tab)}
-          className={`tabs__button ${activeTab === tab.id ? "active" : ""}`}
+          className={`tabs__button ${activeTab === tab.id ? "tabs__button--active" : ""}`}
         >
           {tab.label}
         </button>

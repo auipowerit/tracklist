@@ -31,12 +31,9 @@
   box-shadow: $light-shadow;
   width: fit-content;
   overflow: hidden;
+  max-height: 0;
 
-  &:not(.active) {
-    max-height: 0;
-  }
-
-  &.active {
+  &--active {
     padding: $padding-y $padding-x;
     max-height: 100vh;
   }

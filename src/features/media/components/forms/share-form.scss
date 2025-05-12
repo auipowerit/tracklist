@@ -6,7 +6,7 @@
     @include flexcol(center, center, 0.25em);
     width: 100%;
 
-    &--dropdown {
+    &__dropdown {
       position: absolute;
       top: 20%;
       right: 0;
@@ -14,14 +14,14 @@
       @include flexcol();
       background-color: $basic-green;
 
-      &.active {
+      &--active {
         height: fit-content;
         max-height: 200px;
         overflow: auto;
       }
     }
 
-    &--item {
+    &__item {
       @include flexrow(initial, center, 0.25em);
       padding: 0.25em;
       text-align: left;
@@ -31,7 +31,7 @@
       }
     }
 
-    &--image {
+    &__image {
       border-radius: 100%;
       aspect-ratio: 1/1;
       width: 40px;
@@ -39,15 +39,15 @@
       object-fit: cover;
     }
 
-    &--info {
+    &__info {
       @include flexcol();
     }
 
-    &--displayname {
+    &__displayname {
       @include font(0.75, bold);
     }
 
-    &--username {
+    &__username {
       @include font(0.75);
     }
   }
@@ -64,11 +64,11 @@
     background-color: $darker-gray;
     padding: 0.25em 0.5em;
 
-    &--username {
+    &__username {
       @include font(0.75, bold);
     }
 
-    &--remove {
+    &__remove {
       @include font(0.75);
 
       &:hover {

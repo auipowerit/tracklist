@@ -62,3 +62,9 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 900px) {
+  .basic-button {
+    font-size: 1rem;
+  }
+}

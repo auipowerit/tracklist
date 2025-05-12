@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { MOBILE_WIDTH } from "src/data/const";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
 import Modal from "src/features/shared/components/modal/Modal";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +21,9 @@ export default function AccountProfile() {
   const { user, canEdit } = useOutletContext();
 
   const params = new URLSearchParams(window.location.search);
+
   const navigate = useNavigate();
+  const localParams = useParams();
 
   const { globalUser } = useAuthContext();
   const { updateSpotifyInfo } = useAuthContext();
@@ -26,12 +32,14 @@ export default function AccountProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Redirect to reviews if the user is on mobile
-    if (window.innerWidth <= MOBILE_WIDTH) {
-      navigate(`/users/${user.username}/reviews`);
-      return;
+    if (localParams.username) {
+      navigate(`/users/${localParams.username}/reviews`);
+    } else {
+      navigate(`/users/${globalUser.username}/reviews`);
     }
+  }, []);
 
+  useEffect(() => {
     const fetchData = async () => {
       handleNavigate();
 

@@ -39,7 +39,9 @@ export default function SortButton(props) {
         <p>Sort by</p>
       </button>
 
-      <div className={`sort__dropdown ${showSort ? "active" : ""}`}>
+      <div
+        className={`sort__dropdown ${showSort ? "sort__dropdown--active" : ""}`}
+      >
         {sortOptions.map((option) => (
           <button
             key={option.value}

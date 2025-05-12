@@ -27,3 +27,11 @@
     @include flexrow(space-between, center);
   }
 }
+
+@media (max-width: 900px) {
+  .user-form {
+    &__spotify {
+      display: none !important;
+    }
+  }
+}

@@ -49,7 +49,7 @@ export default function SaveButton({ list, user }) {
   return (
     <button
       onClick={handleSave}
-      className={`save-list-button ${isSaved ? "active" : ""} ${list.userId === globalUser?.uid ? "disabled" : ""}`}
+      className={`save-list-button ${isSaved ? "save-list-button--active" : ""} ${list.userId === globalUser?.uid ? "disabled" : ""}`}
     >
       <FontAwesomeIcon
         icon={faBookmark}

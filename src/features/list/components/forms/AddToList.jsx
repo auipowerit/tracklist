@@ -268,7 +268,9 @@ function FormMediaResults(props) {
   }
 
   return (
-    <div className={`form__search-list ${mediaResults.length > 0 && "active"}`}>
+    <div
+      className={`form__search-list ${mediaResults.length > 0 ? "form__search-list--active" : ""}`}
+    >
       {mediaResults.map(({ id, name, subtitle }) => (
         <button
           key={id}

@@ -258,7 +258,9 @@ function FormInput(props) {
 
 function FormSearchResults({ results, handleClick, type }) {
   return (
-    <div className={`form__search-list ${results.length > 0 && "active"}`}>
+    <div
+      className={`form__search-list ${results.length > 0 ? "form__search-list--active" : ""}`}
+    >
       {results.map(({ id, name, subtitle }) => (
         <button
           type="button"

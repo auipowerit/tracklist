@@ -39,7 +39,7 @@ function NavLogo() {
     <NavLink
       to="/home"
       className={({ isActive }) =>
-        `navbar__link navbar__logo ${isActive ? "active" : ""}`
+        `navbar__link navbar__logo ${isActive ? "navbar__link--active" : ""}`
       }
     >
       <p>TrackList</p>
@@ -51,7 +51,9 @@ function NavItem({ link, icon }) {
   return (
     <NavLink
       to={link}
-      className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}
+      className={({ isActive }) =>
+        `navbar__link ${isActive ? "navbar__link--active" : ""}`
+      }
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>

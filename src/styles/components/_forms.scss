@@ -70,7 +70,7 @@
     @include flexcol();
     background-color: $basic-green;
 
-    &.active {
+    &--active {
       height: 200px;
       overflow: auto;
     }

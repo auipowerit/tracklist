@@ -81,35 +81,35 @@
 
     &__image {
       border-radius: 50%;
-      width: 75px;
-      height: 75px;
+      width: 100px;
+      height: 100px;
       object-fit: cover;
     }
 
     &__displayname,
     &__username {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
     &__username {
-      color: $basic-white;
-      font-weight: bold;
+      color: $basic-gray;
     }
 
     &__bio {
       font-style: italic;
+      font-size: 1rem;
     }
 
     &__date {
       color: $basic-gray;
-      font-size: 0.75rem;
+      font-size: 1rem;
       @include flexrow(initial, center, 0.5em);
     }
 
     &__friends {
       @include flexrow(initial, center, 0.5em);
       color: $basic-gray;
-      font-size: 0.75rem;
+      font-size: 1rem;
     }
 
     &__count {
@@ -118,7 +118,7 @@
     }
 
     &__links {
-      @include flexrow(initial, center);
+      @include flexrow(center, center);
       margin: 0 auto;
       background-color: $dark-green;
       width: fit-content;
@@ -127,10 +127,10 @@
     }
 
     &__link {
-      padding: 0.5em 1.5em;
+      padding: 0.5em 1em;
       color: $basic-white;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 1rem;
 
       &--active {
         background-color: $basic-green;

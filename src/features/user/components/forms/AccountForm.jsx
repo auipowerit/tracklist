@@ -75,7 +75,7 @@ function FormImage({ globalUser }) {
       <button
         type="button"
         onClick={() => redirectToSpotifyAuth(false)}
-        className="basic-button"
+        className="basic-button user-form__spotify"
       >
         <FontAwesomeIcon icon={faSpotify} />
         <p>{globalUser?.spotifyUrl ? "Resync" : "Sync"}</p>

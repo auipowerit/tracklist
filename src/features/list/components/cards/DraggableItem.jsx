@@ -28,7 +28,7 @@ export default function DraggableItem(props) {
       <div className="draggable-item">
         <div
           {...listeners}
-          className={`draggable-item-listener ${isDragging && "active"}`}
+          className={`draggable-item__listener ${isDragging ? "draggable-item__listener--active" : ""}`}
         >
           <ListItemCard
             title={item.title}
@@ -42,7 +42,7 @@ export default function DraggableItem(props) {
         <button
           type="button"
           onClick={() => handleDelete(item.id)}
-          className="draggable-item-delete-button"
+          className="draggable-item__delete"
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>

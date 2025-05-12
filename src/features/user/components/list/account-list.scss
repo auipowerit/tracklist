@@ -60,13 +60,13 @@
 .account-list-orientation {
   @include flexrow(initial, center, 1em);
   width: 100%;
+}
 
-  button {
-    @include font(0.75);
+.account-list-button {
+  @include font(0.75);
 
-    &.active {
-      color: $basic-green;
-    }
+  &--active {
+    color: $basic-green;
   }
 }
 
@@ -102,17 +102,18 @@
   cursor: pointer;
   border-radius: 20px;
   background-color: $darker-gray;
-}
-.toggle:before {
-  position: absolute;
-  bottom: 4px;
-  left: 4px;
-  transition: 0.2s;
-  border-radius: 50%;
-  background-color: $basic-white;
-  width: 18px;
-  height: 18px;
-  content: "";
+
+  &:before {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    transition: 0.2s;
+    border-radius: 50%;
+    background-color: $basic-white;
+    width: 18px;
+    height: 18px;
+    content: "";
+  }
 }
 
 input:checked + .toggle:before {
