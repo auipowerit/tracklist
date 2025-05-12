@@ -11,9 +11,9 @@ export default function UserCard({ user: propUser }) {
   useEffect(() => {
     setUser({
       ...propUser,
-      followersCount: propUser.followers.length,
-      followingCount: propUser.following.length,
-      isFollowing: propUser.followers.includes(globalUser?.uid),
+      followersCount: propUser.followers?.length || 0,
+      followingCount: propUser.following?.length || 0,
+      isFollowing: propUser.followers?.includes(globalUser?.uid) || false,
     });
   }, []);
 

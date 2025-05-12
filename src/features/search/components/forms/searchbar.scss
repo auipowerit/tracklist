@@ -23,13 +23,12 @@
 @media (max-width: 900px) {
   .searchbar {
     gap: 0.5em;
-    padding: 0.5em;
+    padding: 0.25em;
     max-width: 100%;
-    border-radius: 24px;
 
     &__input {
       width: 100%;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
     }
 
     &__submit {

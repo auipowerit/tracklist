@@ -1,49 +1,50 @@
 @use "src/styles/abstracts" as *;
 
 .mobile-navbar {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  background-color: $basic-black;
-  width: 100%;
-
-  &--container {
-    @include flexrow(space-between, center);
-    z-index: 2;
-    transition: opacity 0.2s ease-in-out;
-    margin: 0 auto;
-    padding: 1em 2em;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  &--hidden {
-    opacity: 0.5;
-  }
-
-  &__link {
-    font-size: 1.5rem;
-
-    &.active {
-      color: $basic-green;
-    }
-  }
-
-  &__messages {
-    position: relative;
-  }
-
-  &__badge {
-    @include badge(0.5, $basic-white, $basic-red, 1.2em);
-    position: absolute;
-    top: -0.5em;
-    right: -0.8em;
-    font-size: 1rem;
-  }
+  display: none;
 }
 
-@media (min-width: 900px) {
+@media (max-width: 900px) {
   .mobile-navbar {
-    display: none;
+    display: block;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    background-color: $basic-black;
+    width: 100%;
+
+    &--container {
+      @include flexrow(space-between, center);
+      z-index: 2;
+      transition: opacity 0.2s ease-in-out;
+      margin: 0 auto;
+      padding: 1em 2em;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    &--hidden {
+      opacity: 0.5;
+    }
+
+    &__link {
+      font-size: 1.5rem;
+
+      &.active {
+        color: $basic-green;
+      }
+    }
+
+    &__messages {
+      position: relative;
+    }
+
+    &__badge {
+      @include badge(0.5, $basic-white, $basic-red, 1.2em);
+      position: absolute;
+      top: -0.5em;
+      right: -0.8em;
+      font-size: 1rem;
+    }
   }
 }

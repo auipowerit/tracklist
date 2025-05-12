@@ -8,7 +8,7 @@ export default function FollowButton({ user, setUser }) {
   const { addNotification } = useInboxContext();
 
   const [isFollowing, setIsFollowing] = useState(
-    user.followers.includes(globalUser?.uid) || false,
+    user.followers?.includes(globalUser?.uid) || false,
   );
 
   async function handleClick() {
@@ -41,7 +41,7 @@ export default function FollowButton({ user, setUser }) {
   return (
     <button
       onClick={() => handleClick()}
-      className={`follow-button ${isFollowing && "active"}`}
+      className={`follow-button ${isFollowing ? "follow-button--active" : ""}`}
     >
       {isFollowing ? "Following" : "Follow"}
     </button>

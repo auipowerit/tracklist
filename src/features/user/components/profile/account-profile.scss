@@ -49,3 +49,10 @@
     @include font(initial, bold, $basic-white);
   }
 }
+
+@media (max-width: 900px) {
+  // Profile info is in mobile header
+  .account-profile {
+    display: none;
+  }
+}

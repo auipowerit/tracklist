@@ -5,7 +5,7 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
 
-export default function ChatSearchInput({ setIsCollapsed }) {
+export default function ChatSearchInput() {
   const { globalUser, getUserById, searchByUsername } = useAuthContext();
   const { chats, addChat, setActiveChatId, setActiveChatUser } =
     useChatContext();
@@ -53,14 +53,16 @@ export default function ChatSearchInput({ setIsCollapsed }) {
 
   return (
     <div className="chat-search">
-      <CancelButton setIsCollapsed={setIsCollapsed} />
+      <CancelButton />
       <SearchInput ref={inputRef} handleSearch={handleSearch} />
       <SearchResults users={users} handleAddUser={handleAddUser} />
     </div>
   );
 }
 
-function CancelButton({ setIsCollapsed }) {
+function CancelButton() {
+  const { setIsCollapsed } = useChatContext();
+
   function handleClick() {
     setIsCollapsed(false);
   }

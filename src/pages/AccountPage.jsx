@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Loading from "src/features/shared/components/Loading";
-import NavLinks from "src/features/user/components/nav/NavLinks";
+import AccountNav from "src/features/user/components/nav/AccountNav";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import ChatButton from "src/features/user/components/buttons/ChatButton";
-import LogoutButton from "src/features/user/components/buttons/LogoutButton";
+import AccountMobileNav from "src/features/user/components/nav/AccountMobileNav";
 import "./styles/account.scss";
 
 export default function AccountPage() {
@@ -19,6 +12,7 @@ export default function AccountPage() {
   const username = params.username;
 
   const { getUserByUsername, loadingUser, globalUser } = useAuthContext();
+
   const [user, setUser] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
 
@@ -53,34 +47,12 @@ export default function AccountPage() {
 
   return (
     <div className="account">
-      <div className="account__navbar">
-        <Profile user={user} />
-        <NavLinks username={user.username} />
-        {canEdit ? <LogoutButton /> : <ChatButton username={user.username} />}
-      </div>
+      <AccountNav user={user} canEdit={canEdit} />
+      <AccountMobileNav user={user} setUser={setUser} canEdit={canEdit} />
 
       <div className="account__outlet">
         <Outlet context={{ user, canEdit }} />
       </div>
     </div>
-  );
-}
-
-function Profile({ user }) {
-  const location = useLocation();
-
-  const isHomePage =
-    location.pathname === "/profile" ||
-    location.pathname === `/users/${user.username}` ||
-    location.pathname === `/users/${user.username}/profile`;
-
-  return (
-    <Link
-      to={`/users/${user.username}`}
-      className={`account__nav-link ${isHomePage && "account__nav-link--active"}`}
-    >
-      <img src={user.profileUrl} className="account__image" />
-      <p>{user.username}</p>
-    </Link>
   );
 }

@@ -22,6 +22,9 @@ export default function FriendsList({ activeTab, user }) {
         const fetchedUsersDetails = await Promise.all(
           fetchedUsers?.map(async (uid) => {
             const user = await getUserById(uid);
+            if (!user) {
+              return null;
+            }
             return {
               uid,
               ...user,
@@ -50,6 +53,9 @@ export default function FriendsList({ activeTab, user }) {
         (users.length > 0 ? (
           <ul className="account-friends-list">
             {users.map((user) => {
+              if (!user) {
+                return null;
+              }
               return <UserCard key={user.uid} user={user} />;
             })}
           </ul>

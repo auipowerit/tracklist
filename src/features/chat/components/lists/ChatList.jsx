@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { MOBILE_WIDTH } from "src/data/const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -8,13 +9,10 @@ import {
   faSquareCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
 import "./chat-list.scss";
-import { useEffect } from "react";
 
-export default function ChatList({
-  handleOpenChat,
-  isCollapsed,
-  setIsCollapsed,
-}) {
+export default function ChatList({ handleOpenChat }) {
+  const { isCollapsed, setIsCollapsed } = useChatContext();
+
   useEffect(() => {
     if (isCollapsed) return;
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -26,21 +24,18 @@ export default function ChatList({
     >
       {!isCollapsed && (
         <>
-          <Header setIsCollapsed={setIsCollapsed} />
+          <Header />
           <Chats handleOpenChat={handleOpenChat} />
         </>
       )}
-      <CollapseButton
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-      />
+      <CollapseButton />
     </div>
   );
 }
 
-function Header({ setIsCollapsed }) {
+function Header() {
   const { globalUser } = useAuthContext();
-  const { setActiveChatId, activeChatUser, setActiveChatUser } =
+  const { setActiveChatId, activeChatUser, setActiveChatUser, setIsCollapsed } =
     useChatContext();
 
   async function handleNewChat() {
@@ -114,7 +109,8 @@ function ChatCard({ chat, handleOpenChat }) {
   );
 }
 
-function CollapseButton({ isCollapsed, setIsCollapsed }) {
+function CollapseButton() {
+  const { isCollapsed, setIsCollapsed } = useChatContext();
   const icon = isCollapsed ? faSquareCaretRight : faSquareCaretLeft;
 
   return (

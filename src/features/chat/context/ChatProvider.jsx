@@ -9,6 +9,7 @@ export default function ChatProvder({ children }) {
   const [chats, setChats] = useState(null);
   const [activeChatId, setActiveChatId] = useState(-1);
   const [activeChatUser, setActiveChatUser] = useState({});
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const { globalUser, getUserById } = useAuthContext();
   const useChatMethods = useChat();
@@ -48,6 +49,8 @@ export default function ChatProvder({ children }) {
     setActiveChatId,
     activeChatUser,
     setActiveChatUser,
+    isCollapsed,
+    setIsCollapsed,
     ...useChatMethods,
   };
 

@@ -1,0 +1,140 @@
+@use "src/styles/abstracts" as *;
+
+.account-nav {
+  @include flexrow(space-between, center);
+  flex-wrap: wrap;
+  background-color: $dark-green;
+  padding: 0.75em 2em;
+  width: 100%;
+
+  &__links {
+    @include flexrow(initial, center, 1em);
+  }
+
+  &__link {
+    @include flexrow(initial, center, 0.5em);
+    @include font(0.75, normal);
+    color: $basic-gray;
+
+    &:hover,
+    &--active {
+      color: $basic-white;
+    }
+  }
+
+  &__image {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+}
+
+.account-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .account-nav {
+    display: none;
+
+    &__links {
+      display: none;
+    }
+  }
+
+  .account-mobile-nav {
+    @include flexcol(initial, center);
+    position: relative;
+    background-color: $background-primary;
+    padding-bottom: 1em;
+    width: 100%;
+    text-align: center;
+
+    &__header {
+      padding: 1em;
+      width: 100%;
+
+      &--left-button {
+        position: absolute;
+        top: 5%;
+        left: 3%;
+      }
+
+      &--right-button {
+        position: absolute;
+        top: 5%;
+        right: 3%;
+      }
+    }
+
+    &__profile {
+      @include flexcol(initial, center, 0.5em);
+      top: 0;
+      margin: 0 auto;
+    }
+
+    &__user {
+      @include flexrow(initial, center, 0.5em);
+      gap: 0.5em;
+    }
+
+    &__image {
+      border-radius: 50%;
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+    }
+
+    &__displayname,
+    &__username {
+      font-size: 1rem;
+    }
+
+    &__username {
+      color: $basic-white;
+      font-weight: bold;
+    }
+
+    &__bio {
+      font-style: italic;
+    }
+
+    &__date {
+      color: $basic-gray;
+      font-size: 0.75rem;
+      @include flexrow(initial, center, 0.5em);
+    }
+
+    &__friends {
+      @include flexrow(initial, center, 0.5em);
+      color: $basic-gray;
+      font-size: 0.75rem;
+    }
+
+    &__count {
+      color: $basic-white;
+      font-weight: bold;
+    }
+
+    &__links {
+      @include flexrow(initial, center);
+      margin: 0 auto;
+      background-color: $dark-green;
+      width: fit-content;
+      max-width: 100%;
+      overflow-x: scroll;
+    }
+
+    &__link {
+      padding: 0.5em 1.5em;
+      color: $basic-white;
+      font-weight: bold;
+      font-size: 0.75rem;
+
+      &--active {
+        background-color: $basic-green;
+      }
+    }
+  }
+}

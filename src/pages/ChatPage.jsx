@@ -9,11 +9,16 @@ import "./styles/chat.scss";
 
 export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();
-  const { setActiveChatId, setActiveChatUser, readMessage } = useChatContext();
+  const {
+    setActiveChatId,
+    setActiveChatUser,
+    isCollapsed,
+    setIsCollapsed,
+    readMessage,
+  } = useChatContext();
 
   const [mounted, setMounted] = useState(false);
   const [chatWindowKey, setChatWindowKey] = useState(0);
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,16 +60,8 @@ export default function ChatPage() {
 
   return (
     <div className="chat">
-      <ChatList
-        handleOpenChat={handleOpenChat}
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-      />
-      <ChatWindow
-        key={chatWindowKey}
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-      />
+      <ChatList handleOpenChat={handleOpenChat} />
+      <ChatWindow key={chatWindowKey} />
     </div>
   );
 }

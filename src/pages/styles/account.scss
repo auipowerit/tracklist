@@ -7,36 +7,6 @@
   max-width: 1200px;
   min-height: 80vh;
 
-  &__navbar {
-    @include flexrow(space-between, center);
-    flex-wrap: wrap;
-    background-color: $dark-green;
-    padding: 0.75em 2em;
-    width: 100%;
-  }
-
-  &__nav-links {
-    @include flexrow(initial, center, 1em);
-  }
-
-  &__nav-link {
-    @include flexrow(initial, center, 0.5em);
-    @include font(1, normal);
-    color: $basic-gray;
-
-    &:hover,
-    &--active {
-      color: $basic-white;
-    }
-  }
-
-  &__image {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-  }
-
   &__outlet {
     padding: 0 1em;
     width: 100%;
@@ -61,40 +31,23 @@
 
 @media (max-width: 900px) {
   .account {
-    &__navbar {
-      justify-content: space-evenly;
-      padding: 0.5em 0.25em;
-    }
-
-    &__nav-link {
-      gap: 0.25em;
-    }
-
-    &__nav-link {
-      font-size: 0.85rem;
-    }
+    gap: 0;
+    background-color: $dark-gray;
+    max-width: 100%;
+    height: 100%;
+    min-height: auto;
 
     &__image {
-      width: 20px;
-      height: 20px;
+      width: 50px;
+      height: 50px;
     }
 
     &__outlet {
-      padding: 0;
+      padding: 1em 0;
     }
 
     &__header {
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      border-bottom: 1px solid $basic-gray;
-      background-color: $background-primary;
-      padding: 0.5em 0.25em;
-    }
-
-    &__title {
-      font-size: 1rem;
+      display: none;
     }
   }
 }

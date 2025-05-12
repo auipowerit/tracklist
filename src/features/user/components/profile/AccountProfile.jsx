@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { MOBILE_WIDTH } from "src/data/const";
 import { formatDateMDYLong } from "src/utils/date";
 import Modal from "src/features/shared/components/modal/Modal";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import FollowButton from "src/features/user/components/buttons/FollowButton";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import AccountForm from "../forms/AccountForm";
+import EditProfileButton from "../buttons/EditProfileButton";
 import "./account-profile.scss";
 
 export default function AccountProfile() {
@@ -24,6 +26,12 @@ export default function AccountProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    // Redirect to reviews if the user is on mobile
+    if (window.innerWidth <= MOBILE_WIDTH) {
+      navigate(`/users/${user.username}/reviews`);
+      return;
+    }
+
     const fetchData = async () => {
       handleNavigate();
 
@@ -165,14 +173,5 @@ function ProfileDetails({ user }) {
         </Link>
       </div>
     </div>
-  );
-}
-
-function EditProfileButton({ setIsModalOpen }) {
-  return (
-    <button onClick={() => setIsModalOpen(true)} className="basic-button">
-      <FontAwesomeIcon icon={faPen} />
-      <p>Edit</p>
-    </button>
   );
 }

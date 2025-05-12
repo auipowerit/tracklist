@@ -17,7 +17,7 @@
   padding: 0.5em;
   height: fit-content;
 
-  &.active {
+  &--active {
     border-color: transparent;
     background-color: $basic-green;
   }
@@ -39,15 +39,24 @@
 
 @media (max-width: 900px) {
   .chat-button {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
   .follow-button {
-    font-size: 1rem;
-    border-radius: 24px;
+    border: 1px solid $basic-white;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0.5em;
+    width: 75px;
+    font-size: 0.75rem;
   }
 
   .logout-button {
-    font-size: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .profile-button {
+    color: $basic-gray;
+    font-size: 1.25rem;
   }
 }

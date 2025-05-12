@@ -39,7 +39,7 @@ export function formatDateMDLong(date) {
 export function formatDateMDYShort(date) {
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     month: "2-digit",
-    day: "numeric",
+    day: "2-digit",
     year: "numeric",
   });
 

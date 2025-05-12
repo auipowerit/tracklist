@@ -13,9 +13,14 @@ import MessageInput from "../inputs/MessageInput";
 import ChatSearchInput from "../inputs/ChatSearchInput";
 import "./chat-window.scss";
 
-export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
+export default function ChatWindow() {
   const { globalUser } = useAuthContext();
-  const { activeChatId, activeChatUser, readMessage } = useChatContext();
+  const {
+    activeChatId,
+    activeChatUser,
+    isCollapsed,
+    readMessage,
+  } = useChatContext();
   const { getReviewById } = useReviewContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
@@ -110,10 +115,10 @@ export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
       className={`chats ${isCollapsed ? "chats--active" : "chats--collapsed"}`}
     >
       {activeChatId === -1 ? (
-        <ChatSearchInput setIsCollapsed={setIsCollapsed} />
+        <ChatSearchInput />
       ) : (
         <>
-          <Header setIsCollapsed={setIsCollapsed} />
+          <Header />
           <Messages messages={messages} />
           <MessageInput />
         </>
@@ -122,8 +127,8 @@ export default function ChatWindow({ isCollapsed, setIsCollapsed }) {
   );
 }
 
-function Header({ setIsCollapsed }) {
-  const { activeChatUser, setActiveChatId } = useChatContext();
+function Header() {
+  const { activeChatUser, setActiveChatId, setIsCollapsed } = useChatContext();
 
   function handleCollapse() {
     setActiveChatId(-1);
