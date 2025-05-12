@@ -17,14 +17,14 @@ export default function ListHeader(props) {
   const { user } = useOutletContext();
 
   return (
-    <div className="account__header">
-      <div className="account-list-title">
-        <div className="account-list-name-container">
+    <div className="account-list__header">
+      <div className="account-list__info">
+        <div className="account-list__title">
           {list.isPrivate && <LockIcon />}
-          <p className="account-list-name">{list.name}</p>
+          <p className="account-list__name">{list.name}</p>
           <SaveButton list={list} user={user} />
         </div>
-        <p className="account-list-description">{list.description}</p>
+        <p className="account-list__description">{list.description}</p>
       </div>
 
       <ListDropdown {...props} />
@@ -35,7 +35,7 @@ export default function ListHeader(props) {
 function LockIcon() {
   return (
     <div data-tooltip-content="Private" data-tooltip-id="category-tooltip">
-      <FontAwesomeIcon icon={faLock} className="account-list-lock" />
+      <FontAwesomeIcon icon={faLock} className="account-list__lock" />
       <Tooltip id="category-tooltip" place="top" type="dark" effect="float" />
     </div>
   );
@@ -72,14 +72,14 @@ function ListDropdown(props) {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="account-list-dropdown-container">
+    <div ref={dropdownRef} className="account-list__dropdown">
       <DropdownButton
         showDropdown={showDropdown}
         setShowDropdown={setShowDropdown}
       />
 
       <div
-        className={`account-list-dropdown ${showDropdown ? "account-list-dropdown--active" : ""}`}
+        className={`account-list__dropdown-menu ${showDropdown ? "account-list__dropdown-menu--active" : ""}`}
       >
         <OrientationButtons
           orientation={orientation}
@@ -90,7 +90,7 @@ function ListDropdown(props) {
           <>
             <EditToggle isEditing={isEditing} setIsEditing={setIsEditing} />
 
-            <div className="list-edit-buttons">
+            <div className="account-list__dropdown-buttons">
               <AddToListButton
                 isModalOpen={isAddModalOpen}
                 setIsModalOpen={setIsAddModalOpen}
@@ -115,7 +115,7 @@ function DropdownButton({ showDropdown, setShowDropdown }) {
   }
 
   return (
-    <button onClick={handleUserClick}>
+    <button onClick={handleUserClick} className="account-list__dropdown-button">
       <FontAwesomeIcon icon={faCaretSquareDown} />
     </button>
   );
@@ -123,21 +123,22 @@ function DropdownButton({ showDropdown, setShowDropdown }) {
 
 function OrientationButtons({ orientation, setOrientation }) {
   return (
-    <div className="account-list-orientation">
-      <p className="account-list-label">Layout</p>
+    <div className="account-list__orientation">
+      <p className="account-list__label">Layout</p>
 
       <button
         onClick={() => setOrientation("horizontal")}
-        className={`account-list-button
-          ${orientation === "horizontal" ? "account-list-button--active" : ""}`}
+        className={`account-list__button
+         ${orientation === "horizontal" ? "account-list__button--active" : ""}`}
       >
         <FontAwesomeIcon icon={faTableCellsLarge} />
       </button>
 
       <button
         onClick={() => setOrientation("vertical")}
-        className={`account-list-button
-          ${orientation === "vertical" ? "account-list-button--active" : ""}`}
+        className={`account-list__button
+         ${orientation === "vertical" ? "account-list__button--active" : ""}
+        `}
       >
         <FontAwesomeIcon icon={faBars} />
       </button>
@@ -151,16 +152,16 @@ function EditToggle({ isEditing, setIsEditing }) {
   }
 
   return (
-    <div className="account-list-edit">
-      <p className="account-list-label">Edit mode</p>
-      <label className="toggle-container">
+    <div className="account-list__edit">
+      <p className="account-list__label">Edit mode</p>
+      <label className="toggle">
         <input
           type="checkbox"
           onChange={handleToggle}
           checked={isEditing}
-          className="toggle-input"
+          className="toggle__input"
         />
-        <span className="toggle"></span>
+        <span className="toggle__slider"></span>
       </label>
     </div>
   );

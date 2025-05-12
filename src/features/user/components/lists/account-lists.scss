@@ -1,23 +1,40 @@
 @use "src/styles/abstracts" as *;
 
-.account-lists-container {
-  overflow-y: auto;
-}
-
 .account-lists {
-  @include flexcol($gap: 2em);
-  width: 100%;
-}
-
-.account-list-item {
-  @include flexcol();
-  border-bottom: 1px solid $basic-gray;
-
-  &:hover {
-    background-color: $dark-green;
+  &__list {
+    @include flexcol($gap: 2em);
+    width: 100%;
   }
 
-  & > p {
-    @include font(0.5, normal, $basic-gray);
+  &__item {
+    @include flexcol($gap: 0.5em);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $basic-gray;
+    }
+
+    &:hover {
+      background-color: $dark-green;
+    }
+  }
+
+  &__user {
+    @include font(1, normal, $basic-gray);
+  }
+}
+
+@media (max-width: 900px) {
+  .account-lists {
+    padding: 0 0.5em;
+
+    &__item {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &__user {
+      font-size: 1rem;
+    }
   }
 }

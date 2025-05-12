@@ -1,125 +1,169 @@
 @use "src/styles/abstracts" as *;
 
 .account-list {
-  @include flexrow($gap: 1em);
-  padding-top: 1em;
-
-  &.vertical {
-    flex-direction: column;
-    flex-wrap: wrap;
+  &__header {
+    @include flexrow(space-between, end);
+    border-bottom: 1px solid $basic-white;
+    padding: 0.5em;
   }
 
-  &.horizontal {
-    flex-direction: row;
-    flex-wrap: wrap;
+  &__info {
+    @include flexcol($gap: 0.25em);
   }
-}
 
-.account-list-title {
-  @include flexcol($gap: 0.25em);
-}
+  &__title {
+    @include flexrow(initial, center, 0.5em);
+  }
 
-.account-list-name-container {
-  @include flexrow(initial, center, 0.5em);
-}
+  &__lock {
+    color: $basic-gray;
+  }
 
-.account-list-lock {
-  color: $basic-gray;
-}
+  &__name {
+    @include font(1, bold);
+  }
 
-.account-list-name {
-  @include font(1, bold);
-}
+  &__description {
+    @include font(0.5, normal, $basic-gray);
+    text-wrap: wrap;
+  }
 
-.account-list-description {
-  @include font(0.5, normal, $basic-gray);
-  text-wrap: wrap;
-}
+  &__dropdown {
+    position: relative;
+  }
 
-.account-list-dropdown-container {
-  position: relative;
-
-  & > button {
+  &__dropdown-button {
     @include font(1.5, normal, $basic-green);
   }
-}
 
-.account-list-dropdown {
-  @include dropdown(right, 1em, 1.5em);
-  @include flexcol(center, center, 1em);
-  z-index: 2;
-  background-color: $dark-gray;
-}
-
-.account-list-label {
-  @include font(0.5, normal, $basic-gray);
-  margin-right: auto;
-  text-wrap: nowrap;
-}
-
-.account-list-orientation {
-  @include flexrow(initial, center, 1em);
-  width: 100%;
-}
-
-.account-list-button {
-  @include font(0.75);
-
-  &--active {
-    color: $basic-green;
+  &__dropdown-menu {
+    @include dropdown(right, 1em, 1.5em);
+    @include flexcol(center, center, 1em);
+    z-index: 2;
+    background-color: $dark-gray;
   }
-}
 
-.account-list-edit {
-  @include flexrow(space-between, center);
-  width: 100%;
-}
+  &__label {
+    @include font(0.5, normal, $basic-gray);
+    margin-right: auto;
+    text-wrap: nowrap;
+  }
 
-.toggle-container {
-  display: inline-block;
-  position: relative;
-  width: 50px;
-  height: 26px;
-}
+  &__orientation {
+    @include flexrow(initial, center, 0.5em);
+    width: 100%;
+  }
 
-.toggle-input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  &__button {
+    @include font(1);
 
-  &:checked + .toggle {
-    background-color: $basic-green;
+    &--active {
+      color: $basic-green;
+    }
+  }
+
+  &__edit {
+    @include flexrow(space-between, center);
+    width: 100%;
+  }
+
+  &__dropdown-buttons {
+    @include flexcol(center, flex-start, 1em);
+  }
+
+  &__list {
+    @include flexrow($gap: 1em);
+    padding-bottom: 2em;
+
+    &--vertical {
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+
+    &--horizontal {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 }
 
 .toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transition: 0.2s;
-  cursor: pointer;
-  border-radius: 20px;
-  background-color: $darker-gray;
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 26px;
 
-  &:before {
+  &__input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggle__slider {
+      background-color: $basic-green;
+    }
+
+    &:checked + .toggle__slider:before {
+      transform: translateX(22px);
+    }
+  }
+
+  &__slider {
     position: absolute;
-    bottom: 4px;
-    left: 4px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     transition: 0.2s;
-    border-radius: 50%;
-    background-color: $basic-white;
-    width: 18px;
-    height: 18px;
-    content: "";
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: $darker-gray;
+
+    &:before {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      transition: 0.2s;
+      border-radius: 50%;
+      background-color: $basic-white;
+      width: 18px;
+      height: 18px;
+      content: "";
+    }
   }
 }
 
-input:checked + .toggle:before {
-  transform: translateX(22px);
-}
+@media (max-width: 900px) {
+  .account-list {
+    margin: 0 auto;
+    padding: 0.5em;
 
-.list-edit-buttons {
-  @include flexcol(center, flex-start, 1em);
+    &__name {
+      font-size: 1.25rem;
+    }
+
+    &__description {
+      font-size: 1rem;
+    }
+
+    &__label {
+      padding-right: 1em;
+      font-size: 1rem;
+    }
+
+    &__orientation {
+      gap: 1em;
+    }
+
+    &__button {
+      font-size: 1.5rem;
+    }
+
+    &__list {
+      &--horizontal {
+        justify-content: space-evenly;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+  }
 }

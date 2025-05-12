@@ -21,7 +21,7 @@ export default function AccountLists() {
   ];
 
   return (
-    <div className="account__section">
+    <div className="account__section account-lists">
       <Header canEdit={canEdit} />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <Lists user={user} activeTab={activeTab} />
@@ -114,25 +114,22 @@ function Lists({ user, activeTab }) {
     return <Loading />;
   }
 
+  if (!lists || lists.length === 0) {
+    return <p className="empty__message">There are no lists yet!</p>;
+  }
+
   return (
-    <div className="account-lists-container">
-      {lists && lists.length > 0 ? (
-        <ul className="account-lists">
-          {lists.map((list, index) => {
-            return (
-              <li key={list.id}>
-                <ListItem
-                  item={list}
-                  image={images[index] || DEFAULT_MEDIA_IMG}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <p className="empty__message">There are no lists yet!</p>
-      )}
-    </div>
+    <ul className="account-lists__list">
+      {lists.map((list, index) => {
+        return (
+          <ListItem
+            key={list.id}
+            item={list}
+            image={images[index] || DEFAULT_MEDIA_IMG}
+          />
+        );
+      })}
+    </ul>
   );
 }
 
@@ -156,8 +153,10 @@ function ListItem({ item, image }) {
   }, [item]);
 
   return (
-    <Link to={link} className="account-list-item">
-      {listUser && <p>{`Created by ${listUser}`}</p>}
+    <Link to={link} className="account-lists__item">
+      {listUser && (
+        <p className="account-lists__user">{`Created by ${listUser}`}</p>
+      )}
       <ListCard id={item.id} list={item} image={image} />
     </Link>
   );

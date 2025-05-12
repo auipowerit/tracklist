@@ -23,17 +23,26 @@ export default function ListItemCard(props) {
   }, [title, orientation]);
 
   return (
-    <div className={`list-item-card ${orientation}`}>
-      <div className={`list-item-image ${orientation}`}>
-        {index && <p>{index}</p>}
-        <img src={image} />
+    <div className={`list-item list-item--${orientation}`}>
+      <div className={`list-item__media list-item__media--${orientation}`}>
+        {index && (
+          <p className={`list-item__index list-item__index--${orientation}`}>
+            {index}
+          </p>
+        )}
+        <img
+          src={image}
+          className={`list-item__image list-item__image--${orientation}`}
+        />
       </div>
 
-      <div className={`list-item-info ${orientation}`}>
-        <div className="list-item-title">
-          <p ref={titleRef}>{title}</p>
+      <div className={`list-item__info list-item__info--${orientation}`}>
+        <div className="list-item__title--wrapper">
+          <p ref={titleRef} className="list-item__title">
+            {title}
+          </p>
         </div>
-        {subtitle && <p className="list-item-subtitle">{subtitle}</p>}
+        {subtitle && <p className="list-item__subtitle">{subtitle}</p>}
       </div>
     </div>
   );

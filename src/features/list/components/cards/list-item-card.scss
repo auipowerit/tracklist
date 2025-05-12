@@ -1,6 +1,6 @@
 @use "src/styles/abstracts" as *;
 
-.list-item-card {
+.list-item {
   @include flexrow();
   @include font(0.5);
   border: 1px solid transparent;
@@ -9,33 +9,50 @@
     border-color: $basic-white;
   }
 
-  &.horizontal {
+  &--horizontal {
     flex-direction: column;
     gap: 0.25em;
     width: 200px;
   }
 
-  &.vertical {
+  &--vertical {
     flex-direction: row;
     gap: 1em;
     height: 200px;
   }
-}
 
-.list-item-image {
-  @include flexrow($gap: 0.5em);
-  position: relative;
+  &__media {
+    @include flexrow($gap: 0.5em);
+    position: relative;
 
-  &.horizontal {
-    width: 100%;
+    &--horizontal {
+      width: 100%;
+    }
+  }
 
-    img {
+  &__image {
+    &--horizontal {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
 
-    p {
+    &--vertical {
+      width: 200px;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__index {
+    @include flexrow(center, center);
+    @include font(1);
+    background-color: $darker-green;
+    width: 1.5em;
+    height: 1.5em;
+    font-weight: bold;
+
+    &--horizontal {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -43,55 +60,71 @@
     }
   }
 
-  &.vertical img {
-    width: 200px;
-    height: 100%;
-    object-fit: cover;
+  &__info {
+    @include flexcol();
+
+    &--horizontal .list-item-title {
+      text-align: center;
+    }
+
+    &--vertical {
+      height: 100%;
+      @include flexcol(center, center);
+    }
   }
 
-  p {
-    @include flexrow(center, center);
-    @include font(1);
-    background-color: $darker-green;
-    width: 1.5em;
-    height: 1.5em;
-    font-weight: bold;
-  }
-}
-
-.list-item-info {
-  @include flexcol();
-
-  &.horizontal .list-item-title {
-    text-align: center;
-  }
-
-  &.vertical {
-    height: 100%;
-    @include flexcol(center, center);
-  }
-}
-
-.list-item-title {
-  padding: 0 0.5em;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  @include gradient(left);
-
-  p {
+  &__title {
     @include font(0.5, bold);
     margin: auto;
     width: fit-content;
     color: $basic-white;
     white-space: nowrap;
+
+    &--wrapper {
+      padding: 0 0.5em;
+      width: 100%;
+      overflow: hidden;
+      text-align: center;
+      @include gradient(left);
+    }
+  }
+
+  &__subtitle {
+    overflow: hidden;
+    color: $basic-gray;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
   }
 }
 
-.list-item-subtitle {
-  overflow: hidden;
-  color: $basic-gray;
-  text-align: center;
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
+@media (max-width: 900px) {
+  .list-item {
+    border: none;
+
+    &--horizontal {
+      width: 125px;
+    }
+
+    &--vertical {
+      height: 125px;
+    }
+
+    &__image {
+      width: 125px;
+      height: 125px;
+    }
+
+    &__index {
+      font-size: 1rem;
+    }
+
+    &__title {
+      font-size: 0.75rem;
+    }
+
+    &__subtitle {
+      font-size: 0.75rem;
+    }
+  }
 }

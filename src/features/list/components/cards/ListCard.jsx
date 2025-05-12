@@ -6,16 +6,16 @@ import "./list-card.scss";
 export default function ListCard({ image, list }) {
   return (
     <div className="list-card">
-      <img src={image} />
-      <div className="list-card-info-container">
-        <div className="list-card-header">
-          <div className="list-card-title-container">
+      <img src={image} className="list-card__image" />
+      <div className="list-card__info">
+        <div className="list-card__header">
+          <div className="list-card__title">
             {list.isPrivate && (
               <div
                 data-tooltip-content="Private"
                 data-tooltip-id="category-tooltip"
               >
-                <FontAwesomeIcon icon={faLock} className="list-card-lock" />
+                <FontAwesomeIcon icon={faLock} className="list-card__icon" />
                 <Tooltip
                   id="category-tooltip"
                   place="top"
@@ -24,15 +24,15 @@ export default function ListCard({ image, list }) {
                 />
               </div>
             )}
-            <p className="list-card-title">{list.name}</p>
+            <p className="list-card__name">{list.name}</p>
           </div>
 
-          <p className="list-card-count">
+          <p className="list-card__count">
             {list.media.length === 0 ? "No" : list.media.length}&nbsp;
             {list.media.length === 1 ? "entry" : "entries"}
           </p>
         </div>
-        <p className="list-card-description">{list.description}</p>
+        <p className="list-card__description">{list.description}</p>
       </div>
     </div>
   );

@@ -3,37 +3,64 @@
 .list-card {
   @include flexrow($gap: 1em);
 
-  img {
+  &__image {
     width: 200px;
     height: 200px;
     object-fit: cover;
   }
+
+  &__info {
+    @include flexcol($gap: 0.25em);
+  }
+
+  &__header {
+    @include flexcol();
+  }
+
+  &__title {
+    @include flexrow(initial, center, 0.5em);
+  }
+
+  &__icon {
+    color: $basic-gray;
+  }
+
+  &__name {
+    @include font(1, bold);
+  }
+
+  &__count {
+    @include font(0.75, normal, $basic-gray);
+  }
+
+  &__description {
+    @include font(0.75);
+  }
 }
 
-.list-card-info-container {
-  @include flexcol($gap: 0.25em);
-}
+@media (max-width: 900px) {
+  .list-card {
+    padding-bottom: 0.5em;
 
-.list-card-header {
-  @include flexcol();
-}
+    &__image {
+      width: 100px;
+      height: 100px;
+    }
 
-.list-card-title-container {
-  @include flexrow(initial, center, 0.5em);
-}
+    &__info {
+      justify-content: space-between;
+    }
 
-.list-card-lock {
-  color: $basic-gray;
-}
+    &__name {
+      font-size: 1.25rem;
+    }
 
-.list-card-title {
-  @include font(1, bold);
-}
+    &__count {
+      font-size: 1rem;
+    }
 
-.list-card-count {
-  color: $basic-gray;
-}
-
-.list-card-description {
-  @include font(0.75);
+    &__description {
+      font-size: 1rem;
+    }
+  }
 }

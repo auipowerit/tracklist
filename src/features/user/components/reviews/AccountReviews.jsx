@@ -10,7 +10,7 @@ export default function AccountReviews() {
   const { user, canEdit } = useOutletContext();
 
   return (
-    <div className="account__section">
+    <div className="account__section account-reviews">
       <Header canEdit={canEdit} />
       <ReviewsList user={user} />
     </div>
@@ -69,7 +69,7 @@ function ReviewsList({ user }) {
   return (
     reviews &&
     (reviews.length > 0 ? (
-      <ul className="account-reviews-list">
+      <ul className="account-reviews__list">
         {reviews.map((review) => {
           return <ReviewCard key={review.id} review={review} />;
         })}

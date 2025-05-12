@@ -22,7 +22,7 @@ export default function AccountList() {
   }
 
   return (
-    <div className="account__section">
+    <div className="account__section account-list">
       <ListHeader
         list={list}
         canEdit={canEdit}
@@ -45,15 +45,11 @@ export default function AccountList() {
 
 function List({ list, items, setItems, isEditing, orientation }) {
   if (items?.length === 0) {
-    return (
-      <div className="account-list">
-        <p className="empty__message">This list is empty.</p>
-      </div>
-    );
+    return <p className="empty__message">This list is empty.</p>;
   }
 
   return (
-    <div className={`account-list ${orientation}`}>
+    <div className={`account-list__list account-list__list--${orientation}`}>
       {isEditing ? (
         <DraggableList
           items={items}
