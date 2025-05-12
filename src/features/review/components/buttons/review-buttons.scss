@@ -32,6 +32,10 @@
     gap: 2em;
   }
 
+  .review-button {
+    font-size: 1.25rem;
+  }
+
   .add-review-button {
     @include badge(1.5, $basic-white, $dark-green, 2.25em);
     position: fixed;

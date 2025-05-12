@@ -75,5 +75,69 @@
     background-color: rgba(0, 0, 0, 0.3);
     padding: 0 0.75em;
     height: 100%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 900px) {
+  .media-banner {
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    margin: 0;
+    box-shadow: none;
+    background-color: transparent;
+    padding: 1em 0 0 0;
+    max-width: 100%;
+
+    &__image {
+      box-shadow: $dark-shadow;
+      width: 100%;
+      max-width: 275px;
+      height: fit-content;
+
+      &--wrapper {
+        box-shadow: none;
+        width: fit-content;
+        max-width: 100%;
+      }
+    }
+
+    &__content {
+      flex: unset;
+      gap: 1em;
+      background-color: transparent;
+      padding: 0;
+      height: fit-content;
+    }
+
+    &__header {
+      padding: 0;
+      max-width: 300px;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+    }
+
+    &__rating {
+      font-size: 1.25rem;
+    }
+
+    &__stars span svg {
+      font-size: 1.25rem;
+    }
+
+    &__buttons {
+      flex-direction: row;
+      background-color: transparent;
+      padding: 1em 0;
+      width: 100%;
+      height: fit-content;
+    }
   }
 }

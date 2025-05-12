@@ -1,21 +1,12 @@
 @use "src/styles/abstracts" as *;
 
-.artist {
-  @include flexcol(initial, center, 1em);
-  padding: 1em 0;
-  width: 100%;
-  max-width: 1000px;
-  height: 100%;
-}
-
 .discography {
   @include flexcol(center, initial, 1em);
   width: 100%;
 
   &__items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    justify-content: start;
+    @include flexrow(flex-start, center, 1.5em);
+    flex-wrap: wrap;
     gap: 2em;
     margin: auto;
     padding: 1em;
@@ -34,6 +25,33 @@
 
     &:hover {
       background-color: $dark-green;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .discography {
+    align-items: center;
+
+    &__items {
+      justify-content: center;
+    }
+
+    &__button {
+      font-size: 1.25rem;
+      border-radius: 0.75em;
+      padding: 0.75em 1em;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .discography {
+    align-items: center;
+
+    &__items {
+      @include flexcol(initial, center, 1.5em);
+      padding: 1em 0;
     }
   }
 }

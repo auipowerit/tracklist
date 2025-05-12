@@ -23,3 +23,9 @@
     color: $basic-green;
   }
 }
+
+@media (max-width: 900px) {
+  .list-save-button {
+    font-size: 1.25rem;
+  }
+}

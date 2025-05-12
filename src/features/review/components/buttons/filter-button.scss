@@ -14,3 +14,17 @@
     background-color: $dark-gray;
   }
 }
+
+@media (max-width: 900px) {
+  .reviews-filter {
+    gap: 0.5em;
+
+    &__label {
+      font-size: 1.25rem;
+    }
+
+    &__select {
+      font-size: 1.25rem;
+    }
+  }
+}

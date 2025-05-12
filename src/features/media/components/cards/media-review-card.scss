@@ -37,10 +37,44 @@
 
   &__date {
     @include font(0.5, normal, $basic-gray);
+
+    &--mobile {
+      display: none;
+    }
   }
 
   &__content {
     @include font(1);
     overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 900px) {
+  .media-review {
+    gap: 0.5em;
+
+    &__image {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__username {
+      font-size: 1rem;
+    }
+
+    &__date {
+      display: none;
+
+      &--mobile {
+        display: unset;
+        color: $basic-gray;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+    }
+
+    &__content {
+      font-size: 1.25rem;
+    }
   }
 }

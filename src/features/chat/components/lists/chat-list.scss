@@ -6,7 +6,7 @@
   flex: 1;
   transition: all 0.2s;
   border-right: 2px solid $basic-white;
-  background-color: $darker-green;
+  background-color: $dark-green;
 
   &--collapsed {
     flex: 0 0 5%;
@@ -42,11 +42,11 @@
     padding: 0.5em 0.75em;
 
     &:hover {
-      background-color: $dark-green;
+      background-color: $darker-green;
     }
 
     &--active {
-      background-color: $dark-green;
+      background-color: $darker-green;
     }
   }
 
@@ -83,6 +83,8 @@
 
 @media (max-width: 900px) {
   .chatlist {
+    background-color: $background-primary;
+
     &--active {
       flex: 1 1 100%;
       border: none;
@@ -99,8 +101,9 @@
       left: 0;
       z-index: 2;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $darker-green;
+      background-color: $background-primary;
       padding: 1em;
+      color: $basic-green;
       font-size: 1rem;
     }
 

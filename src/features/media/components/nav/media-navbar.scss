@@ -17,3 +17,15 @@
     white-space: nowrap;
   }
 }
+
+@media (max-width: 900px) {
+  .media-navbar {
+    display: none;
+    margin: 0 auto;
+    background-color: $background-primary;
+    padding: 1em 0.5em;
+    width: 100%;
+    max-width: 100%;
+    font-size: 1rem;
+  }
+}

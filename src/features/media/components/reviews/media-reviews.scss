@@ -13,3 +13,12 @@
     margin-left: 1em;
   }
 }
+
+@media (max-width: 900px) {
+  .media-reviews {
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0;
+    width: 100%;
+  }
+}

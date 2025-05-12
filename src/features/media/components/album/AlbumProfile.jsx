@@ -22,7 +22,7 @@ export default function AlbumProfile() {
   }, []);
 
   return (
-    <div className="album">
+    <div className="media__section">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
@@ -40,21 +40,19 @@ export default function AlbumProfile() {
 
 function TrackList({ artistId, albumId, tracks }) {
   return (
-    <div>
-      {tracks && tracks.length > 0 && (
-        <div className="tracklist">
-          {tracks.map((track) => {
-            return (
-              <TrackCard
-                key={track.id}
-                track={track}
-                artistId={artistId}
-                albumId={albumId}
-              />
-            );
-          })}
-        </div>
-      )}
+    <div className="tracklist">
+      {tracks &&
+        tracks.length > 0 &&
+        tracks.map((track) => {
+          return (
+            <TrackCard
+              key={track.id}
+              track={track}
+              artistId={artistId}
+              albumId={albumId}
+            />
+          );
+        })}
     </div>
   );
 }

@@ -1,13 +1,5 @@
 @use "src/styles/abstracts" as *;
 
-.album {
-  @include flexcol(initial, center, 2em);
-  padding: 0.5em 0;
-  width: 100%;
-  max-width: 1000px;
-  height: 100%;
-}
-
 .tracklist {
   @include flexcol(initial, center, 1.25em);
   @include gradient(top);
@@ -34,5 +26,24 @@
 
   &__name {
     margin-right: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .tracklist {
+    mask-image: none;
+    height: fit-content;
+    max-height: unset;
+
+    &__card {
+      gap: 1em;
+      border: 2px solid $basic-white;
+      padding: 0.25em;
+      font-size: 1rem;
+
+      &:hover {
+        border: 2px solid $basic-green;
+      }
+    }
   }
 }

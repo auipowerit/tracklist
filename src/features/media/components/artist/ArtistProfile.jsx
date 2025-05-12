@@ -56,7 +56,7 @@ export default function ArtistProfile() {
   }
 
   return (
-    <div className="artist">
+    <div className="media__section">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (

@@ -17,4 +17,46 @@
     width: 100%;
     height: 100%;
   }
+
+  &__section {
+    @include flexcol(initial, center, 0.5em);
+    padding: 1em 0;
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .media {
+    &__content {
+      gap: 0;
+    }
+
+    &__outlet {
+      background-color: $background-primary;
+    }
+
+    &__section {
+      align-items: center;
+      padding: 0;
+      max-width: unset;
+
+      .tabs {
+        position: sticky;
+        top: 0;
+        flex-wrap: nowrap;
+        gap: 1.5em;
+        z-index: 1;
+        background-color: $background-primary;
+        padding: 1em 0 0 0;
+        width: 100%;
+        overflow-x: scroll;
+
+        &__button {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
 }

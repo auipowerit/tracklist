@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { formatDateMDYLong } from "src/utils/date";
+import { formatDateMDYLong, getTimeSinceShort } from "src/utils/date";
 import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import "./media-review-card.scss";
 
@@ -22,6 +22,10 @@ function Header({ review }) {
           <p className="media-review__username">
             Review by{" "}
             <span className="media-review--highlight">{review.username}</span>
+            <span className="media-review__date media-review__date--mobile">
+              {" "}
+              {getTimeSinceShort(review.createdAt.toDate())}
+            </span>
           </p>
 
           <ReviewStars rating={review.rating} />
