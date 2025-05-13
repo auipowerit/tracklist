@@ -50,6 +50,14 @@
 
       .tabs {
         margin: 0 !important;
+
+        &__button {
+          border-bottom: 5px solid transparent;
+
+          &--active {
+            border-color: $basic-green;
+          }
+        }
       }
     }
 
