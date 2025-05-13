@@ -1,7 +1,8 @@
 @use "src/styles/abstracts" as *;
 
 .search {
-  padding: 2em 0;
+  @include flexcol(center, center);
+  padding: 1em 0;
 
   &__header {
     @include flexrow(center, center, 1em);

@@ -4,14 +4,18 @@
   @include flexcol();
   margin: auto;
   margin-top: 1em;
+  padding: 0 2em;
   width: 100%;
   max-width: 1200px;
   height: 100vh;
-  padding: 0 2em;
 
   &__header {
     @include flexrow(space-between, center);
     border-bottom: 1px solid $basic-white;
+
+    .tabs {
+      margin: 0 0 1em 0 !important;
+    }
 
     .review-button {
       margin-left: auto;
@@ -31,22 +35,28 @@
 @media (max-width: 900px) {
   .home {
     margin-top: 0.5em;
-    height: fit-content;
+    margin-bottom: 2em;
     padding: 0;
+    height: fit-content;
 
     &__header {
-      justify-content: center;
-      border: none;
       position: sticky;
       top: 0;
+      justify-content: center;
       z-index: 2;
-      background-color: $background-primary;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      border: none;
+      background-color: $background-primary;
+
+      .tabs {
+        margin: 0 !important;
+      }
     }
 
     &__feed {
-      padding: 0;
       mask-image: none;
+      padding: 0;
+      padding-top: 0.5em;
     }
   }
 }

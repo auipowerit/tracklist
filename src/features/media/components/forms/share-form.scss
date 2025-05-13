@@ -77,3 +77,27 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .share-form {
+    &__search {
+      &__displayname {
+        font-size: 1.25rem;
+      }
+
+      &__username {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__user {
+      &__username {
+        font-size: 1.25rem;
+      }
+
+      &__remove {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}

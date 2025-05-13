@@ -20,6 +20,7 @@
 @media (max-width: 1200px) {
   .search-results--media {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2em;
   }
 }
 

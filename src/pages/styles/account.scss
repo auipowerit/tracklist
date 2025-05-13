@@ -14,7 +14,7 @@
   }
 
   &__section {
-    @include flexcol(initial, initial, 2em);
+    @include flexcol(initial, initial, 1em);
     height: 100%;
   }
 
@@ -48,6 +48,7 @@
 
     &__section {
       gap: 1em;
+      margin-bottom: 2em;
     }
 
     &__header {
