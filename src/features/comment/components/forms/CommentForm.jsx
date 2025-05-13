@@ -3,21 +3,23 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import "./comment-input.scss";
+import "./comment-form.scss";
 
-export default function CommentInput({ review, setComments }) {
+export default function CommentForm({ review, setComments }) {
   const { globalUser } = useAuthContext();
   const { addComment } = useCommentContext();
   const { addNotification } = useInboxContext();
   const { updateReviewState } = useReviewContext();
 
-  const inputComment = useRef(null);
+  const commentRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const content = inputComment.current?.value.trim();
+    const content = commentRef.current?.value.trim();
     if (!content || !globalUser || !review) return;
+
+    closeComment();
 
     const commentInfo = {
       content,
@@ -53,18 +55,16 @@ export default function CommentInput({ review, setComments }) {
       await addNotification(
         review.userId,
         globalUser.uid,
-        `${globalUser.username} commented on your review`,
-        `${content.slice(0, 40)}`,
+        `${globalUser.username} commented on your review:`,
+        content.length > 40 ? `${content.slice(0, 40)}...` : `${content}`,
         review.id,
         "review",
       );
     }
-
-    closeComment();
   }
 
   function closeComment() {
-    inputComment.current.value = "";
+    commentRef.current.value = "";
   }
 
   if (!globalUser) {
@@ -78,7 +78,7 @@ export default function CommentInput({ review, setComments }) {
       )}
 
       <input
-        ref={inputComment}
+        ref={commentRef}
         placeholder="Add a comment..."
         className="comment-form__input"
       />

@@ -187,7 +187,9 @@ function FormName({ name, setName }) {
   return (
     <div className="list-form__name">
       <div className="list-form__input--header">
-        <label htmlFor="listname">Name</label>
+        <label htmlFor="listname" className="form__textarea--label">
+          Name
+        </label>
         <p style={{ color: color }}>
           {name.length || 0}/{LIST_NAME_LIMIT}
         </p>
@@ -237,13 +239,16 @@ function FormDescription({ description, setDescription }) {
   return (
     <div className="form__textarea">
       <div className="list-form__input--header">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description" className="form__textarea--label">
+          Description
+        </label>
         <p style={{ color: color }}>
           {description.length || 0}/{LIST_DESCRIPTION_LIMIT}
         </p>
       </div>
 
       <textarea
+        className="form__textarea--input"
         name="description"
         id="description"
         placeholder="Write a description..."
@@ -276,13 +281,13 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         <button
           type="button"
           onClick={() => setNewList(false)}
-          className="list-form__button--back"
+          className="list-form__button list-form__button--back"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back</p>
         </button>
       )}
-      <button type="submit" className="form__submit">
+      <button type="submit" className="list-form__button form__submit">
         {list ? "Save" : "Create"}
       </button>
 
@@ -290,9 +295,8 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
         <button
           type="button"
           onClick={handleDelete}
-          className="list-form__button--delete"
+          className="list-form__button list-form__button--delete"
         >
-          <FontAwesomeIcon icon={faTrash} />
           <p>Delete</p>
         </button>
       )}

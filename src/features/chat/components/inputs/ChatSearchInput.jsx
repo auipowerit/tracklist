@@ -89,7 +89,7 @@ function SearchInput({ ref, handleSearch }) {
 function SearchResults({ users, handleAddUser }) {
   return (
     <div
-      className={`chat-search__dropdown ${users.length > 0 ? "chat-search__dropdown--active" : ""}`}
+      className={`chat-search__dropdown ${users.length > 0 ? "active" : ""}`}
     >
       {users.map((user) => (
         <button

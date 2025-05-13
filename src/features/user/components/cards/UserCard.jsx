@@ -33,7 +33,10 @@ export default function UserCard({ user: propUser }) {
           </div>
 
           <p className="user-card__friends">
-            {`${user.followersCount || 0} followers, ${user.followingCount || 0} following`}
+            <span className="user-card__count">{`${user.followersCount || 0}`}</span>{" "}
+            {`followers, `}
+            <span className="user-card__count">{`${user.followingCount || 0}`}</span>{" "}
+            {` following`}
           </p>
         </div>
       </Link>

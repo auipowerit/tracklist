@@ -38,7 +38,7 @@ export default function SaveButton({ list, user }) {
       await addNotification(
         list.userId,
         globalUser.uid,
-        `${globalUser.username} saved your list`,
+        `${globalUser.username} saved your list:`,
         "",
         list.id,
         "list",

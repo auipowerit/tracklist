@@ -19,6 +19,7 @@
     height: 75px;
     object-fit: cover;
   }
+
   &__info {
     @include flexcol($gap: 0.5em);
   }
@@ -37,6 +38,10 @@
 
   &__friends {
     @include font(0.5, normal, $basic-gray);
+  }
+
+  &__count {
+    @include font(0.5, bold);
   }
 }
 @media (max-width: 900px) {
@@ -62,7 +67,8 @@
       font-size: 1rem;
     }
 
-    &__friends {
+    &__friends,
+    &__count {
       font-size: 0.75rem;
     }
   }

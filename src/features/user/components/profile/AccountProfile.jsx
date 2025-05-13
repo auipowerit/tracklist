@@ -16,6 +16,7 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import AccountForm from "../forms/AccountForm";
 import EditProfileButton from "../buttons/EditProfileButton";
 import "./account-profile.scss";
+import { MOBILE_WIDTH } from "src/data/const";
 
 export default function AccountProfile() {
   const { user, canEdit } = useOutletContext();
@@ -32,11 +33,9 @@ export default function AccountProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (localParams.username) {
-      navigate(`/users/${localParams.username}/reviews`);
-    } else {
-      navigate(`/users/${globalUser.username}/reviews`);
-    }
+    if (window.innerWidth > MOBILE_WIDTH) return;
+
+    navigate(`/users/${localParams.username || globalUser.username}/reviews`);
   }, []);
 
   useEffect(() => {

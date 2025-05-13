@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Loading from "src/features/shared/components/Loading";
 import SortComments from "src/features/sort/components/SortComments";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import CommentInput from "../inputs/CommentInput";
+import CommentForm from "../forms/CommentForm";
 import CommentCard from "../cards/CommentCard";
 import "./comment-list.scss";
 
@@ -94,7 +94,7 @@ function Header({ review, comments, setComments }) {
 
       <SortSelect setComments={setComments} sortMethod={sortMethod} />
 
-      <CommentInput review={review} setComments={setComments} />
+      <CommentForm review={review} setComments={setComments} />
     </div>
   );
 }

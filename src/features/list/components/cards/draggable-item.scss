@@ -29,3 +29,11 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .draggable-item {
+    &__delete {
+      font-size: 1rem;
+    }
+  }
+}

@@ -214,7 +214,7 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
 function FormUserResults({ users, handleAddUser }) {
   return (
     <div
-      className={`share-form__search__dropdown ${users.length > 0 ? "share-form__search__dropdown--active" : ""}`}
+      className={`share-form__search__dropdown ${users.length > 0 ? "active" : ""}`}
     >
       {users.map((user) => (
         <button

@@ -160,9 +160,10 @@
 
     &__list {
       &--horizontal {
-        justify-content: space-evenly;
-        margin: 0 auto;
-        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 150px);
+        justify-content: center;
+        align-items: center;
       }
     }
   }

@@ -103,7 +103,7 @@
     border: none;
 
     &--horizontal {
-      width: 125px;
+      width: 150px;
     }
 
     &--vertical {
@@ -111,8 +111,15 @@
     }
 
     &__image {
-      width: 125px;
-      height: 125px;
+      &--horizontal {
+        width: 150px;
+        height: 150px;
+      }
+
+      &--vertical {
+        width: 125px;
+        height: 125px;
+      }
     }
 
     &__index {
@@ -120,7 +127,7 @@
     }
 
     &__title {
-      font-size: 0.75rem;
+      font-size: 1rem;
     }
 
     &__subtitle {

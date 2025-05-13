@@ -52,11 +52,15 @@ function UserImage({ profileUrl }) {
 function Content({ notification }) {
   return (
     <>
-      <p className="inbox-card__title">{notification.title}</p>
-
-      {notification.subtitle && (
-        <p className="inbox-card__subtitle">"{notification.subtitle}"</p>
-      )}
+      <p className="inbox-card__title">
+        {notification.title}
+        {notification.subtitle && (
+          <span className="inbox-card__subtitle">
+            {" "}
+            "{notification.subtitle}"
+          </span>
+        )}
+      </p>
     </>
   );
 }

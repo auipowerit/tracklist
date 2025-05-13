@@ -79,7 +79,7 @@ function ListDropdown(props) {
       />
 
       <div
-        className={`account-list__dropdown-menu ${showDropdown ? "account-list__dropdown-menu--active" : ""}`}
+        className={`account-list__dropdown-menu ${showDropdown ? "active" : ""}`}
       >
         <OrientationButtons
           orientation={orientation}

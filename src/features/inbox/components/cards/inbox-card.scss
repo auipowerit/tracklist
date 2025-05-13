@@ -12,7 +12,7 @@
   }
 
   &__info {
-    @include flexrow(center, center, 0.5em);
+    @include flexrow(center, flex-start, 0.5em);
   }
 
   &__profile {
@@ -47,7 +47,7 @@
   .inbox-card {
     gap: 0.5em;
     border: none;
-    height: 75px;
+    height: fit-content;
 
     &:hover {
       background-color: transparent;
