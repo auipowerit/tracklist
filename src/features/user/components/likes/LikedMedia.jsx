@@ -6,8 +6,10 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 export default function LikedMedia({ user, activeTab }) {
   const { getMediaById, getMediaLinks } = useSpotifyContext();
   const [media, setMedia] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     setMedia(null);
 
     const fetchMedia = async () => {
@@ -31,33 +33,41 @@ export default function LikedMedia({ user, activeTab }) {
         .sort((a, b) => a.name.localeCompare(b.name));
 
       setMedia(sortedMedia);
+      setIsLoading(false);
     };
 
     fetchMedia();
+
+    return () => {
+      setMedia(null);
+    };
   }, [user, activeTab]);
 
+  if (isLoading) {
+    return;
+  }
+
+  if (!media || media.length === 0) {
+    return (
+      <p className="empty__message">
+        {`There are no liked ${activeTab}s yet!`}
+      </p>
+    );
+  }
+
   return (
-    <div>
-      {media &&
-        (media.length > 0 ? (
-          <div className="account-likes-media">
-            {media.map((entry) => {
-              return (
-                <Link key={entry.id} to={entry.titleLink}>
-                  <ListItemCard
-                    title={entry.title}
-                    subtitle={entry.subtitle}
-                    image={entry.image}
-                  />
-                </Link>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="empty__message">
-            {`There are no liked ${activeTab}s yet!`}
-          </p>
-        ))}
+    <div className="account-likes__media">
+      {media.map((entry) => {
+        return (
+          <Link key={entry.id} to={entry.titleLink}>
+            <ListItemCard
+              title={entry.title}
+              subtitle={entry.subtitle}
+              image={entry.image}
+            />
+          </Link>
+        );
+      })}
     </div>
   );
 }

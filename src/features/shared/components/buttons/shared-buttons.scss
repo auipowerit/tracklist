@@ -43,6 +43,16 @@
 @media (max-width: 900px) {
   .heart-button {
     font-size: 1.25rem;
+
+    &:hover {
+      &:not(.heart-button--active) {
+        color: $basic-white;
+      }
+
+      &--active {
+        color: $basic-green;
+      }
+    }
   }
 
   .share-button {

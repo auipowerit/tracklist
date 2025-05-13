@@ -84,11 +84,12 @@
 
     &__container {
       gap: 0.25em;
-      border-bottom: 1px solid $darker-gray;
-      padding-bottom: 0.5em;
-    }
 
-    
+      &:not(:last-child) {
+        border-bottom: 1px solid $darker-gray;
+        padding-bottom: 0.5em;
+      }
+    }
 
     &__user {
       flex-wrap: wrap;

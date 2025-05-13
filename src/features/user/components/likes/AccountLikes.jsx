@@ -17,10 +17,15 @@ export default function AccountLikes() {
   ];
 
   return (
-    <div className="account__section">
+    <div className="account__section account-likes">
       <Header />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <LikedContent activeTab={activeTab} user={user} />
+
+      {activeTab === "review" ? (
+        <LikedReviews user={user} />
+      ) : (
+        <LikedMedia user={user} activeTab={activeTab} />
+      )}
     </div>
   );
 }
@@ -29,18 +34,6 @@ function Header() {
   return (
     <div className="account__header">
       <h2 className="account__title">Likes</h2>
-    </div>
-  );
-}
-
-function LikedContent({ activeTab, user }) {
-  return (
-    <div>
-      {activeTab === "review" ? (
-        <LikedReviews user={user} />
-      ) : (
-        <LikedMedia user={user} activeTab={activeTab} />
-      )}
     </div>
   );
 }
