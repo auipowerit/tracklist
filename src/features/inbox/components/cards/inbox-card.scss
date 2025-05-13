@@ -2,17 +2,13 @@
 
 .inbox-card {
   @include flexrow(space-between, center, 2em);
-  cursor: pointer;
   padding: 0 0.5em;
   width: 100%;
   height: 120px;
 
-  &:hover {
-    background-color: $dark-green;
-  }
-
   &__info {
     @include flexrow(center, flex-start, 0.5em);
+    cursor: pointer;
   }
 
   &__profile {
@@ -54,8 +50,8 @@
     }
 
     &__profile {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
     }
 
     &__title,

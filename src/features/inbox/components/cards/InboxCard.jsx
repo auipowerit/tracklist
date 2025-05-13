@@ -1,11 +1,26 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { getTimeSinceShort } from "src/utils/date";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
+import FollowButton from "src/features/user/components/buttons/FollowButton";
 import "./inbox-card.scss";
 
 export default function InboxCard({ notification }) {
-  const { globalUser } = useAuthContext();
+  const { globalUser, getUserById } = useAuthContext();
   const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      if (notification.category === "user") {
+        const fetchedUser = await getUserById(notification.senderId);
+        setUser(fetchedUser);
+      }
+    }
+
+    fetchUser();
+  }, [notification]);
 
   function handleClick(category, contentId) {
     switch (category) {
@@ -27,11 +42,13 @@ export default function InboxCard({ notification }) {
   }
 
   return (
-    <div
-      onClick={() => handleClick(notification.category, notification.contentId)}
-      className="inbox-card"
-    >
-      <div className="inbox-card__info">
+    <div className="inbox-card">
+      <div
+        onClick={() =>
+          handleClick(notification.category, notification.contentId)
+        }
+        className="inbox-card__info"
+      >
         <UserImage profileUrl={notification.profileUrl} />
 
         <div className="inbox-card__content">
@@ -40,7 +57,11 @@ export default function InboxCard({ notification }) {
         </div>
       </div>
 
-      <MediaImage image={notification.image} />
+      {user ? (
+        <FollowButton user={user} setUser={setUser} />
+      ) : (
+        <MediaImage image={notification.imageUrl} />
+      )}
     </div>
   );
 }
@@ -72,7 +93,7 @@ function Date({ createdAt }) {
 }
 
 function MediaImage({ image }) {
-  if (!image) return;
+  if (image === "") return null;
 
   return <img src={image} className="inbox-card__media" />;
 }

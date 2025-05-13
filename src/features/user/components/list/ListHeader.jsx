@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function ListHeader(props) {
-  const { list } = props;
+  const { list, image } = props;
   const { user } = useOutletContext();
 
   return (
@@ -22,7 +22,7 @@ export default function ListHeader(props) {
         <div className="account-list__title">
           {list.isPrivate && <LockIcon />}
           <p className="account-list__name">{list.name}</p>
-          <SaveButton list={list} user={user} />
+          <SaveButton list={list} user={user} image={image} />
         </div>
         <p className="account-list__description">{list.description}</p>
       </div>

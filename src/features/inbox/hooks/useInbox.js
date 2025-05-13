@@ -11,6 +11,7 @@ export function useInbox() {
     title,
     subtitle,
     contentId,
+    imageUrl,
     category,
   ) {
     try {
@@ -30,6 +31,7 @@ export function useInbox() {
               subtitle,
               contentId,
               category,
+              imageUrl,
               createdAt: new Date(),
             },
           ],
@@ -68,6 +70,7 @@ export function useInbox() {
             subtitle,
             contentId,
             category,
+            imageUrl,
             createdAt: new Date(),
           }),
         });

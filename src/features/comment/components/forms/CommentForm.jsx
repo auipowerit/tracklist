@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -58,6 +59,7 @@ export default function CommentForm({ review, setComments }) {
         `${globalUser.username} commented on your review:`,
         content.length > 40 ? `${content.slice(0, 40)}...` : `${content}`,
         review.id,
+        review.media.image || review.media.images?.[0].url || DEFAULT_MEDIA_IMG,
         "review",
       );
     }

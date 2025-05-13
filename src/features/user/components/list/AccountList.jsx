@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
-import ListHeader from "./ListHeader";
 import StaticList from "src/features/list/components/StaticList";
 import DraggableList from "src/features/list/components/DraggableList";
+import ListHeader from "./ListHeader";
 import ListDataFetcher from "./ListDataFetcher";
 import "./account-list.scss";
 
@@ -25,6 +26,7 @@ export default function AccountList() {
     <div className="account__section account-list">
       <ListHeader
         list={list}
+        image={items[0]?.image || DEFAULT_MEDIA_IMG}
         canEdit={canEdit}
         isEditing={isEditing}
         setIsEditing={setIsEditing}

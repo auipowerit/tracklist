@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import VoteButton from "src/features/comment/components/buttons/VoteButton";
@@ -91,6 +92,7 @@ function Buttons({ comment, review, comments, setComments }) {
         `${globalUser.username} liked your comment`,
         `${content}`,
         review.id,
+        review.media.image || review.media.images?.[0].url || DEFAULT_MEDIA_IMG,
         "review",
       );
     }

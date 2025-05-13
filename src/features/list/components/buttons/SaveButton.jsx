@@ -6,7 +6,7 @@ import { useListContext } from "src/features/list/context/ListContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import "./list-buttons.scss";
 
-export default function SaveButton({ list, user }) {
+export default function SaveButton({ list, user, image }) {
   const { globalUser } = useAuthContext();
   const { addNotification } = useInboxContext();
   const { saveList } = useListContext();
@@ -41,6 +41,7 @@ export default function SaveButton({ list, user }) {
         `${globalUser.username} saved your list:`,
         "",
         list.id,
+        image,
         "list",
       );
     }

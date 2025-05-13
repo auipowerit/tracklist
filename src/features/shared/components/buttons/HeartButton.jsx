@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -53,6 +54,7 @@ export default function HeartButton(props) {
         `${globalUser.username} liked your review`,
         "",
         review.id,
+        review.media.image || review.media.images?.[0].url || DEFAULT_MEDIA_IMG,
         "review",
       );
     }

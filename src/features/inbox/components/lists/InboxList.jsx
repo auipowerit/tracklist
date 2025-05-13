@@ -16,8 +16,6 @@ export default function InboxList() {
   const { globalUser, getUserById } = useAuthContext();
   const { readAllNotifications } = useInboxContext();
   const { getListById } = useListContext();
-  const { getReviewById } = useReviewContext();
-  const { getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [notifications, setnotifications] = useState([]);
@@ -41,7 +39,10 @@ export default function InboxList() {
           .data()
           .notifications.sort((a, b) => b.createdAt - a.createdAt);
 
-        if (notifications.length === 0) return;
+        if (notifications.length === 0) {
+          setIsLoading(false);
+          return;
+        }
 
         const inboxData = await processNotifications(notifications);
 
@@ -63,67 +64,18 @@ export default function InboxList() {
         const user = await getUserById(notification.senderId);
         const timeSince = getTimeSinceDay(notification.createdAt.toDate());
 
-        if (notification.category === "review") {
-          const review = await getReviewById(notification.contentId);
-
-          if (!review || review.media.length === 0) {
-            return {
-              ...notification,
-              username: user.username,
-              profileUrl: user.profileUrl,
-              image: DEFAULT_MEDIA_IMG,
-              timeSince,
-            };
-          }
-
-          return {
-            ...notification,
-            username: user.username,
-            profileUrl: user.profileUrl,
-            image:
-              review.media.image ||
-              review.media.images?.[0].url ||
-              DEFAULT_MEDIA_IMG,
-            timeSince,
-          };
-        }
-
         if (notification.category === "list") {
           const list = await getListById(notification.contentId);
 
-          if (!list || list.media.length === 0) {
+          if (list) {
             return {
               ...notification,
               username: user.username,
               profileUrl: user.profileUrl,
-              image: DEFAULT_MEDIA_IMG,
+              subtitle: list.name,
               timeSince,
             };
           }
-
-          const media = await getMediaById(
-            list.media[0].id,
-            list.media[0].category,
-          );
-
-          if (!media) {
-            return {
-              ...notification,
-              username: user.username,
-              profileUrl: user.profileUrl,
-              image: DEFAULT_MEDIA_IMG,
-              timeSince,
-            };
-          }
-
-          return {
-            ...notification,
-            username: user.username,
-            profileUrl: user.profileUrl,
-            subtitle: list.name,
-            image: media.image || media.images?.[0].url || DEFAULT_MEDIA_IMG,
-            timeSince,
-          };
         }
 
         return {

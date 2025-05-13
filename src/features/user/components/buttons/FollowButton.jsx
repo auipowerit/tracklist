@@ -23,6 +23,7 @@ export default function FollowButton({ user, setUser }) {
         `${globalUser.username} started following you`,
         "",
         globalUser.username,
+        "",
         "user",
       );
     }
