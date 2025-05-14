@@ -14,8 +14,9 @@
   @include flexrow(center);
   @include font(0.75);
   border: 2px solid $basic-white;
-  padding: 0.5em;
+  padding: 0.25em 0.5em;
   height: fit-content;
+  width: fit-content;
 
   &--active {
     border-color: transparent;

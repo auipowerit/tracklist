@@ -50,9 +50,16 @@
         z-index: 1;
         background-color: $background-primary;
         padding: 1em 0 0 0;
+        .tabs {
+          margin: 0 !important;
 
-        &__button {
-          font-size: 1.25rem;
+          &__button {
+            border-bottom: 5px solid transparent;
+
+            &--active {
+              border-color: $basic-green;
+            }
+          }
         }
       }
     }

@@ -1,15 +1,15 @@
 @use "src/styles/abstracts" as *;
 
 .tabs {
-  @include flexrow(center, initial, 2em);
+  @include flexrow(safe center, initial, 2em);
   margin: 0 auto 1em auto;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   overflow-x: scroll;
 
   &__button {
     @include font(1, bold, $basic-gray);
-    border-bottom: 2px solid transparent;
+    border-bottom: 5px solid transparent;
     padding: 0.25em 0;
     letter-spacing: 0.05em;
 
@@ -26,8 +26,7 @@
 
 @media (max-width: 900px) {
   .tabs {
-    justify-content: initial;
-    margin: 0 auto;
+    margin-bottom: 0;
 
     &__button {
       border: none;

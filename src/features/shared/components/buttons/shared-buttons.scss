@@ -57,9 +57,17 @@
 
   .share-button {
     font-size: 1.25rem;
+
+    &:hover {
+      color: $basic-white;
+    }
   }
 
   .delete-button {
     font-size: 1.25rem;
+
+    &:hover {
+      color: $basic-white;
+    }
   }
 }

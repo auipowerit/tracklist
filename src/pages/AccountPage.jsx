@@ -47,7 +47,7 @@ export default function AccountPage() {
 
   return (
     <div className="account">
-      <AccountNav user={user} canEdit={canEdit} />
+      <AccountNav user={user} setUser={setUser} canEdit={canEdit} />
       <AccountMobileNav user={user} setUser={setUser} canEdit={canEdit} />
 
       <div className="account__outlet">

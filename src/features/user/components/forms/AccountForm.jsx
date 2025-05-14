@@ -147,7 +147,7 @@ function FormBio({ bio, setBio }) {
 function FormButton() {
   return (
     <button type="submit" className="form__submit">
-      Save changes
+      <p>Save</p>
     </button>
   );
 }

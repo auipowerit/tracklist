@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .user-card {
-  @include flexrow(space-between, center);
+  @include flexrow(space-between, center, 2em);
   border: 1px solid $basic-gray;
   padding: 1em;
 
@@ -25,7 +25,7 @@
   }
 
   &__header {
-    @include flexrow(initial, center, 0.5em);
+    @include flexrow(initial, center, 0.25em);
   }
 
   &__displayname {
@@ -43,11 +43,15 @@
   &__count {
     @include font(0.5, bold);
   }
+
+  .follow-button {
+    padding: 0.5em;
+  }
 }
 @media (max-width: 900px) {
   .user-card {
-    padding: 0.5em;
     border: none;
+    padding: 0.5em;
 
     &--container {
       padding: 0;

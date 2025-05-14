@@ -1,7 +1,6 @@
 @use "src/styles/abstracts" as *;
 
 .account {
-  @include flexcol(initial, center, 2em);
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
@@ -20,8 +19,10 @@
 
   &__header {
     @include flexrow(space-between, end);
+    margin-top: 1em;
     border-bottom: 1px solid $basic-white;
-    padding: 0.5em 0;
+    padding-bottom: 0.5em;
+    height: 50px;
   }
 
   &__title {

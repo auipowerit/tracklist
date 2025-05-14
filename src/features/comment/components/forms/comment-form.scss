@@ -62,6 +62,10 @@
     }
 
     &__button {
+      &:hover {
+        color: $basic-white;
+      }
+
       &--submit {
         margin: 0;
         border-radius: 0.5em;

@@ -42,9 +42,37 @@
 @media (max-width: 900px) {
   .comment-button {
     font-size: 1.25rem;
+
+    &:hover {
+      color: $basic-white;
+    }
   }
 
   .vote-button {
     font-size: 1.25rem;
+
+    &--like {
+      &:hover {
+        &:not(.vote-button--like--active) {
+          color: $basic-white;
+        }
+
+        &--active {
+          color: $light-green;
+        }
+      }
+    }
+
+    &--dislike {
+      &:hover {
+        &:not(.vote-button--dislike--active) {
+          color: $basic-white;
+        }
+
+        &--active {
+          color: $basic-red;
+        }
+      }
+    }
   }
 }

@@ -11,10 +11,10 @@
 
   &__header {
     @include flexrow(space-between, center);
-    border-bottom: 1px solid $basic-white;
 
     .tabs {
-      margin: 0 0 1em 0 !important;
+      margin: 0 0 !important;
+      width: fit-content !important;
     }
 
     .review-button {
@@ -45,7 +45,6 @@
       justify-content: center;
       z-index: 2;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      border: none;
       background-color: $background-primary;
 
       .tabs {
