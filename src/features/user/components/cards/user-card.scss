@@ -43,10 +43,6 @@
   &__count {
     @include font(0.5, bold);
   }
-
-  .follow-button {
-    padding: 0.5em;
-  }
 }
 @include md {
   .user-card {

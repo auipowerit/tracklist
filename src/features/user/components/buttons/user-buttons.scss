@@ -14,7 +14,7 @@
   @include flexrow(center);
   @include font(0.75);
   border: 2px solid $basic-white;
-  padding: 0.25em 0.5em;
+  padding: 0.5em;
   height: fit-content;
   width: fit-content;
 
@@ -38,7 +38,7 @@
   }
 }
 
-@include md {
+@media (max-width: 900px) {
   .chat-button {
     font-size: 1.25rem;
   }
@@ -47,8 +47,14 @@
     border: 1px solid $basic-white;
     border-radius: 0;
     background-color: transparent;
-    padding: 0.5em 1em;
+    padding: 0.5em;
+    width: 90px;
     font-size: 1rem;
+
+    &--active {
+      border-color: transparent;
+      background-color: $darker-green;
+    }
   }
 
   .logout-button {

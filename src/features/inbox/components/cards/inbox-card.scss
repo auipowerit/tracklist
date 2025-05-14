@@ -7,7 +7,7 @@
   height: 120px;
 
   &__info {
-    @include flexrow(center, flex-start, 0.5em);
+    @include flexrow(center, center, 0.5em);
     cursor: pointer;
   }
 
@@ -50,8 +50,8 @@
     }
 
     &__profile {
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
     }
 
     &__title,

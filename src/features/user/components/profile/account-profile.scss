@@ -50,6 +50,10 @@
   }
 }
 
+.follow-button {
+  padding: 0.25em 0.5em;
+}
+
 @include md {
   // Profile info is in mobile header
   .account-profile {
