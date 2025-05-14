@@ -37,7 +37,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .comment-card {
     &__user {
       font-size: 1.25rem;

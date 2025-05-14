@@ -49,7 +49,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .review-media {
     flex-basis: unset;
     align-self: flex-end;

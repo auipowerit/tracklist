@@ -29,7 +29,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .chats {
     padding: 0;
     padding-bottom: 0.75em;

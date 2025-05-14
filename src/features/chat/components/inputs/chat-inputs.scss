@@ -95,7 +95,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .chat-compose {
     position: sticky;
     bottom: 3em;

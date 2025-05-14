@@ -38,7 +38,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .chat-button {
     font-size: 1.25rem;
   }

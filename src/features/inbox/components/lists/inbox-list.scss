@@ -14,7 +14,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .inbox-list {
     gap: 0.5em;
     mask-image: none;

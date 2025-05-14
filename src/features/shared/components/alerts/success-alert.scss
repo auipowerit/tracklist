@@ -21,7 +21,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .success {
     padding: 3em 2em;
 

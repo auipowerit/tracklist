@@ -19,7 +19,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .to-top-button {
     display: none;
   }

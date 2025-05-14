@@ -63,7 +63,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .basic-button {
     font-size: 1rem;
   }

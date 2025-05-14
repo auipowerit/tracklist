@@ -30,7 +30,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .account {
     gap: 0;
     background-color: $dark-gray;

@@ -20,7 +20,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .searchbar {
     gap: 0.5em;
     padding: 0.25em;

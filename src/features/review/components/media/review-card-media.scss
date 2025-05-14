@@ -31,7 +31,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .review-card-media {
     max-width: 100%;
 

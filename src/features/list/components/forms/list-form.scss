@@ -91,7 +91,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .list-form {
     width: 100%;
 

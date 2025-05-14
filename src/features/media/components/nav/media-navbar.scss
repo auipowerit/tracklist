@@ -18,7 +18,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .media-navbar {
     display: none;
     margin: 0 auto;

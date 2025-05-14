@@ -79,7 +79,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .media-banner {
     flex-direction: column;
     align-items: center;

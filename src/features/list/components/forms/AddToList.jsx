@@ -238,7 +238,7 @@ function FormMediaInput(props) {
       <select value={type} onChange={handleChange} className="form__select">
         <option value="artist">artist</option>
         <option value="album">album</option>
-        <option value="track">song</option>
+        <option value="track">track</option>
       </select>
 
       <FormMediaResults

@@ -39,7 +39,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .comment-button {
     font-size: 1.25rem;
 

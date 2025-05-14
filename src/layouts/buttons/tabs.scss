@@ -24,7 +24,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .tabs {
     margin-bottom: 0;
 

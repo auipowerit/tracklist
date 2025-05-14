@@ -82,7 +82,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .nav {
     display: none;
   }

@@ -23,7 +23,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .account-lists {
     padding: 0 0.5em;
 

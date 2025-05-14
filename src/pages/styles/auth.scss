@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .auth {
     background-color: $dark-gray;
     padding: 1em 0;

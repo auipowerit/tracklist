@@ -8,7 +8,7 @@
   height: 80vh;
 }
 
-@media (max-width: 900px) {
+@include md {
   .chat {
     height: 100%;
   }

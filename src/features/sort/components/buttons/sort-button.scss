@@ -8,6 +8,8 @@
   &__button {
     @include flexrow(initial, center, 0.5em);
     @include font(0.75);
+    border: 1px solid $basic-white;
+    padding: 0.5em;
     cursor: pointer;
   }
 
@@ -30,10 +32,9 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .sort {
     &__button {
-      border: 1px solid $basic-white;
       padding: 0.25em 0.5em;
       font-size: 1.5rem;
     }

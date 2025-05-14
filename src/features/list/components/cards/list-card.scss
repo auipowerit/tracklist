@@ -38,7 +38,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .list-card {
     padding-bottom: 0.5em;
 

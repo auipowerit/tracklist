@@ -79,7 +79,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .review {
     margin: 0;
 

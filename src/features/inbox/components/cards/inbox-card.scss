@@ -39,7 +39,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .inbox-card {
     gap: 0.5em;
     border: none;

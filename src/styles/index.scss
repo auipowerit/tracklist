@@ -112,7 +112,7 @@ select {
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .empty__message {
     font-size: 1.5rem;
   }

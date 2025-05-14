@@ -81,7 +81,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .chatlist {
     background-color: $background-primary;
 

@@ -38,7 +38,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .modal {
     &__container {
       max-width: none;

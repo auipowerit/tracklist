@@ -175,7 +175,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .messages {
     mask-image: none;
     padding: 0.5em;

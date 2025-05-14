@@ -14,7 +14,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .media-reviews {
     justify-content: center;
     align-items: center;

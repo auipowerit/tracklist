@@ -78,7 +78,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .share-form {
     &__search {
       &__displayname {

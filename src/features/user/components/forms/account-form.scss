@@ -28,7 +28,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .user-form {
     &__spotify {
       display: none !important;

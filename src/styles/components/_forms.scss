@@ -132,7 +132,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .form {
     width: 100vw;
     max-height: 100%;

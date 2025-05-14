@@ -13,7 +13,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .review-form {
     &__content {
       flex-direction: column;

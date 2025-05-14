@@ -49,7 +49,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .media-review {
     gap: 0.5em;
 

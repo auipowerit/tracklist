@@ -11,7 +11,7 @@
   width: 100%;
 }
 
-@media (max-width: 900px) {
+@include md {
   .account-friends-container {
     height: auto;
   }

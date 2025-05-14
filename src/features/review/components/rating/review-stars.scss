@@ -6,7 +6,7 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 900px) {
+@include md {
   .review-stars {
     &__star {
       font-size: 1.25rem;

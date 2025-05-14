@@ -17,7 +17,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .footer {
     display: none;
   }

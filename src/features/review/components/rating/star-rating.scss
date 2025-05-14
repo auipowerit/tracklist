@@ -16,7 +16,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .star-rating {
     &__title {
       font-size: 1.25rem;

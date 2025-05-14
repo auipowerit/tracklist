@@ -30,7 +30,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .draggable-item {
     &__delete {
       font-size: 1rem;

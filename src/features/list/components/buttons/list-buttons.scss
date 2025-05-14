@@ -24,7 +24,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .list-save-button {
     font-size: 1.25rem;
   }

@@ -39,7 +39,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .comment-form {
     @include flexrow(space-between, center, 0.5em);
     position: sticky;

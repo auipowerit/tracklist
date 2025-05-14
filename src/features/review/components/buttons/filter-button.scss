@@ -15,7 +15,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include md {
   .reviews-filter {
     gap: 0.5em;
 
