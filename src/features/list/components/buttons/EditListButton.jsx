@@ -48,6 +48,7 @@ export default function EditListButton(props) {
         ) : (
           <ListForm
             isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
             list={list}
             setSuccess={setSuccess}
           />

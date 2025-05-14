@@ -4,7 +4,15 @@ import AddToList from "./AddToList";
 import "./list-form.scss";
 
 export default function ListForm(props) {
-  const { isModalOpen, media, category, list, isAdding, setSuccess } = props;
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    media,
+    category,
+    list,
+    isAdding,
+    setSuccess,
+  } = props;
 
   const [newList, setNewList] = useState(false);
 
@@ -12,6 +20,7 @@ export default function ListForm(props) {
     return newList ? (
       <CreateList
         isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         setNewList={setNewList}
         setSuccess={setSuccess}
       />
@@ -31,6 +40,7 @@ export default function ListForm(props) {
     return (
       <CreateList
         isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         list={list}
         setSuccess={setSuccess}
       />
@@ -39,6 +49,7 @@ export default function ListForm(props) {
   return newList ? (
     <CreateList
       isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
       setNewList={setNewList}
       setSuccess={setSuccess}
     />

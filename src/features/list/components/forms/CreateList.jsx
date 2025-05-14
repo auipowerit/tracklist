@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { LIST_DESCRIPTION_LIMIT, LIST_NAME_LIMIT } from "src/data/const";
-import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
@@ -262,6 +262,7 @@ function FormDescription({ description, setDescription }) {
 function FormButtons({ list, setNewList, setIsModalOpen }) {
   const navigate = useNavigate();
 
+  const { globalUser } = useAuthContext();
   const { deleteList } = useListContext();
 
   async function handleDelete() {
@@ -272,7 +273,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
     await deleteList(list.id, globalUser.uid);
 
     setIsModalOpen(false);
-    navigate(`/users/${globalUser.uid}/lists`);
+    navigate(`/users/${globalUser.username}/lists`);
   }
 
   return (
