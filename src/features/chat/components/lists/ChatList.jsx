@@ -4,14 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import {
+  faPencil,
   faPenToSquare,
   faSquareCaretLeft,
   faSquareCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
 import "./chat-list.scss";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 
 export default function ChatList({ handleOpenChat }) {
-  const { isCollapsed, setIsCollapsed } = useChatContext();
+  const { isCollapsed } = useChatContext();
 
   useEffect(() => {
     if (isCollapsed) return;
@@ -24,16 +26,28 @@ export default function ChatList({ handleOpenChat }) {
     >
       {!isCollapsed && (
         <>
+          <MobileBanner title="Messages" />
           <Header />
           <Chats handleOpenChat={handleOpenChat} />
+          <NewChatButton showIcon={true} />
         </>
       )}
+
       <CollapseButton />
     </div>
   );
 }
 
 function Header() {
+  return (
+    <div className="chatlist__header">
+      <h2>All chats</h2>
+      <NewChatButton />
+    </div>
+  );
+}
+
+function NewChatButton({ showIcon = false }) {
   const { globalUser } = useAuthContext();
   const { setActiveChatId, activeChatUser, setActiveChatUser, setIsCollapsed } =
     useChatContext();
@@ -48,17 +62,18 @@ function Header() {
     }
   }
 
-  return (
-    <div className="chatlist__header">
-      <h2>All chats</h2>
-      <button
-        type="button"
-        onClick={handleNewChat}
-        className="chatlist__compose"
-      >
-        <FontAwesomeIcon icon={faPenToSquare} />
+  if (showIcon) {
+    return (
+      <button type="button" onClick={handleNewChat} className="chatlist__new">
+        <FontAwesomeIcon icon={faPencil} />
       </button>
-    </div>
+    );
+  }
+
+  return (
+    <button type="button" onClick={handleNewChat} className="chatlist__compose">
+      <FontAwesomeIcon icon={faPenToSquare} />
+    </button>
   );
 }
 

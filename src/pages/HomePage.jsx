@@ -4,6 +4,7 @@ import Loading from "src/features/shared/components/Loading";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 import "./styles/home.scss";
 
@@ -33,6 +34,7 @@ export default function HomePage() {
 
   return (
     <div className="home">
+      <MobileBanner title={"TrackList"} />
       {globalUser && (
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       )}

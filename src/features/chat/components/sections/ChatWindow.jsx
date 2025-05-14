@@ -8,6 +8,7 @@ import { useChatContext } from "src/features/chat/context/ChatContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import Messages from "../messages/Messages";
 import MessageInput from "../inputs/MessageInput";
 import ChatSearchInput from "../inputs/ChatSearchInput";
@@ -18,7 +19,9 @@ export default function ChatWindow() {
   const {
     activeChatId,
     activeChatUser,
+    setActiveChatId,
     isCollapsed,
+    setIsCollapsed,
     readMessage,
   } = useChatContext();
   const { getReviewById } = useReviewContext();
@@ -110,6 +113,11 @@ export default function ChatWindow() {
     }, 1500);
   }
 
+  function handleCollapse() {
+    setActiveChatId(-1);
+    setIsCollapsed(false);
+  }
+
   return (
     <div
       className={`chats ${isCollapsed ? "chats--active" : "chats--collapsed"}`}
@@ -118,7 +126,11 @@ export default function ChatWindow() {
         <ChatSearchInput />
       ) : (
         <>
-          <Header />
+          <MobileBanner
+            title={activeChatUser.displayname}
+            onClick={handleCollapse}
+          />
+          <Header handleCollapse={handleCollapse} />
           <Messages messages={messages} />
           <MessageInput />
         </>
@@ -127,13 +139,8 @@ export default function ChatWindow() {
   );
 }
 
-function Header() {
-  const { activeChatUser, setActiveChatId, setIsCollapsed } = useChatContext();
-
-  function handleCollapse() {
-    setActiveChatId(-1);
-    setIsCollapsed(false);
-  }
+function Header({ handleCollapse }) {
+  const { activeChatUser } = useChatContext();
 
   return (
     <div className="chats__header">
@@ -144,6 +151,7 @@ function Header() {
       >
         <FontAwesomeIcon icon={faSquareCaretLeft} />
       </button>
+
       <Link to={`/users/${activeChatUser.username}`}>
         <h2>{activeChatUser.displayname || "Display Name"}</h2>
       </Link>

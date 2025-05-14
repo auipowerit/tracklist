@@ -43,7 +43,7 @@
   .comment-form {
     @include flexrow(space-between, center, 0.5em);
     position: sticky;
-    background-color: $background-primary;
+    background-color: $dark-gray;
     padding: 0.5em 0;
     width: 100%;
 

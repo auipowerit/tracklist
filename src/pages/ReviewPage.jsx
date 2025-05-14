@@ -6,6 +6,7 @@ import ReviewMedia from "src/features/review/components/media/ReviewMedia";
 import CommentList from "src/features/comment/components/lists/CommentList";
 import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import ReviewButtons from "src/features/review/components/buttons/ReviewButtons";
 import "./styles/review.scss";
 
@@ -47,6 +48,7 @@ export default function ReviewPage() {
 
   return (
     <div className="review">
+      <MobileBanner title={"Review"} onClick={() => window.history.back()} />
       <Review review={review} />
       <CommentList review={review} />
     </div>

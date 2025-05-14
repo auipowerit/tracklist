@@ -82,12 +82,12 @@
 @include md {
   .review {
     margin: 0;
+    gap: 0;
 
     &__container {
       flex-direction: column;
       gap: 0.5em;
       border-bottom: 1px solid $basic-gray;
-      background-color: $dark-gray;
       padding: 0;
     }
 

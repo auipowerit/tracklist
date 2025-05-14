@@ -30,6 +30,8 @@
   .comments {
     padding: 0;
 
+    background-color: $dark-gray;
+
     &__header {
       position: sticky;
       top: 0;
@@ -37,7 +39,7 @@
       align-items: flex-start;
       z-index: 1;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $background-primary;
+      background-color: $dark-gray;
       padding: 1em 0.5em;
     }
 

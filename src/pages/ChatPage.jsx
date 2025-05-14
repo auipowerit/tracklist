@@ -5,17 +5,13 @@ import ChatList from "src/features/chat/components/lists/ChatList";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import ChatWindow from "src/features/chat/components/sections/ChatWindow";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import "./styles/chat.scss";
 
 export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();
-  const {
-    setActiveChatId,
-    setActiveChatUser,
-    isCollapsed,
-    setIsCollapsed,
-    readMessage,
-  } = useChatContext();
+  const { setActiveChatId, setActiveChatUser, setIsCollapsed, readMessage } =
+    useChatContext();
 
   const [mounted, setMounted] = useState(false);
   const [chatWindowKey, setChatWindowKey] = useState(0);

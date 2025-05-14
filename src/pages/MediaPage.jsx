@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
@@ -7,6 +7,7 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import MediaNavBar from "../features/media/components/nav/MediaNavBar";
 import MediaBanner from "../features/media/components/banner/MediaBanner";
 import "./styles/media.scss";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 
 export default function MediaPage() {
   const { getMediaById } = useSpotifyContext();
@@ -111,6 +112,14 @@ export default function MediaPage() {
 
   return (
     <div className="media">
+      <MobileBanner
+        title={
+          memoizedMedia.track?.name ||
+          memoizedMedia.album?.name ||
+          memoizedMedia.artist?.name
+        }
+        onClick={() => window.history.back()}
+      />
       <MediaGradient
         image={
           memoizedMedia.album?.images?.[0]?.url ||

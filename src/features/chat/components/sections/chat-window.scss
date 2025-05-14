@@ -32,13 +32,14 @@
 @include md {
   .chats {
     padding: 0;
-    padding-bottom: 0.75em;
 
     &--active {
       overflow-y: unset;
     }
 
     &__header {
+      display: none;
+      /*
       position: sticky;
       top: 0;
       justify-content: center;
@@ -52,10 +53,14 @@
       &:hover {
         color: $basic-white;
       }
+*/
     }
 
     &__collapse {
-      display: initial;
+      display: unset;
+      position: absolute;
+      top: 3%;
+      left: 3%;
     }
   }
 }
