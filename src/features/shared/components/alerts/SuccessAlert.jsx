@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import Button from "../buttons/Button";
 import "./success-alert.scss";
 
 export default function SuccessAlert({ message, link, icon, onClick }) {
@@ -9,10 +10,10 @@ export default function SuccessAlert({ message, link, icon, onClick }) {
         <FontAwesomeIcon icon={faCircleCheck} /> <p>{message}</p>
       </div>
 
-      <button className="success__button" onClick={onClick}>
+      <Button onClick={onClick} classes="success__button" ariaLabel="continue">
         <p>{link}</p>
         <FontAwesomeIcon icon={icon} />
-      </button>
+      </Button>
     </div>
   );
 }

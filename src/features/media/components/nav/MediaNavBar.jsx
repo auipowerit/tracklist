@@ -3,7 +3,7 @@ import "./media-navbar.scss";
 
 export default function MediaNavbar({ artist, album, track, category }) {
   return (
-    <div className="media-navbar">
+    <nav className="media-navbar">
       <NavLink
         link={`/artists/${artist.id}`}
         category={category}
@@ -33,7 +33,7 @@ export default function MediaNavbar({ artist, album, track, category }) {
           )}
         </>
       )}
-    </div>
+    </nav>
   );
 }
 

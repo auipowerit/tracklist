@@ -4,7 +4,7 @@ import "./alert.scss";
 
 export default function Alert({ message }) {
   return (
-    <div className={`alert ${message && "alert--active"}`}>
+    <div className="alert" aria-expanded={message ? "true" : "false"}>
       <FontAwesomeIcon icon={faCircleExclamation} className="alert__icon" />
       <p>{message}</p>
     </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "src/features/shared/components/modal/Modal";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Button from "src/features/shared/components/buttons/Button";
 import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import PasswordReset from "../forms/PasswordReset";
 
@@ -37,13 +38,13 @@ export default function ForgotPasswordButton() {
 
       <div className="reset">
         <p>Forgot password?</p>
-        <button
-          type="button"
+        <Button
           onClick={() => setIsModalOpen(true)}
-          className="link reset__link"
+          classes="link reset__link"
+          ariaLabel="go to reset password"
         >
           Click here
-        </button>
+        </Button>
       </div>
     </div>
   );

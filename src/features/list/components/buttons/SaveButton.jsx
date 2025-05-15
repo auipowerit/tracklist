@@ -50,7 +50,10 @@ export default function SaveButton({ list, user, image }) {
   return (
     <button
       onClick={handleSave}
-      className={`save-list-button ${isSaved ? "save-list-button--active" : ""} ${list.userId === globalUser?.uid ? "disabled" : ""}`}
+      className="save-list-button"
+      aria-label="save List"
+      aria-selected={isSaved}
+      disabled={list.userId === globalUser?.uid}
     >
       <FontAwesomeIcon
         icon={faBookmark}

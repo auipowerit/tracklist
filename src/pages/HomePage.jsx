@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import Loading from "src/features/shared/components/Loading";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
@@ -33,15 +33,17 @@ export default function HomePage() {
   }
 
   return (
-    <div className="home">
+    <section className="home">
       <MobileBanner title={"TrackList"} />
+
       {globalUser && (
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       )}
+
       <FeedResults
         results={activeTab === "newest" ? reviews || [] : popularReviews}
       />
-    </div>
+    </section>
   );
 }
 

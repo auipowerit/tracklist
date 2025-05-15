@@ -26,7 +26,7 @@ export default function MediaReviews({ mediaId, filter, setFilter }) {
   }
 
   return (
-    <div className="media-reviews">
+    <section className="media-reviews">
       <div className="media-reviews__header">
         <SortReviews
           reviews={filteredReviews}
@@ -41,7 +41,7 @@ export default function MediaReviews({ mediaId, filter, setFilter }) {
       </div>
 
       {reviews && <Reviews reviews={filteredReviews} />}
-    </div>
+    </section>
   );
 }
 

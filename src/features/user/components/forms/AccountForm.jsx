@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { ACCOUNT_BIO_LIMIT, ACCOUNT_NAME_LIMIT } from "src/data/const";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
@@ -70,16 +71,20 @@ function FormImage({ globalUser }) {
 
   return (
     <div className="user-form__profile">
-      <img src={globalUser?.profileUrl} className="user-form__image" />
+      <img
+        src={globalUser?.profileUrl}
+        className="user-form__image"
+        alt="current user profile"
+      />
 
-      <button
-        type="button"
+      <Button
         onClick={() => redirectToSpotifyAuth(false)}
-        className="basic-button user-form__spotify"
+        classes="basic-button user-form__spotify"
+        ariaLabel="sync with spotify"
       >
         <FontAwesomeIcon icon={faSpotify} />
         <p>{globalUser?.spotifyUrl ? "Resync" : "Sync"}</p>
-      </button>
+      </Button>
     </div>
   );
 }
@@ -146,8 +151,8 @@ function FormBio({ bio, setBio }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form__submit">
+    <Button type="submit" classes="form__submit" ariaLabel="save changes">
       <p>Save</p>
-    </button>
+    </Button>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useOutletContext } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import SaveButton from "src/features/list/components/buttons/SaveButton";
 import EditListButton from "src/features/list/components/buttons/EditListButton";
 import AddToListButton from "src/features/list/components/buttons/AddToListButton";
@@ -78,9 +79,7 @@ function ListDropdown(props) {
         setShowDropdown={setShowDropdown}
       />
 
-      <div
-        className={`account-list__dropdown-menu ${showDropdown ? "active" : ""}`}
-      >
+      <div className="account-list__dropdown-menu" aria-expanded={showDropdown}>
         <OrientationButtons
           orientation={orientation}
           setOrientation={setOrientation}
@@ -115,9 +114,9 @@ function DropdownButton({ showDropdown, setShowDropdown }) {
   }
 
   return (
-    <button onClick={handleUserClick} className="account-list__dropdown-button">
+    <Button onClick={handleUserClick} classes="account-list__dropdown-button">
       <FontAwesomeIcon icon={faCaretSquareDown} />
-    </button>
+    </Button>
   );
 }
 
@@ -126,22 +125,23 @@ function OrientationButtons({ orientation, setOrientation }) {
     <div className="account-list__orientation">
       <p className="account-list__label">Layout</p>
 
-      <button
+      <Button
         onClick={() => setOrientation("horizontal")}
-        className={`account-list__button
-         ${orientation === "horizontal" ? "account-list__button--active" : ""}`}
+        classes="account-list__button"
+        ariaSelected={orientation === "horizontal"}
+        ariaLabel="horizontal layout"
       >
         <FontAwesomeIcon icon={faTableCellsLarge} />
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={() => setOrientation("vertical")}
-        className={`account-list__button
-         ${orientation === "vertical" ? "account-list__button--active" : ""}
-        `}
+        classes="account-list__button"
+        ariaSelected={orientation === "vertical"}
+        ariaLabel="vertical layout"
       >
         <FontAwesomeIcon icon={faBars} />
-      </button>
+      </Button>
     </div>
   );
 }

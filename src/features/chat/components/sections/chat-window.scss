@@ -33,27 +33,12 @@
   .chats {
     padding: 0;
 
-    &--active {
+    &[aria-expanded="false"] {
       overflow-y: unset;
     }
 
     &__header {
       display: none;
-      /*
-      position: sticky;
-      top: 0;
-      justify-content: center;
-      z-index: 2;
-      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      border: none;
-      background-color: $dark-gray;
-      padding: 1em;
-      font-size: 1rem;
-
-      &:hover {
-        color: $basic-white;
-      }
-*/
     }
 
     &__collapse {

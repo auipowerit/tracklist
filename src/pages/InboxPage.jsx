@@ -4,11 +4,11 @@ import "./styles/inbox.scss";
 
 export default function InboxPage() {
   return (
-    <div className="inbox">
+    <section className="inbox">
       <MobileBanner title={"Inbox"} />
       <Header />
       <InboxList />
-    </div>
+    </section>
   );
 }
 

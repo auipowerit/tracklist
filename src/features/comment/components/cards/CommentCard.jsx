@@ -40,7 +40,11 @@ function Header({ comment }) {
 function UserInfo({ comment }) {
   return (
     <Link to={`/users/${comment.username}`} className="comment-card__user">
-      <img src={comment.profileUrl} className="comment-card__profile" />
+      <img
+        src={comment.profileUrl}
+        className="comment-card__profile"
+        alt="comment user profile"
+      />
       <p className="comment-card__username">@{comment.username}</p>
     </Link>
   );

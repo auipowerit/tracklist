@@ -48,12 +48,10 @@
       background-color: $background-primary;
 
       .tabs {
-        margin: 0 !important;
-
         &__button {
           border-bottom: 5px solid transparent;
 
-          &--active {
+          &[aria-selected="true"] {
             border-color: $basic-green;
           }
         }

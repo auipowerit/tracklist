@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { MOBILE_WIDTH } from "src/data/const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import {
   faPencil,
   faPenToSquare,
@@ -10,7 +12,6 @@ import {
   faSquareCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
 import "./chat-list.scss";
-import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 
 export default function ChatList({ handleOpenChat }) {
   const { isCollapsed } = useChatContext();
@@ -21,9 +22,7 @@ export default function ChatList({ handleOpenChat }) {
   }, [isCollapsed]);
 
   return (
-    <div
-      className={`chatlist ${isCollapsed ? "chatlist--collapsed" : "chatlist--active"}`}
-    >
+    <section className="chatlist" aria-expanded={!isCollapsed}>
       {!isCollapsed && (
         <>
           <MobileBanner title="Messages" />
@@ -34,7 +33,7 @@ export default function ChatList({ handleOpenChat }) {
       )}
 
       <CollapseButton />
-    </div>
+    </section>
   );
 }
 
@@ -64,16 +63,16 @@ function NewChatButton({ showIcon = false }) {
 
   if (showIcon) {
     return (
-      <button type="button" onClick={handleNewChat} className="chatlist__new">
+      <Button onClick={handleNewChat} classes="chatlist__new">
         <FontAwesomeIcon icon={faPencil} />
-      </button>
+      </Button>
     );
   }
 
   return (
-    <button type="button" onClick={handleNewChat} className="chatlist__compose">
+    <Button onClick={handleNewChat} classes="chatlist__compose">
       <FontAwesomeIcon icon={faPenToSquare} />
-    </button>
+    </Button>
   );
 }
 
@@ -112,10 +111,15 @@ function ChatCard({ chat, handleOpenChat }) {
   return (
     <div
       onClick={() => handleOpenChat(chat)}
-      className={`chatlist__card ${isActive ? "chatlist__card--active" : ""}`}
+      className="chatlist__card"
+      aria-selected={isActive}
     >
       <div className="chatlist__user">
-        <img src={chat.profileUrl} className="chatlist__image" />
+        <img
+          src={chat.profileUrl}
+          className="chatlist__image"
+          alt="chat user profile"
+        />
         <p>{chat.username}</p>
       </div>
 
@@ -129,11 +133,12 @@ function CollapseButton() {
   const icon = isCollapsed ? faSquareCaretRight : faSquareCaretLeft;
 
   return (
-    <button
+    <Button
       onClick={() => setIsCollapsed(!isCollapsed)}
-      className={`chatlist__collapse ${isCollapsed ? "chatlist__collapse--active" : ""}`}
+      classes="chatlist__collapse"
+      ariaSelected={isCollapsed}
     >
       <FontAwesomeIcon icon={icon} />
-    </button>
+    </Button>
   );
 }

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { faCaretSquareLeft } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../../context/ChatContext";
@@ -68,19 +69,23 @@ function CancelButton() {
   }
 
   return (
-    <button type="button" onClick={handleClick} className="chat-search__cancel">
+    <Button
+      onClick={handleClick}
+      classes="chat-search__cancel"
+      ariaLabel="collapse chat list"
+    >
       <FontAwesomeIcon icon={faCaretSquareLeft} />
-    </button>
+    </Button>
   );
 }
 
 function SearchInput({ ref, handleSearch }) {
   return (
     <input
-      ref={ref}
-      onChange={handleSearch}
       type="text"
       placeholder="Search for a friend..."
+      ref={ref}
+      onChange={handleSearch}
       className="chat-search__input"
     />
   );
@@ -88,22 +93,24 @@ function SearchInput({ ref, handleSearch }) {
 
 function SearchResults({ users, handleAddUser }) {
   return (
-    <div
-      className={`chat-search__dropdown ${users.length > 0 ? "active" : ""}`}
-    >
+    <div className="chat-search__dropdown" aria-expanded={users.length > 0}>
       {users.map((user) => (
-        <button
+        <Button
           key={user.uid}
-          type="button"
           onClick={() => handleAddUser(user.uid)}
-          className="chat-search__user"
+          classes="chat-search__user"
+          ariaLabel="add user to chat"
         >
-          <img src={user.profileUrl} className="chat-search__image" />
+          <img
+            src={user.profileUrl}
+            className="chat-search__image"
+            alt="chat user profile"
+          />
           <div className="chat-search__info">
             <p className="chat-search__displayname">{user.displayname}</p>
             <p className="chat-search__username">@{user.username}</p>
           </div>
-        </button>
+        </Button>
       ))}
     </div>
   );

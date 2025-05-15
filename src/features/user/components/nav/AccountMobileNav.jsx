@@ -21,7 +21,7 @@ export default function AccountMobileNav({ user, setUser, canEdit }) {
   }, [isModalOpen]);
 
   return (
-    <div className="account-mobile-nav">
+    <nav className="account-mobile-nav">
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <AccountForm
           isModalOpen={isModalOpen}
@@ -46,7 +46,7 @@ export default function AccountMobileNav({ user, setUser, canEdit }) {
       </div>
 
       <NavLinks username={user.username} />
-    </div>
+    </nav>
   );
 }
 
@@ -73,7 +73,11 @@ function RightButton({ user, canEdit }) {
 function UserData({ user }) {
   return (
     <>
-      <img src={user.profileUrl} className="account-mobile-nav__image" />
+      <img
+        src={user.profileUrl}
+        className="account-mobile-nav__image"
+        alt="user profile"
+      />
       <p className="account-mobile-nav__displayname">
         {user.displayname}{" "}
         <span className="account-mobile-nav__username">@{user.username}</span>
@@ -132,7 +136,8 @@ function NavLinks({ username }) {
         <Link
           key={child.id}
           to={`/users/${username}/${child.id}`}
-          className={`account-mobile-nav__link ${isActive(child.id) && "account-mobile-nav__link--active"}`}
+          className="account-mobile-nav__link"
+          aria-selected={isActive(child.id) ? "true" : "false"}
         >
           {child.title}
         </Link>

@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isEmailValid, isPasswordValid } from "src/utils/form";
 import Alert from "src/features/shared/components/alerts/Alert";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
-import { isEmailValid, isPasswordValid } from "src/utils/form";
 import AuthInput from "../inputs/AuthInput";
 import ForgotPasswordButton from "../buttons/ForgotPasswordButton";
 
@@ -66,7 +67,7 @@ export default function Login({ setIsRegistration }) {
   }
 
   return (
-    <div className="auth--container">
+    <section className="auth--container">
       <h1 className="auth__header">
         Log into <span className="auth__header--highlight">TrackList</span>
       </h1>
@@ -78,22 +79,22 @@ export default function Login({ setIsRegistration }) {
         <ForgotPasswordButton />
 
         <Alert message={error} />
-        <button type="submit" className="form__submit">
+        <Button type="submit" classes="form__submit" ariaLabel="log in">
           Submit
-        </button>
+        </Button>
       </form>
 
       <div className="auth__button--wrapper">
         <p>Don't have an account with us?</p>
-        <button
-          type="button"
+        <Button
           onClick={() => setIsRegistration(true)}
-          className="back-button auth__button auth__button--before"
+          classes="back-button auth__button auth__button--before"
+          ariaLabel="go to sign up"
         >
           <FontAwesomeIcon icon={faArrowLeft} className="button-before" />
           <p>Sign up</p>
-        </button>
+        </Button>
       </div>
-    </div>
+    </section>
   );
 }

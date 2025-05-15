@@ -8,7 +8,7 @@
   border-right: 2px solid $basic-white;
   background-color: $dark-green;
 
-  &--collapsed {
+  &[aria-expanded="false"] {
     flex: 0 0 5%;
     overflow: hidden;
   }
@@ -49,7 +49,7 @@
       background-color: $darker-green;
     }
 
-    &--active {
+    &[aria-selected="true"] {
       background-color: $darker-green;
     }
   }
@@ -77,7 +77,7 @@
     width: fit-content;
     height: fit-content;
 
-    &--active {
+    &[aria-selected="true"] {
       right: auto;
       left: 50%;
       transform: translateX(-50%);
@@ -89,29 +89,18 @@
   .chatlist {
     background-color: $background-primary;
 
-    &--active {
-      flex: 1 1 100%;
+    &[aria-expanded="false"] {
+      flex: 0 0 0;
       border: none;
     }
 
-    &--collapsed {
-      flex: 0 0 0;
+    &[aria-expanded="true"] {
+      flex: 1 1 100%;
       border: none;
     }
 
     &__header {
       display: none;
-      /*
-      position: sticky;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $background-primary;
-      padding: 1em;
-      color: $basic-green;
-      font-size: 1rem;
-*/
     }
 
     &__compose {
@@ -141,7 +130,7 @@
         background-color: transparent;
       }
 
-      &--active {
+      &[aria-selected="true"] {
         background-color: transparent;
       }
     }

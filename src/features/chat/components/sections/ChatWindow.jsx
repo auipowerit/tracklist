@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { db } from "src/config/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { faSquareCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -118,24 +119,24 @@ export default function ChatWindow() {
     setIsCollapsed(false);
   }
 
-  return (
-    <div
-      className={`chats ${isCollapsed ? "chats--active" : "chats--collapsed"}`}
-    >
-      {activeChatId === -1 ? (
+  if (activeChatId === -1) {
+    return (
+      <section className="chats" aria-expanded={!isCollapsed}>
         <ChatSearchInput />
-      ) : (
-        <>
-          <MobileBanner
-            title={activeChatUser.displayname}
-            onClick={handleCollapse}
-          />
-          <Header handleCollapse={handleCollapse} />
-          <Messages messages={messages} />
-          <MessageInput />
-        </>
-      )}
-    </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="chats" aria-expanded={!isCollapsed}>
+      <MobileBanner
+        title={activeChatUser.displayname}
+        onClick={handleCollapse}
+      />
+      <Header handleCollapse={handleCollapse} />
+      <Messages messages={messages} />
+      <MessageInput />
+    </section>
   );
 }
 
@@ -144,13 +145,13 @@ function Header({ handleCollapse }) {
 
   return (
     <div className="chats__header">
-      <button
-        type="button"
+      <Button
         onClick={handleCollapse}
-        className="chats__collapse"
+        classes="chats__collapse"
+        ariaLabel="collapse chat"
       >
         <FontAwesomeIcon icon={faSquareCaretLeft} />
-      </button>
+      </Button>
 
       <Link to={`/users/${activeChatUser.username}`}>
         <h2>{activeChatUser.displayname || "Display Name"}</h2>

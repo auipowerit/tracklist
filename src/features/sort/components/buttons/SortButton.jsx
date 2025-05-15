@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import "./sort-button.scss";
 
 export default function SortButton(props) {
@@ -31,25 +32,25 @@ export default function SortButton(props) {
 
   return (
     <div ref={sorterRef} className="sort">
-      <button
+      <Button
         onClick={() => results?.length > 0 && setShowSort(!showSort)}
-        className="sort__button"
+        classes="sort__button"
+        ariaLabel="sort results by"
       >
         <FontAwesomeIcon icon={faSort} />
         <p>Sort by</p>
-      </button>
+      </Button>
 
-      <div
-        className={`sort__dropdown ${showSort ? "active" : ""}`}
-      >
+      <div className="sort__dropdown" aria-expanded={showSort}>
         {sortOptions.map((option) => (
-          <button
+          <Button
             key={option.value}
             onClick={() => sortResults(option.value)}
-            className="sort__item"
+            classes="sort__item"
+            ariaLabel={option.label}
           >
             {option.label}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

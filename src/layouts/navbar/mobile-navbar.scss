@@ -6,23 +6,18 @@
 
 @include md {
   .mobile-navbar {
-    display: block;
+    @include flexrow(space-between, center);
     position: sticky;
     bottom: 0;
     left: 0;
+    z-index: 2;
     z-index: 3;
+    transition: opacity 0.2s ease-in-out;
+    margin: 0 auto;
     background-color: $basic-black;
+    padding: 1em 2em;
     width: 100%;
-
-    &--container {
-      @include flexrow(space-between, center);
-      z-index: 2;
-      transition: opacity 0.2s ease-in-out;
-      margin: 0 auto;
-      padding: 1em 2em;
-      width: 100%;
-      max-width: 600px;
-    }
+    max-width: 600px;
 
     &--hidden {
       opacity: 0.5;
@@ -31,7 +26,7 @@
     &__link {
       font-size: 1.5rem;
 
-      &--active {
+      &[aria-selected="true"] {
         color: $basic-green;
       }
     }

@@ -6,13 +6,10 @@
   max-width: 1200px;
   min-height: 80vh;
 
-  &__outlet {
-    padding: 0 1em;
-    width: 100%;
-  }
-
   &__section {
     @include flexcol(initial, initial, 1em);
+    padding: 0 1em;
+    width: 100%;
     height: 100%;
   }
 
@@ -31,7 +28,6 @@
 
 @include md {
   .account {
-    gap: 0;
     background-color: $dark-gray;
     max-width: 100%;
     height: 100%;
@@ -42,13 +38,10 @@
       height: 50px;
     }
 
-    &__outlet {
-      padding: 0;
-    }
-
     &__section {
       gap: 1em;
       margin-bottom: 2em;
+      padding: 0;
     }
 
     &__header {

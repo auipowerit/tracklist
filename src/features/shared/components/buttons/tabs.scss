@@ -17,7 +17,7 @@
       color: $basic-green;
     }
 
-    &--active {
+    &[aria-selected="true"] {
       border-color: $basic-green;
       color: $basic-green;
     }

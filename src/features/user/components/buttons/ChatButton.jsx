@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { MOBILE_WIDTH } from "src/data/const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -43,12 +44,12 @@ export default function ChatButton({ username = "" }) {
   }
 
   return (
-    <button onClick={handleClick} className="chat-button">
+    <Button onClick={handleClick} classes="chat-button" ariaLabel="start chat">
       {username ? (
         <FontAwesomeIcon icon={faPaperPlane} />
       ) : (
         <FontAwesomeIcon icon={faEnvelope} />
       )}
-    </button>
+    </Button>
   );
 }

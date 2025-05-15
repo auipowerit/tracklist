@@ -1,5 +1,6 @@
-import { faGear, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear, faPen } from "@fortawesome/free-solid-svg-icons";
+import Button from "src/features/shared/components/buttons/Button";
 import "./user-buttons.scss";
 
 export default function EditProfileButton({
@@ -8,16 +9,24 @@ export default function EditProfileButton({
 }) {
   if (showIcon) {
     return (
-      <button onClick={() => setIsModalOpen(true)} className="profile-button">
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        classes="profile-button"
+        ariaLabel="edit profile"
+      >
         <FontAwesomeIcon icon={faGear} />
-      </button>
+      </Button>
     );
   }
 
   return (
-    <button onClick={() => setIsModalOpen(true)} className="basic-button">
+    <Button
+      onClick={() => setIsModalOpen(true)}
+      classes="basic-button"
+      ariaLabel="edit profile"
+    >
       <FontAwesomeIcon icon={faPen} />
       <p>Edit</p>
-    </button>
+    </Button>
   );
 }

@@ -54,12 +54,12 @@ export default function Layout() {
       </main>
 
       <ToTop />
-      <Footer />
 
       <MobileNavbar
         unreadMessages={unreadMessages}
         unreadNotifs={unreadNotifs}
       />
+      <Footer />
     </div>
   );
 }

@@ -19,7 +19,7 @@
       color: $basic-green;
     }
 
-    &--active {
+    &[aria-current="page"] {
       color: $basic-green !important;
     }
   }

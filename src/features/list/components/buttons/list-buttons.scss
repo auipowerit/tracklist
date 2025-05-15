@@ -15,11 +15,11 @@
   margin-left: 0.5em;
   width: 30px;
 
-  &:not(.disabled):hover {
+  &:not(:disabled):hover {
     color: $basic-green;
   }
 
-  &--active {
+  &[aria-selected="true"] {
     color: $basic-green;
   }
 }

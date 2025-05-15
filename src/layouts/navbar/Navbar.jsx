@@ -13,8 +13,8 @@ export default function Navbar({ unreadMessages, unreadNotifs }) {
   const { globalUser } = useAuthContext();
 
   return (
-    <div className="nav">
-      <div className="navbar">
+    <header className="nav">
+      <nav className="navbar">
         <NavLogo />
         <NavItem link="/search" icon={faSearch} />
 
@@ -29,8 +29,8 @@ export default function Navbar({ unreadMessages, unreadNotifs }) {
         </div>
 
         <NavProfile globalUser={globalUser} />
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 }
 
@@ -38,9 +38,8 @@ function NavLogo() {
   return (
     <NavLink
       to="/home"
-      className={({ isActive }) =>
-        `navbar__link navbar__logo ${isActive ? "navbar__link--active" : ""}`
-      }
+      className="navbar__link navbar__logo"
+      aria-current="page"
     >
       <p>TrackList</p>
     </NavLink>
@@ -49,12 +48,7 @@ function NavLogo() {
 
 function NavItem({ link, icon }) {
   return (
-    <NavLink
-      to={link}
-      className={({ isActive }) =>
-        `navbar__link ${isActive ? "navbar__link--active" : ""}`
-      }
-    >
+    <NavLink to={link} className="navbar__link" aria-current="page">
       <FontAwesomeIcon icon={icon} />
     </NavLink>
   );

@@ -14,7 +14,7 @@ export default function ErrorPage({ is404 }) {
     : "Oops! Something went wrong :(";
 
   return (
-    <div className="error">
+    <section className="error">
       <FontAwesomeIcon icon={faExclamationTriangle} className="error__icon" />
 
       <h1 className="error__header">{errorMessage}</h1>
@@ -24,6 +24,6 @@ export default function ErrorPage({ is404 }) {
         <FontAwesomeIcon icon={faHome} />
         Go to home
       </Link>
-    </div>
+    </section>
   );
 }

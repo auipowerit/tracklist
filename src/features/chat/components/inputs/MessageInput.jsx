@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import "./chat-inputs.scss";
@@ -45,9 +46,13 @@ export default function MessageInput() {
         placeholder={`Message ${activeChatUser.displayname || "user"}...`}
         className="chat-compose__input"
       />
-      <button type="submit" className="chat-compose__button">
+      <Button
+        type="submit"
+        classes="chat-compose__button"
+        ariaLabel="send message"
+      >
         <FontAwesomeIcon icon={faPaperPlane} />
-      </button>
+      </Button>
     </form>
   );
 }

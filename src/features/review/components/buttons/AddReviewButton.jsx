@@ -11,6 +11,7 @@ import {
 import ReviewForm from "../forms/ReviewForm";
 import Modal from "src/features/shared/components/modal/Modal";
 import "./review-buttons.scss";
+import Button from "src/features/shared/components/buttons/Button";
 
 export default function AddReviewButton(props) {
   const {
@@ -67,15 +68,20 @@ export default function AddReviewButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button onClick={handleClick} className="review-button">
+        <Button
+          onClick={handleClick}
+          classes="review-button"
+          ariaLabel="add review"
+        >
           <FontAwesomeIcon icon={faPenToSquare} />
-        </button>
+        </Button>
       ) : (
         <button
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
           onClick={handleClick}
           className="add-review-button"
+          aria-label="add review"
         >
           <FontAwesomeIcon icon={faPlus} />
           <p>Post review</p>

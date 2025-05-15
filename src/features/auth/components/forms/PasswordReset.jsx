@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { isEmailValid } from "src/utils/form";
 import Alert from "src/features/shared/components/alerts/Alert";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "../../context/AuthContext";
 
 export default function PasswordReset({ isModalOpen, setSuccess }) {
@@ -77,9 +78,13 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
       </div>
 
       <Alert message={error} />
-      <button type="button" onClick={handleSubmit} className="form__submit">
+      <Button
+        onClick={handleSubmit}
+        classes="form__submit"
+        ariaLabel="reset password"
+      >
         Submit
-      </button>
+      </Button>
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "src/features/shared/components/alerts/Alert";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { LIST_DESCRIPTION_LIMIT, LIST_NAME_LIMIT } from "src/data/const";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
@@ -279,27 +280,31 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
   return (
     <div className="list-form__buttons">
       {setNewList && (
-        <button
-          type="button"
+        <Button
           onClick={() => setNewList(false)}
-          className="list-form__button list-form__button--back"
+          classes="list-form__button list-form__button--back"
+          ariaLabel="back"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back</p>
-        </button>
+        </Button>
       )}
-      <button type="submit" className="list-form__button form__submit">
+      <Button
+        type="submit"
+        classes="list-form__button form__submit"
+        ariaLabel="submit changes"
+      >
         {list ? "Save" : "Create"}
-      </button>
+      </Button>
 
       {list && (
-        <button
-          type="button"
+        <Button
           onClick={handleDelete}
-          className="list-form__button list-form__button--delete"
+          classes="list-form__button list-form__button--delete"
+          ariaLabel="delete list"
         >
           <p>Delete</p>
-        </button>
+        </Button>
       )}
     </div>
   );

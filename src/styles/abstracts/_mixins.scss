@@ -33,7 +33,7 @@
   overflow: hidden;
   max-height: 0;
 
-  &.active {
+  &[aria-expanded="true"] {
     padding: $padding-y $padding-x;
     max-height: 100vh;
   }

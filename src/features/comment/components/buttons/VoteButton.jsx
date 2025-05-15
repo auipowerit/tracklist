@@ -44,7 +44,10 @@ export default function VoteButton(props) {
   return (
     <button
       onClick={handleClick}
-      className={`vote-button vote-button--${type} ${userVoted && `vote-button--${type}--active`} ${isLoading && `vote-button--loading`}`}
+      className={`vote-button vote-button--${type}`}
+      aria-selected={userVoted}
+      aria-label={type === "like" ? "like" : "dislike"}
+      disabled={isLoading}
     >
       <FontAwesomeIcon
         icon={type === "like" ? faThumbsUp : faThumbsDown}

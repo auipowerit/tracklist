@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDateMDYLong } from "src/utils/date";
 import SortMusic from "src/features/sort/components/SortMusic";
+import Button from "src/features/shared/components/buttons/Button";
 import MediaCard from "src/features/media/components/cards/MediaCard";
 
 export default function Discography({ media, setMedia, isMore, loadMedia }) {
   const [page, setPage] = useState(0);
 
   return (
-    <div className="discography">
+    <section className="discography">
       <SortMusic
         results={media}
         setResults={setMedia}
@@ -20,7 +21,22 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
       {media &&
         (media.length > 0 ? (
           <div className="discography__items">
-            <MediaItems media={media} />
+            {media.map((music) => {
+              const artistId = music.artists?.[0]?.id || "";
+
+              return (
+                <Link
+                  key={music.id}
+                  to={`/artists/${artistId}/albums/${music.id}`}
+                >
+                  <MediaCard
+                    key={music.id}
+                    media={music}
+                    defaultSubtitle={formatDateMDYLong(music.release_date)}
+                  />
+                </Link>
+              );
+            })}
 
             {isMore && (
               <LoadMoreButton
@@ -33,27 +49,7 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
         ) : (
           <p className="empty__message">Nothing to show!</p>
         ))}
-    </div>
-  );
-}
-
-function MediaItems({ media }) {
-  return (
-    <>
-      {media.map((music) => {
-        const artistId = music.artists?.[0]?.id || "";
-
-        return (
-          <Link key={music.id} to={`/artists/${artistId}/albums/${music.id}`}>
-            <MediaCard
-              key={music.id}
-              media={music}
-              defaultSubtitle={formatDateMDYLong(music.release_date)}
-            />
-          </Link>
-        );
-      })}
-    </>
+    </section>
   );
 }
 
@@ -65,8 +61,12 @@ function LoadMoreButton({ loadMedia, page, setPage }) {
   }
 
   return (
-    <button onClick={loadMore} className="discography__button">
-      Load more
-    </button>
+    <Button
+      onClick={loadMore}
+      classes="discography__button"
+      ariaLabel="load more music"
+    >
+      <p>Load more</p>
+    </Button>
   );
 }

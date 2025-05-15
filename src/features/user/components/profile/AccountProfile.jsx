@@ -90,7 +90,7 @@ export default function AccountProfile() {
   }
 
   return (
-    <div className="account__section">
+    <section className="account__section">
       <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <AccountForm
           isModalOpen={isModalOpen}
@@ -109,7 +109,7 @@ export default function AccountProfile() {
 
         <ProfileDetails user={user} />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -134,14 +134,24 @@ function SpotifyImage({ user }) {
       data-tooltip-id="profile-tooltip"
       data-tooltip-content="Open Spotify Profile"
     >
-      <img src={user.profileUrl} className="account-profile__image" />
+      <img
+        src={user.profileUrl}
+        className="account-profile__image"
+        alt="user profile"
+      />
       <Tooltip id="profile-tooltip" place="top" type="dark" effect="float" />
     </Link>
   );
 }
 
 function ProfileImage({ user }) {
-  return <img src={user.profileUrl} className="account-profile__image" />;
+  return (
+    <img
+      src={user.profileUrl}
+      className="account-profile__image"
+      alt="user profile"
+    />
+  );
 }
 
 function ProfileDetails({ user }) {

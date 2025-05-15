@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import Discography from "./Discography";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import MediaReviews from "../reviews/MediaReviews";
 import "./artist-profile.scss";
 
@@ -56,7 +56,7 @@ export default function ArtistProfile() {
   }
 
   return (
-    <div className="media__section">
+    <section className="media__section">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
@@ -80,6 +80,6 @@ export default function ArtistProfile() {
           loadMedia={loadSingles}
         />
       )}
-    </div>
+    </section>
   );
 }

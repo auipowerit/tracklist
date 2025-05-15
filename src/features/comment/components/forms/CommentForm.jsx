@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -76,7 +77,11 @@ export default function CommentForm({ review, setComments }) {
   return (
     <form className="comment-form" onSubmit={handleSubmit}>
       {globalUser && (
-        <img src={globalUser.profileUrl} className="comment-form__profile" />
+        <img
+          src={globalUser.profileUrl}
+          className="comment-form__profile"
+          alt="current user profile"
+        />
       )}
 
       <input
@@ -86,20 +91,21 @@ export default function CommentForm({ review, setComments }) {
       />
 
       <div className="comment-form__buttons">
-        <button
+        <Button
           type="submit"
-          className="comment-form__button comment-form__button--submit"
+          classes="comment-form__button comment-form__button--submit"
+          ariaLabel="post comment"
         >
           Post
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
           onClick={closeComment}
-          className="comment-form__button comment-form__button--cancel"
+          classes="comment-form__button comment-form__button--cancel"
+          ariaLabel="cancel comment"
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </form>
   );

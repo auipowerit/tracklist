@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DEFAULT_PROFILE_IMG } from "src/data/const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import {
   faList,
@@ -86,9 +87,7 @@ function DropdownMenu({ showDropdown, setShowDropdown, items }) {
   }
 
   return (
-    <ul
-      className={`navbar-dropdown ${showDropdown ? "active" : ""}`}
-    >
+    <ul className="navbar-dropdown" aria-expanded={showDropdown}>
       <li>
         <p className="navbar-dropdown__header">Hi, {globalUser?.username}</p>
       </li>
@@ -101,10 +100,14 @@ function DropdownMenu({ showDropdown, setShowDropdown, items }) {
         </li>
       ))}
       <li>
-        <button onClick={handleLogout} className="navbar-dropdown__item">
+        <Button
+          onClick={handleLogout}
+          classes="navbar-dropdown__item"
+          ariaLabel="logout of account"
+        >
           <FontAwesomeIcon icon={faSignOut} />
           <p>Logout</p>
-        </button>
+        </Button>
       </li>
     </ul>
   );

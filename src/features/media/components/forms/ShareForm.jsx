@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import Alert from "src/features/shared/components/alerts/Alert";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import Alert from "src/features/shared/components/alerts/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
@@ -214,16 +215,21 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
 function FormUserResults({ users, handleAddUser }) {
   return (
     <div
-      className={`share-form__search__dropdown ${users.length > 0 ? "active" : ""}`}
+      className="share-form__search__dropdown"
+      aria-expanded={users.length > 0}
     >
       {users.map((user) => (
-        <button
+        <Button
           key={user.uid}
-          type="button"
           onClick={() => handleAddUser(user)}
-          className="share-form__search__item"
+          classes="share-form__search__item"
+          ariaLabel="add user to share contet"
         >
-          <img src={user.profileUrl} className="share-form__search__image" />
+          <img
+            src={user.profileUrl}
+            className="share-form__search__image"
+            alt="shared media"
+          />
           <div className="share-form__search__info">
             <p className="share-form__search__displayname">
               {user.displayname}
@@ -232,7 +238,7 @@ function FormUserResults({ users, handleAddUser }) {
               @{user.username}
             </span>
           </div>
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -249,13 +255,13 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
         return (
           <div key={user.uid} className="share-form__user">
             <p className="share-form__user__username">@{user.username}</p>
-            <button
-              type="button"
+            <Button
               onClick={() => handleRemoveUser(user.uid)}
-              className="share-form__user__remove"
+              classes="share-form__user__remove"
+              ariaLabel="remove user to share content"
             >
               <FontAwesomeIcon icon={faXmark} />
-            </button>
+            </Button>
           </div>
         );
       })}
@@ -281,8 +287,8 @@ function FormMessage({ message, setMessage }) {
 
 function FormButton({ currentUsers }) {
   return (
-    <button type="submit" className="form__submit">
-      {`Send${currentUsers.length > 1 ? " seperately" : ""} `}
-    </button>
+    <Button type="submit" classes="form__submit" ariaLabel="share content">
+      <p>{`Send${currentUsers.length > 1 ? " seperately" : ""} `}</p>
+    </Button>
   );
 }

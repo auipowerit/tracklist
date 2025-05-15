@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Modal from "src/features/shared/components/modal/Modal";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
+import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ShareForm from "src/features/media/components/forms/ShareForm";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
+import Button from "./Button";
 import "./shared-buttons.scss";
 
 export default function ShareButton(props) {
@@ -32,9 +33,13 @@ export default function ShareButton(props) {
         />
       </Modal>
 
-      <button onClick={handleClick} className="share-button">
+      <Button
+        onClick={handleClick}
+        classes="share-button"
+        ariaLabel="share content"
+      >
         <FontAwesomeIcon icon={faShare} />
-      </button>
+      </Button>
     </div>
   );
 }

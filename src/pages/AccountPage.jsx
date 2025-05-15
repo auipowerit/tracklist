@@ -46,13 +46,11 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="account">
+    <section className="account">
       <AccountNav user={user} setUser={setUser} canEdit={canEdit} />
       <AccountMobileNav user={user} setUser={setUser} canEdit={canEdit} />
 
-      <div className="account__outlet">
-        <Outlet context={{ user, canEdit }} />
-      </div>
-    </div>
+      <Outlet context={{ user, canEdit }} />
+    </section>
   );
 }

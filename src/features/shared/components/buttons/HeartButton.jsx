@@ -63,7 +63,10 @@ export default function HeartButton(props) {
   return (
     <button
       onClick={handleClick}
-      className={`heart-button ${isLiked && "heart-button--active"} ${isLoading && "heart-button--disabled"}`}
+      className="heart-button"
+      aria-selected={isLiked}
+      aria-label={isLiked ? "unlike" : "like"}
+      disabled={isLoading}
     >
       <FontAwesomeIcon icon={faHeart} className={isActive ? "fa-beat" : ""} />
       {review && <p>{count}</p>}

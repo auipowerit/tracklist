@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import LikedMedia from "./LikedMedia";
 import LikedReviews from "./LikedReviews";
 import "./account-likes.scss";
@@ -17,7 +17,7 @@ export default function AccountLikes() {
   ];
 
   return (
-    <div className="account__section account-likes">
+    <section className="account__section account-likes">
       <Header />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -26,7 +26,7 @@ export default function AccountLikes() {
       ) : (
         <LikedMedia user={user} activeTab={activeTab} />
       )}
-    </div>
+    </section>
   );
 }
 

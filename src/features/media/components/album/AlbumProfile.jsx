@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import MediaReviews from "../reviews/MediaReviews";
@@ -22,7 +22,7 @@ export default function AlbumProfile() {
   }, []);
 
   return (
-    <div className="media__section">
+    <section className="media__section">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "reviews" ? (
@@ -34,7 +34,7 @@ export default function AlbumProfile() {
       ) : (
         <TrackList artistId={artist?.id} albumId={album?.id} tracks={tracks} />
       )}
-    </div>
+    </section>
   );
 }
 

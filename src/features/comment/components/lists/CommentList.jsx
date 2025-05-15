@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "src/features/shared/components/Loading";
+import Button from "src/features/shared/components/buttons/Button";
 import SortComments from "src/features/sort/components/SortComments";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
 import CommentForm from "../forms/CommentForm";
@@ -34,10 +35,10 @@ export default function CommentList({ review }) {
   }
 
   return (
-    <div className="comments">
+    <section className="comments">
       <Header review={review} comments={comments} setComments={setComments} />
       <Comments comments={comments} setComments={setComments} review={review} />
-    </div>
+    </section>
   );
 }
 
@@ -131,34 +132,34 @@ function SortSelect({ setComments, sortMethod }) {
 
   return (
     <div className="comments__tabs">
-      <button
-        type="button"
+      <Button
         onClick={() => setSortValue("newest")}
-        className={`comments__tab ${sortValue === "newest" && "comments__tab--active"}`}
+        classes="comments__tab"
+        ariaSelected={sortValue === "newest"}
       >
         Newest
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
         onClick={() => setSortValue("oldest")}
-        className={`comments__tab ${sortValue === "oldest" && "comments__tab--active"}`}
+        classes="comments__tab"
+        ariaSelected={sortValue === "oldest"}
       >
         Oldest
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
         onClick={() => setSortValue("best")}
-        className={`comments__tab ${sortValue === "best" && "comments__tab--active"}`}
+        classes="comments__tab"
+        ariaSelected={sortValue === "best"}
       >
         Best
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
         onClick={() => setSortValue("worst")}
-        className={`comments__tab ${sortValue === "worst" && "comments__tab--active"}`}
+        classes="comments__tab"
+        ariaSelected={sortValue === "worst"}
       >
         Worst
-      </button>
+      </Button>
     </div>
   );
 }

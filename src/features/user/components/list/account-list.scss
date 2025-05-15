@@ -1,6 +1,8 @@
 @use "src/styles/abstracts" as *;
 
 .account-list {
+  margin-top: 1em;
+
   &__header {
     @include flexrow(space-between, end);
     border-bottom: 1px solid $basic-white;
@@ -8,7 +10,7 @@
   }
 
   &__info {
-    @include flexcol($gap: 0.25em);
+    @include flexcol(initial, flex-start, 0.5em);
   }
 
   &__title {
@@ -57,7 +59,7 @@
   &__button {
     @include font(1);
 
-    &--active {
+    &[aria-selected="true"] {
       color: $basic-green;
     }
   }

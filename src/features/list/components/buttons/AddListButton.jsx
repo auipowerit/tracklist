@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
@@ -48,10 +49,14 @@ export default function AddListButton({ isModalOpen, setIsModalOpen }) {
         )}
       </Modal>
 
-      <button className="basic-button" onClick={handleClick}>
+      <Button
+        onClick={handleClick}
+        classes="basic-button"
+        ariaLabel="create list"
+      >
         <FontAwesomeIcon icon={faPlus} />
         <p>Create list</p>
-      </button>
+      </Button>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import "./totop-button.scss";
+import Button from "src/features/shared/components/buttons/Button";
 
 export default function ToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,12 +23,13 @@ export default function ToTop() {
   }
 
   return (
-    <button
-      href="#"
-      className={`to-top-button ${isVisible ? "to-top-button--active" : ""}`}
+    <Button
       onClick={handleClick}
+      classes="to-top-button"
+      ariaSelected={isVisible}
+      ariaLabel="scroll to top"
     >
       <FontAwesomeIcon icon={faArrowUp} />
-    </button>
+    </Button>
   );
 }

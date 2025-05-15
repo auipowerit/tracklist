@@ -7,7 +7,7 @@
     opacity: 0.5;
     cursor: grab;
 
-    &--active {
+    &[aria-selected="true"] {
       opacity: 1;
     }
   }

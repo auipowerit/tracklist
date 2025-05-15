@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import FriendsList from "./FriendsList";
 import "./account-friends.scss";
 
@@ -15,12 +15,12 @@ export default function AccountFriends() {
   ];
 
   return (
-    <div className="account__section">
+    <section className="account__section">
       <Header />
 
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <FriendsList activeTab={activeTab} user={user} />
-    </div>
+    </section>
   );
 }
 

@@ -2,6 +2,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import ListItemCard from "src/features/list/components/cards/ListItemCard";
 import "./draggable-item.scss";
 
@@ -28,7 +29,8 @@ export default function DraggableItem(props) {
       <div className="draggable-item">
         <div
           {...listeners}
-          className={`draggable-item__listener ${isDragging ? "draggable-item__listener--active" : ""}`}
+          className="draggable-item__listener"
+          aria-selected={isDragging}
         >
           <ListItemCard
             title={item.title}
@@ -39,13 +41,13 @@ export default function DraggableItem(props) {
           />
         </div>
 
-        <button
-          type="button"
+        <Button
           onClick={() => handleDelete(item.id)}
-          className="draggable-item__delete"
+          classes="draggable-item__delete"
+          ariaLabel="remove media from list"
         >
           <FontAwesomeIcon icon={faXmark} />
-        </button>
+        </Button>
       </div>
     </div>
   );

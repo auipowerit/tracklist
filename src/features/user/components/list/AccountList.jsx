@@ -23,7 +23,7 @@ export default function AccountList() {
   }
 
   return (
-    <div className="account__section account-list">
+    <section className="account__section account-list">
       <ListHeader
         list={list}
         image={items[0]?.image || DEFAULT_MEDIA_IMG}
@@ -41,7 +41,7 @@ export default function AccountList() {
         isEditing={isEditing}
         orientation={orientation}
       />
-    </div>
+    </section>
   );
 }
 

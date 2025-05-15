@@ -26,7 +26,11 @@ export default function ReviewCard({ review }) {
         className="review-card"
       >
         <div className="review-card__header">
-          <img src={review.media.image} className="review-card__image" />
+          <img
+            src={review.media.image}
+            className="review-card__image"
+            alt="reviewed media"
+          />
 
           <div className="review-card__info">
             <ReviewUser review={review} />
@@ -55,7 +59,11 @@ function ReviewUser({ review }) {
   return (
     <div className="review-card__user__container">
       <div className="review-card__user">
-        <img src={review.profileUrl} className="review-card__profile" />
+        <img
+          src={review.profileUrl}
+          className="review-card__profile"
+          alt="reviewed media"
+        />
         <p>@{review.username}</p>
         <p className="review-card__date review-card__date--mobile">
           {getTimeSinceShort(review.createdAt.toDate())}

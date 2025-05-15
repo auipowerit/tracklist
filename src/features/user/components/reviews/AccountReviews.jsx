@@ -10,10 +10,10 @@ export default function AccountReviews() {
   const { user, canEdit } = useOutletContext();
 
   return (
-    <div className="account__section account-reviews">
+    <section className="account__section account-reviews">
       <Header canEdit={canEdit} />
       <ReviewsList user={user} />
-    </div>
+    </section>
   );
 }
 

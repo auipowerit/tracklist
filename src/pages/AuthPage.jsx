@@ -29,12 +29,12 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="auth">
+    <section className="auth">
       {isRegistration ? (
         <Signup setIsRegistration={setIsRegistration} />
       ) : (
         <Login setIsRegistration={setIsRegistration} />
       )}
-    </div>
+    </section>
   );
 }

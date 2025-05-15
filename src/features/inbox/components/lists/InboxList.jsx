@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { db } from "src/config/firebase";
 import { getTimeSinceDay } from "src/utils/date";
-import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { doc, onSnapshot } from "firebase/firestore";
 import Loading from "src/features/shared/components/Loading";
 import InboxCard from "src/features/inbox/components/cards/InboxCard";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
-import { useReviewContext } from "src/features/review/context/ReviewContext";
-import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./inbox-list.scss";
 
 export default function InboxList() {
@@ -104,7 +101,7 @@ export default function InboxList() {
   }
 
   return (
-    <div className="inbox-list">
+    <section className="inbox-list">
       {notifications.map((notification, i) => {
         // Check if timeSince is different than previous notification
         const prevTimeSince = notifications[i - 1];
@@ -113,13 +110,20 @@ export default function InboxList() {
 
         return (
           <div key={notification.id} className="inbox-list__item">
-            {showTimeSince && (
-              <h2 className="inbox-list__time">{notification.timeSince}</h2>
-            )}
+            <InboxTime
+              showTimeSince={showTimeSince}
+              notification={notification}
+            />
             <InboxCard key={notification.id} notification={notification} />
           </div>
         );
       })}
-    </div>
+    </section>
   );
+}
+
+function InboxTime({ showTimeSince, notification }) {
+  if (!showTimeSince) return null;
+
+  return <h2 className="inbox-list__time">{notification.timeSince}</h2>;
 }

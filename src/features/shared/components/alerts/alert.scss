@@ -10,7 +10,7 @@
   height: 20px;
   transition: all 0.2s;
 
-  &--active {
+  &[aria-expanded="true"] {
     opacity: 1;
   }
 

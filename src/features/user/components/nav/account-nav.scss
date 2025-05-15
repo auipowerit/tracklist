@@ -17,7 +17,7 @@
     color: $basic-gray;
 
     &:hover,
-    &--active {
+    &[aria-selected="true"] {
       color: $basic-white;
     }
   }
@@ -127,7 +127,7 @@
       font-weight: bold;
       font-size: 1rem;
 
-      &--active {
+      &[aria-selected="true"] {
         background-color: $basic-green;
       }
     }

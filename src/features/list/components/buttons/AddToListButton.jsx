@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "src/features/shared/components/modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import SuccessAlert from "src/features/shared/components/alerts/SuccessAlert";
 import {
@@ -69,14 +70,22 @@ export default function AddToListButton(props) {
       </Modal>
 
       {showIcon ? (
-        <button onClick={handleClick} className="list-save-button">
+        <Button
+          onClick={handleClick}
+          classes="list-save-button"
+          ariaLabel="add to list"
+        >
           <FontAwesomeIcon icon={faList} />
-        </button>
+        </Button>
       ) : (
-        <button className="basic-button" onClick={handleClick}>
+        <Button
+          onClick={handleClick}
+          classes="basic-button"
+          ariaLabel="add to list"
+        >
           <FontAwesomeIcon icon={faPlus} />
           <p>Add items</p>
-        </button>
+        </Button>
       )}
     </div>
   );

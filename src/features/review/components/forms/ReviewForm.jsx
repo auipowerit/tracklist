@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { DEFAULT_MEDIA_IMG, REVIEW_LIMIT } from "src/data/const";
 import Alert from "src/features/shared/components/alerts/Alert";
+import { DEFAULT_MEDIA_IMG, REVIEW_LIMIT } from "src/data/const";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
@@ -214,7 +215,13 @@ function FormHeader() {
 
   return (
     <div className="form__header">
-      {globalUser && <img src={globalUser.profileUrl} className="form__user" />}
+      {globalUser && (
+        <img
+          src={globalUser.profileUrl}
+          className="form__user"
+          alt="current user profile"
+        />
+      )}
       <p>Add a review</p>
     </div>
   );
@@ -222,7 +229,11 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
+    <img
+      src={media?.image || DEFAULT_MEDIA_IMG}
+      className="form__image"
+      alt="media to review"
+    />
   );
 }
 
@@ -258,21 +269,19 @@ function FormInput(props) {
 
 function FormSearchResults({ results, handleClick, type }) {
   return (
-    <div
-      className={`form__search-list ${results.length > 0 ? "form__search-list--active" : ""}`}
-    >
+    <div className="form__search-list" aria-expanded={results.length > 0}>
       {results.map(({ id, name, subtitle }) => (
-        <button
-          type="button"
+        <Button
           key={id}
           onClick={() => handleClick(id, name)}
-          className="form__search-item"
+          classes="form__search-item"
+          ariaLabel="add media to list"
         >
           <p className="form__search-item--title">{name}</p>
           {type !== "artist" && (
             <span className="form__search-item--subtitle">{subtitle}</span>
           )}
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -314,8 +323,8 @@ function FormReview({ content, setContent }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form__submit">
+    <Button type="submit" classes="form__submit" ariaLabel="submit review">
       Post
-    </button>
+    </Button>
   );
 }

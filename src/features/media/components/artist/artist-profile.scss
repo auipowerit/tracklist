@@ -3,6 +3,7 @@
 .discography {
   @include flexcol(center, initial, 1em);
   width: 100%;
+  max-width: 1000px;
 
   &__items {
     @include flexrow(flex-start, center, 1.5em);

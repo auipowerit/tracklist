@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import Loading from "src/features/shared/components/Loading";
 import SortUsers from "src/features/sort/components/SortUsers";
 import SortMusic from "src/features/sort/components/SortMusic";
@@ -27,7 +27,7 @@ export default function SearchPage() {
   }, [activeTab]);
 
   return (
-    <div className="search">
+    <section className="search">
       <Tabs
         tabs={tabs}
         activeTab={activeTab}
@@ -46,7 +46,7 @@ export default function SearchPage() {
 
       {isLoading && <Loading />}
       <SearchResults results={results} category={category} />
-    </div>
+    </section>
   );
 }
 
@@ -78,36 +78,23 @@ function Header(props) {
           setResults={setResults}
         />
 
-        <SortResults
-          category={category}
-          results={results}
-          setResults={setResults}
-          initialResults={initialResults}
-        />
+        {category === "user" ? (
+          <SortUsers
+            users={results}
+            setUsers={setResults}
+            initialUsers={initialResults}
+            category={category}
+          />
+        ) : (
+          <SortMusic
+            results={results}
+            setResults={setResults}
+            initialResults={initialResults}
+            category={category}
+            search={true}
+          />
+        )}
       </div>
     </div>
-  );
-}
-
-function SortResults({ category, results, setResults, initialResults }) {
-  return (
-    <>
-      {category === "user" ? (
-        <SortUsers
-          users={results}
-          setUsers={setResults}
-          initialUsers={initialResults}
-          category={category}
-        />
-      ) : (
-        <SortMusic
-          results={results}
-          setResults={setResults}
-          initialResults={initialResults}
-          category={category}
-          search={true}
-        />
-      )}
-    </>
   );
 }

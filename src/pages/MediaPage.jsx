@@ -1,13 +1,13 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import MediaNavBar from "../features/media/components/nav/MediaNavBar";
 import MediaBanner from "../features/media/components/banner/MediaBanner";
 import "./styles/media.scss";
-import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 
 export default function MediaPage() {
   const { getMediaById } = useSpotifyContext();
@@ -111,7 +111,7 @@ export default function MediaPage() {
   }
 
   return (
-    <div className="media">
+    <section className="media">
       <MobileBanner
         title={
           memoizedMedia.track?.name ||
@@ -143,20 +143,18 @@ export default function MediaPage() {
           setFilter={setFilter}
         />
 
-        <div className="media__outlet">
-          <Outlet
-            context={{
-              artist: memoizedMedia.artist,
-              album: memoizedMedia.album,
-              track: memoizedMedia.track,
-              activeTab: activeTab,
-              setActiveTab: setActiveTab,
-              filter: filter,
-              setFilter: setFilter,
-            }}
-          />
-        </div>
+        <Outlet
+          context={{
+            artist: memoizedMedia.artist,
+            album: memoizedMedia.album,
+            track: memoizedMedia.track,
+            activeTab: activeTab,
+            setActiveTab: setActiveTab,
+            filter: filter,
+            setFilter: setFilter,
+          }}
+        />
       </div>
-    </div>
+    </section>
   );
 }

@@ -14,26 +14,16 @@
   @include font(0.75, 400);
   width: 2.5em;
 
-  &--loading {
-    pointer-events: none;
-  }
-
   &--like {
-    &:hover {
-      color: $light-green;
-    }
-
-    &--active {
+    &:hover,
+    &[aria-selected="true"] {
       color: $light-green;
     }
   }
 
   &--dislike {
-    &:hover {
-      color: $basic-red;
-    }
-
-    &--active {
+    &:hover,
+    &[aria-selected="true"] {
       color: $basic-red;
     }
   }
@@ -53,11 +43,11 @@
 
     &--like {
       &:hover {
-        &:not(.vote-button--like--active) {
+        &:not([aria-selected="true"]) {
           color: $basic-white;
         }
 
-        &--active {
+        &[aria-selected="true"] {
           color: $light-green;
         }
       }
@@ -65,11 +55,11 @@
 
     &--dislike {
       &:hover {
-        &:not(.vote-button--dislike--active) {
+        &:not([aria-selected="true"]) {
           color: $basic-white;
         }
 
-        &--active {
+        &[aria-selected="true"] {
           color: $basic-red;
         }
       }

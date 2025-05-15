@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
 import {
   faBell,
   faEnvelope,
@@ -9,7 +10,6 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import "./mobile-navbar.scss";
-import { useAuthContext } from "src/features/auth/context/AuthContext";
 
 export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
   const mobileRef = useRef();
@@ -44,50 +44,46 @@ export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
   }
 
   return (
-    <div ref={mobileRef} className="mobile-navbar">
-      <nav className="mobile-navbar--container" onClick={handleClick}>
-        <MobileNavItem
-          link="/home"
-          icon={faHome}
-          isActive={isActive("home") || isActive("reviews")}
-        />
-        <MobileNavItem
-          link="/search"
-          icon={faSearch}
-          isActive={isActive("search")}
-        />
+    <nav ref={mobileRef} onClick={handleClick} className="mobile-navbar">
+      <MobileNavItem
+        link="/home"
+        icon={faHome}
+        isActive={isActive("home") || isActive("reviews")}
+      />
+      <MobileNavItem
+        link="/search"
+        icon={faSearch}
+        isActive={isActive("search")}
+      />
 
-        <div className="mobile-navbar__messages">
-          <MobileNavItem
-            link="/messages"
-            icon={faEnvelope}
-            isActive={isActive("messages")}
-          />
-          <NotificationBadge unreadCount={unreadMessages} />
-        </div>
-
-        <div className="mobile-navbar__messages">
-          <MobileNavItem
-            link="/inbox"
-            icon={faBell}
-            isActive={isActive("inbox")}
-          />
-          <NotificationBadge unreadCount={unreadNotifs} />
-        </div>
-
+      <div className="mobile-navbar__messages">
         <MobileNavItem
-          link={
-            globalUser ? `/users/${globalUser.username}/reviews` : "/profile"
-          }
-          icon={faUser}
-          isActive={
-            isActive("profile") ||
-            (globalUser && isActive(`users/${globalUser.username}`)) ||
-            isActive("authenticate")
-          }
+          link="/messages"
+          icon={faEnvelope}
+          isActive={isActive("messages")}
         />
-      </nav>
-    </div>
+        <NotificationBadge unreadCount={unreadMessages} />
+      </div>
+
+      <div className="mobile-navbar__messages">
+        <MobileNavItem
+          link="/inbox"
+          icon={faBell}
+          isActive={isActive("inbox")}
+        />
+        <NotificationBadge unreadCount={unreadNotifs} />
+      </div>
+
+      <MobileNavItem
+        link={globalUser ? `/users/${globalUser.username}/reviews` : "/profile"}
+        icon={faUser}
+        isActive={
+          isActive("profile") ||
+          (globalUser && isActive(`users/${globalUser.username}`)) ||
+          isActive("authenticate")
+        }
+      />
+    </nav>
   );
 }
 
@@ -95,7 +91,8 @@ function MobileNavItem({ link, icon, isActive }) {
   return (
     <NavLink
       to={link}
-      className={`mobile-navbar__link ${isActive ? "mobile-navbar__link--active" : ""}`}
+      className="mobile-navbar__link"
+      aria-selected={isActive ? "true" : "false"}
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>

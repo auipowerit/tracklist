@@ -9,9 +9,14 @@
   transition: all 0.2s;
   inset: 0;
 
-  &--active {
+  &[aria-expanded="true"] {
     visibility: visible;
     background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  &[aria-expanded="true"] &__container {
+    transform: scale(100%);
+    opacity: 100;
   }
 
   &__container {
@@ -23,11 +28,6 @@
     background-color: $dark-gray;
     width: fit-content;
     max-width: 800px;
-
-    &--active {
-      transform: scale(100%);
-      opacity: 100;
-    }
   }
 
   &__button {

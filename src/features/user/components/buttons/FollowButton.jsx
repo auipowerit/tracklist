@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import "./user-buttons.scss";
@@ -40,11 +41,13 @@ export default function FollowButton({ user, setUser }) {
   }
 
   return (
-    <button
+    <Button
       onClick={() => handleClick()}
-      className={`follow-button ${isFollowing ? "follow-button--active" : ""}`}
+      className="follow-button"
+      ariaSelected={isFollowing}
+      ariaLabel={isFollowing ? "unfollow" : "follow"}
     >
       {isFollowing ? "Following" : "Follow"}
-    </button>
+    </Button>
   );
 }

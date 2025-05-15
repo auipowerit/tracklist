@@ -58,7 +58,11 @@ function SpotifyImage({ image, spotifyUrl }) {
       data-tooltip-content="Open in Spotify"
       className="media-banner__image--wrapper"
     >
-      <img src={image || DEFAULT_MEDIA_IMG} className="media-banner__image" />
+      <img
+        src={image || DEFAULT_MEDIA_IMG}
+        className="media-banner__image"
+        alt="spotify user profile"
+      />
       <Tooltip id="media-tooltip" place="top" type="dark" effect="float" />
     </div>
   );

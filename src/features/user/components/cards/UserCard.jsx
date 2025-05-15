@@ -24,7 +24,11 @@ export default function UserCard({ user: propUser }) {
   return (
     <div className="user-card">
       <Link to={`/users/${user.username}`} className="user-card--container">
-        <img src={user.profileUrl} className="user-card__image" />
+        <img
+          src={user.profileUrl}
+          className="user-card__image"
+          alt="user profile"
+        />
 
         <div className="user-card__info">
           <div className="user-card__header">

@@ -6,6 +6,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import Button from "src/features/shared/components/buttons/Button";
 
 export default function AddToList(props) {
   const { isModalOpen, mediaId, listId, category, setNewList, setSuccess } =
@@ -166,7 +167,11 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
+    <img
+      src={media?.image || DEFAULT_MEDIA_IMG}
+      className="form__image"
+      alt="list media"
+    />
   );
 }
 
@@ -268,19 +273,17 @@ function FormMediaResults(props) {
   }
 
   return (
-    <div
-      className={`form__search-list ${mediaResults.length > 0 ? "form__search-list--active" : ""}`}
-    >
+    <div className="form__search-list" aria-expanded={mediaResults.length > 0}>
       {mediaResults.map(({ id, name, subtitle }) => (
-        <button
+        <Button
           key={id}
-          type="button"
           onClick={() => handleClick(id, name)}
-          className="form__search-item"
+          classes="form__search-item"
+          ariaLabel="add media to list"
         >
           <p>{name}</p>
           {type !== "artist" && <span>{subtitle}</span>}
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -326,13 +329,13 @@ function FormLists({ currentLists, removeFromCurrentLists }) {
         return (
           <div key={list.id} className="list-form__lists-item">
             <p>{list.name}</p>
-            <button
-              type="button"
+            <Button
               onClick={() => removeFromCurrentLists(list)}
-              className="list-form__lists-item--remove"
+              classes="list-form__lists-item--remove"
+              ariaLabel="remove media from list"
             >
               <FontAwesomeIcon icon={faXmark} />
-            </button>
+            </Button>
           </div>
         );
       })}
@@ -342,8 +345,8 @@ function FormLists({ currentLists, removeFromCurrentLists }) {
 
 function FormButton() {
   return (
-    <button type="submit" className="form__submit">
+    <Button type="submit" classes="form__submit" ariaLabel="submit add to list">
       Add to List
-    </button>
+    </Button>
   );
 }

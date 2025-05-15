@@ -5,11 +5,11 @@ import "./account-nav.scss";
 
 export default function AccountNav({ user, canEdit }) {
   return (
-    <div className="account-nav">
+    <nav className="account-nav">
       <Profile user={user} />
       <NavLinks username={user.username} />
       {canEdit ? <LogoutButton /> : <ChatButton username={user.username} />}
-    </div>
+    </nav>
   );
 }
 
@@ -24,9 +24,14 @@ function Profile({ user }) {
   return (
     <Link
       to={`/users/${user.username}`}
-      className={`account-nav__link ${isHomePage && "account-nav__link--active"}`}
+      className="account-nav__link"
+      aria-selected={isHomePage ? "true" : "false"}
     >
-      <img src={user.profileUrl} className="account-nav__image" />
+      <img
+        src={user.profileUrl}
+        className="account-nav__image"
+        alt="user profile"
+      />
       <p>{user.username}</p>
     </Link>
   );
@@ -52,7 +57,8 @@ function NavLinks({ username }) {
         <Link
           key={child.id}
           to={`/users/${username}/${child.id}`}
-          className={`account-nav__link ${isActive(child.id) && "account-nav__link--active"}`}
+          className="account-nav__link"
+          aria-selected={isActive(child.id) ? "true" : "false"}
         >
           {child.title}
         </Link>

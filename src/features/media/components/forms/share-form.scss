@@ -14,7 +14,7 @@
       @include flexcol();
       background-color: $basic-green;
 
-      &--active {
+      &[aria-expanded="true"] {
         height: fit-content;
         max-height: 200px;
         overflow: auto;

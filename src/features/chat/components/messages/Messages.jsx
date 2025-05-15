@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MOBILE_WIDTH } from "src/data/const";
 import { formatDateDMD } from "src/utils/date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewStars from "src/features/review/components/rating/ReviewStars";
@@ -124,13 +125,13 @@ function MessageDeleteButton({ message, isCurrentUser }) {
   }
 
   return (
-    <button
-      type="button"
+    <Button
       onClick={handleDelete}
-      className="message__button message__delete"
+      classes="message__button message__delete"
+      ariaLabel="delete message"
     >
       <FontAwesomeIcon icon={faTrash} />
-    </button>
+    </Button>
   );
 }
 
@@ -150,20 +151,24 @@ function MessageLikeButton({ message, isCurrentUser }) {
   }
 
   return (
-    <button
-      type="button"
+    <Button
       onClick={handleLike}
-      className={`message__button message__like ${color} ${position}`}
+      classes={`message__button message__like ${color} ${position}`}
+      ariaLabel="like message"
     >
       <FontAwesomeIcon icon={faHeart} />
-    </button>
+    </Button>
   );
 }
 
 function MessageImage({ message }) {
   return (
     <Link to={`/users/${message.username}`}>
-      <img src={message.profileUrl} className="message__image" />
+      <img
+        src={message.profileUrl}
+        className="message__image"
+        alt="chat user profile"
+      />
     </Link>
   );
 }
@@ -198,7 +203,11 @@ function MessageContent({ message, category }) {
             @{message.review.username}
           </span>
         </p>
-        <img src={message.mediaData.image} className="message__media--image" />
+        <img
+          src={message.mediaData.image}
+          className="message__media--image"
+          alt="chat media image"
+        />
         <ReviewStars rating={message.review.rating} />
       </Link>
     );
@@ -213,7 +222,11 @@ function MessageContent({ message, category }) {
 
     return (
       <Link to={message.mediaData.titleLink} className="message__media">
-        <img src={message.mediaData.image} className="message__media--image" />
+        <img
+          src={message.mediaData.image}
+          className="message__media--image"
+          alt="chat media image"
+        />
         <p className="message_media--title">{message.mediaData.title}</p>
         <p className="message__media--subtitle">{message.mediaData.subtitle}</p>
       </Link>

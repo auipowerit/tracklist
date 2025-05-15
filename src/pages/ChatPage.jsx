@@ -55,9 +55,9 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="chat">
+    <section className="chat">
       <ChatList handleOpenChat={handleOpenChat} />
       <ChatWindow key={chatWindowKey} />
-    </div>
+    </section>
   );
 }

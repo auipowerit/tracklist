@@ -1,3 +1,4 @@
+import Button from "../buttons/Button";
 import "./modal.scss";
 
 export default function Modal({ children, isModalOpen, setIsModalOpen }) {
@@ -7,14 +8,15 @@ export default function Modal({ children, isModalOpen, setIsModalOpen }) {
   }
 
   return (
-    <div className={`modal ${isModalOpen && "modal--active"}`} onClick={onClose}>
-      <div
-        className={`modal__container ${isModalOpen && "modal__container--active"}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button type="button" onClick={onClose} className="modal__button">
+    <div onClick={onClose} className="modal" aria-expanded={isModalOpen}>
+      <div onClick={(e) => e.stopPropagation()} className="modal__container">
+        <Button
+          onClick={onClose}
+          classes="modal__button"
+          ariaLabel="close modal"
+        >
           &times;
-        </button>
+        </Button>
 
         {children}
       </div>

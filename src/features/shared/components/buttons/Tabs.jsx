@@ -1,10 +1,11 @@
+import Button from "./Button";
 import "./tabs.scss";
 
 export default function Tabs(props) {
   const { tabs, activeTab, setActiveTab, setResults } = props;
 
   function handleClick(tab) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // window.scrollTo({ top: 0, behavior: "smooth" });
     setResults && setResults(null);
     setActiveTab(tab.id);
   }
@@ -12,13 +13,14 @@ export default function Tabs(props) {
   return (
     <div className="tabs">
       {tabs.map((tab) => (
-        <button
+        <Button
           key={tab.id}
           onClick={() => handleClick(tab)}
-          className={`tabs__button ${activeTab === tab.id ? "tabs__button--active" : ""}`}
+          classes="tabs__button"
+          ariaSelected={activeTab === tab.id}
         >
           {tab.label}
-        </button>
+        </Button>
       ))}
     </div>
   );

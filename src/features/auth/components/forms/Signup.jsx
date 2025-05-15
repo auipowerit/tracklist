@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Alert from "src/features/shared/components/alerts/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { checkEmptyForm, isEmailValid, isPasswordValid } from "src/utils/form";
 import AuthInput from "../inputs/AuthInput";
@@ -79,7 +80,7 @@ export default function Signup({ setIsRegistration }) {
   }
 
   return (
-    <div className="auth--container">
+    <section className="auth--container">
       <h1 className="auth__header">
         Sign up for <span className="auth__header--highlight">TrackList</span>
       </h1>
@@ -96,20 +97,21 @@ export default function Signup({ setIsRegistration }) {
         />
 
         <Alert message={error} />
-        <button type="submit" className="form__submit">
+        <Button type="submit" classes="form__submit" ariaLabel="sign up">
           Submit
-        </button>
+        </Button>
       </form>
       <div className="auth__button--wrapper">
         <p>Already have an account with us?</p>
-        <button
+        <Button
           onClick={() => setIsRegistration(false)}
-          className="forward-button auth__button auth__button--after"
+          classes="forward-button auth__button auth__button--after"
+          ariaLabel="go to log in"
         >
           <p>Log in</p>
           <FontAwesomeIcon icon={faArrowRight} className="button-after" />
-        </button>
+        </Button>
       </div>
-    </div>
+    </section>
   );
 }

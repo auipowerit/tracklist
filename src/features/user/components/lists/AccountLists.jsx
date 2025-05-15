@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import Tabs from "src/layouts/buttons/Tabs";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import Loading from "src/features/shared/components/Loading";
 import ListCard from "src/features/list/components/cards/ListCard";
@@ -21,11 +21,11 @@ export default function AccountLists() {
   ];
 
   return (
-    <div className="account__section account-lists">
+    <section className="account__section account-lists">
       <Header canEdit={canEdit} />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <Lists user={user} activeTab={activeTab} />
-    </div>
+    </section>
   );
 }
 

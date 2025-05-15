@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./searchbar.scss";
@@ -67,9 +68,13 @@ export default function SearchBar(props) {
         className="searchbar__input"
       />
 
-      <button type="submit" className="searchbar__submit">
+      <Button
+        type="submit"
+        classes="searchbar__submit"
+        ariaLabel="submit search"
+      >
         <FontAwesomeIcon icon={faArrowRight} />
-      </button>
+      </Button>
     </form>
   );
 }

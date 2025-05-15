@@ -71,7 +71,7 @@
       font-weight: bold;
       font-size: 1rem;
 
-      &--active {
+      &[aria-selected="true"] {
         background-color: $basic-white;
         color: $basic-black;
       }

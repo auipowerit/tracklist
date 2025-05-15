@@ -9,12 +9,8 @@
     color: $basic-green;
   }
 
-  &--active {
+  &[aria-selected="true"] {
     color: $basic-green;
-  }
-
-  &--disabled {
-    pointer-events: none;
   }
 
   .fa-beat {
@@ -45,11 +41,11 @@
     font-size: 1.25rem;
 
     &:hover {
-      &:not(.heart-button--active) {
+      &:not([aria-selected="true"]) {
         color: $basic-white;
       }
 
-      &--active {
+      &[aria-selected="true"] {
         color: $basic-green;
       }
     }

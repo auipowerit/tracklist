@@ -47,17 +47,17 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="review">
+    <section className="review">
       <MobileBanner title={"Review"} onClick={() => window.history.back()} />
       <Review review={review} />
       <CommentList review={review} />
-    </div>
+    </section>
   );
 }
 
 function Review({ review }) {
   return (
-    <div className="review__container">
+    <section className="review__container">
       <ReviewMedia review={review} />
 
       <div className="review__content">
@@ -68,14 +68,18 @@ function Review({ review }) {
 
         <ReviewButtons review={review} showComment={false} />
       </div>
-    </div>
+    </section>
   );
 }
 
 function ReviewHeader({ review }) {
   return (
     <div className="review__header">
-      <img src={review.profileUrl} className="review__profile" />
+      <img
+        src={review.profileUrl}
+        className="review__profile"
+        alt="reviewed media"
+      />
 
       <div className="review__details">
         <div className="review__title">

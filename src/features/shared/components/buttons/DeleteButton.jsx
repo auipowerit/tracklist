@@ -1,5 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "./Button";
 import "./shared-buttons.scss";
 
 export default function DeleteButton({ type, deleteContent }) {
@@ -12,8 +13,12 @@ export default function DeleteButton({ type, deleteContent }) {
   }
 
   return (
-    <button className="delete-button" onClick={handleDelete}>
+    <Button
+      onClick={handleDelete}
+      classes="delete-button"
+      ariaLabel="delete content"
+    >
       <FontAwesomeIcon icon={faTrashCan} />
-    </button>
+    </Button>
   );
 }

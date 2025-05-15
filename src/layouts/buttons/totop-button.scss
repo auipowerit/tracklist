@@ -14,7 +14,7 @@
     transform: scale(1.2);
   }
 
-  &--active {
+  &[aria-selected="true"] {
     opacity: 1;
   }
 }
