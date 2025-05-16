@@ -5,7 +5,6 @@ import ChatList from "src/features/chat/components/lists/ChatList";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import ChatWindow from "src/features/chat/components/sections/ChatWindow";
-import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import "./styles/chat.scss";
 
 export default function ChatPage() {
@@ -39,6 +38,8 @@ export default function ChatPage() {
 
       setActiveChatId(-1);
       setActiveChatUser({});
+      setIsCollapsed(false);
+      setChatWindowKey(0);
     };
   }, [loadingUser, globalUser, mounted]);
 

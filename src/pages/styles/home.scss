@@ -35,6 +35,8 @@
 @include md {
   .home {
     margin-bottom: 2em;
+    padding: 0;
+    gap: 0;
 
     &__header {
       justify-content: center;
@@ -54,6 +56,7 @@
     &__feed {
       padding: 0;
       padding-top: 0.5em;
+      height: fit-content;
     }
   }
 }

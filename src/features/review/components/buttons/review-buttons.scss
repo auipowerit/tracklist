@@ -2,7 +2,6 @@
 
 .review-buttons {
   @include flexrow(initial, center, 1em);
-  cursor: pointer;
   margin-left: 0.25em;
   padding-left: 0.5em;
 }

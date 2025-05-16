@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "src/features/shared/components/buttons/Button";
-import { faCaretSquareLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCaretSquareLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
@@ -74,7 +77,7 @@ function CancelButton() {
       classes="chat-search__cancel"
       ariaLabel="collapse chat list"
     >
-      <FontAwesomeIcon icon={faCaretSquareLeft} />
+      <FontAwesomeIcon icon={faArrowLeft} />
     </Button>
   );
 }

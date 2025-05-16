@@ -34,10 +34,6 @@
 
   &__cancel {
     display: none;
-    cursor: pointer;
-    padding: 0 0.5em;
-    color: $basic-white;
-    font-size: 2rem;
   }
 
   &__input {
@@ -123,7 +119,11 @@
     @include flexrow(center, center, 0.5em);
 
     &__cancel {
-      display: unset;
+      display: block;
+      cursor: pointer;
+      padding: 0 0.5em;
+      color: $basic-white;
+      font-size: 1.5rem;
     }
 
     &__input {

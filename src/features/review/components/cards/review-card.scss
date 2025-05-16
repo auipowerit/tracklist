@@ -19,8 +19,9 @@
     box-shadow: $light-shadow;
     aspect-ratio: 1/1;
     width: 20%;
-    min-width: 100px;
+    min-width: 115px;
     max-width: 175px;
+    height: fit-content;
     object-fit: cover;
   }
 
@@ -74,21 +75,20 @@
       border-bottom: none;
     }
 
+    &__container {
+      gap: 0.25em;
+      border-top: none;
+      padding: 0.5em 0;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $darker-gray;
+      }
+    }
+
     &__info {
       gap: 1em;
       width: 80%;
       overflow-x: hidden;
-    }
-
-    &__container {
-      gap: 0.25em;
-      padding: 0;
-      border-top: none;
-
-      &:not(:last-child) {
-        border-bottom: 1px solid $darker-gray;
-        padding-bottom: 0.5em;
-      }
     }
 
     &__user {
