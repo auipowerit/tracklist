@@ -7,8 +7,11 @@
 
   &__container {
     @include flexcol();
-    border-top: 1px solid $darker-gray;
     padding: 1em 0;
+
+    &:not(:first-child) {
+      border-top: 1px solid $darker-gray;
+    }
   }
 
   &__header {

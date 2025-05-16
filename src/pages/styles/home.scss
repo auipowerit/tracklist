@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .home {
-  @include flexcol($gap: 1em);
+  @include flexcol();
   margin: auto;
   padding: 1em;
   width: 100%;
@@ -14,6 +14,8 @@
     top: 0;
     z-index: 2;
     background-color: $background-primary;
+    padding-bottom: 1em;
+    border-bottom: 1px solid $darker-gray;
 
     .tabs {
       margin: 0 0 !important;
@@ -36,11 +38,12 @@
   .home {
     margin-bottom: 2em;
     padding: 0;
-    gap: 0;
 
     &__header {
       justify-content: center;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+      border: none;
+      padding: 0;
 
       .tabs {
         &__button {
