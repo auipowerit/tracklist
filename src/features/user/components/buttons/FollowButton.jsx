@@ -43,7 +43,7 @@ export default function FollowButton({ user, setUser }) {
   return (
     <Button
       onClick={() => handleClick()}
-      className="follow-button"
+      classes="follow-button"
       ariaSelected={isFollowing}
       ariaLabel={isFollowing ? "unfollow" : "follow"}
     >

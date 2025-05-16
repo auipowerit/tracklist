@@ -4,13 +4,20 @@
   margin: 0 auto;
   width: 100%;
   max-width: 800px;
-  height: 100vh;
-  overflow-y: auto;
-  @include flexcol(initial, center, 1em);
-  padding: 2em 0;
+  height: fit-content;
+  @include flexcol(initial, center);
+  background-color: $dark-gray;
+  padding: 1em;
 
   &__header {
     @include font(0.75, normal, $basic-green);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: $dark-gray;
+    padding: 0.5em 0;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -18,24 +25,10 @@
   .inbox {
     gap: 0;
     padding: 0;
-    margin-bottom: 2em;
     height: 100%;
-    overflow-y: visible;
 
     &__header {
       display: none;
-      /*
-      position: sticky;
-      top: 0;
-      justify-content: center;
-      z-index: 2;
-      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $background-primary;
-      padding: 1em;
-      width: 100%;
-      font-size: 1rem;
-      text-align: center;
-      */
     }
   }
 }

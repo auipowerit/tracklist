@@ -84,7 +84,7 @@ export default function AddReviewButton(props) {
           aria-label="add review"
         >
           <FontAwesomeIcon icon={faPlus} />
-          <p>Post review</p>
+          <p>Review</p>
         </button>
       )}
     </div>

@@ -1,16 +1,19 @@
 @use "src/styles/abstracts" as *;
 
 .home {
-  @include flexcol();
+  @include flexcol($gap: 1em);
   margin: auto;
-  margin-top: 1em;
-  padding: 0 2em;
+  padding: 1em;
   width: 100%;
-  max-width: 1200px;
-  height: 100vh;
+  max-width: 1000px;
+  height: fit-content;
 
   &__header {
     @include flexrow(space-between, center);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: $background-primary;
 
     .tabs {
       margin: 0 0 !important;
@@ -23,29 +26,19 @@
   }
 
   &__feed {
-    @include flexcol($gap: 1em);
-    @include gradient(top);
-    padding: 2em 0;
+    @include flexcol();
     width: 100%;
     height: 100%;
-    overflow-y: auto;
   }
 }
 
 @include md {
   .home {
-    margin-top: 0;
     margin-bottom: 2em;
-    padding: 0;
-    height: fit-content;
 
     &__header {
-      position: sticky;
-      top: 0;
       justify-content: center;
-      z-index: 2;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
-      background-color: $background-primary;
 
       .tabs {
         &__button {
@@ -59,7 +52,6 @@
     }
 
     &__feed {
-      mask-image: none;
       padding: 0;
       padding-top: 0.5em;
     }

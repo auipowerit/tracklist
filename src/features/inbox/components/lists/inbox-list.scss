@@ -2,11 +2,10 @@
 
 .inbox-list {
   @include flexcol(initial, initial);
-  @include gradient(bottom);
+  border-top: 1px solid $darker-gray;
   padding: 0 1em 1em 0;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
 
   &__time {
     @include font(1.5, bold);
@@ -17,7 +16,7 @@
 @include md {
   .inbox-list {
     gap: 0.5em;
-    mask-image: none;
+    border: none;
     padding: 0 0.5em 1em 0.5em;
 
     &__time {

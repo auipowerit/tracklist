@@ -87,7 +87,7 @@
 
 @include md {
   .chatlist {
-    background-color: $background-primary;
+    background-color: $dark-gray;
 
     &[aria-expanded="false"] {
       flex: 0 0 0;

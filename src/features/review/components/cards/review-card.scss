@@ -5,12 +5,10 @@
   cursor: pointer;
   padding: 0.5em;
 
-  &:hover {
-    background-color: $dark-green;
-  }
-
   &__container {
     @include flexcol();
+    border-top: 1px solid $darker-gray;
+    padding: 1em 0;
   }
 
   &__header {
@@ -84,6 +82,8 @@
 
     &__container {
       gap: 0.25em;
+      padding: 0;
+      border-top: none;
 
       &:not(:last-child) {
         border-bottom: 1px solid $darker-gray;

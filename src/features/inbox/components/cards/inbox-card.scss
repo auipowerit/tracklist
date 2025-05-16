@@ -4,7 +4,7 @@
   @include flexrow(space-between, center, 2em);
   padding: 0 0.5em;
   width: 100%;
-  height: 120px;
+  height: 115px;
 
   &__info {
     @include flexrow(center, center, 0.5em);

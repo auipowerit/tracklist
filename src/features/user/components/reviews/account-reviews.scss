@@ -2,6 +2,11 @@
 
 .account-reviews {
   &__list {
-    @include flexcol($gap: 2em);
+    @include flexcol();
+
+    .review-card__container:first-child {
+      border: none;
+      padding-top: 0;
+    }
   }
 }
