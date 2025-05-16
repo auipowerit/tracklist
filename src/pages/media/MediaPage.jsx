@@ -5,9 +5,9 @@ import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import MobileBanner from "src/features/shared/components/banner/MobileBanner";
-import MediaNavBar from "../features/media/components/nav/MediaNavBar";
-import MediaBanner from "../features/media/components/banner/MediaBanner";
-import "./styles/media.scss";
+import MediaNavBar from "src/features/media/components/nav/MediaNavBar";
+import MediaBanner from "src/features/media/components/banner/MediaBanner";
+import "./media.scss";
 
 export default function MediaPage() {
   const { getMediaById } = useSpotifyContext();

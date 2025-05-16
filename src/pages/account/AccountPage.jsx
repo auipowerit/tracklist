@@ -4,7 +4,7 @@ import Loading from "src/features/shared/components/Loading";
 import AccountNav from "src/features/user/components/nav/AccountNav";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import AccountMobileNav from "src/features/user/components/nav/AccountMobileNav";
-import "./styles/account.scss";
+import "./account.scss";
 
 export default function AccountPage() {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import {
   faExclamationTriangle,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import "./styles/error.scss";
+import "./error.scss";
 
 export default function ErrorPage({ is404 }) {
   const error = useRouteError();

@@ -8,7 +8,7 @@ import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import MobileBanner from "src/features/shared/components/banner/MobileBanner";
 import ReviewButtons from "src/features/review/components/buttons/ReviewButtons";
-import "./styles/review.scss";
+import "./review.scss";
 
 export default function ReviewPage() {
   const params = useParams();

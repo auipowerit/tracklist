@@ -5,7 +5,7 @@ import ChatList from "src/features/chat/components/lists/ChatList";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "src/features/chat/context/ChatContext";
 import ChatWindow from "src/features/chat/components/sections/ChatWindow";
-import "./styles/chat.scss";
+import "./chat.scss";
 
 export default function ChatPage() {
   const { globalUser, loadingUser } = useAuthContext();

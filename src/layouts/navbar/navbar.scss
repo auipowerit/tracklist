@@ -55,6 +55,14 @@
     top: -10%;
     right: -25%;
   }
+
+  &__login {
+    @include font(0.75, bold, $basic-gray);
+
+    &:hover {
+      color: $basic-green;
+    }
+  }
 }
 
 .navbar-dropdown {

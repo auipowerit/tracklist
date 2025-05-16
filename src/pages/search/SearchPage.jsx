@@ -6,7 +6,7 @@ import SortMusic from "src/features/sort/components/SortMusic";
 import SearchBar from "src/features/search/components/forms/SearchBar";
 import SearchResults from "src/features/search/components/SearchResults";
 import SearchSelect from "src/features/search/components/inputs/SearchSelect";
-import "./styles/search.scss";
+import "./search.scss";
 
 export default function SearchPage() {
   const [activeTab, setActiveTab] = useState("artists");

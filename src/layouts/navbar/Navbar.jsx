@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import {
@@ -28,7 +28,7 @@ export default function Navbar({ unreadMessages, unreadNotifs }) {
           <NotificationBadge unreadCount={unreadNotifs} link="/inbox" />
         </div>
 
-        <NavProfile globalUser={globalUser} />
+        {globalUser ? <NavProfile globalUser={globalUser} /> : <LoginButton />}
       </nav>
     </header>
   );
@@ -60,5 +60,13 @@ function NotificationBadge({ unreadCount, link }) {
     <NavLink to={link}>
       <p className="navbar__badge">{unreadCount}</p>
     </NavLink>
+  );
+}
+
+function LoginButton() {
+  return (
+    <Link to="/authenticate" className="navbar__login">
+      LOG IN
+    </Link>
   );
 }
