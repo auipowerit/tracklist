@@ -63,7 +63,7 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
   }
 
   return (
-    <div className="auth--container">
+    <div className="auth--container auth--container--reset">
       <h1 className="form__header">Reset your password</h1>
 
       <div className="auth__input--wrapper">

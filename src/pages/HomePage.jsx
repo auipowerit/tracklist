@@ -12,7 +12,7 @@ export default function HomePage() {
   const { loadingUser, globalUser } = useAuthContext();
   const { reviews, getPopularReviews } = useReviewContext();
 
-  const [popularReviews, setPopularReviews] = useState([]);
+  const [popularReviews, setPopularReviews] = useState(null);
   const [activeTab, setActiveTab] = useState("newest");
 
   useEffect(() => {
@@ -28,7 +28,8 @@ export default function HomePage() {
     fetchReviews();
   }, [activeTab, loadingUser]);
 
-  if (loadingUser || (globalUser && !reviews)) {
+  // Set loading for fetching user, then for reviews (popular if not logged in)
+  if (loadingUser || (globalUser ? !reviews : !popularReviews)) {
     return <Loading />;
   }
 

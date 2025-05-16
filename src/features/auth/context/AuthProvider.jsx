@@ -18,6 +18,7 @@ export default function AuthProvider({ children }) {
       try {
         if (!user) {
           setGlobalUser(null);
+          setLoadingUser(false);
           return;
         }
 
