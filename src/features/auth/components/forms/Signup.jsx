@@ -16,12 +16,17 @@ export default function Signup({ setIsRegistration }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!(await validateData())) return;
+    const formData = new FormData(formRef.current);
 
-    const email = formRef.current.elements["email"].value;
-    const password = formRef.current.elements["password"].value;
-    const displayname = formRef.current.elements["displayname"].value;
-    const username = formRef.current.elements["username"].value;
+    const displayname = formData.get("displayname");
+    const username = formData.get("username");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const repassword = formData.get("repassword");
+
+    if (!(await validateData(email, password, repassword, username))) {
+      return;
+    }
 
     if (
       await signup(
@@ -36,12 +41,7 @@ export default function Signup({ setIsRegistration }) {
     }
   }
 
-  async function validateData() {
-    const email = formRef.current.elements["email"];
-    const password = formRef.current.elements["password"];
-    const repassword = formRef.current.elements["repassword"];
-    const username = formRef.current.elements["username"];
-
+  async function validateData(email, password, repassword, username) {
     if (checkEmptyForm(formRef)) {
       setError("Please fill out all fields.");
       return false;

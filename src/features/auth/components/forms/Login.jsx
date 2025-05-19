@@ -19,10 +19,12 @@ export default function Login({ setIsRegistration }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validateData()) return;
+    const formData = new FormData(formRef.current);
 
-    const email = formRef.current.elements["email"].value;
-    const password = formRef.current.elements["password"].value;
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    if (!validateData(email, password)) return;
 
     if (await login(email, password, setError)) {
       navigate("/");
@@ -30,10 +32,7 @@ export default function Login({ setIsRegistration }) {
     }
   }
 
-  function validateData() {
-    const email = formRef.current.elements["email"];
-    const password = formRef.current.elements["password"];
-
+  function validateData(email, password) {
     if (email.value === "") {
       setError("Please enter an email.");
       email.classList.add("form__input--invalid");

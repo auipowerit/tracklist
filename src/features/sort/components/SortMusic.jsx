@@ -16,9 +16,6 @@ export default function SortMusic(props) {
         ? [{ label: "Popularity", value: "popular" }]
         : []
       : []),
-    ...(category === "artist"
-      ? [{ label: "Followers", value: "followers" }]
-      : []),
     ...(search
       ? category === "album" || category === "track"
         ? [{ label: "Artist", value: "artist" }]
@@ -43,8 +40,6 @@ export default function SortMusic(props) {
       switch (sortValue) {
         case "popular":
           return b.popularity - a.popularity;
-        case "followers":
-          return b.followers.total - a.followers.total;
         case "artist":
           const artistComparison = a.artists[0].name.localeCompare(
             b.artists[0].name,

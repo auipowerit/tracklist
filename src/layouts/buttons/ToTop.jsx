@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import "./totop-button.scss";
 import Button from "src/features/shared/components/buttons/Button";
+import "./totop-button.scss";
 
 export default function ToTop() {
   const [isVisible, setIsVisible] = useState(false);
