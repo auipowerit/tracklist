@@ -22,9 +22,8 @@ export default function Signup({ setIsRegistration }) {
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
-    const repassword = formData.get("repassword");
 
-    if (!(await validateData(email, password, repassword, username))) {
+    if (!(await validateData())) {
       return;
     }
 
@@ -41,11 +40,16 @@ export default function Signup({ setIsRegistration }) {
     }
   }
 
-  async function validateData(email, password, repassword, username) {
+  async function validateData() {
     if (checkEmptyForm(formRef)) {
       setError("Please fill out all fields.");
       return false;
     }
+
+    const email = formRef.current.elements.email;
+    const password = formRef.current.elements.password;
+    const repassword = formRef.current.elements.repassword;
+    const username = formRef.current.elements.username;
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");

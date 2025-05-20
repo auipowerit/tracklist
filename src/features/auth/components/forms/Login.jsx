@@ -32,7 +32,10 @@ export default function Login({ setIsRegistration }) {
     }
   }
 
-  function validateData(email, password) {
+  function validateData() {
+    const email = formRef.current.elements.email;
+    const password = formRef.current.elements.password;
+
     if (email.value === "") {
       setError("Please enter an email.");
       email.classList.add("form__input--invalid");

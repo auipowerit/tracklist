@@ -1,10 +1,7 @@
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "src/features/shared/components/buttons/Button";
-import {
-  faArrowLeft,
-  faCaretSquareLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
