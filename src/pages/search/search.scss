@@ -1,8 +1,8 @@
 @use "src/styles/abstracts" as *;
 
 .search {
+  @include padding-y(1em);
   @include flexcol(center, center);
-  padding: 1em 0;
 
   &__header {
     @include flexrow(center, center, 1em);
@@ -13,7 +13,7 @@
 
 @include md {
   .search {
-    padding: 1em 0;
+    @include padding-y(1em);
 
     .tabs {
       display: none;

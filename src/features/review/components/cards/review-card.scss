@@ -6,8 +6,8 @@
   padding: 0.5em;
 
   &__container {
+    @include padding-y(1em);
     @include flexcol();
-    padding: 1em 0;
 
     &:not(:first-child) {
       border-top: 1px solid $darker-gray;
@@ -81,7 +81,7 @@
     &__container {
       gap: 0.25em;
       border-top: none;
-      padding: 0.5em 0;
+      @include padding-y(0.5em);
 
       &:not(:last-child) {
         border-bottom: 1px solid $darker-gray;

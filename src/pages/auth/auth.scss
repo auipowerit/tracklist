@@ -2,7 +2,7 @@
 
 .auth {
   margin: auto;
-  padding: 2em 0;
+  @include padding-y(2em);
   width: 100%;
   max-width: 600px;
 
@@ -62,7 +62,7 @@
   &__button {
     @include flexrow(center, center, 0.5em);
     @include font(1);
-    margin: 0 auto;
+    @include margin-x(auto);
     border: 1px solid $basic-white;
     padding: 0.5em 1.5em;
 
@@ -90,11 +90,11 @@
 
 @include md {
   .auth {
+    @include padding-y(1em);
+    @include flexcol(center, center);
     background-color: $dark-gray;
-    padding: 1em 0;
     max-width: unset;
     height: 100%;
-    @include flexcol(center, center);
 
     &--container {
       margin: auto;

@@ -81,7 +81,7 @@
     white-space: nowrap;
 
     &--wrapper {
-      padding: 0 0.5em;
+      @include padding-x(0.5em);
       width: 100%;
       overflow: hidden;
       text-align: center;

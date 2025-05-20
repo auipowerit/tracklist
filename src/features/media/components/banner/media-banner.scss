@@ -30,17 +30,17 @@
   }
 
   &__content {
+    @include padding-y(1em);
     @include flexcol(space-between, center);
     flex: 1;
     background-color: rgba(0, 0, 0, 0.7);
-    padding: 1em 0;
     height: 100%;
     overflow: hidden;
   }
 
   &__header {
     @include flexcol($gap: 0.25em);
-    padding: 0 0.5em;
+    @include padding-x(0.5em);
     width: 100%;
     max-width: 400px;
   }
@@ -52,8 +52,8 @@
     white-space: nowrap;
 
     &--wrapper {
+      @include padding-x(0.5em);
       @include gradient(left, 5%, 99%);
-      padding: 0 0.5em;
       width: 100%;
       overflow: hidden;
     }
@@ -73,9 +73,9 @@
   }
 
   &__buttons {
+    @include padding-x(0.75em);
     @include flexcol(space-evenly, center);
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 0 0.75em;
     max-width: 600px;
     height: 100%;
   }
@@ -89,7 +89,7 @@
     margin: 0;
     box-shadow: none;
     background-color: transparent;
-    padding: 1em 0 0 0;
+    padding-top: 1em;
     max-width: 100%;
 
     &__image {
@@ -136,9 +136,9 @@
     }
 
     &__buttons {
+      @include padding-y(1em);
       flex-direction: row;
       background-color: transparent;
-      padding: 1em 0;
       width: 100%;
       height: fit-content;
     }

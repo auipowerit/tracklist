@@ -21,7 +21,7 @@
 @include md {
   .media-navbar {
     display: none;
-    margin: 0 auto;
+    @include margin-x(auto);
     background-color: $background-primary;
     padding: 1em 0.5em;
     width: 100%;

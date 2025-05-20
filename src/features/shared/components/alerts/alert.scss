@@ -1,11 +1,11 @@
 @use "src/styles/abstracts" as *;
 
 .alert {
-  @include flexrow(center, center, 0.5em);
   @include font(0.5, normal, $basic-white, italic);
+  @include padding-y(1em);
+  @include flexrow(center, center, 0.5em);
   opacity: 0;
-  margin: 0 auto;
-  padding: 1em 0;
+  @include margin-x(auto);
   width: fit-content;
   height: 20px;
   transition: all 0.2s;

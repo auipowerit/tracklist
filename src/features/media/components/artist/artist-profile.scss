@@ -48,8 +48,8 @@
 @include sm {
   .discography {
     &__items {
+      @include padding-y(1em);
       @include flexcol(initial, center, 1.5em);
-      padding: 1em 0;
     }
   }
 }

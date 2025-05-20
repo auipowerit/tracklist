@@ -25,7 +25,7 @@
 
 @include md {
   .account-lists {
-    padding: 0 0.5em;
+    @include padding-x(0.5em);
 
     &__item {
       &:hover {

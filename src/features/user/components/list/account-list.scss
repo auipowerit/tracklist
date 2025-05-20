@@ -136,7 +136,7 @@
 
 @include md {
   .account-list {
-    margin: 0 auto;
+    @include margin-x(auto);
     padding: 0.5em;
 
     &__name {

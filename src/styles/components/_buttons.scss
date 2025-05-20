@@ -17,7 +17,7 @@
   position: relative;
   vertical-align: middle;
   transition: all 200ms;
-  margin: 0 auto;
+  @include margin-x(auto);
   text-align: center;
 
   .button-after {
@@ -42,7 +42,7 @@
   position: relative;
   vertical-align: middle;
   transition: all 200ms;
-  margin: 0 auto;
+  @include margin-x(auto);
   text-align: center;
 
   .button-before {

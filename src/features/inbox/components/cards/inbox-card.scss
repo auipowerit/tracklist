@@ -2,7 +2,7 @@
 
 .inbox-card {
   @include flexrow(space-between, center, 2em);
-  padding: 0 0.5em;
+  @include padding-x(0.5em);
   width: 100%;
   height: 115px;
 

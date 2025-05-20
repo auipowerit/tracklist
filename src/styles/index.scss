@@ -70,8 +70,8 @@ select {
 
 .empty__message {
   @include font(1, normal, $basic-gray, italic);
+  @include padding-y(4em);
   margin: auto;
-  padding: 4em 0;
   width: fit-content;
   max-width: 500px;
   text-align: center;

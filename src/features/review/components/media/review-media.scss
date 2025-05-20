@@ -33,8 +33,8 @@
     }
 
     &--wrapper {
+      @include padding-x(0.5em);
       @include gradient(left, 5%, 99%);
-      padding: 0 0.5em;
       width: 100%;
       overflow: hidden;
     }
@@ -54,7 +54,7 @@
     flex-basis: unset;
     align-self: flex-end;
     gap: 1em;
-    margin: 0 auto;
+    @include margin-x(auto);
     padding: 1em;
     width: 100%;
     max-width: 100%;
@@ -76,7 +76,7 @@
       font-size: 1.25rem;
 
       &--wrapper {
-        padding: 0 1em;
+        @include padding-x(1em);
       }
     }
 

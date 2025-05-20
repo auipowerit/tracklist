@@ -15,7 +15,7 @@
   &__date {
     @include font(0.5, normal, $basic-gray);
     align-self: center;
-    padding: 1.5em 0;
+    @include padding-y(1.5em);
   }
 
   &__bubble {

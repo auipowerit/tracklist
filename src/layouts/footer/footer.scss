@@ -2,9 +2,9 @@
 
 .footer {
   @include font(0.5, normal, $basic-gray);
+  @include padding-y(2em);
   @include flexcol(center, center, 1em);
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 2em 0;
   height: fit-content;
   text-align: center;
 

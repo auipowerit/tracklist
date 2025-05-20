@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .inbox {
-  margin: 0 auto;
+  @include margin-x(auto);
   width: 100%;
   max-width: 800px;
   height: fit-content;
@@ -15,7 +15,7 @@
     top: 0;
     z-index: 2;
     background-color: $dark-gray;
-    padding: 0.5em 0;
+    @include padding-y(0.5em);
     width: 100%;
     text-align: center;
   }

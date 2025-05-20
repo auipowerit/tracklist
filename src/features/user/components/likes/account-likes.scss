@@ -9,7 +9,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1em;
-    margin: 0 auto;
+    @include margin-x(auto);
     width: 100%;
   }
 
@@ -21,7 +21,7 @@
 @include md {
   .account-likes {
     .tabs {
-      padding: 0 1em;
+      @include padding-x(1em);
     }
 
     &__media {

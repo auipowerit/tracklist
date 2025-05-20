@@ -8,7 +8,7 @@
 
 .navbar {
   @include flexrow(initial, center, 1.5em);
-  margin: 0 auto;
+  @include margin-x(auto);
   width: 90%;
   max-width: 1200px;
 

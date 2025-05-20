@@ -119,9 +119,9 @@
     @include flexrow(center, center, 0.5em);
 
     &__cancel {
+      @include padding-x(0.5em);
       display: block;
       cursor: pointer;
-      padding: 0 0.5em;
       color: $basic-white;
       font-size: 1.5rem;
     }

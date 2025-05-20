@@ -6,10 +6,10 @@
 
   &__item {
     @include font(0.5);
+    @include margin-y(5px);
     position: relative;
     transition: all 0.2s;
     cursor: pointer;
-    margin: 5px 0;
     border-radius: 1px 1px 0 0;
     background-color: $basic-gray;
     width: 20px;

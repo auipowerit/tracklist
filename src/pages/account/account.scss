@@ -1,14 +1,14 @@
 @use "src/styles/abstracts" as *;
 
 .account {
-  margin: 0 auto;
+  @include margin-x(auto);
   width: 100%;
   max-width: 1200px;
   min-height: 80vh;
 
   &__section {
+    @include padding-x(1em);
     @include flexcol(initial, initial, 1em);
-    padding: 0 1em;
     width: 100%;
     height: 100%;
   }

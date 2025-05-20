@@ -22,7 +22,7 @@
   &__info {
     @include flexcol(space-between, initial, 0.25em);
     flex-grow: 1;
-    padding: 0.5em 0;
+    @include padding-y(0.5em);
     text-align: center;
   }
 
@@ -33,11 +33,11 @@
     white-space: nowrap;
 
     &--wrapper {
-      padding: 0 0.5em;
+      @include padding-x(0.5em);
+      @include gradient(left);
       width: 100%;
       overflow: hidden;
       text-align: center;
-      @include gradient(left);
     }
   }
 

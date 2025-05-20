@@ -10,7 +10,7 @@
   &__button {
     @include font(1, bold, $basic-gray);
     border-bottom: 5px solid transparent;
-    padding: 0.25em 0;
+    @include padding-y(0.25em);
     letter-spacing: 0.05em;
 
     &:hover {
@@ -30,7 +30,7 @@
 
     &__button {
       border: none;
-      padding: 0.5em 0;
+      @include padding-y(0.5em);
       font-size: 1.5rem;
     }
   }
