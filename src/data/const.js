@@ -16,6 +16,16 @@ const LIST_DESCRIPTION_LIMIT = 150;
 
 const MOBILE_WIDTH = 900;
 
+const WAITING_MESSAGES = [
+  "And I will wait, I will wait for you",
+  "The waiting is the hardest part",
+  "All we need is just a little patience",
+  "We keep on waiting, waiting on the world to change",
+  "So baby, I will wait for you / 'Cause I don't know what else I can do",
+  "Anticipation, anticipation, is making me late, is keeping me waiting",
+  "I am waiting for you / If you’re late, I will wait",
+];
+
 export {
   CLIENT_ID,
   CLIENT_SECRET,
@@ -29,4 +39,5 @@ export {
   LIST_NAME_LIMIT,
   LIST_DESCRIPTION_LIMIT,
   MOBILE_WIDTH,
+  WAITING_MESSAGES,
 };

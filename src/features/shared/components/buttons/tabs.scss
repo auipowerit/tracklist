@@ -5,7 +5,7 @@
   margin: 0 auto 1em auto;
   width: 100%;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   &__button {
     @include font(1, bold, $basic-gray);
