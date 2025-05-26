@@ -19,7 +19,7 @@ export default function AccountList() {
   const [orientation, setOrientation] = useState("horizontal");
 
   if (!list) {
-    return <Loading />;
+    return null;
   }
 
   return (

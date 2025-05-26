@@ -63,7 +63,7 @@ function ReviewsList({ user }) {
   }, [user]);
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   return (

@@ -31,7 +31,7 @@ export default function CommentList({ review }) {
   }, []);
 
   if (isLoading) {
-    return <Loading />;
+    return <section className="comments"></section>;
   }
 
   return (

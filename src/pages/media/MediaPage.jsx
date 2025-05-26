@@ -107,7 +107,7 @@ export default function MediaPage() {
   }
 
   if (isLoading) {
-    return <Loading />;
+    return <section className="media"></section>;
   }
 
   return (

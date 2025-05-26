@@ -111,7 +111,7 @@ function Lists({ user, activeTab }) {
   }
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   if (!lists || lists.length === 0) {

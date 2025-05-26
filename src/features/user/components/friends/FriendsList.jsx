@@ -44,7 +44,7 @@ export default function FriendsList({ activeTab, user }) {
   }, [user, activeTab]);
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   return (
