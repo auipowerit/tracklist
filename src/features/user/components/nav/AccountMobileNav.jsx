@@ -78,10 +78,11 @@ function UserData({ user }) {
         className="account-mobile-nav__image"
         alt="user profile"
       />
-      <p className="account-mobile-nav__displayname">
-        {user.displayname}{" "}
-        <span className="account-mobile-nav__username">@{user.username}</span>
-      </p>
+      <div className="account-mobile-nav__user">
+        <p className="account-mobile-nav__displayname">{user.displayname}</p>
+        <p className="account-mobile-nav__username">@{user.username}</p>
+      </div>
+
       <p className="account-mobile-nav__bio">{user.bio}</p>
       <div className="account-mobile-nav__date">
         <FontAwesomeIcon icon={faCalendar} />

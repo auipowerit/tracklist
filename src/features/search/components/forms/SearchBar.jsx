@@ -9,7 +9,7 @@ import "./searchbar.scss";
 export default function SearchBar(props) {
   const { category, setIsLoading, setResults, setInitialResults } = props;
 
-  const { searchByUsername } = useAuthContext();
+  const { searchByUser } = useAuthContext();
   const { searchByName } = useSpotifyContext();
 
   const searchInput = useRef(null);
@@ -42,7 +42,7 @@ export default function SearchBar(props) {
 
     try {
       if (category === "user") {
-        const users = await searchByUsername(searchString);
+        const users = await searchByUser(searchString);
         setResults(users);
         setInitialResults([...users]);
         return;

@@ -196,7 +196,7 @@ function FormMediaInput(props) {
   async function handleSearch(e) {
     e.target.classList.remove("form__input--invalid");
 
-    // Confirm search time contains characters
+    // Confirm search string contains characters
     if (mediaInputRef.current?.value.trim() !== "") {
       const data =
         (await searchByName(mediaInputRef.current?.value.trim(), type, 20)) ||

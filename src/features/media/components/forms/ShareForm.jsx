@@ -170,7 +170,7 @@ function FormImage({ media }) {
 }
 
 function FormInput({ input, setInput, setUsers, currentUsers }) {
-  const { globalUser, searchByUsername } = useAuthContext();
+  const { globalUser, searchByUser } = useAuthContext();
 
   async function handleSearch(e) {
     setInput(e.target.value);
@@ -180,7 +180,7 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
       return;
     }
 
-    const fetchedUsers = await searchByUsername(input, globalUser.uid);
+    const fetchedUsers = await searchByUser(input, globalUser.uid);
 
     // Remove users that are already in the currentUsers array
     const filteredUsers = fetchedUsers.filter(

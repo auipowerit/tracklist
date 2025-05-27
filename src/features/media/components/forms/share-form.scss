@@ -45,6 +45,7 @@
 
     &__displayname {
       @include font(0.75, bold);
+      text-transform: capitalize;
     }
 
     &__username {

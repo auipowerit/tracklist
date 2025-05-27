@@ -81,9 +81,13 @@
       object-fit: cover;
     }
 
-    &__displayname,
-    &__username {
+    &__user {
+      @include flexrow(initial, center, 0.25em);
       font-size: 1.25rem;
+    }
+
+    &__displayname {
+      text-transform: capitalize;
     }
 
     &__username {

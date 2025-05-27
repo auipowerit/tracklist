@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "src/features/shared/components/buttons/Button";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -7,12 +7,43 @@ import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
 
 export default function ChatSearchInput() {
-  const { globalUser, getUserById, searchByUsername } = useAuthContext();
+  const { globalUser, getUserById, searchByUser } = useAuthContext();
   const { chats, addChat, setActiveChatId, setActiveChatUser } =
     useChatContext();
 
+  const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
-  const inputRef = useRef(null);
+
+  const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (isSearching) return;
+
+      setIsSearching(true);
+
+      try {
+        if (search === "") {
+          setUsers([]);
+          return;
+        }
+
+        const fetchedUsers = await searchByUser(search, globalUser.uid);
+        fetchedUsers.sort((a, b) => {
+          return (
+            globalUser.following.includes(b.uid) -
+            globalUser.following.includes(a.uid)
+          );
+        });
+
+        setUsers(fetchedUsers);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    handleSearch();
+  }, [search, isSearching]);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -23,7 +54,7 @@ export default function ChatSearchInput() {
       return;
     }
 
-    const fetchedUsers = await searchByUsername(input, globalUser.uid);
+    const fetchedUsers = await searchByUser(input, globalUser.uid);
 
     fetchedUsers.sort((a, b) => {
       return (
@@ -55,7 +86,11 @@ export default function ChatSearchInput() {
   return (
     <div className="chat-search">
       <CancelButton />
-      <SearchInput ref={inputRef} handleSearch={handleSearch} />
+      <SearchInput
+        search={search}
+        setSearch={setSearch}
+        handleSearch={handleSearch}
+      />
       <SearchResults users={users} handleAddUser={handleAddUser} />
     </div>
   );
@@ -79,13 +114,13 @@ function CancelButton() {
   );
 }
 
-function SearchInput({ ref, handleSearch }) {
+function SearchInput({ search, setSearch }) {
   return (
     <input
       type="text"
+      value={search}
+      onChange={(e) => setSearch(e.target.value.trim())}
       placeholder="Search for a friend..."
-      ref={ref}
-      onChange={handleSearch}
       className="chat-search__input"
     />
   );

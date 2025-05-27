@@ -10,6 +10,7 @@
   &__header {
     @include flexrow(initial, center, 1em);
     @include font(0.75, bold);
+    text-transform: capitalize;
     position: relative;
     border-bottom: 1px solid $basic-gray;
     padding-bottom: 0.25em;

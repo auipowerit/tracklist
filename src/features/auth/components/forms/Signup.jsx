@@ -27,15 +27,7 @@ export default function Signup({ setIsRegistration }) {
       return;
     }
 
-    if (
-      await signup(
-        email,
-        password,
-        displayname,
-        username.toLowerCase(),
-        setError,
-      )
-    ) {
+    if (await signup(email, password, displayname, username, setError)) {
       resetForm();
     }
   }
