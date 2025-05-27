@@ -31,6 +31,7 @@ export default function ChatPage() {
 
     // reset state when user leaves page
     return () => {
+      // If the user is not loaded yet, don't to reset the state
       if (!mounted) {
         setMounted(true);
         return;

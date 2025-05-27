@@ -132,6 +132,7 @@ export default function ChatWindow() {
       <MobileBanner
         title={activeChatUser.displayname}
         onClick={handleCollapse}
+        link={`/users/${activeChatUser.username}`}
       />
       <Header handleCollapse={handleCollapse} />
       <Messages messages={messages} />
