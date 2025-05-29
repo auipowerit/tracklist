@@ -16,7 +16,9 @@ import {
   fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "src/config/firebase";
 import { DEFAULT_PROFILE_IMG } from "src/data/const";
@@ -32,6 +34,28 @@ export function useAuth() {
 
       const newUser = userCredentials.user;
 
+      const result = await createUser(
+        email,
+        displayname,
+        username,
+        newUser.uid,
+        setError,
+      );
+
+      return result;
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        setError("The email address is already in use.");
+      } else {
+        setError("Something went wrong! Please review fields.");
+      }
+
+      return false;
+    }
+  }
+
+  async function createUser(email, displayname, username, uid, setError) {
+    try {
       const newUserData = {
         email: email.toLowerCase(),
         displayname: displayname.toLowerCase(),
@@ -48,17 +72,13 @@ export function useAuth() {
         createdAt: new Date(),
       };
 
-      const userRef = doc(db, "users", newUser.uid);
+      const userRef = doc(db, "users", uid);
       await setDoc(userRef, newUserData);
 
       return true;
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        setError("The email address is already in use.");
-      } else {
-        setError("Something went wrong! Please review fields.");
-      }
-
+      console.log(error);
+      setError("Something went wrong! Please review fields.");
       return false;
     }
   }
@@ -93,6 +113,51 @@ export function useAuth() {
         setError("Something went wrong! Please try again.");
       }
 
+      return false;
+    }
+  }
+
+  async function loginWithGoogle(setError, username) {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      if (!result.user) return false;
+
+      const user = result.user?.reloadUserInfo;
+      const uid = user["uid"] || user.localId;
+
+      const fetchedUser = await getUserById(uid);
+
+      if (username) {
+        if (fetchedUser) {
+          setError("A user with this email already exists.");
+          logout();
+          return false;
+        } else {
+          const result = await createUser(
+            user.email,
+            user.displayName,
+            username,
+            uid,
+            setError,
+          );
+
+          if (!result) {
+            logout();
+            return false;
+          }
+        }
+      } else if (!fetchedUser) {
+        setError("A user with this email does not exist.");
+        logout();
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      setError("Something went wrong! Please try again.");
       return false;
     }
   }
@@ -378,6 +443,7 @@ export function useAuth() {
     signup,
     usernameAvailable,
     login,
+    loginWithGoogle,
     logout,
     checkIfEmailExists,
     resetPassword,

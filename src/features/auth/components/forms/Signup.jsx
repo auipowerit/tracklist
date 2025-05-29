@@ -6,6 +6,7 @@ import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { checkEmptyForm, isEmailValid, isPasswordValid } from "src/utils/form";
 import AuthInput from "../inputs/AuthInput";
+import GoogleSignupButton from "../buttons/GoogleSignupButton";
 
 export default function Signup({ setIsRegistration }) {
   const { signup, usernameAvailable } = useAuthContext();
@@ -89,7 +90,7 @@ export default function Signup({ setIsRegistration }) {
         <AuthInput
           label="Re-enter Password"
           name="repassword"
-          type="repassword"
+          type="password"
         />
 
         <Alert message={error} />
@@ -97,17 +98,25 @@ export default function Signup({ setIsRegistration }) {
           Submit
         </Button>
       </form>
-      <div className="auth__button--wrapper">
-        <p>Already have an account with us?</p>
-        <Button
-          onClick={() => setIsRegistration(false)}
-          classes="forward-button auth__button auth__button--after"
-          ariaLabel="go to log in"
-        >
-          <p>Log in</p>
-          <FontAwesomeIcon icon={faArrowRight} className="button-after" />
-        </Button>
-      </div>
+
+      <GoogleSignupButton />
+      <GoToLogin setIsRegistration={setIsRegistration} />
     </section>
+  );
+}
+
+function GoToLogin({ setIsRegistration }) {
+  return (
+    <div className="auth__button--wrapper">
+      <p>Already have an account with us?</p>
+      <Button
+        onClick={() => setIsRegistration(false)}
+        classes="forward-button auth__button auth__button--after"
+        ariaLabel="go to log in"
+      >
+        <p>Log in</p>
+        <FontAwesomeIcon icon={faArrowRight} className="button-after" />
+      </Button>
+    </div>
   );
 }

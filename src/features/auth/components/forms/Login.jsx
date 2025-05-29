@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import AuthInput from "../inputs/AuthInput";
+import GoogleLoginButton from "../buttons/GoogleLoginButton";
 import ForgotPasswordButton from "../buttons/ForgotPasswordButton";
 
 export default function Login({ setIsRegistration }) {
@@ -86,17 +87,25 @@ export default function Login({ setIsRegistration }) {
         </Button>
       </form>
 
-      <div className="auth__button--wrapper">
-        <p>Don't have an account with us?</p>
-        <Button
-          onClick={() => setIsRegistration(true)}
-          classes="back-button auth__button auth__button--before"
-          ariaLabel="go to sign up"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="button-before" />
-          <p>Sign up</p>
-        </Button>
-      </div>
+      <GoogleLoginButton setError={setError} />
+
+      <GoToSignup setIsRegistration={setIsRegistration} />
     </section>
+  );
+}
+
+function GoToSignup({ setIsRegistration }) {
+  return (
+    <div className="auth__button--wrapper">
+      <p>Don't have an account with us?</p>
+      <Button
+        onClick={() => setIsRegistration(true)}
+        classes="back-button auth__button auth__button--before"
+        ariaLabel="go to sign up"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} className="button-before" />
+        <p>Sign up</p>
+      </Button>
+    </div>
   );
 }

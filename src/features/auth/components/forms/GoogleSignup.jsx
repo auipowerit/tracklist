@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { isEmailValid } from "src/utils/form";
 import Alert from "src/features/shared/components/alerts/Alert";
 import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "../../context/AuthContext";
 
-export default function PasswordReset({ isModalOpen, setSuccess }) {
-  const { checkIfEmailExists, resetPassword } = useAuthContext();
+export default function GoogleSignup({ isModalOpen, setSuccess }) {
+  const { usernameAvailable, loginWithGoogle } = useAuthContext();
 
   const [error, setError] = useState("");
   const inputRef = useRef(null);
@@ -31,31 +30,26 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
   async function handleSubmit() {
     if (!(await validateData())) return;
 
-    const email = inputRef.current.value;
+    const username = inputRef.current.value;
 
-    await resetPassword(email);
-    resetValues();
-    setSuccess(true);
+    if (await loginWithGoogle(setError, username)) {
+      resetValues();
+      setSuccess(true);
+    }
   }
 
   async function validateData() {
-    const email = inputRef.current;
+    const username = inputRef.current;
 
-    if (!email.value) {
-      setError("Please enter an email.");
-      email.classList.add("form__input--invalid");
+    if (!username.value) {
+      setError("Please enter a username.");
+      username.classList.add("form__input--invalid");
       return false;
     }
 
-    if (!isEmailValid(email.value)) {
-      setError("Please enter a valid email.");
-      email.classList.add("form__input--invalid");
-      return false;
-    }
-
-    if (!(await checkIfEmailExists(email.value))) {
-      setError("This email does not exist.");
-      email.classList.add("form__input--invalid");
+    if (!(await usernameAvailable(username.value))) {
+      setError("This username is already taken.");
+      username.classList.add("form__input--invalid");
       return false;
     }
 
@@ -64,15 +58,15 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
 
   return (
     <div className="auth--container auth--container--reset">
-      <h1 className="form__header">Reset your password</h1>
+      <h1 className="form__header">Sign up with Google</h1>
 
       <div className="auth__input--wrapper">
-        <label htmlFor="reset-email">Email</label>
+        <label htmlFor="google-username">Username</label>
         <input
           ref={inputRef}
           className="auth__input"
-          name="reset-email"
-          type="email"
+          name="google-username"
+          type="text"
           onChange={handleChange}
         />
       </div>
@@ -81,7 +75,7 @@ export default function PasswordReset({ isModalOpen, setSuccess }) {
       <Button
         onClick={handleSubmit}
         classes="form__submit"
-        ariaLabel="reset password"
+        ariaLabel="sign up with google"
       >
         Submit
       </Button>
