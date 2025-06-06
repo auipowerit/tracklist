@@ -17,16 +17,16 @@ export default function Signup({ setIsRegistration }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!(await validateData())) {
+      return;
+    }
+
     const formData = new FormData(formRef.current);
 
     const displayname = formData.get("displayname");
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
-
-    if (!(await validateData())) {
-      return;
-    }
 
     if (await signup(email, password, displayname, username, setError)) {
       resetForm();

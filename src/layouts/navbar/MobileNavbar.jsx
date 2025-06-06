@@ -93,7 +93,6 @@ function MobileNavItem({ link, icon, isActive }) {
       to={link}
       className="mobile-navbar__link"
       aria-selected={isActive ? "true" : "false"}
-      activeClassName="animate"
     >
       <FontAwesomeIcon icon={icon} />
     </NavLink>

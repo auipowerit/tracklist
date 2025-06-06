@@ -7,6 +7,7 @@ import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import BannerButtons from "./BannerButtons";
 import "./media-banner.scss";
+import { Link } from "react-router-dom";
 
 function MediaBanner({ media, category, setActiveTab, setFilter }) {
   const { getAvgRating } = useReviewContext();
@@ -37,7 +38,11 @@ function MediaBanner({ media, category, setActiveTab, setFilter }) {
         spotifyUrl={media.external_urls.spotify}
       />
       <div className="media-banner__content">
-        <Title name={data.title} subtitle={data.subtitle} />
+        <Title
+          name={data.title}
+          subtitle={data.subtitle}
+          link={data.subtitleLink}
+        />
         <Rating
           mediaId={media.id}
           rating={rating}
@@ -68,7 +73,7 @@ function SpotifyImage({ image, spotifyUrl }) {
   );
 }
 
-function Title({ name, subtitle }) {
+function Title({ name, subtitle, link }) {
   const titleRef = useRef(null);
 
   useEffect(() => {
@@ -90,7 +95,9 @@ function Title({ name, subtitle }) {
         </p>
       </div>
 
-      <p className="media-banner__subtitle">{subtitle}</p>
+      <Link to={link} className="media-banner__subtitle">
+        {subtitle}
+      </Link>
     </div>
   );
 }
