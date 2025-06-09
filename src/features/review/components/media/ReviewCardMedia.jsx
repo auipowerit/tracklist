@@ -1,42 +1,16 @@
 import { useEffect, useRef } from "react";
-import { Tooltip } from "react-tooltip";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
-import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons/faMicrophoneLines";
+import MediaIcon from "src/features/media/components/cards/MediaIcon";
 import "./review-card-media.scss";
 
 export default function ReviewCardMedia({ title, subtitle, category }) {
   return (
     <div className="review-card-media">
       <div className="review-card-media__header">
-        <MediaIcon category={category} />
+        <MediaIcon category={category} className="review-card-media__icon" />
         <MediaTitle title={title} />
       </div>
 
       <p className="review-card-media__subtitle">{subtitle}</p>
-    </div>
-  );
-}
-
-function MediaIcon({ category }) {
-  const icon =
-    category === "track"
-      ? faMusic
-      : category === "album"
-        ? faCompactDisc
-        : faMicrophoneLines;
-
-  function capitalizeFirstLetter(str) {
-    return str[0].toUpperCase() + str.slice(1);
-  }
-
-  return (
-    <div
-      data-tooltip-content={capitalizeFirstLetter(category)}
-      data-tooltip-id="category-tooltip"
-    >
-      <FontAwesomeIcon icon={icon} className="review-card-media__icon" />
-      <Tooltip id="category-tooltip" place="top" type="dark" effect="float" />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
+import MediaIcon from "src/features/media/components/cards/MediaIcon";
+import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./review-media.scss";
 
 export default function ReviewMedia({ review }) {
@@ -24,7 +25,7 @@ export default function ReviewMedia({ review }) {
         image={mediaData.image || DEFAULT_MEDIA_IMG}
         link={mediaData.titleLink}
       />
-      <MediaInfo mediaData={mediaData} />
+      <MediaInfo mediaData={mediaData} category={review?.category} />
     </div>
   );
 }
@@ -41,7 +42,7 @@ function MediaImage({ image, link }) {
   );
 }
 
-function MediaInfo({ mediaData }) {
+function MediaInfo({ mediaData, category }) {
   const titleRef = useRef(null);
 
   useEffect(() => {
@@ -57,11 +58,18 @@ function MediaInfo({ mediaData }) {
 
   return (
     <div className="review-media__info">
-      <Link to={mediaData.titleLink} className="review-media__title--wrapper">
-        <p ref={titleRef} className="review-media__title">
-          {mediaData.title}
-        </p>
-      </Link>
+      <div className="review-media__header">
+        <MediaIcon
+          category={category || "track"}
+          className="review-media__icon"
+        />
+        <Link to={mediaData.titleLink} className="review-media__title--wrapper">
+          <p ref={titleRef} className="review-media__title">
+            {mediaData.title}
+          </p>
+        </Link>
+      </div>
+
       <Link to={mediaData.subtitleLink} className="review-media__subtitle">
         {mediaData.subtitle}
       </Link>

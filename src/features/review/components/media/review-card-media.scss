@@ -8,7 +8,6 @@
   }
 
   &__icon {
-    color: $basic-gray;
     @include font(0.75, normal, $basic-gray);
   }
 
@@ -19,7 +18,7 @@
 
     &--wrapper {
       @include padding-x(0.25em);
-      @include gradient(left, 5%, 99%);      
+      @include gradient(left, 5%, 99%);
       width: 100%;
       max-width: 400px;
       overflow: hidden;
