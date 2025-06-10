@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import Loading from "src/features/shared/components/Loading";
 import MediaGradient from "src/features/shared/components/MediaGradient";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import MobileBanner from "src/features/shared/components/banner/MobileBanner";
@@ -118,7 +117,7 @@ export default function MediaPage() {
           memoizedMedia.album?.name ||
           memoizedMedia.artist?.name
         }
-        onClick={() => window.history.back()}
+        canGoBack={true}
       />
       <MediaGradient
         image={

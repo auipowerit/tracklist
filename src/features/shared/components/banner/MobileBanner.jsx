@@ -4,18 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../buttons/Button";
 import "./mobile-banner.scss";
 
-export default function MobileBanner({ title, icon = false, onClick, link }) {
+export default function MobileBanner({
+  title,
+  link,
+  icon = false,
+  canGoBack = false,
+  onClick,
+}) {
   return (
     <section className="mobile-banner">
-      {onClick && <BackButton onClick={onClick} />}
+      {(canGoBack || onClick) && <BackButton onClick={onClick} />}
       {link ? (
         <Link to={link} className="mobile-banner__title">
           <h1>{title}</h1>
         </Link>
       ) : icon ? (
         <img
-          src="/images/logo/logo-primary-01.png"
-          alt="TrackList"
+          src="/images/logo/logo-primary-small.png"
           className="mobile-banner__logo"
         />
       ) : (
@@ -26,8 +31,22 @@ export default function MobileBanner({ title, icon = false, onClick, link }) {
 }
 
 function BackButton({ onClick }) {
+  const handleClick = () => {
+    window.history.back();
+  };
+
+  const canGoBack =
+    window.history.length > 1 &&
+    window.history.state &&
+    window.history.state.idx > 0;
+
+  // If the user can't go back, don't show the button
+  if (!canGoBack && !onClick) {
+    return null;
+  }
+
   return (
-    <Button onClick={onClick} classes="mobile-banner__back">
+    <Button onClick={onClick || handleClick} classes="mobile-banner__back">
       <FontAwesomeIcon icon={faArrowLeft} />
     </Button>
   );

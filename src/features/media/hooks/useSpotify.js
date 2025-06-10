@@ -15,10 +15,8 @@ export function useSpotify() {
       });
       const data = await response.json();
 
-      console.log(data);
-
-      setAccessToken(data.access_token);
-      return data.access_token;
+      setAccessToken(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +78,8 @@ export function useSpotify() {
 
   async function searchByName(name, category, limit = 20) {
     if (!name || !category) return [];
-    const access_token = accessToken || (await getAccessToken());
+
+    const token = accessToken || (await getAccessToken());
 
     try {
       const response = await fetch(
@@ -89,7 +88,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         },
       );
@@ -104,7 +103,8 @@ export function useSpotify() {
   async function getMediaById(mediaId, category) {
     if (!mediaId || !category) return [];
 
-    const access_token = accessToken || (await getAccessToken());
+    const token = accessToken || (await getAccessToken());
+    //  console.log(token);
 
     try {
       const response = await fetch(
@@ -113,7 +113,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         },
       );
@@ -174,7 +174,8 @@ export function useSpotify() {
 
   async function getArtistAlbums(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
-    const access_token = accessToken || (await getAccessToken());
+
+    const token = accessToken || (await getAccessToken());
 
     try {
       const response = await fetch(
@@ -183,7 +184,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         },
       );
@@ -198,7 +199,8 @@ export function useSpotify() {
 
   async function getArtistSingles(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
-    const access_token = accessToken || (await getAccessToken());
+
+    const token = accessToken || (await getAccessToken());
 
     try {
       const response = await fetch(
@@ -207,7 +209,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         },
       );
@@ -221,7 +223,8 @@ export function useSpotify() {
 
   async function getAlbumTracks(albumId) {
     if (!albumId) return [];
-    const access_token = accessToken || (await getAccessToken());
+
+    const token = accessToken || (await getAccessToken());
 
     try {
       const response = await fetch(
@@ -230,7 +233,7 @@ export function useSpotify() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         },
       );

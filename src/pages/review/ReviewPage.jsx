@@ -48,7 +48,7 @@ export default function ReviewPage() {
 
   return (
     <section className="review">
-      <MobileBanner title={"Review"} onClick={() => window.history.back()} />
+      <MobileBanner title={"Review"} canGoBack={true} />
       <Review review={review} />
       <CommentList review={review} />
     </section>

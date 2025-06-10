@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MOBILE_WIDTH } from "src/data/const";
+import { DEFAULT_PROFILE_IMG, MOBILE_WIDTH } from "src/data/const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -116,9 +116,8 @@ function ChatCard({ chat, handleOpenChat }) {
     >
       <div className="chatlist__user">
         <img
-          src={chat.profileUrl}
+          src={chat.profileUrl || DEFAULT_PROFILE_IMG}
           className="chatlist__image"
-          alt="chat user profile"
         />
         <p>{chat.username}</p>
       </div>
