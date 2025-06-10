@@ -104,7 +104,7 @@ export function useSpotify() {
     if (!mediaId || !category) return [];
 
     const token = accessToken || (await getAccessToken());
-    //  console.log(token);
+    console.log(token);
 
     try {
       const response = await fetch(
