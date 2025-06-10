@@ -6,11 +6,11 @@
   cursor: pointer;
 
   &:hover {
-    color: $basic-green;
+    color: $light-green;
   }
 
   &[aria-selected="true"] {
-    color: $basic-green;
+    color: $light-green;
   }
 
   .fa-beat {
