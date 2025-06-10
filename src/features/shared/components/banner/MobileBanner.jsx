@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../buttons/Button";
 import "./mobile-banner.scss";
 
-export default function MobileBanner({ title, onClick, link }) {
+export default function MobileBanner({ title, icon = false, onClick, link }) {
   return (
     <section className="mobile-banner">
       {onClick && <BackButton onClick={onClick} />}
@@ -12,6 +12,12 @@ export default function MobileBanner({ title, onClick, link }) {
         <Link to={link} className="mobile-banner__title">
           <h1>{title}</h1>
         </Link>
+      ) : icon ? (
+        <img
+          src="/images/logo/logo-primary-01.png"
+          alt="TrackList"
+          className="mobile-banner__logo"
+        />
       ) : (
         <h1 className="mobile-banner__title">{title}</h1>
       )}

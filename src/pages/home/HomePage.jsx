@@ -35,7 +35,7 @@ export default function HomePage() {
 
   return (
     <section className="home">
-      <MobileBanner title={"TrackList"} />
+      <MobileBanner icon={true} />
 
       {globalUser && (
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />

@@ -15,6 +15,8 @@ export function useSpotify() {
       });
       const data = await response.json();
 
+      console.log(data);
+
       setAccessToken(data.access_token);
       return data.access_token;
     } catch (error) {
