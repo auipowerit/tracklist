@@ -67,7 +67,7 @@ export default function ChatSearchInput() {
   }
 
   async function handleAddUser(friendId) {
-    inputRef.current.value = "";
+    setSearch("");
     setUsers([]);
 
     const foundChat = chats.find((chat) => chat.recipientId === friendId);

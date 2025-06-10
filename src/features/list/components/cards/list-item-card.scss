@@ -47,7 +47,7 @@
   &__index {
     @include flexrow(center, center);
     @include font(1);
-    background-color: $darker-green;
+    background-color: $dark-green;
     width: 1.5em;
     height: 1.5em;
     font-weight: bold;
