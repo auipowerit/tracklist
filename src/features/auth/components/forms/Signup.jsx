@@ -39,10 +39,41 @@ export default function Signup({ setIsRegistration }) {
       return false;
     }
 
+    const displayname = formRef.current.elements.displayname;
+    const username = formRef.current.elements.username;
     const email = formRef.current.elements.email;
     const password = formRef.current.elements.password;
     const repassword = formRef.current.elements.repassword;
-    const username = formRef.current.elements.username;
+
+    if (displayname.value.length < 6) {
+      setError("Display name must be at least 6 characters long.");
+      displayname.classList.add("form__input--invalid");
+      return false;
+    }
+
+    if (displayname.value.length > 15) {
+      setError("Display name cannot be longer than 15 characters.");
+      displayname.classList.add("form__input--invalid");
+      return false;
+    }
+
+    if (username.value.length < 6) {
+      setError("Username must be at least 6 characters long.");
+      username.classList.add("form__input--invalid");
+      return false;
+    }
+
+    if (username.value.length > 15) {
+      setError("Username cannot be longer than 15 characters.");
+      username.classList.add("form__input--invalid");
+      return false;
+    }
+
+    if (/[^a-zA-Z0-9]/.test(username.value)) {
+      setError("Username can only contain letters and numbers.");
+      username.classList.add("form__input--invalid");
+      return false;
+    }
 
     if (!isEmailValid(email.value)) {
       setError("Please enter a valid email.");
