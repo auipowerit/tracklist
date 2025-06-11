@@ -10,8 +10,7 @@ import "./shared-buttons.scss";
 export default function HeartButton(props) {
   const { isLiked, setIsLiked, id, review, category } = props;
 
-  const { globalUser, likeContent, unlikeContent, updateGlobalUserLikes } =
-    useAuthContext();
+  const { globalUser, likeContent } = useAuthContext();
   const { addNotification } = useInboxContext();
   const { likeReview } = useReviewContext();
 
@@ -34,11 +33,7 @@ export default function HeartButton(props) {
 
     review && (await handleReview(review, globalUser.uid));
 
-    isLiked
-      ? await unlikeContent(id, globalUser.uid)
-      : await likeContent(id, category, globalUser.uid);
-
-    updateGlobalUserLikes(id, category);
+    await likeContent(id, category, globalUser.uid);
 
     setIsLoading(false);
   }

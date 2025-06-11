@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ReviewCard from "src/features/review/components/cards/ReviewCard";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 
 export default function LikedReviews({ user }) {
+  const { getUserLikes } = useAuthContext();
   const { getReviewById } = useReviewContext();
   const [reviews, setReviews] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -12,14 +14,24 @@ export default function LikedReviews({ user }) {
     setReviews(null);
 
     const fetchReviews = async () => {
+      if (!user) {
+        setReviews([]);
+        setIsLoading(false);
+        return;
+      }
+
+      const userLikes = await getUserLikes(user?.uid);
+      if (!userLikes || userLikes["review"] === 0) {
+        setReviews([]);
+        setIsLoading(false);
+        return;
+      }
+
       const fetchedReviews = await Promise.all(
-        user?.likes
-          .filter((like) => like.category === "review")
-          .flatMap((like) => like.content)
-          .map(async (id) => {
-            const review = await getReviewById(id);
-            return review;
-          }),
+        userLikes["review"].map(async (id) => {
+          const review = await getReviewById(id);
+          return review;
+        }),
       ).then((values) => values.filter(Boolean));
 
       const sortedReviews = fetchedReviews

@@ -59,11 +59,7 @@ function ReviewUser({ review }) {
   return (
     <div className="review-card__user__container">
       <div className="review-card__user">
-        <img
-          src={review.profileUrl}
-          className="review-card__profile"
-          alt="reviewed media"
-        />
+        <img src={review.profileUrl} className="review-card__profile" />
         <p>@{review.username}</p>
         <p className="review-card__date review-card__date--mobile">
           {getTimeSinceShort(review.createdAt.toDate())}

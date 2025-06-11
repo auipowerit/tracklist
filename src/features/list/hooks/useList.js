@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "src/config/firebase";
@@ -33,16 +34,24 @@ export function useList() {
     try {
       if (!userId) return;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
 
-      if (!userRef || userDoc.empty) return;
+      if (!userListRef || !userListDoc.exists()) return;
 
-      const lists = userDoc.data().lists.map((id) => doc(db, "lists", id));
+      // If the user has no lists, return an empty array
+      if (!userListDoc.data().lists || userListDoc.data().lists.length === 0) {
+        return [];
+      }
+
+      // Map the list IDs to document references
+      // and fetch the documents
+      const lists = userListDoc.data().lists.map((id) => doc(db, "lists", id));
       const listDocs = await Promise.all(
         lists.map((listRef) => getDoc(listRef)),
       );
 
+      // Return the list documents as an array of objects
       return listDocs.map((doc) => {
         return { id: doc.id, ...doc.data() };
       });
@@ -87,14 +96,18 @@ export function useList() {
       const listRef = collection(db, "lists");
       const newList = await addDoc(listRef, list);
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
 
-      if (!userRef || userDoc.empty) return;
-
-      await updateDoc(userRef, {
-        lists: arrayUnion(newList.id),
-      });
+      if (!userListRef || !userListDoc.exists()) {
+        await setDoc(userListRef, {
+          lists: [newList.id],
+        });
+      } else {
+        await updateDoc(userListRef, {
+          lists: arrayUnion(newList.id),
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -124,23 +137,27 @@ export function useList() {
     }
   }
 
-  async function deleteList(listId) {
+  async function deleteList(listId, userId) {
     try {
-      if (!listId) return;
+      if (!listId || !userId) return;
 
       const listRef = doc(db, "lists", listId);
       const listDoc = await getDoc(listRef);
 
-      const userRef = doc(db, "users", listDoc.data().userId);
-      const userDoc = await getDoc(userRef);
+      if (!listRef || listDoc.empty) return;
 
-      if (!listRef || listDoc.empty || !userRef || userDoc.empty) return;
-
-      await updateDoc(userRef, {
-        lists: userDoc.data().lists.filter((id) => id !== listId),
-      });
-
+      // Delete the list document
       await deleteDoc(listRef);
+
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
+
+      if (!userListRef || userListDoc.empty) return;
+
+      // Remove the list ID from the user's lists
+      await updateDoc(userListRef, {
+        lists: userListDoc.data().lists.filter((id) => id !== listId),
+      });
 
       const usersRef = collection(db, "users");
       const usersDoc = await getDocs(usersRef);
@@ -190,7 +207,9 @@ export function useList() {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
-      if (!listRef || listDoc.empty || !userRef || userDoc.empty) return;
+      if (!listRef || !listDoc.exists() || !userRef || !userDoc.exists()) {
+        return;
+      }
 
       await updateDoc(listRef, {
         saves: listDoc.data().saves.filter((id) => id !== userId),

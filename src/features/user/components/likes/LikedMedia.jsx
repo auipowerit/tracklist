@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ListItemCard from "src/features/list/components/cards/ListItemCard";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 
 export default function LikedMedia({ user, activeTab }) {
+  const { getUserLikes } = useAuthContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
   const [media, setMedia] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,19 +15,29 @@ export default function LikedMedia({ user, activeTab }) {
     setMedia(null);
 
     const fetchMedia = async () => {
+      if (!user) {
+        setMedia([]);
+        setIsLoading(false);
+        return;
+      }
+
+      const userLikes = await getUserLikes(user?.uid);
+      if (!userLikes || userLikes[activeTab].length === 0) {
+        setMedia([]);
+        setIsLoading(false);
+        return;
+      }
+
       const fetchedMedia = await Promise.all(
-        user?.likes
-          .filter((like) => like.category === activeTab)
-          .flatMap((like) => like.content)
-          .map(async (id) => {
-            const media = await getMediaById(id, activeTab);
-            if (!media) return null;
-            const data = getMediaLinks(media);
-            return {
-              ...media,
-              ...data,
-            };
-          }),
+        userLikes[activeTab].map(async (id) => {
+          const media = await getMediaById(id, activeTab);
+          if (!media) return null;
+          const data = getMediaLinks(media);
+          return {
+            ...media,
+            ...data,
+          };
+        }),
       ).then((values) => values.filter(Boolean));
 
       const sortedMedia = fetchedMedia

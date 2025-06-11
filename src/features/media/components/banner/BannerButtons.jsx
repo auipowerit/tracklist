@@ -6,7 +6,7 @@ import AddToListButton from "src/features/list/components/buttons/AddToListButto
 import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
-  const { globalUser } = useAuthContext();
+  const { globalUser, getUserLikes } = useAuthContext();
 
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -16,12 +16,20 @@ export default function BannerButtons({ mediaId, name, category }) {
   const isModalOpen = isListModalOpen || isReviewModalOpen || isShareModalOpen;
 
   useEffect(() => {
-    setIsLiked(
-      globalUser?.likes
-        .filter((like) => like.category === category)
-        .flatMap((like) => like.content)
-        .includes(mediaId),
-    );
+    const checkIfLiked = async () => {
+      if (!globalUser) return;
+
+      const userLikes = await getUserLikes(globalUser.uid);
+      if (!userLikes || !userLikes[category]) return;
+
+      setIsLiked(userLikes[category].includes(mediaId));
+    };
+
+    checkIfLiked();
+
+    return () => {
+      setIsLiked(false);
+    };
   }, []);
 
   useEffect(() => {

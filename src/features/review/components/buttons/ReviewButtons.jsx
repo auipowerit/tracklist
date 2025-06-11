@@ -9,7 +9,7 @@ import { useReviewContext } from "../../context/ReviewContext";
 import "./review-buttons.scss";
 
 export default function ReviewButtons({ review, showComment = true }) {
-  const { globalUser } = useAuthContext();
+  const { globalUser, getUserLikes } = useAuthContext();
   const { deleteComment } = useCommentContext();
   const { setReviews, getNewReviews, deleteReview } = useReviewContext();
 
@@ -17,12 +17,20 @@ export default function ReviewButtons({ review, showComment = true }) {
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    setIsLiked(
-      globalUser?.likes
-        .filter((like) => like.category === "review")
-        .flatMap((like) => like.content)
-        .includes(review.id),
-    );
+    const checkIfLiked = async () => {
+      if (!globalUser) return;
+
+      const userLikes = await getUserLikes(globalUser.uid);
+      if (!userLikes) return;
+
+      setIsLiked(userLikes["review"].includes(review.id));
+    };
+
+    checkIfLiked();
+
+    return () => {
+      setIsLiked(false);
+    };
   }, []);
 
   useEffect(() => {

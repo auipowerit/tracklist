@@ -1,3 +1,5 @@
+import { auth, db } from "src/config/firebase";
+import { DEFAULT_PROFILE_IMG } from "src/data/const";
 import {
   arrayRemove,
   arrayUnion,
@@ -14,14 +16,12 @@ import {
 import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
+  GoogleAuthProvider,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  GoogleAuthProvider,
 } from "firebase/auth";
-import { auth, db } from "src/config/firebase";
-import { DEFAULT_PROFILE_IMG } from "src/data/const";
 
 export function useAuth() {
   async function signup(email, password, displayname, username, setError) {
@@ -67,13 +67,20 @@ export function useAuth() {
         followers: [],
         lists: [],
         savedLists: [],
-        likes: [],
         notifications: 0,
         createdAt: new Date(),
       };
 
       const userRef = doc(db, "users", uid);
       await setDoc(userRef, newUserData);
+
+      const userLikesRef = doc(db, "userlikes", uid);
+      await setDoc(userLikesRef, {
+        review: [],
+        artist: [],
+        album: [],
+        track: [],
+      });
 
       return true;
     } catch (error) {
@@ -356,56 +363,50 @@ export function useAuth() {
     try {
       if (!contentId || !category || !userId) return;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const userLikesRef = doc(db, "userlikes", userId);
+      const userLikesDoc = await getDoc(userLikesRef);
 
-      if (!userRef || userDoc.empty) return;
+      // If the user likes document does not exist, create it
+      if (!userLikesRef || !userLikesDoc.exists()) {
+        await setDoc(userLikesRef, {
+          review: [],
+          artist: [],
+          album: [],
+          track: [],
+        });
 
-      const likes = userDoc.data().likes;
-      const likeObj = likes.find((like) => like.category === category);
+        await updateDoc(userLikesRef, {
+          [category]: [contentId],
+        });
 
-      if (likeObj) {
-        // If the category is already in the likes array, add the contentId to its array
-        likeObj.content = likeObj.content || [];
-        likeObj.content.push(contentId);
-      } else {
-        // If the category is not in the likes array, create a new object and add it to the array
-        likes.push({ category, content: [contentId] });
+        return;
       }
 
-      await updateDoc(userRef, {
-        likes,
-      });
+      const likes = userLikesDoc.data()?.[category] || [];
+
+      // If not liked, then add, otherwise remove
+      if (likes.length === 0 || likes.indexOf(contentId) === -1) {
+        await updateDoc(userLikesRef, {
+          [category]: arrayUnion(contentId),
+        });
+      } else {
+        await updateDoc(userLikesRef, {
+          [category]: arrayRemove(contentId),
+        });
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function unlikeContent(contentId, userId) {
+  async function getUserLikes(userId) {
     try {
-      if (!contentId || !userId) return;
+      const userLikesRef = doc(db, "userlikes", userId);
+      const userLikesDoc = await getDoc(userLikesRef);
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      if (!userLikesRef || userLikesDoc.empty) return;
 
-      if (!userRef || userDoc.empty) return;
-
-      const likes = userDoc.data().likes;
-      const likeObj = likes.find((like) => like.content.includes(contentId));
-
-      if (likeObj) {
-        // If the contentId is in the likes array, remove it
-        likeObj.content = likeObj.content.filter((id) => id !== contentId);
-
-        // If the content array is empty, remove the like object
-        if (likeObj.content.length === 0) {
-          likes.splice(likes.indexOf(likeObj), 1);
-        }
-      }
-
-      await updateDoc(userRef, {
-        likes,
-      });
+      return userLikesDoc.data();
     } catch (error) {
       console.log(error);
     }
@@ -461,7 +462,7 @@ export function useAuth() {
     updateSpotifyInfo,
 
     likeContent,
-    unlikeContent,
+    getUserLikes,
 
     addToInbox,
     getUnreadInbox,
