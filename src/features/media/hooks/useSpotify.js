@@ -3,9 +3,14 @@ import * as Const from "src/data/const";
 
 export function useSpotify() {
   const [accessToken, setAccessToken] = useState("");
+  const [tokenExpiration, setTokenExpiration] = useState("");
 
   async function getAccessToken() {
     try {
+      if (accessToken && !checkIfTokenExpired()) {
+        return accessToken;
+      }
+
       const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
         headers: {
@@ -16,10 +21,15 @@ export function useSpotify() {
       const data = await response.json();
 
       setAccessToken(data);
+      setTokenExpiration(Date.now() + data.expires_in * 1000);
       return data;
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function checkIfTokenExpired() {
+    return tokenExpiration < Date.now();
   }
 
   async function getAuthAccessToken(AUTH_CODE) {
@@ -79,7 +89,7 @@ export function useSpotify() {
   async function searchByName(name, category, limit = 20) {
     if (!name || !category) return [];
 
-    const token = accessToken || (await getAccessToken());
+    const token = await getAccessToken();
 
     try {
       const response = await fetch(
@@ -103,8 +113,7 @@ export function useSpotify() {
   async function getMediaById(mediaId, category) {
     if (!mediaId || !category) return [];
 
-    const token = accessToken || (await getAccessToken());
-    // console.log(token);
+    const token = await getAccessToken();
 
     try {
       const response = await fetch(
@@ -175,7 +184,7 @@ export function useSpotify() {
   async function getArtistAlbums(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
 
-    const token = accessToken || (await getAccessToken());
+    const token = await getAccessToken();
 
     try {
       const response = await fetch(
@@ -200,7 +209,7 @@ export function useSpotify() {
   async function getArtistSingles(artistId, offset = 0, limit = 10) {
     if (!artistId) return [];
 
-    const token = accessToken || (await getAccessToken());
+    const token = await getAccessToken();
 
     try {
       const response = await fetch(
@@ -224,7 +233,7 @@ export function useSpotify() {
   async function getAlbumTracks(albumId) {
     if (!albumId) return [];
 
-    const token = accessToken || (await getAccessToken());
+    const token = await getAccessToken();
 
     try {
       const response = await fetch(
