@@ -47,6 +47,18 @@ export default function GoogleSignup({ isModalOpen, setSuccess }) {
       return false;
     }
 
+    if (username.value.length < 6) {
+      setError("Username must be at least 6 characters long.");
+      username.classList.add("form__input--invalid");
+      return false;
+    }
+
+    if (username.value.length > 15) {
+      setError("Username cannot be longer than 15 characters.");
+      username.classList.add("form__input--invalid");
+      return false;
+    }
+
     if (!(await usernameAvailable(username.value))) {
       setError("This username is already taken.");
       username.classList.add("form__input--invalid");

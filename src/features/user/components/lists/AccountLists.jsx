@@ -120,15 +120,16 @@ function Lists({ user, activeTab }) {
 
   return (
     <ul className="account-lists__list">
-      {lists.map((list, index) => {
-        return (
-          <ListItem
-            key={list.id}
-            item={list}
-            image={images[index] || DEFAULT_MEDIA_IMG}
-          />
-        );
-      })}
+      {lists &&
+        lists.map((list, index) => {
+          return (
+            <ListItem
+              key={list.id}
+              item={list}
+              image={images[index] || DEFAULT_MEDIA_IMG}
+            />
+          );
+        })}
     </ul>
   );
 }

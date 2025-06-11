@@ -311,13 +311,14 @@ function FormListInput(props) {
         -- Select a list --
       </option>
       <option value="_new">--Create new list--</option>
-      {lists.map((item) => {
-        return (
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>
-        );
-      })}
+      {lists &&
+        lists.map((item) => {
+          return (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          );
+        })}
     </select>
   );
 }
