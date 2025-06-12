@@ -118,20 +118,21 @@ export default function CommentForm({
       onSubmit={handleSubmit}
       className={`comment-form ${comment ? "comment-form--reply" : ""}`}
     >
-      {globalUser && (
-        <img
-          src={globalUser.profileUrl}
-          className="comment-form__profile"
-          alt="current user profile"
+      <div className="comment-form__input-container">
+        {globalUser && (
+          <img
+            src={globalUser.profileUrl}
+            className="comment-form__profile"
+            alt="current user profile"
+          />
+        )}
+
+        <input
+          ref={commentRef}
+          placeholder={`${comment ? "Add a reply..." : "Add a comment..."}`}
+          className="comment-form__input"
         />
-      )}
-
-      <input
-        ref={commentRef}
-        placeholder={`${comment ? "Add a reply..." : "Add a comment..."}`}
-        className="comment-form__input"
-      />
-
+      </div>
       <div className="comment-form__buttons">
         <Button
           type="submit"

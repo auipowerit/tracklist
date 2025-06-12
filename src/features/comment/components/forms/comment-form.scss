@@ -8,8 +8,12 @@
     padding-left: 0.5em;
   }
 
+  &__input-container {
+    @include flexrow(start, center, 0.5em);
+    width: 100%;
+  }
+
   &__profile {
-    display: none;
     border-radius: 100%;
     width: 40px;
     height: 40px;
@@ -55,10 +59,6 @@
     background-color: $dark-gray;
     @include padding-y(0.5em);
     width: 100%;
-
-    &__profile {
-      display: block;
-    }
 
     &__input {
       border: 1px solid $basic-gray;
