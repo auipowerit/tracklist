@@ -111,7 +111,7 @@ export function useAuth() {
       return true;
     } catch (error) {
       if (
-        error.code === "auth/invalid-credential" ||
+        error.code === "auth/invalid-email" ||
         error.code === "auth/wrong-password" ||
         error.code === "auth/user-not-found"
       ) {
@@ -217,6 +217,32 @@ export function useAuth() {
 
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("username", "==", username));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) return null;
+
+      const userRef = snapshot.docs[0].ref;
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) return null;
+
+      const user = userDoc.data();
+
+      return {
+        uid: userRef.id,
+        ...user,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUserByEmail(email) {
+    try {
+      email = email.toLowerCase();
+
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", email));
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) return null;
@@ -451,6 +477,7 @@ export function useAuth() {
 
     getUserById,
     getUserByUsername,
+    getUserByEmail,
     searchByUser,
 
     getFollowingById,

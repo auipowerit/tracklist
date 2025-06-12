@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { isEmailValid, isPasswordValid } from "src/utils/form";
+import { isEmailValid } from "src/utils/form";
 import Alert from "src/features/shared/components/alerts/Alert";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,9 +11,10 @@ import GoogleLoginButton from "../buttons/GoogleLoginButton";
 import ForgotPasswordButton from "../buttons/ForgotPasswordButton";
 
 export default function Login({ setIsRegistration }) {
-  const { login } = useAuthContext();
+  const { login, getUserByEmail, getUserByUsername } = useAuthContext();
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const formRef = useRef(null);
 
@@ -22,41 +23,61 @@ export default function Login({ setIsRegistration }) {
 
     const formData = new FormData(formRef.current);
 
-    const email = formData.get("email");
+    const username = formData.get("username");
     const password = formData.get("password");
 
-    if (!validateData(email, password)) return;
+    if (!(await validateData(username, password))) return;
 
-    if (await login(email, password, setError)) {
+    if (await login(email || username, password, setError)) {
       navigate("/");
       resetForm();
     }
   }
 
-  function validateData() {
-    const email = formRef.current.elements.email;
+  async function validateData() {
+    const username = formRef.current.elements.username;
     const password = formRef.current.elements.password;
 
-    if (email.value === "") {
-      setError("Please enter an email.");
-      email.classList.add("form__input--invalid");
+    if (username.value === "") {
+      setError("Please enter a username or email.");
+      username.classList.add("form__input--invalid");
       return false;
+    }
+
+    // Check if input is an email
+    if (username.value.includes("@")) {
+      // If it is an email, validate it
+      if (!isEmailValid(username.value)) {
+        setError("Please enter a valid email address.");
+        username.classList.add("form__input--invalid");
+        return false;
+      } else {
+        const user = await getUserByEmail(username.value);
+
+        // If no user with that email exists, set error
+        if (!user) {
+          setError("Email not found.");
+          username.classList.add("form__input--invalid");
+          return false;
+        } else {
+          setEmail(user.email);
+        }
+      }
+    } else {
+      const user = await getUserByUsername(username.value);
+
+      // If no user with that username exists, set error
+      if (!user) {
+        setError("Username not found.");
+        username.classList.add("form__input--invalid");
+        return false;
+      } else {
+        setEmail(user.email);
+      }
     }
 
     if (password.value === "") {
       setError("Please enter a password.");
-      password.classList.add("form__input--invalid");
-      return false;
-    }
-
-    if (!isEmailValid(email.value)) {
-      setError("Please enter a valid email.");
-      email.classList.add("form__input--invalid");
-      return false;
-    }
-
-    if (!isPasswordValid(password.value)) {
-      setError("Password must be at least 8 characters long.");
       password.classList.add("form__input--invalid");
       return false;
     }
@@ -76,7 +97,7 @@ export default function Login({ setIsRegistration }) {
       </h1>
 
       <form ref={formRef} onSubmit={handleSubmit} className="auth__form">
-        <AuthInput label="Email" name="email" type="text" />
+        <AuthInput label="Username or Email" name="username" type="text" />
         <AuthInput label="Password" name="password" type="password" />
 
         <ForgotPasswordButton />
