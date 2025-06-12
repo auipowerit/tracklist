@@ -7,7 +7,12 @@ import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
 import "./comment-form.scss";
 
-export default function CommentForm({ review, setComments }) {
+export default function CommentForm({
+  review,
+  setComments,
+  comment,
+  setIsReplying,
+}) {
   const { globalUser } = useAuthContext();
   const { addComment } = useCommentContext();
   const { addNotification } = useInboxContext();
@@ -23,14 +28,21 @@ export default function CommentForm({ review, setComments }) {
 
     closeComment();
 
+    const repliedToCommentId = comment?.id || "";
     const commentInfo = {
       content,
       userId: globalUser.uid,
       likes: [],
       dislikes: [],
+      replyingTo: repliedToCommentId,
+      replies: [],
     };
 
-    const newComment = await addComment(commentInfo, review.id);
+    const newComment = await addComment(
+      commentInfo,
+      review.id,
+      repliedToCommentId,
+    );
 
     // Update comment state with new comment data
     setComments((prevData) => [
@@ -42,6 +54,29 @@ export default function CommentForm({ review, setComments }) {
       },
       ...(prevData || []),
     ]);
+
+    // If replying to a comment
+    if (comment) {
+      // Update the parent comment with the new reply
+      comment.replies.push(newComment.id);
+
+      // Send notification if not replying to own comment
+      if (comment.userId !== globalUser.uid) {
+        await addNotification(
+          comment.userId,
+          globalUser.uid,
+          `${globalUser.username} replied to your comment:`,
+          content.length > 40 ? `${content.slice(0, 40)}...` : `${content}`,
+          review.id,
+          review.media.image ||
+            review.media.images?.[0].url ||
+            DEFAULT_MEDIA_IMG,
+          "reply",
+        );
+      }
+
+      return;
+    }
 
     // Save new review for reference
     const newReview = {
@@ -68,6 +103,10 @@ export default function CommentForm({ review, setComments }) {
 
   function closeComment() {
     commentRef.current.value = "";
+
+    if (setIsReplying) {
+      setIsReplying(false);
+    }
   }
 
   if (!globalUser) {
@@ -75,7 +114,10 @@ export default function CommentForm({ review, setComments }) {
   }
 
   return (
-    <form className="comment-form" onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className={`comment-form ${comment ? "comment-form--reply" : ""}`}
+    >
       {globalUser && (
         <img
           src={globalUser.profileUrl}
@@ -86,7 +128,7 @@ export default function CommentForm({ review, setComments }) {
 
       <input
         ref={commentRef}
-        placeholder="Add a comment..."
+        placeholder={`${comment ? "Add a reply..." : "Add a comment..."}`}
         className="comment-form__input"
       />
 

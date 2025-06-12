@@ -34,6 +34,14 @@
 
   &__buttons {
     @include flexrow(initial, center, 0.25em);
+
+    &--reply {
+      @include font(0.5, bold);
+
+      &:hover {
+        color: $light-blue;
+      }
+    }
   }
 }
 
@@ -54,6 +62,16 @@
 
     &__content {
       font-size: 1.25rem;
+    }
+
+    &__buttons {
+      &--reply {
+        font-size: 1.25rem;
+
+        &:hover {
+          color: $basic-white;
+        }
+      }
     }
   }
 }

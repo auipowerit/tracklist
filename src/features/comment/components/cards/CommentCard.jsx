@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getTimeSince } from "src/utils/date";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
@@ -7,10 +8,15 @@ import VoteButton from "src/features/comment/components/buttons/VoteButton";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
+import CommentForm from "../forms/CommentForm";
+import RepliesList from "../lists/RepliesList";
+import ReplyButton from "../buttons/ReplyButton";
 import "./comment-card.scss";
 
 export default function CommentCard(props) {
   const { comment, review, comments, setComments } = props;
+
+  const [isReplying, setIsReplying] = useState(false);
 
   return (
     <div className="comment-card">
@@ -21,7 +27,27 @@ export default function CommentCard(props) {
         review={review}
         comments={comments}
         setComments={setComments}
+        isReplying={isReplying}
+        setIsReplying={setIsReplying}
       />
+
+      {isReplying && (
+        <CommentForm
+          review={review}
+          setComments={setComments}
+          comment={comment}
+          setIsReplying={setIsReplying}
+        />
+      )}
+
+      {comment.replies && comment.replies.length > 0 && (
+        <RepliesList
+          comment={comment}
+          review={review}
+          comments={comments}
+          setComments={setComments}
+        />
+      )}
     </div>
   );
 }
@@ -54,7 +80,10 @@ function Content({ comment }) {
   return <p className="comment-card__content">{comment.content}</p>;
 }
 
-function Buttons({ comment, review, comments, setComments }) {
+function Buttons(props) {
+  const { comment, review, comments, setComments, isReplying, setIsReplying } =
+    props;
+
   const { globalUser } = useAuthContext();
   const { likeComment, dislikeComment } = useCommentContext();
   const { addNotification } = useInboxContext();
@@ -119,7 +148,11 @@ function Buttons({ comment, review, comments, setComments }) {
         type="dislike"
       />
 
-      {globalUser?.uid === comment.userId && (
+      {globalUser && (
+        <ReplyButton isReplying={isReplying} setIsReplying={setIsReplying} />
+      )}
+
+      {comment.userId === globalUser?.uid && (
         <DeleteButton type="comment" deleteContent={handleDelete} />
       )}
     </div>

@@ -1,7 +1,7 @@
 @use "src/styles/abstracts" as *;
 
 .comments {
-  @include flexcol($gap: 2em);
+  @include flexcol($gap: 1em);
   padding: 0 1em 5em 1em;
 
   &__header {
@@ -28,9 +28,8 @@
 
 @include md {
   .comments {
-    padding: 0;
-
     background-color: $dark-gray;
+    padding: 0;
 
     &__header {
       position: sticky;

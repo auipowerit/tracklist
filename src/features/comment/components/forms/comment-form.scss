@@ -3,6 +3,11 @@
 .comment-form {
   @include flexcol();
 
+  &--reply {
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+  }
+
   &__profile {
     display: none;
     border-radius: 100%;
@@ -33,8 +38,12 @@
     margin-top: 0.5em;
     padding: 0.25em 0.75em;
 
-    &:hover {
+    &--submit:hover {
       color: $light-green;
+    }
+
+    &--cancel:hover {
+      color: $basic-red;
     }
   }
 }
@@ -62,16 +71,16 @@
     }
 
     &__button {
-      &:hover {
-        color: $basic-white;
-      }
-
       &--submit {
         margin: 0;
         border-radius: 0.5em;
         background-color: $dark-green;
         padding: 0.5em 1em;
         font-size: 1rem;
+
+        &:hover {
+          color: $basic-white;
+        }
       }
 
       &--cancel {

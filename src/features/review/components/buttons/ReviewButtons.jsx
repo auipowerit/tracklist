@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
@@ -15,6 +16,8 @@ export default function ReviewButtons({ review, showComment = true }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIfLiked = async () => {
@@ -66,7 +69,7 @@ export default function ReviewButtons({ review, showComment = true }) {
       ),
     );
 
-    window.location.reload();
+    navigate("/home");
   }
 
   return (

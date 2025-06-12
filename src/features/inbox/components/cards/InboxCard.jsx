@@ -28,6 +28,7 @@ export default function InboxCard({ notification }) {
         navigate(`/users/${contentId}`);
         break;
       case "review":
+      case "reply":
         navigate(`/reviews/${contentId}`);
         break;
       case "list":

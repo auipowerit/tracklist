@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Loading from "src/features/shared/components/Loading";
 import Button from "src/features/shared/components/buttons/Button";
 import SortComments from "src/features/sort/components/SortComments";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
@@ -92,7 +91,6 @@ function Header({ review, comments, setComments }) {
           sortMethod={sortMethod}
         />
       </div>
-
       <SortSelect setComments={setComments} sortMethod={sortMethod} />
 
       <CommentForm review={review} setComments={setComments} />
@@ -107,17 +105,19 @@ function Comments({ comments, setComments, review }) {
 
   return (
     <div className="comments__list">
-      {comments.map((comment) => {
-        return (
-          <CommentCard
-            key={comment.id}
-            comment={comment}
-            review={review}
-            comments={comments}
-            setComments={setComments}
-          />
-        );
-      })}
+      {comments
+        .filter((comment) => comment.replyingTo === "")
+        .map((comment) => {
+          return (
+            <CommentCard
+              key={comment.id}
+              comment={comment}
+              review={review}
+              comments={comments}
+              setComments={setComments}
+            />
+          );
+        })}
     </div>
   );
 }

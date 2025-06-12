@@ -43,7 +43,7 @@ export default function ReviewPage() {
   }
 
   if (!review) {
-    navigate("/404");
+    navigate("/home");
   }
 
   return (
@@ -63,7 +63,7 @@ function Review({ review }) {
       <div className="review__content">
         <div className="review__section">
           <ReviewHeader review={review} />
-          <p className="review__text">{review.content}</p>
+          <p className="review__text">{review?.content || ""}</p>
         </div>
 
         <ReviewButtons review={review} showComment={false} />

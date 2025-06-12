@@ -270,6 +270,26 @@ export function useReview() {
 
       await deleteDoc(commentRef);
 
+      // Get replied comments
+      const { replies = [], replyingTo = "" } = commentDoc.data();
+
+      // For each reply, delete from Firestore
+      if (replies.length > 0) {
+        await Promise.all(replies.map(deleteComment));
+      }
+
+      // Remove self from parent comment replies
+      if (replyingTo && replyingTo !== "") {
+        const parentRef = doc(db, "comments", replyingTo);
+        const parentDoc = await getDoc(parentRef);
+
+        if (!parentDoc.exists()) return;
+
+        await updateDoc(parentRef, {
+          replies: arrayRemove(commentId),
+        });
+      }
+
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
 

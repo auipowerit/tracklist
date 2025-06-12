@@ -1,0 +1,33 @@
+@use "src/styles/abstracts" as *;
+
+.replies {
+  &__toggle {
+    @include font(0.5, bold, $light-blue);
+    @include flexrow(initial, center, 0.5em);
+    cursor: pointer;
+    border-radius: 100px;
+    padding: 0.35em 0.5em;
+
+    &:hover {
+      background-color: $transparent-blue;
+    }
+  }
+
+  &__list {
+    @include flexcol(initial, initial, 1em);
+    padding-top: 1em;
+    padding-left: 1.5em;
+  }
+}
+
+@include md {
+  .replies {
+    &__toggle {
+      font-size: 1rem;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

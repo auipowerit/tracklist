@@ -54,13 +54,20 @@ export function useComment() {
     }
   }
 
-  async function addComment(commentInfo, reviewId) {
+  async function addComment(commentInfo, reviewId, replyId) {
     try {
       const comment = { ...commentInfo, reviewId, createdAt: new Date() };
       const commentRef = collection(db, "comments");
 
       const commentDoc = await addDoc(commentRef, comment);
       const newComment = await getDoc(commentDoc);
+
+      if (replyId && replyId !== "") {
+        const parentRef = doc(db, "comments", replyId);
+        await updateDoc(parentRef, {
+          replies: arrayUnion(newComment.id),
+        });
+      }
 
       const reviewRef = doc(db, "reviews", reviewId);
       await updateDoc(reviewRef, {
@@ -82,6 +89,26 @@ export function useComment() {
 
       // Delete from Firestore
       await deleteDoc(commentRef);
+
+      // Get replied comments
+      const { replies = [], replyingTo = "" } = commentDoc.data();
+
+      // For each reply, delete from Firestore
+      if (replies.length > 0) {
+        await Promise.all(replies.map(deleteComment));
+      }
+
+      // Remove self from parent comment replies
+      if (replyingTo && replyingTo !== "") {
+        const parentRef = doc(db, "comments", replyingTo);
+        const parentDoc = await getDoc(parentRef);
+
+        if (!parentDoc.exists()) return;
+
+        await updateDoc(parentRef, {
+          replies: arrayRemove(commentId),
+        });
+      }
     } catch (error) {
       console.error(error.message);
     }
