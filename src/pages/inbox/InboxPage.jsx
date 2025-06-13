@@ -34,7 +34,7 @@ export default function InboxPage() {
 function Header() {
   return (
     <div className="inbox__header">
-      <h1>Notifications</h1>
+      <h1 className="inbox__title">Notifications</h1>
     </div>
   );
 }

@@ -10,13 +10,16 @@
   padding: 1em;
 
   &__header {
-    @include font(0.75, normal, $basic-green);
+    @include padding-y(0.5em);
     position: sticky;
     top: 0;
     z-index: 2;
     background-color: $dark-gray;
-    @include padding-y(0.5em);
     width: 100%;
+  }
+
+  &__title {
+    @include font(1.5, bold, $basic-green);
     text-align: center;
   }
 }

@@ -65,8 +65,6 @@ export function useAuth() {
         spotifyUrl: "",
         following: [],
         followers: [],
-        lists: [],
-        savedLists: [],
         notifications: 0,
         createdAt: new Date(),
       };

@@ -1,22 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
+import { db } from "src/config/firebase";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import Loading from "src/features/shared/components/Loading";
+import { doc, onSnapshot } from "firebase/firestore";
 import StaticList from "src/features/list/components/StaticList";
 import DraggableList from "src/features/list/components/DraggableList";
+import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import ListHeader from "./ListHeader";
-import ListDataFetcher from "./ListDataFetcher";
 import "./account-list.scss";
 
 export default function AccountList() {
+  const { getMediaById, getMediaLinks } = useSpotifyContext();
+  const { user, canEdit } = useOutletContext();
+
   const params = useParams();
   const listId = params?.listId;
 
-  const { user, canEdit } = useOutletContext();
+  const [list, setList] = useState(null);
+  const [items, setItems] = useState(null);
 
-  const { list, items, setItems } = ListDataFetcher({ listId, user, canEdit });
   const [isEditing, setIsEditing] = useState(false);
   const [orientation, setOrientation] = useState("horizontal");
+
+  useEffect(() => {
+    if (!listId || !user) return;
+
+    const unsubscribe = onSnapshot(doc(db, "lists", listId), async (doc) => {
+      if (!doc.exists()) return;
+
+      const fetchedList = {
+        id: doc.id,
+        ...doc.data(),
+      };
+
+      if (fetchedList.isPrivate && !canEdit) {
+        navigate(`/users/${user.username}/lists`);
+        return;
+      }
+
+      const listItems = await Promise.all(
+        fetchedList.media.map(async (media) => {
+          const fetchedMedia = await getMediaById(media.id, media.category);
+          const data = getMediaLinks(fetchedMedia);
+
+          return {
+            id: fetchedMedia.id,
+            category: media.category,
+            ...data,
+          };
+        }),
+      );
+
+      setList(fetchedList);
+      setItems(listItems);
+    });
+
+    return () => unsubscribe();
+  }, [listId, user]);
 
   if (!list) {
     return null;

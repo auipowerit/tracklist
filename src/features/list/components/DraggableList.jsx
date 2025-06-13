@@ -19,21 +19,12 @@ export default function DraggableList({ items, setItems, list, orientation }) {
     setItems((items) => {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
-      return arrayMove(items, oldIndex, newIndex);
+
+      const newOrder = arrayMove(items, oldIndex, newIndex);
+      reorderListItems(list.id, newOrder, globalUser.uid);
+
+      return newOrder;
     });
-
-    await reorderList();
-  }
-
-  async function reorderList() {
-    const newOrder = items.map((item) => {
-      return {
-        category: item.category,
-        id: item.id,
-      };
-    });
-
-    await reorderListItems(list.id, newOrder, globalUser.uid);
   }
 
   async function handleDelete(itemId) {

@@ -63,8 +63,7 @@ export default function InboxList() {
 
         if (notification.category === "list") {
           const list = await getListById(notification.contentId);
-
-          if (list) {
+          if (list && list.length > 0) {
             return {
               ...notification,
               username: user.username,
@@ -73,6 +72,8 @@ export default function InboxList() {
               timeSince,
             };
           }
+
+          return;
         }
 
         return {
@@ -103,6 +104,8 @@ export default function InboxList() {
   return (
     <section className="inbox-list">
       {notifications.map((notification, i) => {
+        if (!notification) return null;
+
         // Check if timeSince is different than previous notification
         const prevTimeSince = notifications[i - 1];
         const showTimeSince =

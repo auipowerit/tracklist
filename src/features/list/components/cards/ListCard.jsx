@@ -1,4 +1,5 @@
 import { Tooltip } from "react-tooltip";
+import { DEFAULT_MEDIA_IMG } from "src/data/const";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./list-card.scss";
@@ -23,7 +24,7 @@ export default function ListCard({ image, list }) {
 }
 
 function Image({ image }) {
-  return <img src={image} className="list-card__image" />;
+  return <img src={image || DEFAULT_MEDIA_IMG} className="list-card__image" />;
 }
 
 function LockIcon() {

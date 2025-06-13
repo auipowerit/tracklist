@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import Tabs from "src/features/shared/components/buttons/Tabs";
+import { db } from "src/config/firebase";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import Loading from "src/features/shared/components/Loading";
+import { doc, onSnapshot } from "firebase/firestore";
+import Tabs from "src/features/shared/components/buttons/Tabs";
 import ListCard from "src/features/list/components/cards/ListCard";
 import { useListContext } from "src/features/list/context/ListContext";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
@@ -53,44 +54,48 @@ function Header({ canEdit }) {
 
 function Lists({ user, activeTab }) {
   const { globalUser } = useAuthContext();
-  const { getListsByUserId, getSavedListsByUserId } = useListContext();
+  const { getListById } = useListContext();
   const { getMediaById } = useSpotifyContext();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [lists, setLists] = useState(null);
+  const [lists, setLists] = useState([]);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    const fetchLists = async () => {
-      setIsLoading(true);
+    const unsubscribe = onSnapshot(
+      doc(db, "userlists", user.uid),
+      async (doc) => {
+        if (!doc.exists()) return;
 
-      try {
-        let fetchedLists =
-          activeTab === "created"
-            ? await getListsByUserId(user.uid)
-            : await getSavedListsByUserId(user.uid);
+        setIsLoading(true);
 
-        if (!fetchedLists) return;
+        const userLists =
+          activeTab === "created" ? doc.data().lists : doc.data().savedLists;
+
+        if (!userLists || userLists.length === 0) return;
+
+        const fetchedLists = await Promise.all(
+          userLists.map(async (listId) => await getListById(listId)),
+        );
 
         // Filter out private lists if logged in user is not the owner
         if (user.uid !== globalUser.uid) {
-          fetchedLists = fetchedLists.filter(
+          const filteredLists = fetchedLists.filter(
             (list) => list.isPrivate === false,
           );
+          setLists(filteredLists);
+        } else {
+          setLists(fetchedLists);
         }
-
-        setLists(fetchedLists);
 
         const fetchedImages = await getImages(fetchedLists);
         setImages(fetchedImages);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    fetchLists();
+        setIsLoading(false);
+      },
+    );
+
+    return () => unsubscribe();
   }, [user, activeTab]);
 
   async function getImages(lists) {
@@ -114,7 +119,7 @@ function Lists({ user, activeTab }) {
     return null;
   }
 
-  if (!lists || lists.length === 0) {
+  if (lists.length === 0) {
     return <p className="empty__message">There are no lists yet!</p>;
   }
 

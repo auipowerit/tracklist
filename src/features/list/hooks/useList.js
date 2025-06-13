@@ -19,7 +19,7 @@ export function useList() {
       const listRef = doc(db, "lists", listId);
       const listDoc = await getDoc(listRef);
 
-      if (!listDoc.exists()) return null;
+      if (!listRef || !listDoc.exists()) return [];
 
       return {
         id: listDoc.id,
@@ -34,42 +34,24 @@ export function useList() {
     try {
       if (!userId) return;
 
-      // Get the user document by userId
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
 
-      if (!userRef || !userDoc.exists()) return;
+      if (!userListRef || !userListDoc.exists()) return [];
 
-      // Get the list references from the user's lists
-      const lists = userDoc.data().lists.map((id) => doc(db, "lists", id));
+      // If the user has no lists, return an empty array
+      if (!userListDoc.data().lists || userListDoc.data().lists.length === 0) {
+        return [];
+      }
+
+      // Map the list IDs to document references and fetch the documents
+      const lists = userListDoc.data().lists.map((id) => doc(db, "lists", id));
 
       const listDocs = await Promise.all(
         lists.map((listRef) => getDoc(listRef)),
       );
 
       // Return the list documents as an array of objects
-      return listDocs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getSavedListsByUserId(userId) {
-    try {
-      if (!userId) return;
-
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || userDoc.empty) return;
-
-      const lists = userDoc.data().savedLists.map((id) => doc(db, "lists", id));
-      const listDocs = await Promise.all(
-        lists.map((listRef) => getDoc(listRef)),
-      );
-
       return listDocs.map((doc) => {
         return { id: doc.id, ...doc.data() };
       });
@@ -92,14 +74,19 @@ export function useList() {
       const listRef = collection(db, "lists");
       const newList = await addDoc(listRef, list);
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
 
-      if (!userRef || !userDoc.exists()) return;
-
-      await updateDoc(userRef, {
-        lists: arrayUnion(newList.id),
-      });
+      if (!userListRef || !userListDoc.exists()) {
+        await setDoc(userListRef, {
+          lists: [newList.id],
+          savedLists: [],
+        });
+      } else {
+        await updateDoc(userListRef, {
+          lists: arrayUnion(newList.id),
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -129,24 +116,23 @@ export function useList() {
     }
   }
 
-  async function deleteList(listId) {
+  async function deleteList(listId, userId) {
     try {
-      if (!listId) return;
+      if (!listId || !userId) return;
 
       const listRef = doc(db, "lists", listId);
       const listDoc = await getDoc(listRef);
 
       if (!listRef || !listDoc.exists()) return;
 
-      // Get user document by userId from the list
-      const userRef = doc(db, "users", listDoc.data().userId);
-      const userDoc = await getDoc(userRef);
+      const userListRef = doc(db, "userlists", userId);
+      const userListDoc = await getDoc(userListRef);
 
-      if (!userRef || !userDoc.exists()) return;
+      if (!userListRef || !userListDoc.exists()) return;
 
-      // Remove the listId from the user's lists
-      await updateDoc(userRef, {
-        lists: userDoc.data().lists.filter((id) => id !== listId),
+      // Remove the list ID from the user's lists
+      await updateDoc(userListRef, {
+        lists: userListDoc.data().lists.filter((id) => id !== listId),
       });
 
       const usersRef = collection(db, "users");
@@ -175,11 +161,6 @@ export function useList() {
 
       if (!listRef || !listDoc.exists()) return;
 
-      const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef);
-
-      if (!userRef || !userDoc.exists()) return;
-
       // Check if list is already saved by the user
       if (listDoc.data().saves.includes(userId)) {
         await updateDoc(listRef, {
@@ -189,6 +170,24 @@ export function useList() {
         await updateDoc(listRef, {
           saves: arrayUnion(userId),
         });
+      }
+
+      const userRef = doc(db, "userlists", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userRef || !userDoc.exists()) {
+        await setDoc(userRef, {
+          lists: [],
+          savedLists: [listId],
+        });
+        return;
+      }
+
+      if (!userDoc.data().savedLists) {
+        await updateDoc(userRef, {
+          savedLists: [listId],
+        });
+        return;
       }
 
       // Check if user has already saved the list
@@ -210,7 +209,7 @@ export function useList() {
     try {
       if (!listId || !userId) return;
 
-      const userRef = doc(db, "users", userId);
+      const userRef = doc(db, "userlists", userId);
       const userDoc = await getDoc(userRef);
 
       if (!userRef || !userDoc.exists()) return;
@@ -283,7 +282,6 @@ export function useList() {
   return {
     getListById,
     getListsByUserId,
-    getSavedListsByUserId,
 
     createNewList,
 

@@ -16,10 +16,10 @@ export default function SaveButton({ list, user, image }) {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (!globalUser) return;
+    setSaves(list.saves.length);
 
-    setIsSaved(list.saves.includes(globalUser?.uid));
-  }, [globalUser]);
+    globalUser && setIsSaved(list.saves.includes(globalUser?.uid));
+  }, [list, globalUser]);
 
   async function handleSave() {
     if (!globalUser || user.uid === globalUser.uid) return;

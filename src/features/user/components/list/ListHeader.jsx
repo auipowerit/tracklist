@@ -72,6 +72,18 @@ function ListDropdown(props) {
     };
   }, []);
 
+  if (!canEdit) {
+    return (
+      <div>
+        <OrientationButtons
+          orientation={orientation}
+          setOrientation={setOrientation}
+          showLabel={false}
+        />
+      </div>
+    );
+  }
+
   return (
     <div ref={dropdownRef} className="account-list__dropdown">
       <DropdownButton
@@ -120,10 +132,10 @@ function DropdownButton({ showDropdown, setShowDropdown }) {
   );
 }
 
-function OrientationButtons({ orientation, setOrientation }) {
+function OrientationButtons({ orientation, setOrientation, showLabel = true }) {
   return (
     <div className="account-list__orientation">
-      <p className="account-list__label">Layout</p>
+      {showLabel && <p className="account-list__label">Layout</p>}
 
       <Button
         onClick={() => setOrientation("horizontal")}
@@ -153,7 +165,7 @@ function EditToggle({ isEditing, setIsEditing }) {
 
   return (
     <div className="account-list__edit">
-      <p className="account-list__label">Edit mode</p>
+      <p className="account-list__label">Edit</p>
       <label className="toggle">
         <input
           type="checkbox"
