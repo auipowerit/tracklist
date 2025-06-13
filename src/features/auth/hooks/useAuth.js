@@ -115,10 +115,12 @@ export function useAuth() {
         error.code === "auth/wrong-password" ||
         error.code === "auth/user-not-found"
       ) {
-        setError("The email or password is incorrect.");
+        setError("The credentials are incorrect.");
       } else {
         setError("Something went wrong! Please try again.");
       }
+
+      console.log(error);
 
       return false;
     }

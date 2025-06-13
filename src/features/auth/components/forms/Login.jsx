@@ -14,7 +14,6 @@ export default function Login({ setIsRegistration }) {
   const { login, getUserByEmail, getUserByUsername } = useAuthContext();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const formRef = useRef(null);
 
@@ -26,15 +25,18 @@ export default function Login({ setIsRegistration }) {
     const username = formData.get("username");
     const password = formData.get("password");
 
-    if (!(await validateData(username, password))) return;
+    if (!validateData(username, password)) return;
 
-    if (await login(email || username, password, setError)) {
-      navigate("/");
+    const user = await getUser();
+    if (!user) return;
+
+    if (await login(user, password, setError)) {
+      navigate("/home");
       resetForm();
     }
   }
 
-  async function validateData() {
+  function validateData() {
     const username = formRef.current.elements.username;
     const password = formRef.current.elements.password;
 
@@ -44,38 +46,6 @@ export default function Login({ setIsRegistration }) {
       return false;
     }
 
-    // Check if input is an email
-    if (username.value.includes("@")) {
-      // If it is an email, validate it
-      if (!isEmailValid(username.value)) {
-        setError("Please enter a valid email address.");
-        username.classList.add("form__input--invalid");
-        return false;
-      } else {
-        const user = await getUserByEmail(username.value);
-
-        // If no user with that email exists, set error
-        if (!user) {
-          setError("Email not found.");
-          username.classList.add("form__input--invalid");
-          return false;
-        } else {
-          setEmail(user.email);
-        }
-      }
-    } else {
-      const user = await getUserByUsername(username.value);
-
-      // If no user with that username exists, set error
-      if (!user) {
-        setError("Username not found.");
-        username.classList.add("form__input--invalid");
-        return false;
-      } else {
-        setEmail(user.email);
-      }
-    }
-
     if (password.value === "") {
       setError("Please enter a password.");
       password.classList.add("form__input--invalid");
@@ -83,6 +53,44 @@ export default function Login({ setIsRegistration }) {
     }
 
     return true;
+  }
+
+  async function getUser() {
+    const username = formRef.current.elements.username;
+
+    // If input is an email
+    if (username.value.includes("@")) {
+      // Validate email format
+      if (!isEmailValid(username.value)) {
+        setError("Please enter a valid email address.");
+        username.classList.add("form__input--invalid");
+        return null;
+      }
+
+      const user = await getUserByEmail(username.value);
+
+      // If no user with that email exists, set error
+      if (!user) {
+        setError("Email not found.");
+        username.classList.add("form__input--invalid");
+        return null;
+      }
+
+      // If user exists, return the user's email
+      return user.email;
+    }
+
+    const user = await getUserByUsername(username.value);
+
+    // If no user with that username exists, set error
+    if (!user) {
+      setError("Username not found.");
+      username.classList.add("form__input--invalid");
+      return null;
+    }
+
+    // If user exists, return the user's email
+    return user.email;
   }
 
   function resetForm() {
