@@ -7,14 +7,14 @@ import AccountMobileNav from "src/features/user/components/nav/AccountMobileNav"
 import "./account.scss";
 
 export default function AccountPage() {
+  const [user, setUser] = useState(null);
+  const [canEdit, setCanEdit] = useState(false);
+
   const navigate = useNavigate();
   const params = useParams();
   const username = params.username;
 
   const { getUserByUsername, loadingUser, globalUser } = useAuthContext();
-
-  const [user, setUser] = useState(null);
-  const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {

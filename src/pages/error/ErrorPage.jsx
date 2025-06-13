@@ -7,11 +7,11 @@ import {
 import "./error.scss";
 
 export default function ErrorPage({ is404 }) {
-  const error = useRouteError();
-
   const errorMessage = is404
     ? "404 - Page Not Found"
     : "Oops! Something went wrong :(";
+
+  const error = useRouteError();
 
   return (
     <section className="error">

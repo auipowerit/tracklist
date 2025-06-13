@@ -9,18 +9,19 @@ import MediaBanner from "src/features/media/components/banner/MediaBanner";
 import "./media.scss";
 
 export default function MediaPage() {
-  const { getMediaById } = useSpotifyContext();
-  const params = useParams();
-
   const [isLoading, setIsLoading] = useState(true);
   const [media, setMedia] = useState({
     artist: null,
     album: null,
     track: null,
   });
-
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState("");
+
+  const previousArtistId = useRef(null);
+  const previousAlbumId = useRef(null);
+
+  const params = useParams();
 
   const category = useMemo(() => {
     return params.trackId ? "track" : params.albumId ? "album" : "artist";
@@ -28,19 +29,21 @@ export default function MediaPage() {
 
   const memoizedMedia = useMemo(() => media, [media]);
 
-  const previousArtistId = useRef(null);
-  const previousAlbumId = useRef(null);
+  const { getMediaById } = useSpotifyContext();
 
   useEffect(() => {
     fetchMedia();
   }, [params]);
 
   useEffect(() => {
-    if (activeTab === "reviews") return;
+    if (activeTab === "reviews") {
+      return;
+    }
+
     setFilter("all");
   }, [activeTab]);
 
-  async function fetchMedia() {
+  const fetchMedia = async () => {
     try {
       const artistId = params.artistId;
       const albumId = params.albumId;
@@ -64,9 +67,9 @@ export default function MediaPage() {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  async function fetchArtist(artistId) {
+  const fetchArtist = async (artistId) => {
     if (artistId && artistId !== previousArtistId.current) {
       setIsLoading(true);
       const artist = await getMediaById(artistId, "artist");
@@ -75,9 +78,9 @@ export default function MediaPage() {
     }
 
     return null;
-  }
+  };
 
-  async function fetchAlbum(albumId) {
+  const fetchAlbum = async (albumId) => {
     if (albumId && albumId !== previousAlbumId.current) {
       setIsLoading(true);
       const album = await getMediaById(albumId, "album");
@@ -89,9 +92,9 @@ export default function MediaPage() {
     }
 
     return media.album;
-  }
+  };
 
-  async function fetchTrack(trackId) {
+  const fetchTrack = async (trackId) => {
     if (trackId) {
       setIsLoading(true);
       const track = await getMediaById(trackId, "track");
@@ -99,11 +102,11 @@ export default function MediaPage() {
     }
 
     return null;
-  }
+  };
 
-  function isEqual(obj1, obj2) {
+  const isEqual = (obj1, obj2) => {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
-  }
+  };
 
   if (isLoading) {
     return <section className="media"></section>;

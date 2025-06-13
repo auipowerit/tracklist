@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import Loading from "src/features/shared/components/Loading";
 import UserCard from "src/features/user/components/cards/UserCard";
 import { useAuthContext } from "src/features/auth/context/AuthContext";
 
 export default function FriendsList({ activeTab, user }) {
-  const { getFollowingById, getFollowersById, getUserById } = useAuthContext();
-
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState(null);
+
+  const { getFollowingById, getFollowersById, getUserById } = useAuthContext();
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -43,29 +42,31 @@ export default function FriendsList({ activeTab, user }) {
     fetchFriends();
   }, [user, activeTab]);
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return null;
+  }
+
+  if (users.length === 0) {
+    return (
+      <div className="account-friends-container">
+        <p className="empty__message">
+          {activeTab === "following"
+            ? "No one followed yet!"
+            : "No followers yet!"}
+        </p>
+      </div>
+    );
   }
 
   return (
     <div className="account-friends-container">
-      {users &&
-        (users.length > 0 ? (
-          <ul className="account-friends-list">
-            {users.map((user) => {
-              if (!user) {
-                return null;
-              }
-              return <UserCard key={user.uid} user={user} />;
-            })}
-          </ul>
-        ) : (
-          <p className="empty__message">
-            {activeTab === "following"
-              ? "No one followed yet!"
-              : "No followers yet!"}
-          </p>
-        ))}
+      <ul className="account-friends-list">
+        {users.map((user) => {
+          if (!user) return null;
+
+          return <UserCard key={user.uid} user={user} />;
+        })}
+      </ul>
     </div>
   );
 }

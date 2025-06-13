@@ -12,29 +12,28 @@ import "./list-buttons.scss";
 export default function EditListButton(props) {
   const { isModalOpen, setIsModalOpen, list } = props;
 
-  const { globalUser } = useAuthContext();
-  const navigate = useNavigate();
-
   const [success, setSuccess] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { globalUser } = useAuthContext();
+
   useEffect(() => {
-    return () => {
-      setSuccess(false);
-    };
+    return () => setSuccess(false);
   }, [isModalOpen]);
 
-  function handleClick() {
+  const handleClick = () => {
     if (!globalUser) {
       navigate("/authenticate");
       return;
     }
     setIsModalOpen(true);
-  }
+  };
 
-  function handleSuccessClick() {
+  const handleSuccessClick = () => {
     navigate(`/users/${globalUser.username}/lists`);
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <div>

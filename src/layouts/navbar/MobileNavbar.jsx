@@ -18,30 +18,32 @@ export default function MobileNavbar({ unreadMessages, unreadNotifs }) {
   const { globalUser } = useAuthContext();
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      // Check if the user is scrolling down
+      if (scrollPosition > 200) {
+        // Hide the mobile navbar
+        mobileRef.current.classList.add("mobile-navbar--hidden");
+      } else {
+        // Show the mobile navbar
+        mobileRef.current.classList.remove("mobile-navbar--hidden");
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function handleScroll() {
-    const scrollPosition = window.scrollY;
-
-    // Check if the user is scrolling down
-    if (scrollPosition > 200) {
-      // Hide the mobile navbar
-      mobileRef.current.classList.add("mobile-navbar--hidden");
-    } else {
-      // Show the mobile navbar
-      mobileRef.current.classList.remove("mobile-navbar--hidden");
-    }
-  }
-
-  function handleClick() {
+  const handleClick = () => {
     // Show the mobile navbar
     mobileRef.current.classList.remove("mobile-navbar--hidden");
-  }
+  };
 
-  function isActive(page) {
+  const isActive = (page) => {
     return location.pathname.startsWith(`/${page}`);
-  }
+  };
 
   return (
     <nav ref={mobileRef} onClick={handleClick} className="mobile-navbar">
@@ -100,6 +102,9 @@ function MobileNavItem({ link, icon, isActive }) {
 }
 
 function NotificationBadge({ unreadCount }) {
-  if (!unreadCount || unreadCount === 0) return;
+  if (!unreadCount || unreadCount === 0) {
+    return;
+  }
+
   return <p className="mobile-navbar__badge">{unreadCount}</p>;
 }

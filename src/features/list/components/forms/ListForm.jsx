@@ -36,7 +36,7 @@ export default function ListForm(props) {
     );
   }
 
-  if (!media || !category)
+  if (!media || !category) {
     return (
       <CreateList
         isModalOpen={isModalOpen}
@@ -45,6 +45,7 @@ export default function ListForm(props) {
         setSuccess={setSuccess}
       />
     );
+  }
 
   return newList ? (
     <CreateList

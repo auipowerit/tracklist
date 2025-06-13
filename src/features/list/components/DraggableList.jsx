@@ -12,7 +12,7 @@ export default function DraggableList({ items, setItems, list, orientation }) {
   const { globalUser } = useAuthContext();
   const { reorderListItems, deleteListItem } = useListContext();
 
-  async function handleDragEnd(e) {
+  const handleDragEnd = (e) => {
     const { active, over } = e;
     if (active.id === over.id) return;
 
@@ -25,9 +25,9 @@ export default function DraggableList({ items, setItems, list, orientation }) {
 
       return newOrder;
     });
-  }
+  };
 
-  async function handleDelete(itemId) {
+  const handleDelete = async (itemId) => {
     if (!window.confirm("Are you sure you want to delete this item?")) {
       return;
     }
@@ -39,7 +39,7 @@ export default function DraggableList({ items, setItems, list, orientation }) {
         return item.id !== itemId;
       }),
     );
-  }
+  };
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>

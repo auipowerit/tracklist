@@ -11,9 +11,6 @@ import { LIST_DESCRIPTION_LIMIT, LIST_NAME_LIMIT } from "src/data/const";
 export default function CreateList(props) {
   const { isModalOpen, setIsModalOpen, setNewList, list, setSuccess } = props;
 
-  const { globalUser } = useAuthContext();
-  const { createNewList, updateListDetails } = useListContext();
-
   const [error, setError] = useState("");
   const [name, setName] = useState(list?.name || "");
   const [isRanking, setIsRanking] = useState(list?.isRanking || false);
@@ -22,28 +19,31 @@ export default function CreateList(props) {
 
   const formRef = useRef(null);
 
+  const { globalUser } = useAuthContext();
+  const { createNewList, updateListDetails } = useListContext();
+
   useEffect(() => {
-    handleModal();
+    if (!isModalOpen) {
+      resetValues();
+    }
+
+    const handleListValues = () => {
+      if (list) {
+        setName(list.name);
+        setIsRanking(list.isRanking);
+        setIsPrivate(list.isPrivate);
+        setDescription(list.description);
+      }
+    };
+
     handleListValues();
   }, [isModalOpen, list]);
 
-  function handleModal() {
-    if (!isModalOpen) resetValues();
-  }
-
-  function handleListValues() {
-    if (list) {
-      setName(list.name);
-      setIsRanking(list.isRanking);
-      setIsPrivate(list.isPrivate);
-      setDescription(list.description);
-    }
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateData()) return;
+    const isValid = validateData();
+    if (!isValid) return;
 
     const listData = {
       name,
@@ -69,9 +69,9 @@ export default function CreateList(props) {
 
     setNewList(false);
     resetValues();
-  }
+  };
 
-  function validateData() {
+  const validateData = () => {
     const nameInput = formRef.current.elements["listname"];
     const descriptionInput = formRef.current.elements["description"];
 
@@ -114,15 +114,15 @@ export default function CreateList(props) {
     }
 
     return true;
-  }
+  };
 
-  function resetValues() {
+  const resetValues = () => {
     setName("");
     setIsRanking(false);
     setIsPrivate(false);
     setDescription("");
     setError("");
-    if (setNewList) setNewList(false);
+    setNewList && setNewList(false);
 
     formRef.current.elements["listname"].classList.remove(
       "form__input--invalid",
@@ -130,7 +130,7 @@ export default function CreateList(props) {
     formRef.current.elements["description"].classList.remove(
       "form__input--invalid",
     );
-  }
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="form list-form">
@@ -151,6 +151,7 @@ export default function CreateList(props) {
           />
         </div>
       </div>
+
       <FormDescription
         description={description}
         setDescription={setDescription}
@@ -175,15 +176,16 @@ function FormHeader({ list }) {
 function FormName({ name, setName }) {
   const color = name.length >= LIST_NAME_LIMIT ? "red" : "gray";
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > LIST_NAME_LIMIT) {
       setName(e.target.value.slice(0, LIST_NAME_LIMIT));
       return;
     }
+
     setName(e.target.value);
-  }
+  };
 
   return (
     <div className="list-form__name">
@@ -227,15 +229,16 @@ function FormCheckbox({ name, isChecked, setIsChecked }) {
 function FormDescription({ description, setDescription }) {
   const color = description.length >= LIST_DESCRIPTION_LIMIT ? "red" : "gray";
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > LIST_DESCRIPTION_LIMIT) {
       setDescription(e.target.value.slice(0, LIST_DESCRIPTION_LIMIT));
       return;
     }
+
     setDescription(e.target.value);
-  }
+  };
 
   return (
     <div className="form__textarea">
@@ -266,7 +269,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
   const { globalUser } = useAuthContext();
   const { deleteList } = useListContext();
 
-  async function handleDelete() {
+  const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this list?")) {
       return;
     }
@@ -275,7 +278,7 @@ function FormButtons({ list, setNewList, setIsModalOpen }) {
 
     setIsModalOpen(false);
     navigate(`/users/${globalUser.username}/lists`);
-  }
+  };
 
   return (
     <div className="list-form__buttons">

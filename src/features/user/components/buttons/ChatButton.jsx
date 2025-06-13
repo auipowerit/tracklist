@@ -8,18 +8,18 @@ import { faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./user-buttons.scss";
 
 export default function ChatButton({ username = "" }) {
+  const navigate = useNavigate();
+
   const { globalUser, getUserByUsername } = useAuthContext();
   const { chats, addChat, setActiveChatId, setActiveChatUser, setIsCollapsed } =
     useChatContext();
 
-  const navigate = useNavigate();
-
-  async function handleClick() {
+  const handleClick = async () => {
     await fetchUserChat();
     navigate("/messages");
-  }
+  };
 
-  async function fetchUserChat() {
+  const fetchUserChat = async () => {
     if (username === "" || !globalUser || !chats) return;
 
     try {
@@ -41,7 +41,7 @@ export default function ChatButton({ username = "" }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <Button onClick={handleClick} classes="chat-button" ariaLabel="start chat">

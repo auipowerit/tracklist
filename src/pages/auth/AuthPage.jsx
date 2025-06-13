@@ -7,24 +7,21 @@ import Signup from "src/features/auth/components/forms/Signup";
 import "./auth.scss";
 
 export default function AuthPage() {
+  const [isRegistration, setIsRegistration] = useState(false);
+
   const { globalUser, isLoading } = useAuthContext();
 
   const navigate = useNavigate();
-  const [isRegistration, setIsRegistration] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
 
-    handleUser();
-
-    return () => setIsRegistration(false);
-  }, [globalUser, isLoading]);
-
-  function handleUser() {
     if (globalUser) {
       navigate(`/users/${globalUser.username}/profile`, { replace: true });
     }
-  }
+
+    return () => setIsRegistration(false);
+  }, [globalUser, isLoading]);
 
   if (isLoading) {
     return <Loading />;

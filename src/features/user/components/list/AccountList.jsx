@@ -10,17 +10,16 @@ import ListHeader from "./ListHeader";
 import "./account-list.scss";
 
 export default function AccountList() {
+  const [list, setList] = useState(null);
+  const [items, setItems] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [orientation, setOrientation] = useState("horizontal");
+
   const { getMediaById, getMediaLinks } = useSpotifyContext();
   const { user, canEdit } = useOutletContext();
 
   const params = useParams();
   const listId = params?.listId;
-
-  const [list, setList] = useState(null);
-  const [items, setItems] = useState(null);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [orientation, setOrientation] = useState("horizontal");
 
   useEffect(() => {
     if (!listId || !user) return;

@@ -7,13 +7,13 @@ import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import "./list-buttons.scss";
 
 export default function SaveButton({ list, user, image }) {
-  const { globalUser } = useAuthContext();
-  const { addNotification } = useInboxContext();
-  const { saveList } = useListContext();
-
   const [saves, setSaves] = useState(list.saves.length);
   const [isSaved, setIsSaved] = useState(false);
   const [isActive, setIsActive] = useState(false);
+
+  const { globalUser } = useAuthContext();
+  const { addNotification } = useInboxContext();
+  const { saveList } = useListContext();
 
   useEffect(() => {
     setSaves(list.saves.length);
@@ -21,7 +21,7 @@ export default function SaveButton({ list, user, image }) {
     globalUser && setIsSaved(list.saves.includes(globalUser?.uid));
   }, [list, globalUser]);
 
-  async function handleSave() {
+  const handleSave = async () => {
     if (!globalUser || user.uid === globalUser.uid) return;
 
     if (!isSaved) {
@@ -45,7 +45,7 @@ export default function SaveButton({ list, user, image }) {
         "list",
       );
     }
-  }
+  };
 
   return (
     <button

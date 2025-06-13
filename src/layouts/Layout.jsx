@@ -10,11 +10,11 @@ import Navbar from "./navbar/Navbar.jsx";
 import MobileNavbar from "./navbar/MobileNavbar.jsx";
 
 export default function Layout() {
-  const { globalUser, getUnreadInbox } = useAuthContext();
-  const { chats, getUnreadChatsByUserId } = useChatContext();
-
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [unreadNotifs, setUnreadNotifs] = useState(0);
+
+  const { globalUser, getUnreadInbox } = useAuthContext();
+  const { chats, getUnreadChatsByUserId } = useChatContext();
 
   useEffect(() => {
     if (!globalUser) {

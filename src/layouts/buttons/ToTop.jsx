@@ -8,19 +8,17 @@ export default function ToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    function handleScroll() {
+    const handleScroll = () => {
       window.scrollY > 200 ? setIsVisible(true) : setIsVisible(false);
-    }
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
     };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function handleClick() {
+  const handleClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   return (
     <Button

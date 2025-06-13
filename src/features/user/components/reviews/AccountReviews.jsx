@@ -40,10 +40,10 @@ function Header({ canEdit }) {
 }
 
 function ReviewsList({ user }) {
-  const { getReviewsByUserId } = useReviewContext();
-
   const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
+
+  const { getReviewsByUserId } = useReviewContext();
 
   useEffect(() => {
     const fetchReviews = async () => {

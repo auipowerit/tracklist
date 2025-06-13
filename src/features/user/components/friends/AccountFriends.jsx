@@ -5,14 +5,14 @@ import FriendsList from "./FriendsList";
 import "./account-friends.scss";
 
 export default function AccountFriends() {
-  const { user } = useOutletContext();
-
-  const [activeTab, setActiveTab] = useState("following");
-
   const tabs = [
     { id: "following", label: "Following" },
     { id: "followers", label: "Followers" },
   ];
+
+  const [activeTab, setActiveTab] = useState("following");
+
+  const { user } = useOutletContext();
 
   return (
     <section className="account__section">

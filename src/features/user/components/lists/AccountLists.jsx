@@ -12,14 +12,14 @@ import AddListButton from "src/features/list/components/buttons/AddListButton";
 import "./account-lists.scss";
 
 export default function AccountLists() {
-  const { user, canEdit } = useOutletContext();
-
-  const [activeTab, setActiveTab] = useState("created");
-
   const tabs = [
     { id: "created", label: "Created" },
     { id: "saved", label: "Saved" },
   ];
+
+  const { user, canEdit } = useOutletContext();
+
+  const [activeTab, setActiveTab] = useState("created");
 
   return (
     <section className="account__section account-lists">
@@ -53,13 +53,13 @@ function Header({ canEdit }) {
 }
 
 function Lists({ user, activeTab }) {
-  const { globalUser } = useAuthContext();
-  const { getListById } = useListContext();
-  const { getMediaById } = useSpotifyContext();
-
   const [isLoading, setIsLoading] = useState(true);
   const [lists, setLists] = useState([]);
   const [images, setImages] = useState([]);
+
+  const { globalUser } = useAuthContext();
+  const { getListById } = useListContext();
+  const { getMediaById } = useSpotifyContext();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -104,7 +104,7 @@ function Lists({ user, activeTab }) {
     return () => unsubscribe();
   }, [user, activeTab]);
 
-  async function getImages(lists) {
+  const getImages = async (lists) => {
     const fetchedImages = await Promise.all(
       lists.map(async (list) => {
         if (list.media.length === 0) return DEFAULT_MEDIA_IMG;
@@ -119,7 +119,7 @@ function Lists({ user, activeTab }) {
     );
 
     return fetchedImages;
-  }
+  };
 
   if (isLoading) {
     return null;
@@ -146,11 +146,11 @@ function Lists({ user, activeTab }) {
 }
 
 function ListItem({ item, image }) {
-  const { user } = useOutletContext();
-  const { getUserById } = useAuthContext();
-
   const [link, setLink] = useState(item.id);
   const [listUser, setListUser] = useState(null);
+
+  const { user } = useOutletContext();
+  const { getUserById } = useAuthContext();
 
   useEffect(() => {
     const fetchUser = async () => {

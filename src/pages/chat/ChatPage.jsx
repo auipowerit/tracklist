@@ -8,12 +8,12 @@ import ChatWindow from "src/features/chat/components/sections/ChatWindow";
 import "./chat.scss";
 
 export default function ChatPage() {
+  const [mounted, setMounted] = useState(false);
+  const [chatWindowKey, setChatWindowKey] = useState(0);
+
   const { globalUser, loadingUser } = useAuthContext();
   const { setActiveChatId, setActiveChatUser, setIsCollapsed, readMessage } =
     useChatContext();
-
-  const [mounted, setMounted] = useState(false);
-  const [chatWindowKey, setChatWindowKey] = useState(0);
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export default function ChatPage() {
     };
   }, [loadingUser, globalUser, mounted]);
 
-  async function handleOpenChat(chat) {
+  const handleOpenChat = async (chat) => {
     setActiveChatUser(chat);
     setActiveChatId(chat.chatId);
     setChatWindowKey(chat.chatId);
@@ -54,7 +54,7 @@ export default function ChatPage() {
     }
 
     await readMessage(chat.chatId, globalUser.uid);
-  }
+  };
 
   return (
     <section className="chat">

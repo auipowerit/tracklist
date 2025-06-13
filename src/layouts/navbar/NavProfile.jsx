@@ -12,34 +12,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavProfile() {
-  const { globalUser } = useAuthContext();
-
-  const navigate = useNavigate();
-
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
+  const navigate = useNavigate();
+
+  const { globalUser } = useAuthContext();
+
   useEffect(() => {
-    function handleClickOutside(e) {
+    const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
-    }
+    };
 
     window.addEventListener("click", handleClickOutside);
 
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
+    return () => window.removeEventListener("click", handleClickOutside);
   }, [globalUser]);
 
-  function handleUserClick() {
-    if (globalUser) {
-      setShowDropdown(!showDropdown);
-    } else {
-      navigate("/authenticate");
-    }
-  }
+  const handleUserClick = () => {
+    globalUser ? setShowDropdown(!showDropdown) : navigate("/authenticate");
+  };
 
   return (
     <div ref={dropdownRef} className="navbar__profile">
@@ -71,34 +65,41 @@ export default function NavProfile() {
 }
 
 function DropdownMenu({ showDropdown, setShowDropdown, items }) {
-  const { globalUser } = useAuthContext();
-
   const navigate = useNavigate();
-  const { logout } = useAuthContext();
 
-  async function handleLogout() {
-    onClose();
+  const { globalUser, logout } = useAuthContext();
+
+  const handleLogout = async () => {
+    handleClose();
     await logout();
     navigate("/authenticate", { replace: true });
-  }
+  };
 
-  function onClose() {
+  const handleClose = () => {
     setShowDropdown(false);
-  }
+  };
 
   return (
     <ul className="navbar-dropdown" aria-expanded={showDropdown}>
       <li>
-        <p className="navbar-dropdown__header">Hi, {globalUser?.username}</p>
+        <p className="navbar-dropdown__header">
+          Hi, {globalUser?.username || ""}
+        </p>
       </li>
+
       {items.map(({ label, path, icon }) => (
         <li key={label}>
-          <Link to={path} onClick={onClose} className="navbar-dropdown__item">
+          <Link
+            to={path}
+            onClick={handleClose}
+            className="navbar-dropdown__item"
+          >
             <FontAwesomeIcon icon={icon} />
             <p>{label}</p>
           </Link>
         </li>
       ))}
+
       <li>
         <Button
           onClick={handleLogout}

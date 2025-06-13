@@ -9,11 +9,11 @@ import AddReviewButton from "src/features/review/components/buttons/AddReviewBut
 import "./home.scss";
 
 export default function HomePage() {
-  const { loadingUser, globalUser } = useAuthContext();
-  const { reviews, getPopularReviews } = useReviewContext();
-
   const [popularReviews, setPopularReviews] = useState(null);
   const [activeTab, setActiveTab] = useState("newest");
+
+  const { loadingUser, globalUser } = useAuthContext();
+  const { reviews, getPopularReviews } = useReviewContext();
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -49,12 +49,12 @@ export default function HomePage() {
 }
 
 function Header({ activeTab, setActiveTab }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const tabs = [
     { id: "newest", label: "Newest", category: "newest" },
     { id: "popular", label: "For You", category: "popular" },
   ];
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -81,13 +81,9 @@ function FeedResults({ results }) {
 
   return (
     <div className="home__feed">
-      {results.length > 0 ? (
-        results.map((review) => {
-          return <ReviewCard key={review.id} review={review} onPage={false} />;
-        })
-      ) : (
-        <p className="empty__message"></p>
-      )}
+      {results.map((review) => {
+        return <ReviewCard key={review.id} review={review} onPage={false} />;
+      })}
     </div>
   );
 }

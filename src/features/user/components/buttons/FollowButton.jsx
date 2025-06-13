@@ -12,7 +12,7 @@ export default function FollowButton({ user, setUser }) {
     user.followers?.includes(globalUser?.uid) || false,
   );
 
-  async function handleClick() {
+  const handleClick = async () => {
     isFollowing
       ? await unfollowUser(user.uid, globalUser?.uid)
       : await followUser(user.uid, globalUser?.uid);
@@ -32,13 +32,12 @@ export default function FollowButton({ user, setUser }) {
     setIsFollowing(!isFollowing);
 
     if (!setUser) return;
-
     setUser({
       ...user,
       isFollowing: !user.isFollowing,
       followersCount: user.followersCount + (user.isFollowing ? -1 : 1),
     });
-  }
+  };
 
   return (
     <Button

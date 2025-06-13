@@ -10,10 +10,10 @@ export default function LogoutButton() {
 
   const { logout } = useAuthContext();
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     await logout();
     navigate("/authenticate", { replace: true });
-  }
+  };
 
   return (
     <Button

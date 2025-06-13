@@ -121,9 +121,9 @@ function ListDropdown(props) {
 }
 
 function DropdownButton({ showDropdown, setShowDropdown }) {
-  function handleUserClick() {
+  const handleUserClick = () => {
     setShowDropdown(!showDropdown);
-  }
+  };
 
   return (
     <Button onClick={handleUserClick} classes="account-list__dropdown-button">
@@ -159,10 +159,10 @@ function OrientationButtons({ orientation, setOrientation, showLabel = true }) {
 }
 
 function EditToggle({ isEditing, setIsEditing, setShowDropdown }) {
-  function handleToggle() {
+  const handleToggle = () => {
     setIsEditing(!isEditing);
     !isEditing && setShowDropdown(false);
-  }
+  };
 
   return (
     <div className="account-list__edit">

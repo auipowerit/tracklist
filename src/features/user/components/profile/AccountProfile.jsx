@@ -6,6 +6,7 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
+import { MOBILE_WIDTH } from "src/data/const";
 import { formatDateMDYLong } from "src/utils/date";
 import Modal from "src/features/shared/components/modal/Modal";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
@@ -16,10 +17,11 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import AccountForm from "../forms/AccountForm";
 import EditProfileButton from "../buttons/EditProfileButton";
 import "./account-profile.scss";
-import { MOBILE_WIDTH } from "src/data/const";
 
 export default function AccountProfile() {
   const { user, canEdit } = useOutletContext();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const params = new URLSearchParams(window.location.search);
 
@@ -30,15 +32,11 @@ export default function AccountProfile() {
   const { updateSpotifyInfo } = useAuthContext();
   const { getAuthAccessToken, getSpotifyUser } = useSpotifyContext();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
-    if (window.innerWidth > MOBILE_WIDTH) return;
+    if (window.innerWidth <= MOBILE_WIDTH) {
+      navigate(`/users/${localParams.username || globalUser.username}/reviews`);
+    }
 
-    navigate(`/users/${localParams.username || globalUser.username}/reviews`);
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       handleNavigate();
 
@@ -57,14 +55,14 @@ export default function AccountProfile() {
     }
   }, [isModalOpen]);
 
-  function handleNavigate() {
+  const handleNavigate = () => {
     if (localStorage.getItem("profile")) {
       localStorage.removeItem("profile");
       navigate("/profile");
     }
-  }
+  };
 
-  async function handleProfile() {
+  const handleProfile = async () => {
     const fetchedCode = params.get("code") || null;
     if (!fetchedCode) return;
 
@@ -75,9 +73,9 @@ export default function AccountProfile() {
     if (!profile) return;
 
     return profile;
-  }
+  };
 
-  async function handleUpdate(profile) {
+  const handleUpdate = async (profile) => {
     localStorage.setItem("profile", JSON.stringify(profile));
 
     await updateSpotifyInfo(
@@ -87,7 +85,7 @@ export default function AccountProfile() {
     );
 
     window.location.reload();
-  }
+  };
 
   return (
     <section className="account__section">

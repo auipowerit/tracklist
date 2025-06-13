@@ -3,10 +3,9 @@ import { faGear, faPen } from "@fortawesome/free-solid-svg-icons";
 import Button from "src/features/shared/components/buttons/Button";
 import "./user-buttons.scss";
 
-export default function EditProfileButton({
-  setIsModalOpen,
-  showIcon = false,
-}) {
+export default function EditProfileButton(props) {
+  const { setIsModalOpen, showIcon = false } = props;
+
   if (showIcon) {
     return (
       <Button

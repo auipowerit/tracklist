@@ -9,16 +9,16 @@ import SearchSelect from "src/features/search/components/inputs/SearchSelect";
 import "./search.scss";
 
 export default function SearchPage() {
-  const [activeTab, setActiveTab] = useState("artists");
-  const [results, setResults] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
   const tabs = [
     { id: "artists", label: "Artists", category: "artist" },
     { id: "albums", label: "Albums", category: "album" },
     { id: "tracks", label: "Tracks", category: "track" },
     { id: "users", label: "Users", category: "user" },
   ];
+
+  const [activeTab, setActiveTab] = useState("artists");
+  const [results, setResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const category = tabs.find((tab) => tab.id === activeTab)?.category;
 

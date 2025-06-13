@@ -5,8 +5,9 @@ import FollowButton from "../buttons/FollowButton";
 import "./user-card.scss";
 
 export default function UserCard({ user: propUser }) {
-  const { globalUser } = useAuthContext();
   const [user, setUser] = useState(null);
+
+  const { globalUser } = useAuthContext();
 
   useEffect(() => {
     setUser({

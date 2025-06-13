@@ -12,10 +12,6 @@ export default function AddToList(props) {
   const { isModalOpen, mediaId, listId, category, setNewList, setSuccess } =
     props;
 
-  const { globalUser } = useAuthContext();
-  const { getListsByUserId, addToList, getListById } = useListContext();
-  const { getMediaById } = useSpotifyContext();
-
   const [error, setError] = useState("");
   const [media, setMedia] = useState(null);
   const [mediaResults, setMediaResults] = useState([]);
@@ -27,58 +23,62 @@ export default function AddToList(props) {
   const selectRef = useRef(null);
   const mediaInputRef = useRef(null);
 
+  const { globalUser } = useAuthContext();
+  const { getListsByUserId, addToList, getListById } = useListContext();
+  const { getMediaById } = useSpotifyContext();
+
   useEffect(() => {
-    handleModal();
-    handleData();
+    if (isModalOpen) {
+      resetValues();
+    }
+
+    const fetchData = async () => {
+      if (!globalUser) return;
+
+      if (listId) {
+        const fetchedList = await getListById(listId);
+        setCurrentLists([fetchedList]);
+      }
+
+      if (!mediaId || !category) return;
+
+      const fetchedMedia = await getMediaById(mediaId, category);
+      if (mediaInputRef.current) {
+        mediaInputRef.current.value = fetchedMedia.name;
+      }
+      setMedia(fetchedMedia);
+      setType(category);
+
+      const fetchedLists = await getListsByUserId(globalUser.uid);
+      setLists(fetchedLists);
+    };
+
+    fetchData();
   }, [isModalOpen]);
 
-  function handleModal() {
-    if (isModalOpen) resetValues();
-  }
-
-  async function handleData() {
-    if (!globalUser) return;
-
-    if (listId) {
-      const fetchedList = await getListById(listId);
-      setCurrentLists([fetchedList]);
-    }
-
-    if (!mediaId || !category) return;
-
-    const fetchedMedia = await getMediaById(mediaId, category);
-    if (mediaInputRef.current) {
-      mediaInputRef.current.value = fetchedMedia.name;
-    }
-    setMedia(fetchedMedia);
-    setType(category);
-
-    const fetchedLists = await getListsByUserId(globalUser.uid);
-    setLists(fetchedLists);
-  }
-
-  function addToCurrentLists(id) {
-    if (id === "_new") {
+  const addToCurrentLists = (listId) => {
+    if (listId === "_new") {
       setNewList(true);
       return;
     }
 
-    const selectedList = lists.find((list) => list.id === id);
+    const selectedList = lists.find((list) => list.id === listId);
     setCurrentLists([...currentLists, selectedList]);
 
-    setLists(lists.filter((item) => item.id !== id));
+    setLists(lists.filter((item) => item.id !== listId));
     selectRef.current.value = "";
-  }
+  };
 
-  function removeFromCurrentLists(list) {
+  const removeFromCurrentLists = (list) => {
     setCurrentLists(currentLists.filter((item) => item.id !== list.id));
     setLists([...lists, list]);
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateData()) return;
+    const isValid = validateData();
+    if (!isValid) return;
 
     await Promise.all(
       currentLists.map((list) => addToList(media.id, type, list.id)),
@@ -86,9 +86,9 @@ export default function AddToList(props) {
 
     setSuccess(true);
     resetValues();
-  }
+  };
 
-  function validateData() {
+  const validateData = () => {
     const mediaInput = formRef.current.elements["media"];
     const listInput = formRef.current.elements["list"];
 
@@ -110,22 +110,22 @@ export default function AddToList(props) {
     }
 
     return true;
-  }
+  };
 
-  function resetValues() {
+  const resetValues = () => {
     setError("");
     setMedia(null);
     setMediaResults([]);
     setLists([]);
     setCurrentLists([]);
     setType("artist");
-    
+
     selectRef.current.value = "";
     mediaInputRef.current.value = "";
 
     formRef.current.elements["media"].classList.remove("form__input--invalid");
     formRef.current.elements["list"].classList.remove("form__input--invalid");
-  }
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="form list-form">
@@ -185,13 +185,13 @@ function FormMediaInput(props) {
 
   const { searchByName } = useSpotifyContext();
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setType(e.target.value);
     setMediaResults([]);
     setMedia(null);
-  }
+  };
 
-  async function handleSearch(e) {
+  const handleSearch = async (e) => {
     e.target.classList.remove("form__input--invalid");
 
     // Confirm search string contains characters
@@ -225,7 +225,7 @@ function FormMediaInput(props) {
       setMediaResults([]);
       return;
     }
-  }
+  };
 
   return (
     <div className="list-form__search">
@@ -261,14 +261,14 @@ function FormMediaResults(props) {
 
   const { getMediaById } = useSpotifyContext();
 
-  async function handleClick(id, name) {
+  const handleClick = async (mediaId, name) => {
     mediaInputRef.current.value = name;
 
-    const fetchedMedia = await getMediaById(id, type);
+    const fetchedMedia = await getMediaById(mediaId, type);
     setMedia(fetchedMedia);
 
     setMediaResults([]);
-  }
+  };
 
   return (
     <div className="form__search-list" aria-expanded={mediaResults.length > 0}>
@@ -290,12 +290,12 @@ function FormMediaResults(props) {
 function FormListInput(props) {
   const { selectRef, addToCurrentLists, lists } = props;
 
-  function handleSelect(e) {
+  const handleSelect = (e) => {
     e.stopPropagation();
-    e.target.classList.remove("form__input--invalid");
 
+    e.target.classList.remove("form__input--invalid");
     addToCurrentLists(e.target.value);
-  }
+  };
 
   return (
     <select

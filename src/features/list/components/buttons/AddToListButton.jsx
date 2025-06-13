@@ -22,30 +22,28 @@ export default function AddToListButton(props) {
     media,
     category,
   } = props;
-
-  const { globalUser } = useAuthContext();
-  const navigate = useNavigate();
-
   const [success, setSuccess] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { globalUser } = useAuthContext();
+
   useEffect(() => {
-    return () => {
-      setSuccess(false);
-    };
+    return () => setSuccess(false);
   }, [isModalOpen]);
 
-  function handleClick() {
+  const handleClick = () => {
     if (!globalUser) {
       navigate("/authenticate");
       return;
     }
     setIsModalOpen(true);
-  }
+  };
 
-  function handleSuccessClick() {
-    navigate(`/users/${globalUser.username}/lists/${list?.id || ""}`);
+  const handleSuccessClick = () => {
+    navigate(`/users/${globalUser.username}/lists`);
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <div>
@@ -53,7 +51,7 @@ export default function AddToListButton(props) {
         {success ? (
           <SuccessAlert
             message={"Changes saved!"}
-            link={"Go to list"}
+            link={"Go to lists"}
             icon={faArrowRight}
             onClick={handleSuccessClick}
           />

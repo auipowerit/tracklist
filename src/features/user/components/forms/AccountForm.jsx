@@ -14,22 +14,21 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
   const [bio, setBio] = useState(globalUser?.bio || "");
 
   useEffect(() => {
-    handleModal();
+    if (!isModalOpen) {
+      resetValues();
+    }
+
+    const handleValues = () => {
+      if (globalUser) {
+        setName(globalUser.displayname);
+        setBio(globalUser.bio);
+      }
+    };
+
     handleValues();
   }, [isModalOpen, globalUser]);
 
-  function handleModal() {
-    if (!isModalOpen) resetValues();
-  }
-
-  function handleValues() {
-    if (globalUser) {
-      setName(globalUser.displayname);
-      setBio(globalUser.bio);
-    }
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!globalUser || name === "" || bio === "") return;
@@ -39,12 +38,12 @@ export default function AccountForm({ isModalOpen, setIsModalOpen }) {
     setIsModalOpen(false);
     window.location.reload();
     resetValues();
-  }
+  };
 
-  function resetValues() {
+  const resetValues = () => {
     setName("");
     setBio("");
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="form user-form">
@@ -88,13 +87,14 @@ function FormImage({ globalUser }) {
 function FormName({ name, setName }) {
   const color = name.length >= ACCOUNT_NAME_LIMIT ? "red" : "gray";
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     if (e.target.value.length > ACCOUNT_NAME_LIMIT) {
       setName(e.target.value.slice(0, ACCOUNT_NAME_LIMIT));
       return;
     }
+
     setName(e.target.value);
-  }
+  };
 
   return (
     <div className="user-form__inputs">
@@ -118,13 +118,14 @@ function FormName({ name, setName }) {
 function FormBio({ bio, setBio }) {
   const color = bio.length >= ACCOUNT_BIO_LIMIT ? "red" : "gray";
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     if (e.target.value.length > ACCOUNT_BIO_LIMIT) {
       setBio(e.target.value.slice(0, ACCOUNT_BIO_LIMIT));
       return;
     }
+
     setBio(e.target.value);
-  }
+  };
 
   return (
     <div className="form__textarea">

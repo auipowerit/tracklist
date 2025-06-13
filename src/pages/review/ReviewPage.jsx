@@ -11,15 +11,15 @@ import ReviewButtons from "src/features/review/components/buttons/ReviewButtons"
 import "./review.scss";
 
 export default function ReviewPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [review, setReview] = useState({});
+
   const params = useParams();
   const reviewId = params?.reviewId;
 
   const navigate = useNavigate();
 
   const { getReviewById } = useReviewContext();
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [review, setReview] = useState({});
 
   useEffect(() => {
     const fetchReview = async () => {
