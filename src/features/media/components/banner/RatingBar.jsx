@@ -4,19 +4,17 @@ import { useReviewContext } from "src/features/review/context/ReviewContext";
 import "./rating-bar.scss";
 
 export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
-  const { getRatings } = useReviewContext();
-
   const [ratings, setRatings] = useState(null);
   const [total, setTotal] = useState(0);
+
+  const { getRatings } = useReviewContext();
 
   useEffect(() => {
     const fetchRatings = async () => {
       try {
         if (!mediaId) return;
 
-        const fetchedRatings = await getRatings(mediaId);
-
-        const ratings = {
+        const baseRatings = {
           0.5: 0,
           1: 0,
           1.5: 0,
@@ -29,13 +27,21 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
           5: 0,
         };
 
+        const fetchedRatings = await getRatings(mediaId);
+        const totalRatings = fetchedRatings.docs.length;
+
         fetchedRatings.docs.forEach((doc) => {
-          const rating = doc.data().rating;
-          rating in ratings ? ratings[rating]++ : (ratings[rating] = 1);
+          const rating = doc.data()?.rating || 0;
+
+          // If rating is not in baseRatings, add it
+          // otherwise, increment it
+          rating in baseRatings
+            ? baseRatings[rating]++
+            : (baseRatings[rating] = 1);
         });
 
-        setRatings(ratings);
-        setTotal(fetchedRatings.docs.length);
+        setRatings(baseRatings);
+        setTotal(totalRatings);
       } catch (error) {
         console.log(error);
       }
@@ -44,39 +50,43 @@ export default function RatingBar({ mediaId, setActiveTab, setFilter }) {
     fetchRatings();
   }, [mediaId]);
 
-  function handleClick(key) {
+  const handleClick = (key) => {
     setActiveTab("reviews");
     setFilter(key);
+  };
+
+  if (!ratings) {
+    return;
   }
 
   return (
     <div className="rating-bar">
-      {ratings &&
-        Object.keys(ratings)
-          .sort((a, b) => parseFloat(a) - parseFloat(b))
-          .map((key) => {
-            const count = ratings[key];
-            const percentage = (count / total).toFixed(2) * 100 || 0;
-            const content = `${count} ratings of ${key} stars (${percentage}%)`;
-            return (
-              <div
-                key={key}
-                data-tooltip-id="reviews-tooltip"
-                data-tooltip-content={content}
-                style={{ height: `${percentage}%` }}
-                onClick={() => handleClick(key)}
-                className="rating-bar__item"
-              >
-                <div className="rating-bar__fill" />
-                <Tooltip
-                  id="reviews-tooltip"
-                  place="top"
-                  type="dark"
-                  effect="float"
-                />
-              </div>
-            );
-          })}
+      {Object.keys(ratings)
+        .sort((a, b) => parseFloat(a) - parseFloat(b))
+        .map((key) => {
+          const count = ratings[key];
+          const percentage = (count / total).toFixed(2) * 100 || 0;
+          const content = `${count} ratings of ${key} stars (${percentage}%)`;
+
+          return (
+            <div
+              key={key}
+              data-tooltip-id="reviews-tooltip"
+              data-tooltip-content={content}
+              style={{ height: `${percentage}%` }}
+              onClick={() => handleClick(key)}
+              className="rating-bar__item"
+            >
+              <div className="rating-bar__fill" />
+              <Tooltip
+                id="reviews-tooltip"
+                place="top"
+                type="dark"
+                effect="float"
+              />
+            </div>
+          );
+        })}
     </div>
   );
 }

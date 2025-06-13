@@ -11,32 +11,30 @@ import GoogleLoginButton from "../buttons/GoogleLoginButton";
 import ForgotPasswordButton from "../buttons/ForgotPasswordButton";
 
 export default function Login({ setIsRegistration }) {
-  const { login, getUserByEmail, getUserByUsername } = useAuthContext();
-  const navigate = useNavigate();
-
   const [error, setError] = useState("");
   const formRef = useRef(null);
 
-  async function handleSubmit(e) {
+  const { login, getUserByEmail, getUserByUsername } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(formRef.current);
-
-    const username = formData.get("username");
-    const password = formData.get("password");
-
-    if (!validateData(username, password)) return;
+    const isValid = validateData();
+    if (!isValid) return;
 
     const user = await getUser();
     if (!user) return;
+
+    const password = formRef.current.elements.password.value;
 
     if (await login(user, password, setError)) {
       navigate("/home");
       resetForm();
     }
-  }
+  };
 
-  function validateData() {
+  const validateData = () => {
     const username = formRef.current.elements.username;
     const password = formRef.current.elements.password;
 
@@ -53,9 +51,9 @@ export default function Login({ setIsRegistration }) {
     }
 
     return true;
-  }
+  };
 
-  async function getUser() {
+  const getUser = async () => {
     const username = formRef.current.elements.username;
 
     // If input is an email
@@ -91,12 +89,12 @@ export default function Login({ setIsRegistration }) {
 
     // If user exists, return the user's email
     return user.email;
-  }
+  };
 
-  function resetForm() {
+  const resetForm = () => {
     setIsRegistration(false);
     formRef.current?.reset();
-  }
+  };
 
   return (
     <section className="auth--container">

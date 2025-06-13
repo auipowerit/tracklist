@@ -7,10 +7,10 @@ import CommentCard from "../cards/CommentCard";
 import "./comment-list.scss";
 
 export default function CommentList({ review }) {
-  const { getReviewComments } = useCommentContext();
-
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
+
+  const { getReviewComments } = useCommentContext();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -42,7 +42,7 @@ export default function CommentList({ review }) {
 }
 
 function Header({ review, comments, setComments }) {
-  function sortMethod(sortValue) {
+  const sortMethod = (sortValue) => {
     if (!comments) {
       return [];
     }
@@ -75,7 +75,7 @@ function Header({ review, comments, setComments }) {
           return 0;
       }
     });
-  }
+  };
 
   return (
     <div className="comments__header">

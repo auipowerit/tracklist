@@ -12,8 +12,8 @@ export default function DraggableList({ items, setItems, list, orientation }) {
   const { globalUser } = useAuthContext();
   const { reorderListItems, deleteListItem } = useListContext();
 
-  async function handleDragEnd(event) {
-    const { active, over } = event;
+  async function handleDragEnd(e) {
+    const { active, over } = e;
     if (active.id === over.id) return;
 
     setItems((items) => {

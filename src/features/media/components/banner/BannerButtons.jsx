@@ -6,8 +6,6 @@ import AddToListButton from "src/features/list/components/buttons/AddToListButto
 import AddReviewButton from "src/features/review/components/buttons/AddReviewButton";
 
 export default function BannerButtons({ mediaId, name, category }) {
-  const { globalUser, getUserLikes } = useAuthContext();
-
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -15,7 +13,13 @@ export default function BannerButtons({ mediaId, name, category }) {
 
   const isModalOpen = isListModalOpen || isReviewModalOpen || isShareModalOpen;
 
+  const { globalUser, getUserLikes } = useAuthContext();
+
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+
     const checkIfLiked = async () => {
       if (!globalUser) return;
 
@@ -25,17 +29,10 @@ export default function BannerButtons({ mediaId, name, category }) {
       setIsLiked(userLikes[category].includes(mediaId));
     };
 
-    checkIfLiked();
-
     return () => {
       setIsLiked(false);
+      checkIfLiked();
     };
-  }, []);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add("lock-scroll");
-    }
   }, [isModalOpen]);
 
   return (

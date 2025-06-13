@@ -41,7 +41,7 @@ export default function ReviewProvider({ children }) {
     fetchData();
   }, [globalUser]);
 
-  function updateReviewState(review, updatedReview) {
+  const updateReviewState = (review, updatedReview) => {
     Object.assign(review, updatedReview);
 
     setReviews(
@@ -49,7 +49,7 @@ export default function ReviewProvider({ children }) {
         review.id === updatedReview.id ? updatedReview : review,
       ),
     );
-  }
+  };
 
   const reviewMethods = {
     reviews,

@@ -9,17 +9,16 @@ import AuthInput from "../inputs/AuthInput";
 import GoogleSignupButton from "../buttons/GoogleSignupButton";
 
 export default function Signup({ setIsRegistration }) {
-  const { signup, usernameAvailable } = useAuthContext();
-
   const [error, setError] = useState("");
   const formRef = useRef(null);
 
-  async function handleSubmit(e) {
+  const { signup, usernameAvailable } = useAuthContext();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!(await validateData())) {
-      return;
-    }
+    const isValid = await validateData();
+    if (!isValid) return;
 
     const formData = new FormData(formRef.current);
 
@@ -31,9 +30,9 @@ export default function Signup({ setIsRegistration }) {
     if (await signup(email, password, displayname, username, setError)) {
       resetForm();
     }
-  }
+  };
 
-  async function validateData() {
+  const validateData = async () => {
     if (checkEmptyForm(formRef)) {
       setError("Please fill out all fields.");
       return false;
@@ -100,12 +99,12 @@ export default function Signup({ setIsRegistration }) {
     }
 
     return true;
-  }
+  };
 
-  function resetForm() {
+  const resetForm = () => {
     setIsRegistration(false);
     formRef.current?.reset();
-  }
+  };
 
   return (
     <section className="auth--container">

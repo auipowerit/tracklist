@@ -5,7 +5,7 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 export function useInbox() {
   const { addToInbox } = useAuthContext();
 
-  async function addNotification(
+  const addNotification = async (
     recipientId,
     senderId,
     title,
@@ -13,7 +13,7 @@ export function useInbox() {
     contentId,
     imageUrl,
     category,
-  ) {
+  ) => {
     try {
       const id = Date.now().toString();
 
@@ -80,9 +80,9 @@ export function useInbox() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function readAllNotifications(userId) {
+  const readAllNotifications = async (userId) => {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
@@ -95,9 +95,9 @@ export function useInbox() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function deleteNotification(userId, notifId) {
+  const deleteNotification = async (userId, notifId) => {
     try {
       const inboxRef = doc(db, "inbox", userId);
       const inboxDoc = await getDoc(inboxRef);
@@ -113,7 +113,7 @@ export function useInbox() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     addNotification,

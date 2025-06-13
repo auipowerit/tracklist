@@ -11,10 +11,6 @@ import "./review-form.scss";
 export default function ReviewForm(props) {
   const { isModalOpen, mediaId, category, setSuccess } = props;
 
-  const { globalUser, getUserById } = useAuthContext();
-  const { searchByName, getMediaById } = useSpotifyContext();
-  const { addReview, setReviews } = useReviewContext();
-
   const [error, setError] = useState("");
   const [type, setType] = useState("artist");
   const [results, setResults] = useState([]);
@@ -25,34 +21,37 @@ export default function ReviewForm(props) {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
+  const { globalUser, getUserById } = useAuthContext();
+  const { searchByName, getMediaById } = useSpotifyContext();
+  const { addReview, setReviews } = useReviewContext();
+
   useEffect(() => {
-    handleModal();
+    if (isModalOpen) {
+      resetValues();
+    }
+
+    const fetchMedia = async () => {
+      if (!mediaId || !category || !inputRef.current) return;
+
+      const fetchedMedia = await getMediaById(mediaId, category);
+
+      if (!inputRef.current) return;
+      inputRef.current.value = fetchedMedia.name;
+      setType(category);
+      setMedia(fetchedMedia);
+    };
+
     fetchMedia();
   }, [isModalOpen]);
 
-  function handleModal() {
-    if (isModalOpen) resetValues();
-  }
-
-  async function fetchMedia() {
-    if (!mediaId || !category || !inputRef.current) return;
-
-    const fetchedMedia = await getMediaById(mediaId, category);
-
-    if (!inputRef.current) return;
-    inputRef.current.value = fetchedMedia.name;
-    setType(category);
-    setMedia(fetchedMedia);
-  }
-
-  function handleChange(e) {
+  const handleChange = (e) => {
     setType(e.target.value);
 
     setResults([]);
     setMedia({});
-  }
+  };
 
-  async function handleSearch(e) {
+  const handleSearch = async (e) => {
     e.target.classList.remove("form__input--invalid");
 
     // Confirm search time contains characters
@@ -68,9 +67,9 @@ export default function ReviewForm(props) {
       setResults([]);
       return;
     }
-  }
+  };
 
-  function getMediaData(data) {
+  const getMediaData = (data) => {
     const items = data?.[`${type}s`]?.items;
 
     return items?.map((item) => {
@@ -83,26 +82,27 @@ export default function ReviewForm(props) {
         subtitle,
       };
     });
-  }
+  };
 
-  async function handleClick(id, name) {
+  const handleClick = async (id, name) => {
     inputRef.current.value = name;
 
     const fetchedMedia = await getMediaById(id, type);
     setMedia(fetchedMedia);
 
     setResults([]);
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateData()) return;
+    const isValid = validateData();
+    if (!isValid) return;
 
-    submitReview();
-  }
+    await submitReview();
+  };
 
-  function validateData() {
+  const validateData = () => {
     const mediaInput = formRef.current.elements["media"];
     const reviewText = formRef.current.elements["review"];
 
@@ -134,9 +134,9 @@ export default function ReviewForm(props) {
     }
 
     return true;
-  }
+  };
 
-  async function submitReview() {
+  const submitReview = async () => {
     const reviewInfo = {
       content,
       userId: globalUser.uid,
@@ -166,9 +166,9 @@ export default function ReviewForm(props) {
 
     resetValues();
     setSuccess(true);
-  }
+  };
 
-  function resetValues() {
+  const resetValues = () => {
     setType("artist");
     setResults([]);
     setMedia({});
@@ -176,10 +176,12 @@ export default function ReviewForm(props) {
     setRating(0);
     setContent("");
     setError("");
+
     inputRef.current.value = "";
+
     formRef.current.elements["media"].classList.remove("form__input--invalid");
     formRef.current.elements["review"].classList.remove("form__input--invalid");
-  }
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="form review-form">
@@ -278,7 +280,9 @@ function FormSearchResults({ results, handleClick, type }) {
 }
 
 function FormReview({ content, setContent }) {
-  function handleChange(e) {
+  const color = content.length >= REVIEW_LIMIT ? "red" : "gray";
+
+  const handleChange = (e) => {
     e.target.classList.remove("form__input--invalid");
 
     if (e.target.value.length > REVIEW_LIMIT) {
@@ -287,9 +291,7 @@ function FormReview({ content, setContent }) {
     }
 
     setContent(e.target.value);
-  }
-
-  const color = content.length >= REVIEW_LIMIT ? "red" : "gray";
+  };
 
   return (
     <div className="form__textarea">
@@ -299,6 +301,7 @@ function FormReview({ content, setContent }) {
           {content.length || 0}/{REVIEW_LIMIT}
         </p>
       </div>
+
       <textarea
         name="review"
         placeholder="Write your review..."

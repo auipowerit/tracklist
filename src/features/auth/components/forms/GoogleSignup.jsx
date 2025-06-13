@@ -4,31 +4,30 @@ import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "../../context/AuthContext";
 
 export default function GoogleSignup({ isModalOpen, setSuccess }) {
-  const { usernameAvailable, loginWithGoogle } = useAuthContext();
-
   const [error, setError] = useState("");
   const inputRef = useRef(null);
 
+  const { usernameAvailable, loginWithGoogle } = useAuthContext();
+
   useEffect(() => {
-    handleModal();
+    if (isModalOpen) {
+      resetValues();
+    }
   }, [isModalOpen]);
 
-  function handleModal() {
-    if (isModalOpen) resetValues();
-  }
-
-  function resetValues() {
+  const resetValues = () => {
     setError("");
     inputRef.current.value = "";
     inputRef.current.classList.remove("form__input--invalid");
-  }
+  };
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     e.target.classList.remove("form__input--invalid");
-  }
+  };
 
-  async function handleSubmit() {
-    if (!(await validateData())) return;
+  const handleSubmit = async () => {
+    const isValid = await validateData();
+    if (!isValid) return;
 
     const username = inputRef.current.value;
 
@@ -36,9 +35,9 @@ export default function GoogleSignup({ isModalOpen, setSuccess }) {
       resetValues();
       setSuccess(true);
     }
-  }
+  };
 
-  async function validateData() {
+  const validateData = async () => {
     const username = inputRef.current;
 
     if (!username.value) {
@@ -66,7 +65,7 @@ export default function GoogleSignup({ isModalOpen, setSuccess }) {
     }
 
     return true;
-  }
+  };
 
   return (
     <div className="auth--container auth--container--reset">

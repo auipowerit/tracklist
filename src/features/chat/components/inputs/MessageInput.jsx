@@ -7,12 +7,12 @@ import { useChatContext } from "src/features/chat/context/ChatContext";
 import "./chat-inputs.scss";
 
 export default function MessageInput() {
+  const inputRef = useRef(null);
+
   const { globalUser } = useAuthContext();
   const { activeChatId, activeChatUser, sendMessage } = useChatContext();
 
-  const inputRef = useRef(null);
-
-  async function handleNewMessage(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -20,8 +20,9 @@ export default function MessageInput() {
       !globalUser ||
       !activeChatId ||
       inputRef?.current.value.trim() === ""
-    )
+    ) {
       return;
+    }
 
     const message = inputRef.current.value;
     inputRef.current.value = "";
@@ -32,14 +33,10 @@ export default function MessageInput() {
       activeChatUser.uid,
       message,
     );
-  }
+  };
 
   return (
-    <form
-      onSubmit={handleNewMessage}
-      id="chat-compose"
-      className="chat-compose"
-    >
+    <form onSubmit={handleSubmit} id="chat-compose" className="chat-compose">
       <input
         ref={inputRef}
         text="text"

@@ -5,7 +5,7 @@ export function useSpotify() {
   const [accessToken, setAccessToken] = useState("");
   const [tokenExpiration, setTokenExpiration] = useState("");
 
-  async function getAccessToken() {
+  const getAccessToken = async () => {
     try {
       if (accessToken && !checkIfTokenExpired()) {
         return accessToken;
@@ -26,13 +26,13 @@ export function useSpotify() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  function checkIfTokenExpired() {
+  const checkIfTokenExpired = () => {
     return tokenExpiration < Date.now();
-  }
+  };
 
-  async function getAuthAccessToken(AUTH_CODE) {
+  const getAuthAccessToken = async (AUTH_CODE) => {
     const verifier = localStorage.getItem("verifier");
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
@@ -43,18 +43,18 @@ export function useSpotify() {
 
     const { access_token } = await result.json();
     return access_token;
-  }
+  };
 
-  async function redirectToSpotifyAuth() {
+  const redirectToSpotifyAuth = async () => {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
 
     localStorage.setItem("verifier", verifier);
 
     document.location = `https://accounts.spotify.com/authorize?client_id=${Const.CLIENT_ID}&response_type=code&redirect_uri=${Const.REDIRECT_URI}&scope=user-read-private user-read-email&code_challenge_method=S256&code_challenge=${challenge}`;
-  }
+  };
 
-  function generateCodeVerifier(length) {
+  const generateCodeVerifier = (length) => {
     let text = "";
     let possible =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -64,18 +64,18 @@ export function useSpotify() {
     }
 
     return text;
-  }
+  };
 
-  async function generateCodeChallenge(codeVerifier) {
+  const generateCodeChallenge = async (codeVerifier) => {
     const data = new TextEncoder().encode(codeVerifier);
     const digest = await window.crypto.subtle.digest("SHA-256", data);
     return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
       .replace(/\+/g, "-")
       .replace(/\//g, "_")
       .replace(/=+$/, "");
-  }
+  };
 
-  async function getSpotifyUser(token) {
+  const getSpotifyUser = async (token) => {
     const result = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
@@ -84,9 +84,9 @@ export function useSpotify() {
     const profile = await result.json();
 
     return profile;
-  }
+  };
 
-  async function searchByName(name, category, limit = 20) {
+  const searchByName = async (name, category, limit = 20) => {
     if (!name || !category) return [];
 
     const token = await getAccessToken();
@@ -108,9 +108,9 @@ export function useSpotify() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function getMediaById(mediaId, category) {
+  const getMediaById = async (mediaId, category) => {
     if (!mediaId || !category) return [];
 
     const token = await getAccessToken();
@@ -147,9 +147,9 @@ export function useSpotify() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  function getMediaLinks(media) {
+  const getMediaLinks = (media) => {
     if (!media) return {};
 
     const artist = media?.artists?.[0] || media || {};
@@ -179,9 +179,9 @@ export function useSpotify() {
     }
 
     return mediaData;
-  }
+  };
 
-  async function getArtistAlbums(artistId, offset = 0, limit = 10) {
+  const getArtistAlbums = async (artistId, offset = 0, limit = 10) => {
     if (!artistId) return [];
 
     const token = await getAccessToken();
@@ -204,9 +204,9 @@ export function useSpotify() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function getArtistSingles(artistId, offset = 0, limit = 10) {
+  const getArtistSingles = async (artistId, offset = 0, limit = 10) => {
     if (!artistId) return [];
 
     const token = await getAccessToken();
@@ -228,9 +228,9 @@ export function useSpotify() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function getAlbumTracks(albumId) {
+  const getAlbumTracks = async (albumId) => {
     if (!albumId) return [];
 
     const token = await getAccessToken();
@@ -253,7 +253,7 @@ export function useSpotify() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return {
     getAccessToken,

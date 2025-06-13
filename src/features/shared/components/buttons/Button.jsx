@@ -1,11 +1,13 @@
-export default function Button({
-  type = "button",
-  onClick,
-  classes = "",
-  ariaSelected = false,
-  ariaLabel = "",
-  children,
-}) {
+export default function Button(props) {
+  const {
+    type = "button",
+    onClick,
+    classes = "",
+    ariaSelected = false,
+    ariaLabel = "",
+    children,
+  } = props;
+
   return (
     <button
       type={type}

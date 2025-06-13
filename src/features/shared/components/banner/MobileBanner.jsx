@@ -4,41 +4,50 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../buttons/Button";
 import "./mobile-banner.scss";
 
-export default function MobileBanner({
-  title,
-  link,
-  icon = false,
-  canGoBack = false,
-  onClick,
-}) {
+export default function MobileBanner(props) {
+  const { title, link, icon = false, canGoBack = false, onClick } = props;
+
   return (
     <section className="mobile-banner">
       {(canGoBack || onClick) && <BackButton onClick={onClick} />}
-      {link ? (
-        <Link to={link} className="mobile-banner__title">
-          <h1>{title}</h1>
-        </Link>
-      ) : icon ? (
-        <img
-          src="/images/logo/logo-primary-small.png"
-          className="mobile-banner__logo"
-        />
-      ) : (
-        <h1 className="mobile-banner__title">{title}</h1>
-      )}
+      <Title title={title} link={link} />
+      <Logo icon={icon} />
     </section>
   );
 }
 
-function BackButton({ onClick }) {
-  const handleClick = () => {
-    window.history.back();
-  };
+function Title({ title, link }) {
+  if (link) {
+    return (
+      <Link to={link} className="mobile-banner__title">
+        <h1>{title}</h1>
+      </Link>
+    );
+  }
 
+  return <h1 className="mobile-banner__title">{title}</h1>;
+}
+
+function Logo({ icon }) {
+  if (icon) {
+    return (
+      <img
+        src="/images/logo/logo-primary-small.png"
+        className="mobile-banner__logo"
+      />
+    );
+  }
+}
+
+function BackButton({ onClick }) {
   const canGoBack =
     window.history.length > 1 &&
     window.history.state &&
     window.history.state.idx > 0;
+
+  const handleClick = () => {
+    window.history.back();
+  };
 
   // If the user can't go back, don't show the button
   if (!canGoBack && !onClick) {

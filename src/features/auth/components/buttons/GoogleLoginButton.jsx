@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import Button from "src/features/shared/components/buttons/Button";
 import { useAuthContext } from "../../context/AuthContext";
 
-export default function GoogleLoginButton({setError}) {
+export default function GoogleLoginButton({ setError }) {
   const { loginWithGoogle } = useAuthContext();
   const navigate = useNavigate();
 
-  async function handleClick() {
+  const handleClick = async () => {
     if (await loginWithGoogle(setError)) {
       navigate("/");
     }
-  }
+  };
 
   return (
     <Button

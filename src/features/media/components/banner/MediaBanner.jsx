@@ -1,35 +1,37 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
+import { Link } from "react-router-dom";
 import { DEFAULT_MEDIA_IMG } from "src/data/const";
-import RatingBar from "./RatingBar";
 import ReviewStars from "src/features/review/components/rating/ReviewStars";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
+import RatingBar from "./RatingBar";
 import BannerButtons from "./BannerButtons";
 import "./media-banner.scss";
-import { Link } from "react-router-dom";
 
 function MediaBanner({ media, category, setActiveTab, setFilter }) {
+  const [rating, setRating] = useState(null);
+  const [data, setData] = useState(null);
+
   const { getAvgRating } = useReviewContext();
   const { getMediaLinks } = useSpotifyContext();
 
-  const [rating, setRating] = useState(null);
-  const [data, setData] = useState(null);
+  const fetchRating = async () => {
+    const { avgRating, count } = (await getAvgRating(media.id)) || {};
+    setRating({ avgRating, count });
+
+    const fetchedData = getMediaLinks(media);
+    setData(fetchedData);
+  };
 
   useEffect(() => {
     if (!media) return;
     fetchRating();
   }, [media]);
 
-  async function fetchRating() {
-    const { avgRating, count } = (await getAvgRating(media.id)) || {};
-    setRating({ avgRating, count });
-
-    const fetchedData = getMediaLinks(media);
-    setData(fetchedData);
+  if (!data || !media) {
+    return;
   }
-
-  if (!data || !media) return;
 
   return (
     <div className="media-banner">
@@ -99,6 +101,10 @@ function Title({ name, subtitle, link }) {
 }
 
 function Rating({ mediaId, rating, setActiveTab, setFilter }) {
+  const handleClick = () => {
+    setActiveTab("reviews");
+  };
+
   return (
     <div className="media-banner__rating">
       <RatingBar
@@ -110,7 +116,9 @@ function Rating({ mediaId, rating, setActiveTab, setFilter }) {
       <div className="media-banner__stars">
         <p>{rating.avgRating?.toFixed(1) || ""}</p>
         <ReviewStars rating={rating.avgRating || 0} size={22} />
-        <p>{(rating.avgRating && `(${rating.count})`) || ""}</p>
+        <p onClick={handleClick} className="media-banner__count">
+          {(rating.avgRating && `(${rating.count})`) || ""}
+        </p>
       </div>
     </div>
   );

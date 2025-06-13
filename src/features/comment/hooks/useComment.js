@@ -14,14 +14,14 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 export function useComment() {
   const { getUserById } = useAuthContext();
 
-  async function getCommentById(commentId) {
+  const getCommentById = async (commentId) => {
     const commentRef = doc(db, "comments", commentId);
     const commentDoc = await getDoc(commentRef);
 
     return commentDoc.data();
-  }
+  };
 
-  async function getReviewComments(reviewId) {
+  const getReviewComments = async (reviewId) => {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -52,9 +52,9 @@ export function useComment() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function addComment(commentInfo, reviewId, replyId) {
+  const addComment = async (commentInfo, reviewId, replyId) => {
     try {
       const comment = { ...commentInfo, reviewId, createdAt: new Date() };
       const commentRef = collection(db, "comments");
@@ -78,9 +78,9 @@ export function useComment() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  async function deleteComment(commentId) {
+  const deleteComment = async (commentId) => {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -112,9 +112,9 @@ export function useComment() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  async function likeComment(commentId, userId) {
+  const likeComment = async (commentId, userId) => {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -147,9 +147,9 @@ export function useComment() {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
-  async function dislikeComment(commentId, userId) {
+  const dislikeComment = async (commentId, userId) => {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -182,7 +182,7 @@ export function useComment() {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   return {
     getCommentById,

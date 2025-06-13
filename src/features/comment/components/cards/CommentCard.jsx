@@ -85,7 +85,7 @@ function Buttons(props) {
   const { addNotification } = useInboxContext();
   const { deleteReviewComment, updateReviewState } = useReviewContext();
 
-  async function updateCommentState(comment, updatedComment) {
+  const updateCommentState = async (comment, updatedComment) => {
     Object.assign(comment, updatedComment);
 
     setComments(
@@ -93,9 +93,9 @@ function Buttons(props) {
         comment.id === updatedComment.id ? updatedComment : comment,
       ),
     );
-  }
+  };
 
-  async function handleDelete() {
+  const handleDelete = async () => {
     await deleteReviewComment(comment.id, review.id);
 
     const updatedComments = comments.filter((c) => c.id !== comment.id);
@@ -103,9 +103,9 @@ function Buttons(props) {
 
     const updatedReview = { ...review, comments: updatedComments };
     updateReviewState(review, updatedReview);
-  }
+  };
 
-  async function handleLike(commentId, userId, userVoted) {
+  const handleLike = async (commentId, userId, userVoted) => {
     const updatedComment = await likeComment(commentId, userId);
 
     const content =
@@ -127,7 +127,7 @@ function Buttons(props) {
     }
 
     return updatedComment;
-  }
+  };
 
   return (
     <div className="comment-card__buttons">

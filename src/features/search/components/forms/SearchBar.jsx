@@ -9,11 +9,6 @@ import "./searchbar.scss";
 export default function SearchBar(props) {
   const { category, setIsLoading, setResults, setInitialResults } = props;
 
-  const { searchByUser } = useAuthContext();
-  const { searchByName } = useSpotifyContext();
-
-  const searchInput = useRef(null);
-
   const placeholderMap = {
     artist: "Ex: 'Hippo Campus'",
     album: "Ex: 'Landmark'",
@@ -21,23 +16,28 @@ export default function SearchBar(props) {
     user: "Ex: 'zbetters97'",
   };
 
+  const searchInput = useRef(null);
+
+  const { searchByUser } = useAuthContext();
+  const { searchByName } = useSpotifyContext();
+
   useEffect(() => {
     const searchString = searchInput.current?.value.trim();
-    if (searchString !== "") {
-      handleSubmit(searchString.toLowerCase());
-    }
+    if (searchString === "") return;
+
+    handleSubmit(searchString.toLowerCase());
   }, [category]);
 
-  async function handleSearch(e) {
+  const handleSearch = async (e) => {
     e.preventDefault();
 
     const searchString = searchInput.current?.value.trim();
     if (!searchString) return;
 
     await handleSubmit(searchString.toLowerCase());
-  }
+  };
 
-  async function handleSubmit(searchString) {
+  const handleSubmit = async (searchString) => {
     setIsLoading(true);
 
     try {
@@ -57,7 +57,7 @@ export default function SearchBar(props) {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSearch} className="searchbar">

@@ -8,7 +8,7 @@ export default function SortReviews({ reviews, setReviews }) {
     { label: "Commented", value: "comments" },
   ];
 
-  function sortMethod(sortValue) {
+  const sortMethod = (sortValue) => {
     return reviews.sort((a, b) => {
       switch (sortValue) {
         case "newest":
@@ -36,7 +36,7 @@ export default function SortReviews({ reviews, setReviews }) {
           return 0;
       }
     });
-  }
+  };
 
   return (
     <SortButton

@@ -43,7 +43,7 @@ export default function AddToListButton(props) {
   }
 
   function handleSuccessClick() {
-    navigate(`/users/${globalUser.username}/lists`);
+    navigate(`/users/${globalUser.username}/lists/${list?.id || ""}`);
     setIsModalOpen(false);
   }
 
@@ -53,7 +53,7 @@ export default function AddToListButton(props) {
         {success ? (
           <SuccessAlert
             message={"Changes saved!"}
-            link={"Go to lists"}
+            link={"Go to list"}
             icon={faArrowRight}
             onClick={handleSuccessClick}
           />

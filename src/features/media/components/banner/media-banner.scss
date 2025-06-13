@@ -72,6 +72,14 @@
     @include flexrow(center, center, 0.5em);
   }
 
+  &__count {
+    cursor: pointer;
+
+    &:hover {
+      color: $basic-gray;
+    }
+  }
+
   &__buttons {
     @include padding-x(0.75em);
     @include flexcol(space-evenly, center);
@@ -133,6 +141,12 @@
 
     &__stars span svg {
       font-size: 1.25rem;
+    }
+
+    &__count {
+      &:hover {
+        color: $basic-white;
+      }
     }
 
     &__buttons {

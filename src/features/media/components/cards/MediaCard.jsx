@@ -8,10 +8,10 @@ import "./media-card.scss";
 export default function MediaCard(props) {
   const { media, defaultSubtitle, onClick } = props;
 
-  const { getAvgRating } = useReviewContext();
-
   const [fetchedMedia, setFetchedMedia] = useState({});
   const titleRef = useRef(null);
+
+  const { getAvgRating } = useReviewContext();
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -25,6 +25,7 @@ export default function MediaCard(props) {
             defaultSubtitle ||
             media.artists?.[0]?.name ||
             formatDateMDYLong(media.album?.release_date || media?.release_date),
+
           image:
             media.album?.images?.[0]?.url ||
             media.images?.[0]?.url ||

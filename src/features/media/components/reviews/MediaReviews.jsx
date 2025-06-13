@@ -6,24 +6,26 @@ import MediaReviewCard from "../cards/MediaReviewCard";
 import "./media-reviews.scss";
 
 export default function MediaReviews({ mediaId, filter, setFilter }) {
-  const { getReviewsByMediaId } = useReviewContext();
   const [reviews, setReviews] = useState(null);
   const [filteredReviews, setFilteredReviews] = useState(null);
 
+  const { getReviewsByMediaId } = useReviewContext();
+
   useEffect(() => {
-    if (!mediaId) return;
+    const fetchReviews = async () => {
+      if (!mediaId) return;
+
+      const fetchedReviews = await getReviewsByMediaId(mediaId);
+      const sortedReviews = fetchedReviews.sort(
+        (a, b) => b.createdAt - a.createdAt,
+      );
+
+      setReviews([...sortedReviews]);
+      setFilteredReviews([...sortedReviews]);
+    };
+
     fetchReviews();
   }, [mediaId]);
-
-  async function fetchReviews() {
-    const fetchedReviews = await getReviewsByMediaId(mediaId);
-    const sortedReviews = fetchedReviews.sort(
-      (a, b) => b.createdAt - a.createdAt,
-    );
-
-    setReviews([...sortedReviews]);
-    setFilteredReviews([...sortedReviews]);
-  }
 
   return (
     <section className="media-reviews">

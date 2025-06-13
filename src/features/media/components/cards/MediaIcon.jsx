@@ -14,9 +14,9 @@ export default function MediaIcon({ category, className }) {
         ? faCompactDisc
         : faMicrophoneLines;
 
-  function capitalizeFirstLetter(str) {
+  const capitalizeFirstLetter = (str) => {
     return str[0].toUpperCase() + str.slice(1);
-  }
+  };
 
   return (
     <div

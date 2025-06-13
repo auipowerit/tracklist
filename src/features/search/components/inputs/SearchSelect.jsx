@@ -1,10 +1,10 @@
 import "./search-select.scss";
 
 export default function SearchSelect({ activeTab, setActiveTab, setResults }) {
-  function handleChange(e) {
+  const handleChange = (e) => {
     setResults(null);
     setActiveTab(e.target.value);
-  }
+  };
 
   return (
     <select value={activeTab} onChange={handleChange} className="search-select">

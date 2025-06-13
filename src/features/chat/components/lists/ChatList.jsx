@@ -51,7 +51,7 @@ function NewChatButton({ showIcon = false }) {
   const { setActiveChatId, activeChatUser, setActiveChatUser, setIsCollapsed } =
     useChatContext();
 
-  async function handleNewChat() {
+  const handleNewChat = async () => {
     if (!activeChatUser || !globalUser) return;
     setActiveChatId(-1);
     setActiveChatUser({});
@@ -59,7 +59,7 @@ function NewChatButton({ showIcon = false }) {
     if (window.innerWidth <= MOBILE_WIDTH) {
       setIsCollapsed(true);
     }
-  }
+  };
 
   if (showIcon) {
     return (

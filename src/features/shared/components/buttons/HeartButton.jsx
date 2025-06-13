@@ -10,35 +10,38 @@ import "./shared-buttons.scss";
 export default function HeartButton(props) {
   const { isLiked, setIsLiked, id, review, category } = props;
 
-  const { globalUser, likeContent } = useAuthContext();
-  const { addNotification } = useInboxContext();
-  const { likeReview } = useReviewContext();
-
   const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [count, setCount] = useState(review?.likes?.length || 0);
 
-  async function handleClick() {
+  const { globalUser, likeContent } = useAuthContext();
+  const { addNotification } = useInboxContext();
+  const { likeReview } = useReviewContext();
+
+  const handleClick = async () => {
     if (!globalUser) return;
 
     setIsLoading(true);
 
+    setLiked();
+    setCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+
+    review && (await handleReview(review, globalUser.uid));
+    await likeContent(id, category, globalUser.uid);
+
+    setIsLoading(false);
+  };
+
+  const setLiked = () => {
     if (!isLiked) {
       setIsActive(true);
       setTimeout(() => setIsActive(false), 500);
     }
 
     setIsLiked(!isLiked);
-    setCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+  };
 
-    review && (await handleReview(review, globalUser.uid));
-
-    await likeContent(id, category, globalUser.uid);
-
-    setIsLoading(false);
-  }
-
-  async function handleReview(review, userId) {
+  const handleReview = async (review, userId) => {
     await likeReview(review.id, userId);
 
     // Send notification if not author and not already liked
@@ -53,7 +56,7 @@ export default function HeartButton(props) {
         "review",
       );
     }
-  }
+  };
 
   return (
     <button

@@ -65,14 +65,20 @@ function Lists({ user, activeTab }) {
     const unsubscribe = onSnapshot(
       doc(db, "userlists", user.uid),
       async (doc) => {
-        if (!doc.exists()) return;
+        if (!doc.exists()) {
+          setIsLoading(false);
+          return;
+        }
 
         setIsLoading(true);
 
         const userLists =
           activeTab === "created" ? doc.data().lists : doc.data().savedLists;
 
-        if (!userLists || userLists.length === 0) return;
+        if (!userLists || userLists.length === 0) {
+          setIsLoading(false);
+          return;
+        }
 
         const fetchedLists = await Promise.all(
           userLists.map(async (listId) => await getListById(listId)),

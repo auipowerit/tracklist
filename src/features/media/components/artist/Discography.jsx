@@ -6,8 +6,6 @@ import Button from "src/features/shared/components/buttons/Button";
 import MediaCard from "src/features/media/components/cards/MediaCard";
 
 export default function Discography({ media, setMedia, isMore, loadMedia }) {
-  const [page, setPage] = useState(0);
-
   return (
     <section className="discography">
       <SortMusic
@@ -18,47 +16,51 @@ export default function Discography({ media, setMedia, isMore, loadMedia }) {
         search={false}
       />
 
-      {media &&
-        (media.length > 0 ? (
-          <div className="discography__items">
-            {media.map((music) => {
-              const artistId = music.artists?.[0]?.id || "";
-
-              return (
-                <Link
-                  key={music.id}
-                  to={`/artists/${artistId}/albums/${music.id}`}
-                >
-                  <MediaCard
-                    key={music.id}
-                    media={music}
-                    defaultSubtitle={formatDateMDYLong(music.release_date)}
-                  />
-                </Link>
-              );
-            })}
-
-            {isMore && (
-              <LoadMoreButton
-                loadMedia={loadMedia}
-                page={page}
-                setPage={setPage}
-              />
-            )}
-          </div>
-        ) : (
-          <p className="empty__message">Nothing to show!</p>
-        ))}
+      <MusicGrid media={media} isMore={isMore} loadMedia={loadMedia} />
     </section>
   );
 }
 
+function MusicGrid({ media, isMore, loadMedia }) {
+  const [page, setPage] = useState(0);
+
+  if (!media) {
+    return;
+  }
+
+  if (media.length === 0) {
+    return <p className="empty__message">Nothing to show!</p>;
+  }
+
+  return (
+    <div className="discography__items">
+      {media.map((music) => {
+        const artistId = music.artists?.[0]?.id || "";
+
+        return (
+          <Link key={music.id} to={`/artists/${artistId}/albums/${music.id}`}>
+            <MediaCard
+              key={music.id}
+              media={music}
+              defaultSubtitle={formatDateMDYLong(music.release_date)}
+            />
+          </Link>
+        );
+      })}
+
+      {isMore && (
+        <LoadMoreButton loadMedia={loadMedia} page={page} setPage={setPage} />
+      )}
+    </div>
+  );
+}
+
 function LoadMoreButton({ loadMedia, page, setPage }) {
-  function loadMore() {
+  const loadMore = () => {
     const start = (page + 1) * 6;
     loadMedia(start);
     setPage(page + 1);
-  }
+  };
 
   return (
     <Button

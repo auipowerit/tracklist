@@ -39,8 +39,8 @@ export default function MediaNavbar({ artist, album, track, category }) {
 
 function NavLink({ link, category, label, title }) {
   const ACTIVE_COLOR = "lightblue";
-
   const isActive = category === label;
+
   const color = isActive ? ACTIVE_COLOR : "";
 
   return (

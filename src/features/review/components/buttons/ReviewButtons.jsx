@@ -10,16 +10,20 @@ import { useReviewContext } from "../../context/ReviewContext";
 import "./review-buttons.scss";
 
 export default function ReviewButtons({ review, showComment = true }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
   const { globalUser, getUserLikes } = useAuthContext();
   const { deleteComment } = useCommentContext();
   const { setReviews, getNewReviews, deleteReview } = useReviewContext();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("lock-scroll");
+    }
+
     const checkIfLiked = async () => {
       if (!globalUser) return;
 
@@ -29,23 +33,16 @@ export default function ReviewButtons({ review, showComment = true }) {
       setIsLiked(userLikes["review"].includes(review.id));
     };
 
-    checkIfLiked();
-
     return () => {
+      checkIfLiked();
       setIsLiked(false);
     };
-  }, []);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add("lock-scroll");
-    }
   }, [isModalOpen]);
 
-  async function handleDelete() {
-    const comments = review.comments;
+  const handleDelete = async () => {
+    if (!review || !review?.id) return;
 
-    if (!review.id) return;
+    const comments = review.comments;
 
     // Delete each comment from comments db
     if (comments.length > 0) {
@@ -70,7 +67,7 @@ export default function ReviewButtons({ review, showComment = true }) {
     );
 
     navigate("/home");
-  }
+  };
 
   return (
     <div className="review-buttons">

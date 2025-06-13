@@ -7,28 +7,30 @@ export default function StarRating({ rating, setRating, isModalOpen }) {
   const [hover, setHover] = useState(null);
 
   useEffect(() => {
-    if (!isModalOpen) setHover(null);
+    if (!isModalOpen) {
+      setHover(null);
+    }
   }, [isModalOpen]);
 
-  function getStarColor(ratingValue) {
+  const getStarColor = (ratingValue) => {
     return ratingValue <= (hover || rating) ? "#ffc107" : "#94969c";
-  }
+  };
 
-  function handleMouseMove(e, ratingValue) {
+  const handleMouseMove = (e, ratingValue) => {
     const starElement = e.target.getBoundingClientRect();
     const clickPosition = e.clientX;
     const starMidpoint = starElement.left + starElement.width / 2;
 
     setHover(clickPosition < starMidpoint ? ratingValue - 0.5 : ratingValue);
-  }
+  };
 
-  function handleMouseLeave() {
+  const handleMouseLeave = () => {
     setHover(null);
-  }
+  };
 
-  async function handleClick(ratingValue) {
+  const handleClick = (ratingValue) => {
     setRating(ratingValue);
-  }
+  };
 
   return (
     <div className="star-rating">
@@ -42,7 +44,7 @@ export default function StarRating({ rating, setRating, isModalOpen }) {
           return (
             <span
               key={i}
-              onMouseMove={(event) => handleMouseMove(event, ratingValue)}
+              onMouseMove={(e) => handleMouseMove(e, ratingValue)}
               onMouseLeave={handleMouseLeave}
             >
               {isHalf ? (

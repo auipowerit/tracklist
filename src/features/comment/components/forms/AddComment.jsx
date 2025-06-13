@@ -7,20 +7,17 @@ import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
 import "./add-comment.scss";
 
-export default function AddComment({
-  review,
-  setComments,
-  comment,
-  setIsReplying,
-}) {
+export default function AddComment(props) {
+  const { review, setComments, comment, setIsReplying } = props;
+
+  const commentRef = useRef(null);
+
   const { globalUser } = useAuthContext();
   const { addComment } = useCommentContext();
   const { addNotification } = useInboxContext();
   const { updateReviewState } = useReviewContext();
 
-  const commentRef = useRef(null);
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const content = commentRef.current?.value.trim();
@@ -28,6 +25,18 @@ export default function AddComment({
 
     closeComment();
 
+    await submitToDatabase(content);
+  };
+
+  const closeComment = () => {
+    commentRef.current.value = "";
+
+    if (setIsReplying) {
+      setIsReplying(false);
+    }
+  };
+
+  const submitToDatabase = async (content) => {
     const repliedToCommentId = comment?.id || "";
     const commentInfo = {
       content,
@@ -43,7 +52,13 @@ export default function AddComment({
       review.id,
       repliedToCommentId,
     );
+    updateCommentState(newComment);
 
+    await sendReplyNotification(newComment);
+    await sendReviewNotification(newComment);
+  };
+
+  const updateCommentState = (newComment) => {
     // Update comment state with new comment data
     setComments((prevData) => [
       {
@@ -54,7 +69,9 @@ export default function AddComment({
       },
       ...(prevData || []),
     ]);
+  };
 
+  const sendReplyNotification = async (newComment) => {
     // If replying to a comment
     if (comment) {
       // Update the parent comment with the new reply
@@ -77,7 +94,9 @@ export default function AddComment({
 
       return;
     }
+  };
 
+  const sendReviewNotification = async (newComment) => {
     // Save new review for reference
     const newReview = {
       ...review,
@@ -99,15 +118,7 @@ export default function AddComment({
         "review",
       );
     }
-  }
-
-  function closeComment() {
-    commentRef.current.value = "";
-
-    if (setIsReplying) {
-      setIsReplying(false);
-    }
-  }
+  };
 
   if (!globalUser) {
     return;

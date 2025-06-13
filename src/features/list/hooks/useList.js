@@ -12,7 +12,7 @@ import {
 import { db } from "src/config/firebase";
 
 export function useList() {
-  async function getListById(listId) {
+  const getListById = async (listId) => {
     try {
       if (!listId) return;
 
@@ -28,9 +28,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getListsByUserId(userId) {
+  const getListsByUserId = async (userId) => {
     try {
       if (!userId) return;
 
@@ -58,9 +58,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function createNewList(listData, userId) {
+  const createNewList = async (listData, userId) => {
     try {
       if (!listData || !userId) return;
 
@@ -90,9 +90,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function addToList(mediaId, category, listId) {
+  const addToList = async (mediaId, category, listId) => {
     try {
       if (!mediaId || !category || !listId) return false;
 
@@ -101,6 +101,7 @@ export function useList() {
 
       if (!listRef || listDoc.empty) return false;
 
+      // Prevent duplicate media
       if (listDoc.data().media.some((media) => media.id === mediaId)) {
         return false;
       }
@@ -114,9 +115,9 @@ export function useList() {
       console.log(error);
       return false;
     }
-  }
+  };
 
-  async function deleteList(listId, userId) {
+  const deleteList = async (listId, userId) => {
     try {
       if (!listId || !userId) return;
 
@@ -152,9 +153,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function saveList(listId, userId) {
+  const saveList = async (listId, userId) => {
     try {
       const listRef = doc(db, "lists", listId);
       const listDoc = await getDoc(listRef);
@@ -203,9 +204,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function unsaveList(listId, userId) {
+  const unsaveList = async (listId, userId) => {
     try {
       if (!listId || !userId) return;
 
@@ -220,9 +221,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function deleteListItem(itemId, listId) {
+  const deleteListItem = async (itemId, listId) => {
     try {
       if (!itemId || !listId) return;
 
@@ -237,9 +238,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function updateListDetails(listId, details) {
+  const updateListDetails = async (listId, details) => {
     try {
       if (!listId || !details) return false;
 
@@ -260,9 +261,9 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function reorderListItems(listId, newOrder) {
+  const reorderListItems = async (listId, newOrder) => {
     try {
       if (!listId || !newOrder) return;
 
@@ -277,7 +278,7 @@ export function useList() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     getListById,

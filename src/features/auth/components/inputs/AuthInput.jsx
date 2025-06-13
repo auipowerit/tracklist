@@ -1,7 +1,7 @@
 export default function AuthInput({ label, name, type, ...props }) {
-  function handleChange(e) {
+  const handleChange = (e) => {
     e.target.classList.remove("form__input--invalid");
-  }
+  };
 
   return (
     <div className="auth__input--wrapper">

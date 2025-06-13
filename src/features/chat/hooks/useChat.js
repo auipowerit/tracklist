@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 
 export function useChat() {
-  async function getChatById(chatId) {
+  const getChatById = async (chatId) => {
     try {
       const chatRef = doc(db, "chats", chatId);
       const chatRefSnap = await getDoc(chatRef);
@@ -20,9 +20,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getChatsByUserId(userId) {
+  const getChatsByUserId = async (userId) => {
     try {
       const userChatsRef = doc(db, "userchats", userId);
       const userChatsDocSnap = await getDoc(userChatsRef);
@@ -33,12 +33,11 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function addChat(senderId, recipientId) {
+  const addChat = async (senderId, recipientId) => {
     try {
       const chatRef = collection(db, "chats");
-
       const newchatRef = doc(chatRef);
 
       await setDoc(newchatRef, {
@@ -53,9 +52,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function addUserChat(senderId, recipientId, chatId) {
+  const addUserChat = async (senderId, recipientId, chatId) => {
     try {
       const userChatRef = doc(db, "userchats", senderId);
       const userchatRef = await getDoc(userChatRef);
@@ -84,9 +83,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUnreadChatsByUserId(userId) {
+  const getUnreadChatsByUserId = async (userId) => {
     try {
       const userChatsRef = doc(db, "userchats", userId);
       const userChatsDoc = await getDoc(userChatsRef);
@@ -102,15 +101,15 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function sendMessage(
+  const sendMessage = async (
     chatId,
     senderId,
     recipientId,
     text,
     category = "",
-  ) {
+  ) => {
     try {
       const id = Date.now().toString();
 
@@ -159,9 +158,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function likeMessage(messageId, chatId, isLiked) {
+  const likeMessage = async (messageId, chatId, isLiked) => {
     try {
       const chatRef = doc(db, "chats", chatId);
       const chatDoc = await getDoc(chatRef);
@@ -181,9 +180,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function readMessage(chatId, recipientId) {
+  const readMessage = async (chatId, recipientId) => {
     try {
       const userChatsDoc = doc(db, "userchats", recipientId);
       const userChatsDocSnap = await getDoc(userChatsDoc);
@@ -203,9 +202,9 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function deleteMessage(messageId, chatId, senderId, recipientId) {
+  const deleteMessage = async (messageId, chatId, senderId, recipientId) => {
     try {
       const chatRef = doc(db, "chats", chatId);
       const chatDoc = await getDoc(chatRef);
@@ -256,7 +255,7 @@ export function useChat() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     getChatById,

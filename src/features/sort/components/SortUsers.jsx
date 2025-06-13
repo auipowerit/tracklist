@@ -10,7 +10,7 @@ export default function SortUsers(props) {
     { label: "Z - A", value: "rev-alphabet" },
   ];
 
-  function sortMethod(sortValue) {
+  const sortMethod = (sortValue) => {
     if (sortValue === "relevant") {
       return [...initialUsers];
     }
@@ -27,7 +27,7 @@ export default function SortUsers(props) {
           return 0;
       }
     });
-  }
+  };
 
   return (
     <SortButton

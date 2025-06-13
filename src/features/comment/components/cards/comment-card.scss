@@ -36,7 +36,7 @@
     @include flexrow(initial, center, 0.25em);
 
     &--reply {
-      @include font(0.5, bold);
+      @include font(0.65, bold);
 
       &:hover {
         color: $light-blue;

@@ -10,25 +10,24 @@ export default function SortButton(props) {
   const [showSort, setShowSort] = useState(false);
   const sorterRef = useRef(null);
 
-  function sortResults(sortValue) {
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sorterRef.current && !sorterRef.current.contains(e.target)) {
+        setShowSort(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const sortResults = (sortValue) => {
     const sortedResults = sortMethod(sortValue);
     setResults([...sortedResults]);
 
     setShowSort(false);
-  }
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (sorterRef.current && !sorterRef.current.contains(e.target)) {
-        setShowSort(false);
-      }
-    }
-
-    window.addEventListener("click", handleClickOutside);
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  };
 
   return (
     <div ref={sorterRef} className="sort">

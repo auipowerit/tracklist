@@ -97,24 +97,24 @@ function ListDropdown(props) {
           setOrientation={setOrientation}
         />
 
-        {canEdit && (
-          <>
-            <EditToggle isEditing={isEditing} setIsEditing={setIsEditing} />
+        <EditToggle
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          setShowDropdown={setShowDropdown}
+        />
 
-            <div className="account-list__dropdown-buttons">
-              <AddToListButton
-                isModalOpen={isAddModalOpen}
-                setIsModalOpen={setIsAddModalOpen}
-                list={list}
-              />
-              <EditListButton
-                isModalOpen={isEditModalOpen}
-                setIsModalOpen={setIsEditModalOpen}
-                list={list}
-              />
-            </div>
-          </>
-        )}
+        <div className="account-list__dropdown-buttons">
+          <AddToListButton
+            isModalOpen={isAddModalOpen}
+            setIsModalOpen={setIsAddModalOpen}
+            list={list}
+          />
+          <EditListButton
+            isModalOpen={isEditModalOpen}
+            setIsModalOpen={setIsEditModalOpen}
+            list={list}
+          />
+        </div>
       </div>
     </div>
   );
@@ -158,9 +158,10 @@ function OrientationButtons({ orientation, setOrientation, showLabel = true }) {
   );
 }
 
-function EditToggle({ isEditing, setIsEditing }) {
+function EditToggle({ isEditing, setIsEditing, setShowDropdown }) {
   function handleToggle() {
     setIsEditing(!isEditing);
+    !isEditing && setShowDropdown(false);
   }
 
   return (

@@ -14,13 +14,13 @@ export default function ShareButton(props) {
 
   const navigate = useNavigate();
 
-  function handleClick() {
+  const handleClick = () => {
     if (!globalUser) {
       navigate("/authenticate");
       return;
     }
     setIsModalOpen(true);
-  }
+  };
 
   return (
     <div>

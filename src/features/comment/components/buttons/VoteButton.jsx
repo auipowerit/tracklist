@@ -6,10 +6,11 @@ import "./comment-button.scss";
 
 export default function VoteButton(props) {
   const { comment, handleVote, updateComment, type } = props;
-  const { globalUser } = useAuthContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
+
+  const { globalUser } = useAuthContext();
 
   const count =
     type === "like" ? comment.likes.length : comment.dislikes.length || 0;
@@ -20,7 +21,7 @@ export default function VoteButton(props) {
       : comment?.dislikes.includes(globalUser.uid)
     : false;
 
-  async function handleClick() {
+  const handleClick = async () => {
     if (!globalUser) return;
 
     setIsLoading(true);
@@ -39,7 +40,7 @@ export default function VoteButton(props) {
     updateComment(comment, updatedComment);
 
     setIsLoading(false);
-  }
+  };
 
   return (
     <button

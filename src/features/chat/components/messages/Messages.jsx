@@ -55,7 +55,7 @@ function MessageCard({ message, index, messages }) {
 
   const isCurrentUser = message.senderId === globalUser.uid;
 
-  function handleClick(e) {
+  const handleClick = (e) => {
     // Reveal heart or delete button
     e.target.parentNode.classList.add("message__bubble--clicked");
 
@@ -63,7 +63,7 @@ function MessageCard({ message, index, messages }) {
     setTimeout(() => {
       e.target.parentNode.classList.remove("message__bubble--clicked");
     }, 2000);
-  }
+  };
 
   return (
     <div className="message">
@@ -104,7 +104,9 @@ function MessageDate({ message, index, messages }) {
       ? date !== new Date()
       : date.getDate() !== messages[index - 1].createdAt.toDate().getDate();
 
-  if (!isDifferentDate) return;
+  if (!isDifferentDate) {
+    return;
+  }
 
   return <p className="message__date">{formatDateDMD(date)}</p>;
 }
@@ -113,7 +115,7 @@ function MessageDeleteButton({ message, isCurrentUser }) {
   const { globalUser } = useAuthContext();
   const { deleteMessage, activeChatUser } = useChatContext();
 
-  async function handleDelete() {
+  const handleDelete = async () => {
     if (!isCurrentUser) return;
 
     await deleteMessage(
@@ -122,7 +124,7 @@ function MessageDeleteButton({ message, isCurrentUser }) {
       activeChatUser.uid,
       globalUser.uid,
     );
-  }
+  };
 
   return (
     <Button
@@ -141,14 +143,15 @@ function MessageLikeButton({ message, isCurrentUser }) {
   const color = message.isLiked
     ? "message__like--liked"
     : "message__like--unliked";
+
   const position = isCurrentUser
     ? "message__like--user"
     : "message__like--friend";
 
-  async function handleLike() {
+  const handleLike = async () => {
     if (isCurrentUser) return;
     await likeMessage(message.id, message.chatId, !message.isLiked);
-  }
+  };
 
   return (
     <Button

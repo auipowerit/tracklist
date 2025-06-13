@@ -7,15 +7,15 @@ import MediaReviews from "../reviews/MediaReviews";
 import "./album-profile.scss";
 
 export default function AlbumProfile() {
-  const context = useOutletContext();
-  const { artist, album, activeTab, setActiveTab, filter, setFilter } = context;
-
-  const tracks = useMemo(() => album?.tracks.items, [album]);
-
   const tabs = [
     { id: "tracks", label: "Tracks" },
     { id: "reviews", label: "Reviews" },
   ];
+
+  const context = useOutletContext();
+  const { artist, album, activeTab, setActiveTab, filter, setFilter } = context;
+
+  const tracks = useMemo(() => album?.tracks.items, [album]);
 
   useEffect(() => {
     setActiveTab("tracks");
@@ -58,13 +58,13 @@ function TrackList({ artistId, albumId, tracks }) {
 }
 
 function TrackCard({ track, artistId, albumId }) {
-  const { getAvgRating } = useReviewContext();
   const [rating, setRating] = useState({});
+
+  const { getAvgRating } = useReviewContext();
 
   useEffect(() => {
     const fetchRating = async () => {
       const { avgRating, count } = await getAvgRating(track.id);
-
       setRating({ avgRating, count });
     };
 

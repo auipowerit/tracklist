@@ -10,12 +10,50 @@ import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import "./inbox-list.scss";
 
 export default function InboxList() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [notifications, setnotifications] = useState([]);
+
   const { globalUser, getUserById } = useAuthContext();
   const { readAllNotifications } = useInboxContext();
   const { getListById } = useListContext();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [notifications, setnotifications] = useState([]);
+  const processNotifications = async (notifications) => {
+    const inboxData = await Promise.all(
+      notifications.map(async (notification) => {
+        const user = await getUserById(notification.senderId);
+        const timeSince = getTimeSinceDay(notification.createdAt.toDate());
+
+        if (notification.category === "list") {
+          const list = await getListById(notification.contentId);
+          if (list && list.length > 0) {
+            return {
+              ...notification,
+              username: user.username,
+              profileUrl: user.profileUrl,
+              subtitle: list.name,
+              timeSince,
+            };
+          }
+
+          return;
+        }
+
+        return {
+          ...notification,
+          username: user.username,
+          profileUrl: user.profileUrl,
+          timeSince,
+        };
+      }),
+    );
+
+    // Sort by timeSince then by date
+    const sortedInbox = inboxData.sort(
+      (a, b) => b.timeSince - a.timeSince || b.createdAt - a.createdAt,
+    );
+
+    return sortedInbox;
+  };
 
   useEffect(() => {
     if (!globalUser) {
@@ -54,44 +92,6 @@ export default function InboxList() {
 
     return () => unsubscribe();
   }, [globalUser]);
-
-  async function processNotifications(notifications) {
-    const inboxData = await Promise.all(
-      notifications.map(async (notification) => {
-        const user = await getUserById(notification.senderId);
-        const timeSince = getTimeSinceDay(notification.createdAt.toDate());
-
-        if (notification.category === "list") {
-          const list = await getListById(notification.contentId);
-          if (list && list.length > 0) {
-            return {
-              ...notification,
-              username: user.username,
-              profileUrl: user.profileUrl,
-              subtitle: list.name,
-              timeSince,
-            };
-          }
-
-          return;
-        }
-
-        return {
-          ...notification,
-          username: user.username,
-          profileUrl: user.profileUrl,
-          timeSince,
-        };
-      }),
-    );
-
-    // Sort by timeSince then by date
-    const sortedInbox = inboxData.sort(
-      (a, b) => b.timeSince - a.timeSince || b.createdAt - a.createdAt,
-    );
-
-    return sortedInbox;
-  }
 
   if (isLoading) {
     return <Loading />;

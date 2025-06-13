@@ -28,7 +28,7 @@ export default function SearchResults({ results, category }) {
 }
 
 function ResultCard({ result, category }) {
-  function getUrl(result) {
+  const getUrl = (result) => {
     switch (result.type) {
       case "artist":
         return `/artists/${result.id}`;
@@ -39,17 +39,15 @@ function ResultCard({ result, category }) {
       default:
         return `/users/${result.username}`;
     }
+  };
+
+  if (category === "user") {
+    return <UserCard user={result} />;
   }
 
   return (
-    <>
-      {category === "user" ? (
-        <UserCard user={result} />
-      ) : (
-        <Link to={getUrl(result)}>
-          <MediaCard media={result} category={category} />
-        </Link>
-      )}
-    </>
+    <Link to={getUrl(result)}>
+      <MediaCard media={result} category={category} />
+    </Link>
   );
 }

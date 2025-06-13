@@ -14,13 +14,6 @@ import "./share-form.scss";
 export default function ShareForm(props) {
   const { isModalOpen, setIsModalOpen, mediaId, category } = props;
 
-  const { globalUser } = useAuthContext();
-  const { chats, addChat, sendMessage } = useChatContext();
-  const { getReviewById } = useReviewContext();
-  const { getMediaById } = useSpotifyContext();
-
-  const navigate = useNavigate();
-
   const [error, setError] = useState("");
   const [media, setMedia] = useState(null);
   const [input, setInput] = useState("");
@@ -30,69 +23,60 @@ export default function ShareForm(props) {
 
   const formRef = useRef(null);
 
+  const navigate = useNavigate();
+
+  const { globalUser } = useAuthContext();
+  const { chats, addChat, sendMessage } = useChatContext();
+  const { getReviewById } = useReviewContext();
+  const { getMediaById } = useSpotifyContext();
+
   useEffect(() => {
-    handleModal();
+    if (isModalOpen) {
+      resetValues();
+    }
+
+    const handleData = async () => {
+      if (!globalUser || !mediaId || !category) return;
+
+      const fetchedMedia =
+        category === "review"
+          ? await getReviewById(mediaId, category)
+          : await getMediaById(mediaId, category);
+
+      setMedia(fetchedMedia);
+
+      if (!fetchedMedia) {
+        resetValues();
+        setIsModalOpen(false);
+      }
+    };
+
     handleData();
   }, [isModalOpen]);
 
-  function handleModal() {
-    if (isModalOpen) resetValues();
-  }
-
-  async function handleData() {
-    if (!globalUser || !mediaId || !category) return;
-
-    const fetchedMedia =
-      category === "review"
-        ? await getReviewById(mediaId, category)
-        : await getMediaById(mediaId, category);
-
-    setMedia(fetchedMedia);
-
-    if (!fetchedMedia) {
-      resetValues();
-      setIsModalOpen(false);
-    }
-  }
-
-  async function handleAddUser(user) {
+  const handleAddUser = async (user) => {
     setCurrentUser([...currentUsers, user]);
 
     setUsers([]);
     setInput("");
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateData()) return;
+    const isValid = validateData();
+    if (!isValid) return;
 
-    // For each added user
-    currentUsers.forEach(async (user) => {
-      // Find the chat between the current user and the added user
-      const foundChat = chats.find((chat) => chat.recipientId === user.uid);
-
-      // Get the chat ID of found chat or create new one
-      const chatId = foundChat
-        ? foundChat.chatId
-        : await addChat(globalUser.uid, user.uid);
-
-      // Send message to user with media ID and media category
-      await sendMessage(chatId, globalUser.uid, user.uid, media.id, category);
-
-      // Send message to user after sending media
-      if (message === "") return;
-      await sendMessage(chatId, globalUser.uid, user.uid, message);
-    });
+    await handleSendMessage();
 
     resetValues();
     setIsModalOpen(false);
 
     // Send to messages page
     navigate("/messages");
-  }
+  };
 
-  function validateData() {
+  const validateData = () => {
     const friendInput = formRef.current.elements["friend"];
 
     if (!globalUser) {
@@ -112,17 +96,38 @@ export default function ShareForm(props) {
     }
 
     return true;
-  }
+  };
 
-  function resetValues() {
+  const handleSendMessage = async () => {
+    // For each added user
+    currentUsers.forEach(async (user) => {
+      // Find the chat between the current user and the added user
+      const foundChat = chats.find((chat) => chat.recipientId === user.uid);
+
+      // Get the chat ID of found chat or create new one
+      const chatId = foundChat
+        ? foundChat.chatId
+        : await addChat(globalUser.uid, user.uid);
+
+      // Send message to user with media ID and media category
+      await sendMessage(chatId, globalUser.uid, user.uid, media.id, category);
+
+      // Send message to user after sending media
+      if (message === "") return;
+      await sendMessage(chatId, globalUser.uid, user.uid, message);
+    });
+  };
+
+  const resetValues = () => {
     setMedia(null);
     setInput("");
     setUsers([]);
     setCurrentUser([]);
     setMessage("");
     setError("");
+
     formRef.current.elements["friend"].classList.remove("form__input--invalid");
-  }
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="form share-form">
@@ -172,7 +177,7 @@ function FormImage({ media }) {
 function FormInput({ input, setInput, setUsers, currentUsers }) {
   const { globalUser, searchByUser } = useAuthContext();
 
-  async function handleSearch(e) {
+  const handleSearch = async (e) => {
     setInput(e.target.value);
 
     if (e.target.value === "") {
@@ -198,7 +203,7 @@ function FormInput({ input, setInput, setUsers, currentUsers }) {
     });
 
     setUsers(filteredUsers);
-  }
+  };
 
   return (
     <input
@@ -241,9 +246,9 @@ function FormUserResults({ users, handleAddUser }) {
 }
 
 function FormUsersList({ currentUsers, setCurrentUser }) {
-  function handleRemoveUser(userId) {
+  const handleRemoveUser = (userId) => {
     setCurrentUser(currentUsers.filter((user) => user.uid !== userId));
-  }
+  };
 
   return (
     <div className="share-form__users">
@@ -266,9 +271,9 @@ function FormUsersList({ currentUsers, setCurrentUser }) {
 }
 
 function FormMessage({ message, setMessage }) {
-  function handleChange(e) {
+  const handleChange = (e) => {
     setMessage(e.target.value);
-  }
+  };
 
   return (
     <input

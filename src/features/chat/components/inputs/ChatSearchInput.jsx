@@ -7,14 +7,13 @@ import { useChatContext } from "../../context/ChatContext";
 import "./chat-inputs.scss";
 
 export default function ChatSearchInput() {
+  const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
   const { globalUser, getUserById, searchByUser } = useAuthContext();
   const { chats, addChat, setActiveChatId, setActiveChatUser } =
     useChatContext();
-
-  const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
-
-  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -45,7 +44,7 @@ export default function ChatSearchInput() {
     handleSearch();
   }, [search, isSearching]);
 
-  async function handleSearch(e) {
+  const handleSearch = async (e) => {
     e.preventDefault();
     const input = e.target.value;
 
@@ -64,9 +63,9 @@ export default function ChatSearchInput() {
     });
 
     setUsers(fetchedUsers);
-  }
+  };
 
-  async function handleAddUser(friendId) {
+  const handleAddUser = async (friendId) => {
     setSearch("");
     setUsers([]);
 
@@ -81,7 +80,7 @@ export default function ChatSearchInput() {
       setActiveChatId(chatId);
       setActiveChatUser(recipient);
     }
-  }
+  };
 
   return (
     <div className="chat-search">
@@ -99,9 +98,9 @@ export default function ChatSearchInput() {
 function CancelButton() {
   const { setIsCollapsed } = useChatContext();
 
-  function handleClick() {
+  const handleClick = () => {
     setIsCollapsed(false);
-  }
+  };
 
   return (
     <Button

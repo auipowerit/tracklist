@@ -119,8 +119,10 @@ export default function AddToList(props) {
     setLists([]);
     setCurrentLists([]);
     setType("artist");
+    
     selectRef.current.value = "";
     mediaInputRef.current.value = "";
+
     formRef.current.elements["media"].classList.remove("form__input--invalid");
     formRef.current.elements["list"].classList.remove("form__input--invalid");
   }

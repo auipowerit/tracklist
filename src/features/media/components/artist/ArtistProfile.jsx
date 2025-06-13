@@ -7,21 +7,21 @@ import MediaReviews from "../reviews/MediaReviews";
 import "./artist-profile.scss";
 
 export default function ArtistProfile() {
+  const tabs = [
+    { id: "albums", label: "Albums" },
+    { id: "singles", label: "Singles" },
+    { id: "reviews", label: "Reviews" },
+  ];
+
   const context = useOutletContext();
   const { artist, activeTab, setActiveTab, filter, setFilter } = context;
-
-  const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
   const [albums, setAlbums] = useState(null);
   const [isMoreAlbums, setIsMoreAlbums] = useState(false);
   const [singles, setSingles] = useState(null);
   const [isMoreSingles, setIsMoreSingles] = useState(false);
 
-  const tabs = [
-    { id: "albums", label: "Albums" },
-    { id: "singles", label: "Singles" },
-    { id: "reviews", label: "Reviews" },
-  ];
+  const { getArtistAlbums, getArtistSingles } = useSpotifyContext();
 
   useEffect(() => {
     setActiveTab("albums");
@@ -34,22 +34,23 @@ export default function ArtistProfile() {
         console.log(error);
       }
     };
+
     getArtistData();
   }, []);
 
-  async function loadAlbums(start) {
+  const loadAlbums = async (start) => {
     const fetchedAlbums = await getArtistAlbums(artist?.id, start, 7);
 
     setIsMoreAlbums(fetchedAlbums.length === 7);
     setAlbums([...(albums || []), ...fetchedAlbums.splice(0, 6)]);
-  }
+  };
 
-  async function loadSingles(start) {
+  const loadSingles = async (start) => {
     const fetchedSingles = await getArtistSingles(artist?.id, start, 7);
 
     setIsMoreSingles(fetchedSingles.length === 7);
     setSingles([...(singles || []), ...fetchedSingles.splice(0, 6)]);
-  }
+  };
 
   if (!albums && !singles) {
     return;

@@ -6,23 +6,23 @@ import FollowButton from "src/features/user/components/buttons/FollowButton";
 import "./inbox-card.scss";
 
 export default function InboxCard({ notification }) {
+  const [user, setUser] = useState(null);
+
   const { globalUser, getUserById } = useAuthContext();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(null);
-
   useEffect(() => {
-    async function fetchUser() {
+    const fetchUser = async () => {
       if (notification.category === "user") {
         const fetchedUser = await getUserById(notification.senderId);
         setUser(fetchedUser);
       }
-    }
+    };
 
-    fetchUser();
+    return () => fetchUser();
   }, [notification]);
 
-  function handleClick(category, contentId) {
+  const handleClick = (category, contentId) => {
     switch (category) {
       case "user":
         navigate(`/users/${contentId}`);
@@ -40,7 +40,7 @@ export default function InboxCard({ notification }) {
       default:
         break;
     }
-  }
+  };
 
   return (
     <div className="inbox-card">
@@ -73,17 +73,12 @@ function UserImage({ profileUrl }) {
 
 function Content({ notification }) {
   return (
-    <>
-      <p className="inbox-card__title">
-        {notification.title}
-        {notification.subtitle && (
-          <span className="inbox-card__subtitle">
-            {" "}
-            "{notification.subtitle}"
-          </span>
-        )}
-      </p>
-    </>
+    <p className="inbox-card__title">
+      {notification.title}
+      {notification.subtitle && (
+        <span className="inbox-card__subtitle"> "{notification.subtitle}"</span>
+      )}
+    </p>
   );
 }
 

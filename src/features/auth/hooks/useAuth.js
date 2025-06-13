@@ -24,7 +24,7 @@ import {
 } from "firebase/auth";
 
 export function useAuth() {
-  async function signup(email, password, displayname, username, setError) {
+  const signup = async (email, password, displayname, username, setError) => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -52,9 +52,9 @@ export function useAuth() {
 
       return false;
     }
-  }
+  };
 
-  async function createUser(email, displayname, username, uid, setError) {
+  const createUser = async (email, displayname, username, uid, setError) => {
     try {
       const newUserData = {
         email: email.toLowerCase(),
@@ -86,9 +86,9 @@ export function useAuth() {
       setError("Something went wrong! Please review fields.");
       return false;
     }
-  }
+  };
 
-  async function usernameAvailable(username) {
+  const usernameAvailable = async (username) => {
     try {
       username = username.toLowerCase();
 
@@ -101,9 +101,9 @@ export function useAuth() {
       console.log(error);
       return false;
     }
-  }
+  };
 
-  async function login(email, password, setError) {
+  const login = async (email, password, setError) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return true;
@@ -122,9 +122,9 @@ export function useAuth() {
 
       return false;
     }
-  }
+  };
 
-  async function loginWithGoogle(setError, username) {
+  const loginWithGoogle = async (setError, username) => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -167,22 +167,22 @@ export function useAuth() {
       setError("Something went wrong! Please try again.");
       return false;
     }
-  }
+  };
 
-  function logout() {
+  const logout = () => {
     return signOut(auth);
-  }
+  };
 
-  async function checkIfEmailExists(email) {
+  const checkIfEmailExists = async (email) => {
     const emailAccounts = await fetchSignInMethodsForEmail(auth, email);
     return emailAccounts.length > 0;
-  }
+  };
 
-  function resetPassword(email) {
+  const resetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
-  }
+  };
 
-  async function updateSpotifyInfo(userId, profileUrl, spotifyUrl) {
+  const updateSpotifyInfo = async (userId, profileUrl, spotifyUrl) => {
     try {
       if (!userId || !profileUrl || !spotifyUrl) return;
 
@@ -192,9 +192,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUserById(userId) {
+  const getUserById = async (userId) => {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
@@ -209,9 +209,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUserByUsername(username) {
+  const getUserByUsername = async (username) => {
     try {
       username = username.toLowerCase();
 
@@ -235,9 +235,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUserByEmail(email) {
+  const getUserByEmail = async (email) => {
     try {
       email = email.toLowerCase();
 
@@ -261,9 +261,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function searchByUser(name, currentUserId) {
+  const searchByUser = async (name, currentUserId) => {
     try {
       name = name.toLowerCase();
 
@@ -312,9 +312,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function followUser(followerId, userId) {
+  const followUser = async (followerId, userId) => {
     try {
       const usersRef = collection(db, "users");
       const currentUserRef = doc(usersRef, userId);
@@ -332,9 +332,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function unfollowUser(unfollowedId, userId) {
+  const unfollowUser = async (unfollowedId, userId) => {
     try {
       const usersRef = collection(db, "users");
       const currentUserRef = doc(usersRef, userId);
@@ -352,9 +352,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getFollowingById(userId) {
+  const getFollowingById = async (userId) => {
     try {
       const user = await getUserById(userId);
       if (!user) return;
@@ -363,9 +363,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getFollowersById(userId) {
+  const getFollowersById = async (userId) => {
     try {
       const user = await getUserById(userId);
       if (!user) return;
@@ -374,18 +374,18 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function updateUserDetails(userId, displayname, bio) {
+  const updateUserDetails = async (userId, displayname, bio) => {
     try {
       const userRef = doc(db, "users", userId);
       await updateDoc(userRef, { displayname, bio });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function likeContent(contentId, category, userId) {
+  const likeContent = async (contentId, category, userId) => {
     try {
       if (!contentId || !category || !userId) return;
 
@@ -423,9 +423,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUserLikes(userId) {
+  const getUserLikes = async (userId) => {
     try {
       const userLikesRef = doc(db, "userlikes", userId);
       const userLikesDoc = await getDoc(userLikesRef);
@@ -436,9 +436,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function addToInbox(userId) {
+  const addToInbox = async (userId) => {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
@@ -451,9 +451,9 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getUnreadInbox(userId) {
+  const getUnreadInbox = async (userId) => {
     try {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
@@ -464,7 +464,7 @@ export function useAuth() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     signup,

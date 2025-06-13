@@ -6,9 +6,9 @@ import { useSpotifyContext } from "src/features/media/context/SpotifyContext";
 import "./review-media.scss";
 
 export default function ReviewMedia({ review }) {
-  const { getMediaLinks } = useSpotifyContext();
-
   const [mediaData, setMediaData] = useState({});
+
+  const { getMediaLinks } = useSpotifyContext();
 
   useEffect(() => {
     const fetchData = () => {

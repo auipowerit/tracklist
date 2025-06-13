@@ -4,10 +4,10 @@ import Tabs from "src/features/shared/components/buttons/Tabs";
 import MediaReviews from "../reviews/MediaReviews";
 
 export default function TrackProfile() {
+  const tabs = [{ id: "reviews", label: "Reviews" }];
+
   const context = useOutletContext();
   const { track, activeTab, setActiveTab, filter, setFilter } = context;
-
-  const tabs = [{ id: "reviews", label: "Reviews" }];
 
   useEffect(() => {
     setActiveTab("reviews");

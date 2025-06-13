@@ -16,6 +16,8 @@ import ChatSearchInput from "../inputs/ChatSearchInput";
 import "./chat-window.scss";
 
 export default function ChatWindow() {
+  const [messages, setMessages] = useState([]);
+
   const { globalUser } = useAuthContext();
   const {
     activeChatId,
@@ -28,37 +30,7 @@ export default function ChatWindow() {
   const { getReviewById } = useReviewContext();
   const { getMediaById, getMediaLinks } = useSpotifyContext();
 
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    if (!activeChatId || activeChatId === -1) {
-      setMessages([]);
-      return;
-    }
-
-    const unsubscribe = onSnapshot(
-      doc(db, "chats", activeChatId),
-      async (doc) => {
-        const messages = doc
-          .data()
-          .messages.sort((a, b) => a.createdAt - b.createdAt);
-
-        if (messages.length === 0) return;
-
-        const messageData = await processMessages(messages);
-        setMessages(messageData);
-
-        markAsRead();
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-
-    return () => unsubscribe();
-  }, [activeChatId, activeChatUser]);
-
-  async function processMessages(messages) {
+  const processMessages = async (messages) => {
     const messageData = await Promise.all(
       messages.map(async (message) => {
         if (!message || !globalUser) return null;
@@ -105,19 +77,47 @@ export default function ChatWindow() {
     );
 
     return messageData;
-  }
+  };
 
-  async function markAsRead() {
+  const markAsRead = async () => {
     // Delay read message to allow navbar to sync unread count
     setTimeout(async () => {
       await readMessage(activeChatId, globalUser.uid);
     }, 1500);
-  }
+  };
 
-  function handleCollapse() {
+  useEffect(() => {
+    if (!activeChatId || activeChatId === -1) {
+      setMessages([]);
+      return;
+    }
+
+    const unsubscribe = onSnapshot(
+      doc(db, "chats", activeChatId),
+      async (doc) => {
+        const messages = doc
+          .data()
+          .messages.sort((a, b) => a.createdAt - b.createdAt);
+
+        if (messages.length === 0) return;
+
+        const messageData = await processMessages(messages);
+        setMessages(messageData);
+
+        markAsRead();
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+
+    return () => unsubscribe();
+  }, [activeChatId, activeChatUser]);
+
+  const handleCollapse = () => {
     setActiveChatId(-1);
     setIsCollapsed(false);
-  }
+  };
 
   if (activeChatId === -1) {
     return (

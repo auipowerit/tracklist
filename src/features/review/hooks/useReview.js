@@ -22,7 +22,7 @@ export function useReview() {
   const { getUserById } = useAuthContext();
   const { getMediaById } = useSpotifyContext();
 
-  async function getNewReviews() {
+  const getNewReviews = async () => {
     try {
       const reviewsRef = collection(db, "reviews");
       const reviewsDoc = await getDocs(reviewsRef);
@@ -43,9 +43,9 @@ export function useReview() {
       console.error(error.message);
       return [];
     }
-  }
+  };
 
-  async function getPopularReviews() {
+  const getPopularReviews = async () => {
     try {
       const reviewsRef = collection(db, "reviews");
 
@@ -81,9 +81,9 @@ export function useReview() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getReviewById(reviewId) {
+  const getReviewById = async (reviewId) => {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -104,9 +104,9 @@ export function useReview() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  async function getReviewsByUserId(userId) {
+  const getReviewsByUserId = async (userId) => {
     try {
       if (!userId) return [];
 
@@ -140,9 +140,9 @@ export function useReview() {
       console.error(error.message);
       return [];
     }
-  }
+  };
 
-  async function getReviewsByMediaId(mediaId) {
+  const getReviewsByMediaId = async (mediaId) => {
     try {
       const reviewsRef = collection(db, "reviews");
       const q = query(reviewsRef, where("mediaId", "==", mediaId));
@@ -167,9 +167,9 @@ export function useReview() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function getRatings(mediaId) {
+  const getRatings = async (mediaId) => {
     try {
       const ratingsRef = collection(db, "reviews");
       const q = query(ratingsRef, where("mediaId", "==", mediaId));
@@ -179,9 +179,9 @@ export function useReview() {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
-  async function getAvgRating(mediaId) {
+  const getAvgRating = async (mediaId) => {
     try {
       if (!mediaId) return;
 
@@ -204,9 +204,9 @@ export function useReview() {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
-  async function addReview(reviewInfo) {
+  const addReview = async (reviewInfo) => {
     try {
       if (!reviewInfo) return false;
 
@@ -218,9 +218,9 @@ export function useReview() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  async function deleteReview(reviewId) {
+  const deleteReview = async (reviewId) => {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -232,9 +232,9 @@ export function useReview() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  async function likeReview(reviewId, userId) {
+  const likeReview = async (reviewId, userId) => {
     try {
       const reviewRef = doc(db, "reviews", reviewId);
       const reviewDoc = await getDoc(reviewRef);
@@ -259,9 +259,9 @@ export function useReview() {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
-  async function deleteReviewComment(commentId, reviewId) {
+  const deleteReviewComment = async (commentId, reviewId) => {
     try {
       const commentRef = doc(db, "comments", commentId);
       const commentDoc = await getDoc(commentRef);
@@ -301,7 +301,7 @@ export function useReview() {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
   return {
     getNewReviews,

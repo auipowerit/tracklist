@@ -31,7 +31,7 @@ export default function SortMusic(props) {
     { label: "Z - A", value: "rev-alphabet" },
   ];
 
-  function sortMethod(sortValue) {
+  const sortMethod = (sortValue) => {
     if (sortValue === "relevant") {
       return [...initialResults];
     }
@@ -67,7 +67,7 @@ export default function SortMusic(props) {
           return 0;
       }
     });
-  }
+  };
 
   return (
     <SortButton

@@ -4,13 +4,13 @@ import Button from "./Button";
 import "./shared-buttons.scss";
 
 export default function DeleteButton({ type, deleteContent }) {
-  async function handleDelete() {
+  const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this " + type + "?")) {
       return;
     }
 
     await deleteContent();
-  }
+  };
 
   return (
     <Button

@@ -2,16 +2,16 @@ import Button from "../buttons/Button";
 import "./modal.scss";
 
 export default function Modal({ children, isModalOpen, setIsModalOpen }) {
-  function onClose() {
+  const handleClose = () => {
     setIsModalOpen(false);
     document.body.classList.remove("lock-scroll");
-  }
+  };
 
   return (
-    <div onClick={onClose} className="modal" aria-expanded={isModalOpen}>
+    <div onClick={handleClose} className="modal" aria-expanded={isModalOpen}>
       <div onClick={(e) => e.stopPropagation()} className="modal__container">
         <Button
-          onClick={onClose}
+          onClick={handleClose}
           classes="modal__button"
           ariaLabel="close modal"
         >
