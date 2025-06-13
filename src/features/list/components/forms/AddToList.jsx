@@ -167,11 +167,7 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img
-      src={media?.image || DEFAULT_MEDIA_IMG}
-      className="form__image"
-      alt="list media"
-    />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
   );
 }
 

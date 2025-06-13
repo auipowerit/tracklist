@@ -75,11 +75,7 @@ function Review({ review }) {
 function ReviewHeader({ review }) {
   return (
     <div className="review__header">
-      <img
-        src={review.profileUrl}
-        className="review__profile"
-        alt="reviewed media"
-      />
+      <img src={review.profileUrl} className="review__profile" />
 
       <div className="review__details">
         <div className="review__title">

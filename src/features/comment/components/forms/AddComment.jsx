@@ -5,9 +5,9 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import { useInboxContext } from "src/features/inbox/context/InboxContext";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import "./comment-form.scss";
+import "./add-comment.scss";
 
-export default function CommentForm({
+export default function AddComment({
   review,
   setComments,
   comment,
@@ -120,11 +120,7 @@ export default function CommentForm({
     >
       <div className="comment-form__input-container">
         {globalUser && (
-          <img
-            src={globalUser.profileUrl}
-            className="comment-form__profile"
-            alt="current user profile"
-          />
+          <img src={globalUser.profileUrl} className="comment-form__profile" />
         )}
 
         <input

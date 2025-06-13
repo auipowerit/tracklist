@@ -26,11 +26,7 @@ export default function ReviewCard({ review }) {
         className="review-card"
       >
         <div className="review-card__header">
-          <img
-            src={review.media.image}
-            className="review-card__image"
-            alt="reviewed media"
-          />
+          <img src={review.media.image} className="review-card__image" />
 
           <div className="review-card__info">
             <ReviewUser review={review} />

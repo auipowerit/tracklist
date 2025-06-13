@@ -23,9 +23,7 @@ export default function ListCard({ image, list }) {
 }
 
 function Image({ image }) {
-  return (
-    <img src={image} className="list-card__image" alt="list media image" />
-  );
+  return <img src={image} className="list-card__image" />;
 }
 
 function LockIcon() {

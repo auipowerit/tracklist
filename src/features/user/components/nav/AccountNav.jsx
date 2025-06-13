@@ -27,11 +27,7 @@ function Profile({ user }) {
       className="account-nav__link"
       aria-selected={isHomePage ? "true" : "false"}
     >
-      <img
-        src={user.profileUrl}
-        className="account-nav__image"
-        alt="user profile"
-      />
+      <img src={user.profileUrl} className="account-nav__image" />
       <p>{user.username}</p>
     </Link>
   );

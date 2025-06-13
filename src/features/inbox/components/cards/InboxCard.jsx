@@ -68,13 +68,7 @@ export default function InboxCard({ notification }) {
 }
 
 function UserImage({ profileUrl }) {
-  return (
-    <img
-      src={profileUrl}
-      className="inbox-card__profile"
-      alt="sender profile"
-    />
-  );
+  return <img src={profileUrl} className="inbox-card__profile" />;
 }
 
 function Content({ notification }) {
@@ -102,7 +96,5 @@ function Date({ createdAt }) {
 function MediaImage({ image }) {
   if (image === "") return null;
 
-  return (
-    <img src={image} className="inbox-card__media" alt="notification media" />
-  );
+  return <img src={image} className="inbox-card__media" />;
 }

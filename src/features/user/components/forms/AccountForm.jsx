@@ -71,11 +71,7 @@ function FormImage({ globalUser }) {
 
   return (
     <div className="user-form__profile">
-      <img
-        src={globalUser?.profileUrl}
-        className="user-form__image"
-        alt="current user profile"
-      />
+      <img src={globalUser?.profileUrl} className="user-form__image" />
 
       <Button
         onClick={() => redirectToSpotifyAuth(false)}

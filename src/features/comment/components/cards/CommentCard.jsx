@@ -8,7 +8,7 @@ import VoteButton from "src/features/comment/components/buttons/VoteButton";
 import { useReviewContext } from "src/features/review/context/ReviewContext";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
 import { useCommentContext } from "src/features/comment/context/CommentContext";
-import CommentForm from "../forms/CommentForm";
+import AddComment from "../forms/AddComment";
 import RepliesList from "../lists/RepliesList";
 import ReplyButton from "../buttons/ReplyButton";
 import "./comment-card.scss";
@@ -32,7 +32,7 @@ export default function CommentCard(props) {
       />
 
       {isReplying && (
-        <CommentForm
+        <AddComment
           review={review}
           setComments={setComments}
           comment={comment}
@@ -66,11 +66,7 @@ function Header({ comment }) {
 function UserInfo({ comment }) {
   return (
     <Link to={`/users/${comment.username}`} className="comment-card__user">
-      <img
-        src={comment.profileUrl}
-        className="comment-card__profile"
-        alt="comment user profile"
-      />
+      <img src={comment.profileUrl} className="comment-card__profile" />
       <p className="comment-card__username">@{comment.username}</p>
     </Link>
   );

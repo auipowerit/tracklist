@@ -73,11 +73,7 @@ function RightButton({ user, canEdit }) {
 function UserData({ user }) {
   return (
     <>
-      <img
-        src={user.profileUrl}
-        className="account-mobile-nav__image"
-        alt="user profile"
-      />
+      <img src={user.profileUrl} className="account-mobile-nav__image" />
       <div className="account-mobile-nav__user">
         <p className="account-mobile-nav__displayname">{user.displayname}</p>
         <p className="account-mobile-nav__username">@{user.username}</p>

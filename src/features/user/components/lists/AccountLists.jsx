@@ -155,9 +155,7 @@ function ListItem({ item, image }) {
 
   return (
     <Link to={link} className="account-lists__item">
-      {listUser && (
-        <p className="account-lists__user">{`Created by ${listUser}`}</p>
-      )}
+      {listUser && <p className="account-lists__user">{listUser}</p>}
       <ListCard id={item.id} list={item} image={image} />
     </Link>
   );

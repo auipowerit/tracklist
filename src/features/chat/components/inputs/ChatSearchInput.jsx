@@ -136,11 +136,7 @@ function SearchResults({ users, handleAddUser }) {
           classes="chat-search__user"
           ariaLabel="add user to chat"
         >
-          <img
-            src={user.profileUrl}
-            className="chat-search__image"
-            alt="chat user profile"
-          />
+          <img src={user.profileUrl} className="chat-search__image" />
           <div className="chat-search__info">
             <p className="chat-search__displayname">{user.displayname}</p>
             <p className="chat-search__username">@{user.username}</p>

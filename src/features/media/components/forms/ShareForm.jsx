@@ -225,11 +225,7 @@ function FormUserResults({ users, handleAddUser }) {
           classes="share-form__search__item"
           ariaLabel="add user to share contet"
         >
-          <img
-            src={user.profileUrl}
-            className="share-form__search__image"
-            alt="shared media"
-          />
+          <img src={user.profileUrl} className="share-form__search__image" />
           <div className="share-form__search__info">
             <p className="share-form__search__displayname">
               {user.displayname}

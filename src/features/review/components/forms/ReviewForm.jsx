@@ -215,13 +215,7 @@ function FormHeader() {
 
   return (
     <div className="form__header">
-      {globalUser && (
-        <img
-          src={globalUser.profileUrl}
-          className="form__user"
-          alt="current user profile"
-        />
-      )}
+      {globalUser && <img src={globalUser.profileUrl} className="form__user" />}
       <p>Add a review</p>
     </div>
   );
@@ -229,11 +223,7 @@ function FormHeader() {
 
 function FormImage({ media }) {
   return (
-    <img
-      src={media?.image || DEFAULT_MEDIA_IMG}
-      className="form__image"
-      alt="media to review"
-    />
+    <img src={media?.image || DEFAULT_MEDIA_IMG} className="form__image" />
   );
 }
 

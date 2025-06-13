@@ -164,11 +164,7 @@ function MessageLikeButton({ message, isCurrentUser }) {
 function MessageImage({ message }) {
   return (
     <Link to={`/users/${message.username}`}>
-      <img
-        src={message.profileUrl}
-        className="message__image"
-        alt="chat user profile"
-      />
+      <img src={message.profileUrl} className="message__image" />
     </Link>
   );
 }
@@ -203,11 +199,7 @@ function MessageContent({ message, category }) {
             @{message.review.username}
           </span>
         </p>
-        <img
-          src={message.mediaData.image}
-          className="message__media--image"
-          alt="chat media image"
-        />
+        <img src={message.mediaData.image} className="message__media--image" />
         <ReviewStars rating={message.review.rating} />
       </Link>
     );
@@ -222,11 +214,7 @@ function MessageContent({ message, category }) {
 
     return (
       <Link to={message.mediaData.titleLink} className="message__media">
-        <img
-          src={message.mediaData.image}
-          className="message__media--image"
-          alt="chat media image"
-        />
+        <img src={message.mediaData.image} className="message__media--image" />
         <p className="message_media--title">{message.mediaData.title}</p>
         <p className="message__media--subtitle">{message.mediaData.subtitle}</p>
       </Link>

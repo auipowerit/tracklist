@@ -15,11 +15,7 @@ export default function MediaReviewCard({ review }) {
 function Header({ review }) {
   return (
     <div className="media-review__header">
-      <img
-        src={review.profileUrl}
-        className="media-review__image"
-        alt="review media"
-      />
+      <img src={review.profileUrl} className="media-review__image" />
 
       <div className="media-review__info">
         <div className="media-review__user">
