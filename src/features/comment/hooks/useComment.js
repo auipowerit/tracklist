@@ -80,40 +80,6 @@ export function useComment() {
     }
   };
 
-  const deleteComment = async (commentId) => {
-    try {
-      const commentRef = doc(db, "comments", commentId);
-      const commentDoc = await getDoc(commentRef);
-
-      if (!commentDoc.exists()) return;
-
-      // Delete from Firestore
-      await deleteDoc(commentRef);
-
-      // Get replied comments
-      const { replies = [], replyingTo = "" } = commentDoc.data();
-
-      // For each reply, delete from Firestore
-      if (replies.length > 0) {
-        await Promise.all(replies.map(deleteComment));
-      }
-
-      // Remove self from parent comment replies
-      if (replyingTo && replyingTo !== "") {
-        const parentRef = doc(db, "comments", replyingTo);
-        const parentDoc = await getDoc(parentRef);
-
-        if (!parentDoc.exists()) return;
-
-        await updateDoc(parentRef, {
-          replies: arrayRemove(commentId),
-        });
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
   const likeComment = async (commentId, userId) => {
     try {
       const commentRef = doc(db, "comments", commentId);
@@ -189,7 +155,6 @@ export function useComment() {
     getReviewComments,
 
     addComment,
-    deleteComment,
 
     likeComment,
     dislikeComment,

@@ -4,7 +4,6 @@ import { useAuthContext } from "src/features/auth/context/AuthContext";
 import ShareButton from "src/features/shared/components/buttons/ShareButton";
 import HeartButton from "src/features/shared/components/buttons/HeartButton";
 import DeleteButton from "src/features/shared/components/buttons/DeleteButton";
-import { useCommentContext } from "src/features/comment/context/CommentContext";
 import CommentButton from "src/features/comment/components/buttons/CommentButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import "./review-buttons.scss";
@@ -14,7 +13,6 @@ export default function ReviewButtons({ review, showComment = true }) {
   const [isLiked, setIsLiked] = useState(false);
 
   const { globalUser, getUserLikes } = useAuthContext();
-  const { deleteComment } = useCommentContext();
   const { setReviews, getNewReviews, deleteReview } = useReviewContext();
 
   const navigate = useNavigate();
@@ -41,17 +39,6 @@ export default function ReviewButtons({ review, showComment = true }) {
 
   const handleDelete = async () => {
     if (!review || !review?.id) return;
-
-    const comments = review.comments;
-
-    // Delete each comment from comments db
-    if (comments.length > 0) {
-      await Promise.all(
-        comments.map(async (comment) => {
-          await deleteComment(comment);
-        }),
-      );
-    }
 
     // Delete review
     await deleteReview(review.id);

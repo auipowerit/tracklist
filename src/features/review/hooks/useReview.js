@@ -227,6 +227,15 @@ export function useReview() {
 
       if (!reviewDoc.exists()) return;
 
+      const comments = reviewDoc.data().comments || [];
+      if (comments.length > 0) {
+        await Promise.all(
+          comments.map(async (comment) => {
+            await deleteReviewComment(comment, reviewId);
+          }),
+        );
+      }
+
       // Delete from Firestore
       await deleteDoc(reviewRef);
     } catch (error) {
@@ -275,7 +284,11 @@ export function useReview() {
 
       // For each reply, delete from Firestore
       if (replies.length > 0) {
-        await Promise.all(replies.map(deleteComment));
+        await Promise.all(
+          replies.map(async (reply) => {
+            await deleteReviewComment(reply, reviewId);
+          }),
+        );
       }
 
       // Remove self from parent comment replies
@@ -283,11 +296,11 @@ export function useReview() {
         const parentRef = doc(db, "comments", replyingTo);
         const parentDoc = await getDoc(parentRef);
 
-        if (!parentDoc.exists()) return;
-
-        await updateDoc(parentRef, {
-          replies: arrayRemove(commentId),
-        });
+        if (parentDoc.exists()) {
+          await updateDoc(parentRef, {
+            replies: arrayRemove(commentId),
+          });
+        }
       }
 
       const reviewRef = doc(db, "reviews", reviewId);

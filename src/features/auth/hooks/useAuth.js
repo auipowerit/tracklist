@@ -196,6 +196,8 @@ export function useAuth() {
 
   const getUserById = async (userId) => {
     try {
+      if (!userId) return null;
+      
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
 
