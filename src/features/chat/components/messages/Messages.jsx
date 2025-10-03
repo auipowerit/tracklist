@@ -73,7 +73,6 @@ function MessageCard({ message, index, messages }) {
         className={`message__bubble ${isCurrentUser ? "message__bubble--user" : "message__bubble--friend"}`}
       >
         <div onClick={handleClick} className="message__bubble__overlay" />
-
         {isCurrentUser && !message.isDeleted && (
           <MessageDeleteButton
             message={message}
@@ -166,7 +165,7 @@ function MessageLikeButton({ message, isCurrentUser }) {
 
 function MessageImage({ message }) {
   return (
-    <Link to={`/users/${message.username}`}>
+    <Link to={`/users/${message.username}`} className="message__link">
       <img src={message.profileUrl} className="message__image" />
     </Link>
   );
